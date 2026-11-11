@@ -384,6 +384,77 @@ asymmetry is the whole value of running them.
 Rung addressing follows Tyree Jones (tyofthestarz), the φ² = φ + 1 framework,
 prior art from December 2025.
 
+## NV centres: the same read on an exactly known object
+
+A nitrogen-vacancy centre is the best-behaved target this arithmetic can be
+pointed at: its transition frequencies are tabulated, its linewidths are known
+and its geometry is exact. `scripts/nv_check.py` runs the read on ten of its
+constants - D = 2.87 GHz (plus/minus 1 MHz, drifting -74.2 kHz/K), 14N
+A_parallel 2.16 MHz, A_perp 2.70 MHz, quadrupole 5.01 MHz, 15N 3.03 and
+3.65 MHz, 13C nearest-neighbour 130 MHz, and zero-phonon lines at 637 nm
+(1.945 eV, 15687 cm^-1), 575 nm (2.156 eV) and 1042 nm.
+
+- **Address.** Expressed in six units - Hz, MHz, GHz, eV, cm^-1, nm - the same
+  sixty tests give **3 hits against 6.0 expected** from uniform phase,
+  binomial P(>= 3) = 0.947. Per unit: Hz 1, MHz 0, GHz 1, eV 1, cm^-1 0, nm 0.
+  Rewriting the same frequency in another unit shifts every phase by
+  log(10^6)/log(phi) = 28.7098, so the verdict is a property of the ruler. The
+  14N quadrupole sits 0.006 rungs from an integer in GHz and 0.35 rungs away in
+  MHz.
+- **Geometry.** The NV axis is <111>, so axis-to-bond is arccos(-1/3) =
+  109.4712 deg, exactly. Every angle a bond or axis pair can subtend is an
+  arccosine of 0, +/-1/2, +/-1/sqrt(2), +/-1/sqrt(3), +/-1/3, +/-sqrt(2/3) or
+  +/-2/3, and the nearest of those to 137.5078 deg is **135.0000 deg, off by
+  2.5078 deg exactly**. Allowing high-index directions (|hkl| <= 4) produces 2654
+  distinct angles, one of which lands 0.0420 deg away - a statement about how
+  many pairs exist, not a near-hit. cos(137.5078 deg) = -0.737369 is the
+  arccosine of a fifth-degree algebraic number, and a periodic lattice admits no
+  five-fold rotation at all, phi being the five-fold divergence.
+- **Pitch.** D/nu(HI) = 2.020549. The nearest simple forms are 2 (off 1.017%)
+  and sqrt(phi^3) (off 1.862%), both chosen after the number was known; the two
+  quantities are unrelated couplings and no baseline enters, so the pitch has
+  nothing to act on.
+- **Tolerance.** 0.05 rungs at 2.87 GHz is a 69.9 MHz cone, +/-35 MHz, against a
+  2 MHz ensemble ODMR line: the criterion is ~35x coarser than the instrument,
+  so it is falsifiable - a line 100 MHz off its rung is caught - but
+  uninformative, because one frequency in ten satisfies it. At 1e-3 rungs the
+  cone is 1.38 MHz, comparable to an ensemble line and a thousand times wider
+  than a single centre resolves, which puts the tight version within reach of a
+  bench; there the temperature term bites, since D moves 74.2 kHz/K and holding
+  a 1.38 MHz cone needs ~19 K of control.
+
+### The tightened claim
+
+`scripts/phi_tight.py` runs the version that could be wrong: unit fixed to Hz,
+tolerance 1e-3 rungs. Two numbers decide it. **Content** is 2t, so 0.2% per
+test. **Threshold** is tau = ln(1 + delta/f) / ln(phi): while the cone is
+narrower than the error bar no measurement can refute an on-rung value, so a
+claim at tolerance t is checkable only when **t > tau**. Measured thresholds:
+Cs 133 hyperfine 0 (exact, the SI second), the 21 cm line 1.46e-9, Rb 87
+3.04e-10, NV D 7.24e-7, 14N A_parallel 1.92e-2, 13C 1.59e-2.
+
+At 1e-3 rungs, **0 of 6 pass** (0.012 expected) and 4 of 6 could have been
+checked - the two that could not are the 1% hyperfine terms, where one percent
+of the frequency is twenty times the cone. At the framework's 0.05 all six can
+be checked, and every pass is a 10% event, which is the problem. Content falls
+as t falls while checkability needs t > tau, so the informative region is
+tau < t << 1: inside it the claim is testable and empty, and outside it a pass
+means nothing.
+
+### Fitting instead of assuming
+
+`scripts/phi_fit.py` takes the other route: let the scale float. On the three
+candidates in the STARE2 file, with the offset free and the ratio fixed at phi
+(one parameter), the best offset leaves **0.1438 rungs** where a joint pass
+needs every gap within 0.10 - it fails, and uniform triples in the same band
+pass 0.178 of the time (P(<= observed residual) = 0.334). Fitting the ratio as
+well and searching the integers reproduces the candidates with rms 0.0000 rungs
+- and reproduces uniform noise with median rms 0.0012, forty times inside the
+0.05 tolerance. That is the trade: two continuous parameters plus free integers
+absorb the spacing, so the fit cannot separate a candidate set from noise, which
+is the discrimination the framework exists to provide. A model with a free ratio
+per gap is an interpolant, not a law.
+
 ## Real data
 
 Any SIGPROC `.fil` works. A small, public example is the STARE2 triggered burst
