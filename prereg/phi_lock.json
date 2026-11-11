@@ -18,7 +18,7 @@
     "the echo contrast is quoted only when nints >= 3948 (ten lags at the n/4 cap)",
     "the chance rate is applied as a binomial over candidates"
   ],
-  "decision_rule": "A candidate is locked when its drift is resolved, |k| = 1, and the lock distance is within 0.05. Report the count against the binomial null. If no candidate has a resolved drift the verdict is NOT MEASURED: the rate is not quoted, a null is not claimed, and a failure to resolve is never reported as a non-detection.",
+  "decision_rule": "A candidate is locked when its drift is resolved, |k| = 1 (never k = 0, which is a stationary line), and the lock distance is within 0.05. Report the count against the binomial null. If no candidate has a resolved drift the verdict is NOT MEASURED: the rate is not quoted, a null is not claimed, and a failure to resolve is never reported as a non-detection.",
   "echo_available_here": false,
   "exploratory_excluded": {
     "candidates": 11,
@@ -43,7 +43,7 @@
   },
   "revision": 1,
   "seed": 1729,
-  "sha256": "3d9aadbef7d1df88268b27e04cef2fc5c410dff5ca15f9ce577e147152210852",
+  "sha256": "5c6e9914910ccfa74a8a7146d787aa80c9c429c6b3f7502fd023dd5308b3eadb",
   "statistic": {
     "echo": "mean |autocorrelation| at Fibonacci lags minus mean over all non-Fibonacci lags, as in scripts/phi_echo.py",
     "k_bound": [

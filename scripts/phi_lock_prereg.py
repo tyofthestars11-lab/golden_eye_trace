@@ -110,7 +110,8 @@ def build(channel_hz: float, tsamp_s: float, nchans: int, nints: int,
             "binomial_null": "P(locked >= m | N evaluable) with p = chance_per_candidate",
         },
         "decision_rule": (
-            "A candidate is locked when its drift is resolved, |k| = 1, and the "
+            "A candidate is locked when its drift is resolved, |k| = 1 (never "
+            "k = 0, which is a stationary line), and the "
             "lock distance is within 0.05. Report the count against the binomial "
             "null. If no candidate has a resolved drift the verdict is NOT "
             "MEASURED: the rate is not quoted, a null is not claimed, and a "
