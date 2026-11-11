@@ -1,0 +1,33 @@
+{
+  "attribution": "framework: Tyree Jones (tyofthestarz), golden_eye_trace",
+  "bands": {
+    "A": {
+      "file": "stare2_ovro.fil",
+      "high_mhz": 1530.06103515625,
+      "low_mhz": 1280.18310546875
+    },
+    "B": null
+  },
+  "decision_rule": "p within 5% of 1.0000 keeps the flat-rung-rate statement and refutes the pitch; p within 5% of 0.3063 keeps the pitch and refutes the flat rung rate; neither means both are refuted by these data.",
+  "evidence_required": [
+    "two bands separated by at least one decade in frequency",
+    "at least 3 confirmed drifting lines per band",
+    "each drift resolved well above that file's df/scan amount"
+  ],
+  "predictions": {
+    "phi_lattice": {
+      "p": 1.0,
+      "rungs_per_decade": 4.784971966781666,
+      "statement": "flat rung rate, 4.7849 rungs per decade"
+    },
+    "pitch_angle": {
+      "p": 0.3063491318704174,
+      "rungs_per_decade": 1.4658720080478471,
+      "statement": "rung rate falls 4.94x per decade"
+    }
+  },
+  "seed": 1729,
+  "statistic": "p = d ln|drift| / d ln f over confirmed drifting lines",
+  "test": "rung rate versus frequency, two bands",
+  "tolerance": 0.05
+}
