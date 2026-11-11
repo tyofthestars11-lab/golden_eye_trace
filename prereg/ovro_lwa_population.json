@@ -1,0 +1,92 @@
+{
+  "candidates": 2,
+  "chance_per_candidate": 0.07639320225002104,
+  "days": [
+    {
+      "candidates": 2,
+      "channel_hz": 100547.19562243501,
+      "channels_used": 192,
+      "hours": 0.4984177777777778,
+      "key": "spec_fits/2024/20240207.fits",
+      "locked": 0,
+      "nfreq": 731,
+      "ntime": 7009,
+      "nyquist_hz_s": 196381.2414500684,
+      "resolution_hz_s": 245.47655181258548,
+      "resolved": 2,
+      "rows": [
+        {
+          "distance": 0.05462310788011182,
+          "drift_hz_s": 8194.663463845607,
+          "freq_mhz": 54.45311313164136,
+          "locked": false,
+          "rate": 0.020864170639050498,
+          "resolved": true,
+          "snr": 7.682220935821533
+        },
+        {
+          "distance": 0.052438069983052074,
+          "drift_hz_s": 7866.859885523896,
+          "freq_mhz": 55.90148879488332,
+          "locked": false,
+          "rate": 0.02002956042908027,
+          "resolved": true,
+          "snr": 7.001245498657227
+        }
+      ],
+      "samples_used": 1600,
+      "size_mb": 82.09152,
+      "theta_drift_hz_s": 150021.91896205285
+    },
+    {
+      "candidates": 0,
+      "channel_hz": 100547.19562243501,
+      "channels_used": 96,
+      "hours": 0.36551111111111106,
+      "key": "spec_fits/2024/20240325.fits",
+      "locked": 0,
+      "nfreq": 731,
+      "ntime": 5140,
+      "nyquist_hz_s": 196381.2414500684,
+      "resolution_hz_s": 490.95310362517097,
+      "resolved": 0,
+      "rows": [],
+      "samples_used": 800,
+      "size_mb": 60.21792,
+      "theta_drift_hz_s": 150021.91896205285
+    },
+    {
+      "candidates": 0,
+      "channel_hz": 100547.19562243501,
+      "channels_used": 96,
+      "hours": 0.36551111111111106,
+      "key": "spec_fits/2024/20240326.fits",
+      "locked": 0,
+      "nfreq": 731,
+      "ntime": 5140,
+      "nyquist_hz_s": 196381.2414500684,
+      "resolution_hz_s": 490.95310362517097,
+      "resolved": 0,
+      "rows": [],
+      "samples_used": 800,
+      "size_mb": 60.21792,
+      "theta_drift_hz_s": 150021.91896205285
+    }
+  ],
+  "drift_hz_s": [
+    8194.663463845607,
+    7866.859885523896
+  ],
+  "expected_locked_by_chance": 0.15278640450004208,
+  "failures": [],
+  "locked": 0,
+  "max_mb": 140.0,
+  "rates": [
+    0.020864170639050498,
+    0.02002956042908027
+  ],
+  "resolved": 2,
+  "threshold": 5.5,
+  "verdict": "2 resolved, 0 within 0.05 theta, 0.15 expected",
+  "year": "2024"
+}

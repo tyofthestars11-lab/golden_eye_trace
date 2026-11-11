@@ -102,3 +102,13 @@ time)` the reader code implies. And the files carry **no `CTYPE`, `CRVAL` or
 axis has to be inferred from axis sizes and then validated against the documented
 73.5 MHz span. The script prints that check (`731 x 100.5 kHz = 73.5 MHz`) and
 refuses to run if it fails.
+
+`scripts/ovro_lwa_population.py` then widens the search: it lists `spec_fits/`,
+picks days inside a size window and searches each to Nyquist, scoring every
+drift against the lock. Three 2024 days searched this way — the widest at 1,600
+samples x 192 channels, 410 s of data at 246 Hz/s resolution — contain **two
+drifting lines**, at **8,195 and 7,867 Hz/s**. Their rates are **0.0200 and 0.0209
+cycles per sample, eighteen times below θ = 0.382**, and neither is within 0.05 θ
+of an integer, against **0.15 expected by chance**. So the archive does hold
+drifting lines, and they sit far from the lock; the earlier NOT MEASURED verdict
+was a statement about coverage, not about the sky.
