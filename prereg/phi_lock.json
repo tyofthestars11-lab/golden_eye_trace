@@ -15,7 +15,7 @@
     "tsamp is taken from the instrument header and never re-binned",
     "the drift window is searched to Nyquist, not capped below the lock",
     "the integer advance is bounded at |k| = 1, k = 2 being outside Nyquist",
-    "the echo contrast is quoted only when nints >= 987 (eleven lags)",
+    "the echo contrast is quoted only when nints >= 3948 (ten lags at the n/4 cap)",
     "the chance rate is applied as a binomial over candidates"
   ],
   "decision_rule": "A candidate is locked when its drift is resolved, |k| = 1, and the lock distance is within 0.05. Report the count against the binomial null. If no candidate has a resolved drift the verdict is NOT MEASURED: the rate is not quoted, a null is not claimed, and a failure to resolve is never reported as a non-detection.",
@@ -28,7 +28,7 @@
     "status": "exploratory, excluded from the confirmatory count",
     "window_hz_s": 7453.7
   },
-  "minimum_samples_for_echo": 987,
+  "minimum_samples_for_echo": 3948,
   "multiplicity": {
     "look_elsewhere": "1 - (1 - p)^N over evaluable candidates"
   },
@@ -43,7 +43,7 @@
   },
   "revision": 1,
   "seed": 1729,
-  "sha256": "c65734da9b4e6dbd77ef4073c3dc2c8dfc352fa80738a621b62c149676544817",
+  "sha256": "392fbc892b7c443e247032661b1928a2d6013fad8dd88399609669785b5c5b5f",
   "statistic": {
     "echo": "mean |autocorrelation| at Fibonacci lags minus mean over all non-Fibonacci lags, as in scripts/phi_echo.py",
     "k_bound": 1,

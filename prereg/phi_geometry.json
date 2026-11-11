@@ -42,22 +42,62 @@
       "tsamp_s": 0.4
     }
   },
+  "channel_over_tsamp": {
+    "archives": {
+      "BL L band (nominal)": {
+        "access": "metadata only, 404 here",
+        "channel_hz": 2.9,
+        "ratio_hz_s": 0.009666666666666667,
+        "theta_drift_hz_s": 0.0036923381087510167,
+        "tsamp_s": 300.0
+      },
+      "CAMRAS Dwingeloo": {
+        "access": "open, direct GET",
+        "channel_hz": 136719.0,
+        "ratio_hz_s": 292063290.783112,
+        "theta_drift_hz_s": 111558250.21300487,
+        "tsamp_s": 0.00046811429
+      },
+      "LWA1 drspec": {
+        "access": "open, read here",
+        "channel_hz": 19140.6,
+        "ratio_hz_s": 14907.009345794391,
+        "theta_drift_hz_s": 5693.970899481123,
+        "tsamp_s": 1.284
+      },
+      "OVRO-LWA solar": {
+        "access": "open S3, solar imaging",
+        "channel_hz": 24000.0,
+        "ratio_hz_s": 375000.0,
+        "theta_drift_hz_s": 143237.25421878943,
+        "tsamp_s": 0.064
+      },
+      "STARE2": {
+        "access": "open, one integration",
+        "channel_hz": 122070.0,
+        "ratio_hz_s": 305175.0,
+        "theta_drift_hz_s": 116566.47748325083,
+        "tsamp_s": 0.4
+      }
+    },
+    "needed_for_1hz_s": 2.618033988749895
+  },
   "free_knob": {
     "lwa_1hz_tsamp_s": 7310.8294553270125,
     "note": "tsamp set by the analyst places any drift on theta"
   },
   "frequency_ratio_per_rung": 1.618033988749895,
   "slow_beacon": {
-    "echo (11 lags) D=0.1": {
-      "bandwidth_hz": 7215788.672407761,
-      "dwell_days": 835.1607259731205,
-      "dwell_s": 72157886.72407761,
+    "echo (10 lags) D=0.1": {
+      "bandwidth_hz": 28863154.689631045,
+      "dwell_days": 3340.642903892482,
+      "dwell_s": 288631546.89631045,
       "tsamp_s": 73108.29455327013
     },
-    "echo (11 lags) D=1": {
-      "bandwidth_hz": 7215788.672407761,
-      "dwell_days": 83.51607259731205,
-      "dwell_s": 7215788.672407761,
+    "echo (10 lags) D=1": {
+      "bandwidth_hz": 28863154.689631045,
+      "dwell_days": 334.0642903892482,
+      "dwell_s": 28863154.689631045,
       "tsamp_s": 7310.8294553270125
     },
     "echo (real length) D=0.1": {

@@ -14,9 +14,12 @@ The conditions, and how each is fixed here:
 3. The integer advance is bounded at `|k| = 1`. `k = 2` is outside Nyquist, so
    one physical lock exists; allowing aliased `k` would let `k <= 16` cover every
    rate, which is the failure mode recorded in `GEOMETRY.md` section 4.
-4. Sample count: at least 987 samples for eleven Fibonacci lags is required
-   before the echo contrast may be quoted. The rate test needs only the drift and
-   can run on fewer samples; the two are reported separately and never combined.
+4. Sample count: at least 3,948 samples are required before the echo contrast may
+   be quoted, because `phi_echo.lag_sets` caps Fibonacci lags at `n/4` and ten
+   lags, the count the contrast is calibrated at, need `n/4 >= 987`. At 987
+   samples only seven lags exist, so the earlier 987 figure was wrong. The rate
+   test needs only the drift and can run on fewer samples; the two are reported
+   separately and never combined.
 5. The chance rate is stated and applied as a binomial, not per candidate alone.
 
 The exploratory search already run on LWA `drspec` (2026-11-11, +/-7454 Hz/s, 11
@@ -44,7 +47,7 @@ from seti_search.rungs import PHI  # noqa: E402
 THETA = 1.0 / (PHI * PHI)
 TOLERANCE = 0.05          # of theta, on the lock distance
 K_MAX = 1                 # k = 2 lies outside Nyquist
-MIN_SAMPLES_ECHO = 987    # eleven Fibonacci lags
+MIN_SAMPLES_ECHO = 3948   # ten Fibonacci lags at the n//4 cap
 EXPLORATORY = {
     "date": "2026-11-11",
     "file": "data/lwa_drspec.fil",
@@ -82,7 +85,7 @@ def build(channel_hz: float, tsamp_s: float, nchans: int, nints: int,
             "tsamp is taken from the instrument header and never re-binned",
             "the drift window is searched to Nyquist, not capped below the lock",
             "the integer advance is bounded at |k| = 1, k = 2 being outside Nyquist",
-            "the echo contrast is quoted only when nints >= 987 (eleven lags)",
+            "the echo contrast is quoted only when nints >= 3948 (ten lags at the n/4 cap)",
             "the chance rate is applied as a binomial over candidates",
         ],
         "statistic": {

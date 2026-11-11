@@ -63,11 +63,14 @@ no resolved drifting line at any rate, let alone at θ.
 For the population SETI actually searches — narrowband carriers drifting at
 roughly 0.1 to 10 Hz/s — the lock demands:
 
-| target | t per sample | dwell for eleven Fibonacci lags | bandwidth crossed |
+| target | t per sample | dwell for ten Fibonacci lags | bandwidth crossed |
 | --- | --- | --- | --- |
-| 1 Hz/s, 19.14 kHz channels | 7,311 s (2.03 h) | **83.5 days** (987 samples) | 7.22 MHz |
+| 1 Hz/s, 19.14 kHz channels | 7,311 s (2.03 h) | **334 days** (3,948 samples) | 28.9 MHz |
 | 1 Hz/s, real track length 5,872 | 7,311 s | 496.9 days | 42.9 MHz |
-| 0.1 Hz/s, 19.14 kHz channels | 73,108 s (20.3 h) | 835.2 days | 7.22 MHz |
+| 0.1 Hz/s, 19.14 kHz channels | 73,108 s (20.3 h) | 3,341 days | 28.9 MHz |
+
+Ten lags is the count the echo is calibrated at, and it requires 3,948 samples
+because lags are capped at `n/4`; at 987 samples only seven lags exist.
 
 An 83-day continuous observation at 2-hour integrations is not a hard limit in
 principle but it is far outside any survey cadence in `BANDS.md`, and the signal
@@ -109,11 +112,41 @@ observation can refute it.
    grid is not what limits the test.
 3. **Bound the integer `k`** to `|k| = 1` on the grounds that `k = 2` is outside
    Nyquist, and state that bound in the pre-registration.
-4. **Collect at least 987 samples** (eleven Fibonacci lags) — with `t` fixed, that
-   sets the dwell, so the requirement is a real observing cost.
+4. **Collect at least 3,948 samples** for ten Fibonacci lags, the count the echo is
+   calibrated at; 987 samples gives only seven. With `t` fixed, that sets the
+   dwell, so the requirement is a real observing cost.
 5. **State the chance.** A random drift within 5% of θ in the `k = 1` window is a
    **0.0764** event per candidate; multiplicity over candidate lists is applied on
    top of that.
 
 With those five fixed, the lock is falsifiable and sharp. Without them it is
 satisfiable on demand, which is the same as untestable.
+
+## 6. What open archives can actually offer
+
+The lock needs `channel/tsamp = drift/θ`, so a 1 Hz/s chirp needs **2.62 Hz of
+channel per second of sample** — either about 1 s integrations with 2.6 Hz
+channels, or 100 s integrations with 260 Hz channels. Nothing openly downloadable
+from this workspace sits near that:
+
+| archive | channel | tsamp | channel/tsamp | θ-locked drift | access |
+| --- | --- | --- | --- | --- | --- |
+| LWA1 drspec (read here) | 19.14 kHz | 1.284 s | 1.5e4 | 5,694 Hz/s | open, already searched |
+| STARE2 (read here) | 122.07 kHz | 0.4 s | 3.1e5 | 116,566 Hz/s | open, one integration |
+| CAMRAS Dwingeloo | 136.7 kHz | 468 µs | 2.9e8 | 1.1e8 Hz/s | open, direct GET |
+| OVRO-LWA solar (AWS) | 24 kHz | 64 ms | 3.8e5 | 1.4e5 Hz/s | open S3, solar imaging |
+| BL L band (nominal) | 2.9 Hz | 300 s | 9.7e-3 | 0.0037 Hz/s | metadata only, 404 here |
+
+So the pre-registered test cannot run on any openly reachable data found here, and
+the reason is now precise: `channel/tsamp` is four to eight orders of magnitude
+too coarse, which pushes the lock onto chirps of 10⁴ to 10⁸ Hz/s that no
+transmitter produces. The one geometry that would put θ at a plausible drift is
+fine-channel beamforming — the Breakthrough Listen L band at 2.9 Hz channels over
+300 s gives θ = 0.0037 Hz/s — and that archive's file API answers 404 from here.
+
+The low-frequency options are worth naming because they are genuinely open. CAMRAS
+publishes search-mode filterbanks with per-observation header sidecars and no
+login, but at 136.7 kHz channels. The OVRO-LWA solar archive is a public S3 bucket
+under CC BY 4.0 with 24 kHz resolution and 64 ms cadence — the right resolution,
+but an imaging product whose θ-locked drift is 1.4e5 Hz/s. Neither meets the
+ratio, and no archive reachable here meets both the ratio and the sample count.

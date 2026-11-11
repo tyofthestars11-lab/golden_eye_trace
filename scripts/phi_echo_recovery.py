@@ -8,7 +8,7 @@ opened to Nyquist instead of the 8 Hz/s the earlier runs used?
 Part 1 injects chirps into a simulated file at the rate theta and at arbitrary
 rates, runs the real search, and checks that the recovered rate lands on the
 lattice only for theta. Part 2 checks the echo contrast on a track at the length
-real data has, where eleven Fibonacci lags make it a test rather than a coin.
+real data has, where ten Fibonacci lags make it a test rather than a coin.
 
 The rate deserves a warning, because it is a physical statement and not a
 formality. A phi lock means theta = 0.382 channels of drift per integration, which
@@ -105,7 +105,7 @@ def main() -> int:
     print()
 
     # --- part 2: echo contrast at the length real tracks have -------------
-    print(f"   B. ECHO CONTRAST AT N={CALIBRATION_N} (eleven Fibonacci lags)")
+    print(f"   B. ECHO CONTRAST AT N={CALIBRATION_N} (ten Fibonacci lags)")
     n = CALIBRATION_N
     fibs, others = lag_sets(n)
     null = null_contrast(n, draws=500, rng=rng)

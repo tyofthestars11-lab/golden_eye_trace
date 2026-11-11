@@ -27,7 +27,7 @@ its section, and each script exits 0 on the data named.
 | fitting the scale rescues it | offset and ratio free | fits candidates to 0.0000 rungs and noise to 0.0012: no discrimination |
 | real populations sit on the lattice | 22 frequencies, 48 sources vs uniform controls | 0.2727 and 0.2917 against 0.2618 expected; adjusted p = 0.455 and 0.935 |
 | drift exponent across bands | pre-registered | **NOT MEASURED** — no second band, no resolved drifts |
-| φ phase lock on drifting lines | echo contrast, calibrated at N = 5,872 | detected at p = 0.0005, recovers injected chirps; needs ≥987 samples |
+| φ phase lock on drifting lines | echo contrast, calibrated at N = 5,872 | detected at p = 0.0005, recovers injected chirps; needs ≥3,948 samples for ten lags |
 | the lock on real drift lines | 7 candidates, LWA window opened to Nyquist | **NOT MEASURED** — every drift below resolution, 0 of 7 evaluable |
 | geometry the lock demands | inversion of the lock condition | θ = 76.4% of Nyquist in any band; 1 Hz/s needs 2.03 h integrations |
 | is the integer advance bounded? | aliasing of kθ into Nyquist | k ≤ 16 covers all rates at 5%: empty unless k is fixed independently |
@@ -201,7 +201,7 @@ integration, so `drift·t/Δf = θ`. The echo is the Fibonacci structure of
 three parts in a million, so the statistic contrasts mean |autocorrelation| at
 Fibonacci lags against the mean over every non-Fibonacci lag.
 
-**Calibration at N = 5,872** (eleven Fibonacci lags), null from 2,000 random
+**Calibration at N = 5,872** (ten Fibonacci lags), null from 2,000 random
 rates `+0.035 ± 0.063`:
 
 | case | contrast | p | verdict |
@@ -238,7 +238,7 @@ absence of the measurement.
 the locked drift is always 76.4% of Nyquist — 5,694 Hz/s for the LWA dynamic
 spectrum, 116,566 Hz/s for STARE2 — whatever the band. The LWA window already
 contained 5,694 Hz/s and found nothing. A realistic 1 Hz/s carrier needs 2.03 h
-integrations and 83.5 days of dwell for eleven lags. Two ways the claim loses
+integrations and 334 days of dwell for ten lags. Two ways the claim loses
 content: the integer advance must be bounded independently, because aliasing makes
 `k ≤ 16` cover every rate in Nyquist at 5%; and `t` is the analyst's choice, so
 any drift can be placed on the lock by choosing the block length. `GEOMETRY.md`

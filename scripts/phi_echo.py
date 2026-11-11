@@ -26,7 +26,7 @@ reports nothing about real data. The three failures are worth keeping:
   709 samples an arbitrary rate scored 0.19 against theta's 0.25.
 
 The length matters, so the calibration runs at 5,872 samples - the length of the
-STARE2 tracks - where eleven Fibonacci lags are available instead of six.
+STARE2 tracks - where ten Fibonacci lags are available instead of six.
 
     python3 scripts/phi_echo.py
 """

@@ -37,7 +37,10 @@ from seti_search.rungs import PHI  # noqa: E402
 
 THETA = 1.0 / (PHI * PHI)
 TOLERANCE = 0.05
-ECHO_N = 987          # samples needed for eleven Fibonacci lags
+# phi_echo.lag_sets caps lags at n//4, so ten Fibonacci lags (the number the
+# echo is calibrated at) need n//4 >= 987, i.e. n >= 3948. At 987 samples only
+# seven lags are available, which was an error in the earlier note.
+ECHO_N = 3948
 ECHO_N_LONG = 5872    # the length of real tracks used in the echo harness
 
 
@@ -107,7 +110,7 @@ def main() -> int:
 
     print("   C. WHAT A SLOW BEACON WOULD NEED")
     dwell = {}
-    for label, n in (("echo (11 lags)", ECHO_N), ("echo (real length)", ECHO_N_LONG)):
+    for label, n in (("echo (10 lags)", ECHO_N), ("echo (real length)", ECHO_N_LONG)):
         for drift in (1.0, 0.1):
             t = tsamp_for(19_140.0, drift)
             total = n * t
@@ -159,6 +162,33 @@ def main() -> int:
     print("   sample time is fixed by the instrument before the data are seen.")
     out["free_knob"] = {"note": "tsamp set by the analyst places any drift on theta",
                         "lwa_1hz_tsamp_s": tsamp_for(19_140.0, 1.0)}
+
+    print("   F. CHANNEL OVER CADENCE: WHAT THE LOCK NEEDS AND WHAT EXISTS")
+    need = 1.0 / THETA      # channel Hz per second of sample, for a 1 Hz/s drift
+    print(f"   a 1 Hz/s chirp locks at channel/tsamp = drift/theta = "
+          f"{need:.2f} Hz/s")
+    archives = [
+        ("LWA1 drspec", 19_140.6, 1.284, "open, read here"),
+        ("STARE2", 122_070.0, 0.4, "open, one integration"),
+        ("CAMRAS Dwingeloo", 136_719.0, 468.11429e-6, "open, direct GET"),
+        ("OVRO-LWA solar", 24_000.0, 0.064, "open S3, solar imaging"),
+        ("BL L band (nominal)", 2.9, 300.0, "metadata only, 404 here"),
+    ]
+    print(f"   {'archive':<22}{'channel Hz':>12}{'tsamp s':>11}"
+          f"{'channel/tsamp':>15}{'theta drift':>14}  access")
+    for name, ch, t, access in archives:
+        ratio = ch / t
+        print(f"   {name:<22}{ch:>12,.1f}{t:>11.4g}{ratio:>15,.1f}"
+              f"{THETA * ratio:>14,.4g}  {access}")
+    out["channel_over_tsamp"] = {
+        "needed_for_1hz_s": need,
+        "archives": {name: {"channel_hz": ch, "tsamp_s": t,
+                            "ratio_hz_s": ch / t,
+                            "theta_drift_hz_s": THETA * ch / t,
+                            "access": access}
+                     for name, ch, t, access in archives},
+    }
+    print()
 
     path = os.path.join(ROOT, "prereg", "phi_geometry.json")
     with open(path, "w", encoding="utf-8") as fh:
