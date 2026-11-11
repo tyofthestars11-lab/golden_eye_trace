@@ -26,6 +26,10 @@ its section, and each script exits 0 on the data named.
 | tightened claim (Hz, 1e-3 rungs) | 6 precisely known frequencies | 0 pass, 4 of 6 checkable |
 | fitting the scale rescues it | offset and ratio free | fits candidates to 0.0000 rungs and noise to 0.0012: no discrimination |
 | drift exponent across bands | pre-registered | **NOT MEASURED** — no second band, no resolved drifts |
+| φ phase lock on drifting lines | echo contrast, calibrated at N = 5,872 | detected at p = 0.0005, recovers injected chirps; needs ≥987 samples |
+| the lock on real drift lines | 7 candidates, LWA window opened to Nyquist | **NOT MEASURED** — every drift below resolution, 0 of 7 evaluable |
+| geometry the lock demands | inversion of the lock condition | θ = 76.4% of Nyquist in any band; 1 Hz/s needs 2.03 h integrations |
+| is the integer advance bounded? | aliasing of kθ into Nyquist | k ≤ 16 covers all rates at 5%: empty unless k is fixed independently |
 
 ## 1. The read on real candidates
 
@@ -160,7 +164,65 @@ the ratio is fitted from the same gaps it explains. The fit is an interpolant,
 not a law: it cannot be wrong about data it was fitted to, so it cannot
 discriminate.
 
-## 8. What would change the answer
+## 8. The φ phase lock on drifting lines
+
+`python3 scripts/phi_echo.py`, `python3 scripts/phi_echo_recovery.py`,
+`python3 scripts/phi_geometry.py`.
+
+The claim under test: a drifting line advances by `θ = 1/φ² = 0.381966` turns per
+integration, so `drift·t/Δf = θ`. The echo is the Fibonacci structure of
+`φ² = [2;1,1,1,…]`: `θ·89` is 0.5‰ of a turn from a whole number and `θ·144` is
+three parts in a million, so the statistic contrasts mean |autocorrelation| at
+Fibonacci lags against the mean over every non-Fibonacci lag.
+
+**Calibration at N = 5,872** (eleven Fibonacci lags), null from 2,000 random
+rates `+0.035 ± 0.063`:
+
+| case | contrast | p | verdict |
+| --- | --- | --- | --- |
+| rate = θ | +0.2658 | 0.0005 | detected |
+| rate = φ·θ | +0.2658 | 0.0005 | detected (same rotation; see below) |
+| arbitrary 0.31 | +0.1422 | 0.058 | passes through |
+| white noise | −0.0030 | 0.726 | passes through |
+| AR(1) red noise | +0.0377 | 0.440 | passes through |
+
+The script exits non-zero if that ordering breaks; it did, three times, and each
+failed design is recorded rather than deleted: summing autocorrelations at
+Fibonacci lags tests periodicity rather than φ and scored 517 on an arbitrary
+sinusoid; the lag of the largest |autocorrelation| is dominated by half-turn
+returns and landed on a Fibonacci number 0.498 of the time; six hand-picked
+comparison lags sat inside their own noise, and at 709 samples an arbitrary rate
+scored 0.19 against θ's 0.25.
+
+**Recovery through the search.** An injected chirp at θ (146,221 Hz/s) is found at
+146,552 Hz/s, rate 0.383, **0.002 from an integer** — locked; the same chirp
+injected backwards locks at 0.376 / 0.016; an arbitrary rate is found just as
+eagerly at 118,531 Hz/s, rate 0.310, **0.189 away** — off lattice. So the harness
+separates the two end to end, not only in a synthetic track.
+
+**On real drift lines: NOT MEASURED.** All seven candidates (three STARE2, four
+LWA) have drift 0, below their bands' resolution — 21 Hz/s for LWA, 3.17e+05 Hz/s
+for STARE2. Opening the LWA drift window from 8 Hz/s to Nyquist (±7,454 Hz/s)
+gives 11 candidates at 4σ with drifts of 10–19 Hz/s, none resolved; the strongest
+is 55.2511 MHz at SNR 14.13 and 10.6 Hz/s. Their rates are ~0.001 cycles per
+sample, 300–500× below θ. Nothing here is a null on the framework: it is the
+absence of the measurement.
+
+**Geometry.** Inverting the lock gives `t = θΔf/D`, and since `θ/0.5 = 0.7639`
+the locked drift is always 76.4% of Nyquist — 5,694 Hz/s for the LWA dynamic
+spectrum, 116,566 Hz/s for STARE2 — whatever the band. The LWA window already
+contained 5,694 Hz/s and found nothing. A realistic 1 Hz/s carrier needs 2.03 h
+integrations and 83.5 days of dwell for eleven lags. Two ways the claim loses
+content: the integer advance must be bounded independently, because aliasing makes
+`k ≤ 16` cover every rate in Nyquist at 5%; and `t` is the analyst's choice, so
+any drift can be placed on the lock by choosing the block length. `GEOMETRY.md`
+lists the five conditions under which the test is decisive.
+
+One further observation from the calibration: `φ·θ = 1 − θ = 0.618034` exceeds
+Nyquist, so the framework's φ multiple aliases onto θ exactly. At a fixed sample
+rate those are not two predictions, they are one rotation seen from either side.
+
+## 9. What would change the answer
 
 1. **Two bands, ≥1 decade apart, ≥3 resolved drifting lines each.** The
    pre-registration in `prereg/phi_2band.json` fixes the statistic, the two
@@ -182,6 +244,11 @@ python3 scripts/nv_check.py
 python3 scripts/phi_tight.py
 python3 scripts/phi_fit.py --fil data/stare2_ovro.fil
 python3 scripts/phi_check.py && python3 scripts/phi_native.py && python3 scripts/phi_superpose.py
+python3 scripts/phi_echo.py
+python3 scripts/phi_echo_recovery.py
+python3 scripts/phi_geometry.py
+python3 scripts/lattice_scale.py
+python3 scripts/phi_twoband.py --band-a data/stare2_ovro.fil --band-b data/lwa_drspec.fil
 ```
 
 Earlier harnesses, for completeness: the coordinate round trip reproduces to
