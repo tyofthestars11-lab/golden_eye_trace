@@ -14,7 +14,7 @@
   "conditions": [
     "tsamp is taken from the instrument header and never re-binned",
     "the drift window is searched to Nyquist, not capped below the lock",
-    "the integer advance is bounded at |k| = 1, k = 2 being outside Nyquist",
+    "the advance is bounded to |k| = 1: k = 2 is outside Nyquist and k = 0 is a stationary line",
     "the echo contrast is quoted only when nints >= 3948 (ten lags at the n/4 cap)",
     "the chance rate is applied as a binomial over candidates"
   ],
@@ -43,10 +43,13 @@
   },
   "revision": 1,
   "seed": 1729,
-  "sha256": "392fbc892b7c443e247032661b1928a2d6013fad8dd88399609669785b5c5b5f",
+  "sha256": "3d9aadbef7d1df88268b27e04cef2fc5c410dff5ca15f9ce577e147152210852",
   "statistic": {
     "echo": "mean |autocorrelation| at Fibonacci lags minus mean over all non-Fibonacci lags, as in scripts/phi_echo.py",
-    "k_bound": 1,
+    "k_bound": [
+      1,
+      1
+    ],
     "lock_distance": "|nu/theta - round(nu/theta)|, evaluated only for resolved drifts",
     "rate": "nu = drift * tsamp / channel, cycles per sample",
     "resolved_drift_requires": "|drift| > drift_resolution_hz_s"

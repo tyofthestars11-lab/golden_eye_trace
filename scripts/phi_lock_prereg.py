@@ -11,9 +11,13 @@ The conditions, and how each is fixed here:
    blocks, no averaging chosen because it would put a drift on the lock.
 2. The drift window runs to Nyquist. The lock sits at 76.4% of it, so a window
    capped at a few Hz/s cannot reach the lock at all.
-3. The integer advance is bounded at `|k| = 1`. `k = 2` is outside Nyquist, so
+3. The integer advance is bounded to `|k| = 1`. `k = 2` is outside Nyquist, so
    one physical lock exists; allowing aliased `k` would let `k <= 16` cover every
-   rate, which is the failure mode recorded in `GEOMETRY.md` section 4.
+   rate, which is the failure mode recorded in `GEOMETRY.md` section 4. **`k = 0`
+   is excluded**: it means zero advance, so a stationary carrier would count as
+   locked, and stationary carriers are the commonest thing in any band. Without
+   that exclusion two real OVRO-LWA lines at 0.02 cycles per sample scored a lock
+   distance of 0.05 against `k = 0` and would have been called hits.
 4. Sample count: at least 3,948 samples are required before the echo contrast may
    be quoted, because `phi_echo.lag_sets` caps Fibonacci lags at `n/4` and ten
    lags, the count the contrast is calibrated at, need `n/4 >= 987`. At 987
@@ -47,6 +51,7 @@ from seti_search.rungs import PHI  # noqa: E402
 THETA = 1.0 / (PHI * PHI)
 TOLERANCE = 0.05          # of theta, on the lock distance
 K_MAX = 1                 # k = 2 lies outside Nyquist
+K_MIN = 1                 # k = 0 is a stationary line, not a phase advance
 MIN_SAMPLES_ECHO = 3948   # ten Fibonacci lags at the n//4 cap
 EXPLORATORY = {
     "date": "2026-11-11",
@@ -84,7 +89,8 @@ def build(channel_hz: float, tsamp_s: float, nchans: int, nints: int,
         "conditions": [
             "tsamp is taken from the instrument header and never re-binned",
             "the drift window is searched to Nyquist, not capped below the lock",
-            "the integer advance is bounded at |k| = 1, k = 2 being outside Nyquist",
+            "the advance is bounded to |k| = 1: k = 2 is outside Nyquist and "
+            "k = 0 is a stationary line",
             "the echo contrast is quoted only when nints >= 3948 (ten lags at the n/4 cap)",
             "the chance rate is applied as a binomial over candidates",
         ],
@@ -94,7 +100,7 @@ def build(channel_hz: float, tsamp_s: float, nchans: int, nints: int,
             "resolved_drift_requires": "|drift| > drift_resolution_hz_s",
             "echo": "mean |autocorrelation| at Fibonacci lags minus mean over all "
                     "non-Fibonacci lags, as in scripts/phi_echo.py",
-            "k_bound": K_MAX,
+            "k_bound": [K_MIN, K_MAX],
         },
         "predictions": {
             "framework_locked_drift_hz_s": theta_drift,
