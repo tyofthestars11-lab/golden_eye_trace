@@ -171,7 +171,7 @@ def main() -> int:
         ("LWA1 drspec", 19_140.6, 1.284, "open, read here"),
         ("STARE2", 122_070.0, 0.4, "open, one integration"),
         ("CAMRAS Dwingeloo", 136_719.0, 468.11429e-6, "open, direct GET"),
-        ("OVRO-LWA solar", 24_000.0, 0.064, "open S3, solar imaging"),
+        ("OVRO-LWA spec_fits", 100_547.0, 0.256, "open S3, tested here"),
         ("BL L band (nominal)", 2.9, 300.0, "metadata only, 404 here"),
     ]
     print(f"   {'archive':<22}{'channel Hz':>12}{'tsamp s':>11}"

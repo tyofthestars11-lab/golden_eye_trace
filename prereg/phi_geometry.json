@@ -65,12 +65,12 @@
         "theta_drift_hz_s": 5693.970899481123,
         "tsamp_s": 1.284
       },
-      "OVRO-LWA solar": {
-        "access": "open S3, solar imaging",
-        "channel_hz": 24000.0,
-        "ratio_hz_s": 375000.0,
-        "theta_drift_hz_s": 143237.25421878943,
-        "tsamp_s": 0.064
+      "OVRO-LWA spec_fits": {
+        "access": "open S3, tested here",
+        "channel_hz": 100547.0,
+        "ratio_hz_s": 392761.71875,
+        "theta_drift_hz_s": 150021.62708267313,
+        "tsamp_s": 0.256
       },
       "STARE2": {
         "access": "open, one integration",

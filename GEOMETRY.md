@@ -134,7 +134,7 @@ from this workspace sits near that:
 | LWA1 drspec (read here) | 19.14 kHz | 1.284 s | 1.5e4 | 5,694 Hz/s | open, already searched |
 | STARE2 (read here) | 122.07 kHz | 0.4 s | 3.1e5 | 116,566 Hz/s | open, one integration |
 | CAMRAS Dwingeloo | 136.7 kHz | 468 µs | 2.9e8 | 1.1e8 Hz/s | open, direct GET |
-| OVRO-LWA solar (AWS) | 24 kHz | 64 ms | 3.8e5 | 1.4e5 Hz/s | open S3, solar imaging |
+| OVRO-LWA spec_fits (AWS) | 100.5 kHz | 0.256 s | 3.9e5 | 1.5e5 Hz/s | open S3, tested here |
 | BL L band (nominal) | 2.9 Hz | 300 s | 9.7e-3 | 0.0037 Hz/s | metadata only, 404 here |
 
 So the pre-registered test cannot run on any openly reachable data found here, and

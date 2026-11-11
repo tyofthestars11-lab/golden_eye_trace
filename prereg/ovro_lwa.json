@@ -1,0 +1,25 @@
+{
+  "candidates": 0,
+  "chance_rate": 0.07639320225002104,
+  "channel_hz": 100547.19562243501,
+  "channels_used": 256,
+  "cube_shape": [
+    7009,
+    731,
+    1,
+    2
+  ],
+  "nfreq": 731,
+  "ntime": 7009,
+  "nyquist_hz_s": 196381.2414500684,
+  "resolution_hz_s": 397.9356463020636,
+  "rows": [],
+  "samples_used": 987,
+  "search_meta_time_s": 252.672,
+  "sha_key": "20240207.fits",
+  "source": "spec_fits/2024/20240207.fits",
+  "theta_drift_hz_s": 150021.91896205285,
+  "threshold": 6.0,
+  "tsamp_s": 0.256,
+  "verdict": "NOT MEASURED: no candidate has a drift above resolution"
+}
