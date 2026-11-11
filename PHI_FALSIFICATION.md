@@ -25,6 +25,7 @@ its section, and each script exits 0 on the data named.
 | golden angle is a crystal angle | cubic geometry | exact gap 2.5078° to 135.0000°; no five-fold in a periodic lattice |
 | tightened claim (Hz, 1e-3 rungs) | 6 precisely known frequencies | 0 pass, 4 of 6 checkable |
 | fitting the scale rescues it | offset and ratio free | fits candidates to 0.0000 rungs and noise to 0.0012: no discrimination |
+| real populations sit on the lattice | 22 frequencies, 48 sources vs uniform controls | 0.2727 and 0.2917 against 0.2618 expected; adjusted p = 0.455 and 0.935 |
 | drift exponent across bands | pre-registered | **NOT MEASURED** — no second band, no resolved drifts |
 | φ phase lock on drifting lines | echo contrast, calibrated at N = 5,872 | detected at p = 0.0005, recovers injected chirps; needs ≥987 samples |
 | the lock on real drift lines | 7 candidates, LWA window opened to Nyquist | **NOT MEASURED** — every drift below resolution, 0 of 7 evaluable |
@@ -163,6 +164,31 @@ Two continuous parameters plus two free integers explain three frequencies, and
 the ratio is fitted from the same gaps it explains. The fit is an interpolant,
 not a law: it cannot be wrong about data it was fitted to, so it cannot
 discriminate.
+
+### The same question on populations
+
+`python3 scripts/lattice_scale.py` writes `prereg/lattice_scale.json`. The
+question here is whether the lattice rate survives when the tolerance is fixed in
+**rungs** rather than in frequency, so that a band spanning a fraction of a rung
+is not credited with rungs it never reaches. Expected pass rate for uniform phase
+is `2 × 0.05 = 0.1` per test, but the measured theory value for the additive
+metric is **0.2618**, because a rung address is a sawtooth and a band of finite
+width wraps it: the null is `2t` over the rung, not `2t` absolute.
+
+| population | n | pass rate | best adjusted p |
+| --- | --- | --- | --- |
+| real frequencies | 22 | 0.2727 | 0.455 |
+| real sources | 48 | 0.2917 | 0.935 |
+| uniform positions (control) | 12,000 | 0.2468 | 0.00008 |
+| uniform frequencies (control) | 4,000 | 0.2612 | 0.00017 |
+| theory | — | 0.2618 | — |
+
+The real populations sit **above** theory, and above both uniform controls in
+point estimate, which is exactly the pattern that makes the test useless without
+a look-elsewhere correction: 22 tests at 0.05 admit a best p of 0.027
+(`1 − (1 − 0.05)^22 = 0.67` expected if all were null), and the adjusted value is
+0.455. The controls return best adjusted p of 1e-4, which is the multiplicity
+correction working as intended. No population statement survives.
 
 ## 8. The φ phase lock on drifting lines
 
