@@ -101,8 +101,15 @@ def p_value(observed: float, null: np.ndarray) -> float:
     return float((1 + int(np.sum(null >= observed))) / (1 + null.size))
 
 
-def drift_lock(drift_hz_s: float, channel_hz: float) -> tuple[float, float]:
-    nu = abs(drift_hz_s) / channel_hz
+def drift_lock(drift_hz_s: float, channel_hz: float,
+               tsamp_s: float) -> tuple[float, float]:
+    """Rate in cycles per sample: a drift of one channel per sample is one cycle.
+
+    The sample here is one integration, so the conversion needs its duration:
+    ``nu = drift * tsamp / channel``. Omitting tsamp overstates nu by 1/tsamp,
+    which for a millisecond-cadence file is a factor of a thousand.
+    """
+    nu = abs(drift_hz_s) * tsamp_s / channel_hz
     return nu, abs(nu / THETA - round(nu / THETA))
 
 
@@ -180,6 +187,8 @@ def main() -> int:
         channel_hz = abs(fb.foff) * 1e6
         resolution = channel_hz / fb.total_time
         hits, _meta = search_file(path, cfg, chan_chunk=2048, max_ints=max_ints)
+        print(f"      {label}: tsamp {fb.tsamp:.4g} s, theta is "
+              f"{THETA * channel_hz / fb.tsamp:,.0f} Hz/s")
         for hit in hits:
             if abs(hit.drift_hz_s) <= resolution:
                 rows.append({"set": label, "freq_mhz": hit.freq_mhz,
@@ -187,7 +196,7 @@ def main() -> int:
                              "distance": None,
                              "verdict": "not evaluable: drift below resolution"})
                 continue
-            nu, distance = drift_lock(hit.drift_hz_s, channel_hz)
+            nu, distance = drift_lock(hit.drift_hz_s, channel_hz, fb.tsamp)
             rows.append({"set": label, "freq_mhz": hit.freq_mhz,
                          "drift_hz_s": hit.drift_hz_s, "rate": nu,
                          "distance": distance,
