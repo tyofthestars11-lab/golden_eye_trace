@@ -1,0 +1,15 @@
+{
+  "bytes": 377280,
+  "center_mhz": 1520.0,
+  "channel_khz": null,
+  "decades_from_first": 0.03416726370367388,
+  "drift_resolution_hz_s": null,
+  "fmt": "fits-pulsar",
+  "id": "zenodo-vela",
+  "path": "data/bands/zenodo-vela__content",
+  "qualifies": false,
+  "sha256": "4b95e8aa4d9065fb275dc40e29cc537e17baed07017a5e537cb8f3cc9df75a0f",
+  "source_name": null,
+  "span_mhz": 320.0,
+  "total_time_s": null
+}

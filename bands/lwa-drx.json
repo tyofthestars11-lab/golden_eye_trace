@@ -1,0 +1,22 @@
+{
+  "bytes": 1196,
+  "center_mhz": 42.0000004172,
+  "channel_khz": 4.78515625,
+  "decades_from_first": 1.5244270295292064,
+  "drift_resolution_hz_s": 5.675394674243047,
+  "fmt": "presto-inf",
+  "id": "lwa-drx",
+  "meta_bytes": 1196,
+  "meta_sha256": "640eb464528f74c8b16520f8a76eda6fd92008a58e0e76bee7e42006e1af8830",
+  "nchans": 4096,
+  "path": "data/bands/lwa-drx__drx_56797_B0329+54_b3t1_DM0.00_topo.inf",
+  "payload_bytes": 16138240,
+  "payload_path": "data/bands/lwa-drx__drx_56797_B0329+54_b3t1_DM0.00_topo.dat",
+  "payload_readable": false,
+  "payload_sha256": "7069ee02216a307784070aaf5ae12d845cebfdc3cacbbd6d507aceb84b32115a",
+  "payload_url": "https://lda10g.alliance.unm.edu/PulsarArchive/B0329+54/56797/drx_56797_B0329+54_b3t1_DM0.00_topo.dat",
+  "qualifies": true,
+  "source_name": "B0329+54",
+  "span_mhz": 19.6,
+  "total_time_s": 843.1407020408176
+}
