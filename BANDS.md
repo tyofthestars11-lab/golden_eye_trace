@@ -1,81 +1,61 @@
-# Pulling a second band: what is open, what qualifies, and what band A cannot do
+# Pulling a second band, reading it, and registering the golden axis
 
 The pre-registered test in `prereg/phi_2band.json` needs two bands at least a
 decade apart, each with at least three resolved drifting lines. This note records
-which open archives were reachable from this workspace, what each actually
-delivers, and the two structural obstacles that remain. Every status was checked
-on 2026-11-11 with `scripts/fetch_band.py --check`; nothing is copied from a
-search result.
+which open archives were reachable, what each actually delivers once read, and
+how the registration was revised around the golden axis. Every number here was
+produced by a script in this repository on a file fetched during the session.
 
 ```bash
-python3 scripts/fetch_band.py --list                  # registry, decade column
-python3 scripts/fetch_band.py --check lwa-drx mwa     # HTTP probe, no download
-python3 scripts/fetch_band.py --get lwa-drx --with-payload   # 1.2 kB .inf + 16 MB .dat
-python3 scripts/fetch_band.py --gate                  # does the ledger clear a decade?
+python3 scripts/fetch_band.py --list
+python3 scripts/fetch_band.py --get lwa-drx --with-payload
+python3 scripts/fetch_band.py --gate
 python3 scripts/presto_dat.py --dat <f>.dat --inf <f>.inf --inspect
-python3 scripts/presto_dat.py --dat <f>.dat --inf <f>.inf --out data/lwa_dm0.fil
-python3 scripts/phi_twoband.py --band-a data/stare2_ovro.fil --band-b <second.fil>
+python3 scripts/psrfits.py data/bands/lwa_drspec.fits --info
+python3 scripts/psrfits.py data/bands/lwa_drspec.fits --to-fil data/lwa_drspec.fil
+python3 scripts/phi_prereg_amend.py
+python3 scripts/phi_twoband.py --band-a data/stare2_ovro.fil --band-b data/lwa_drspec.fil
 ```
 
 ## The survey
 
 | source | band | centre | decades from 1405 MHz | status here |
 | --- | --- | --- | --- | --- |
-| STARE2 OVRO (local) | 1280–1530 MHz | 1405 | 0.00 | first band; 3 candidates at 3σ |
-| **LWA1 DRX, B0329+54** | **32.2–51.8 MHz** | **42.0** | **1.52** | **200; `.inf` + 16.1 MB `.dat`** |
-| LWA1 DRX, tuning 2 | 64.2–83.8 MHz | 74.0 | 1.28 | 200; same directory |
+| STARE2 OVRO (local) | 1280–1530 MHz | 1405 | 0.00 | drift-blind: 122 kHz channels, 0.4 s |
+| **LWA1 DRX, B0329+54** | **40.6–60.2 MHz** | **50.4** | **1.45** | **read: 1024 channels, 910 s** |
+| LWA1 DRX, tuning 1 (time series) | 32.2–51.8 MHz | 42.0 | 1.52 | `.dat` is a power series, no axis |
 | LOFAR HBA | 110–190 MHz | 150 | 0.97 | no connection (000); LTA login |
 | MWA | 72–300 MHz | 186 | 0.88 | no connection (000); Pawsey login |
 | BL Open Data (GBT/Parkes X band) | up to 11.2 GHz | 6150 | 0.64 | 200 frontend, `/api/*` 404 here |
-| Zenodo 22848961 (Parkes) | 1360–1680 MHz | 1520 | 0.03 | 200, 377 280 bytes, FITS despite `.sf` |
+| Zenodo 22848961 (Parkes) | 1360–1680 MHz | 1520 | 0.03 | FITS despite `.sf`; rejected by the gate |
 | FAST | 1000–1500 MHz | 1250 | 0.05 | 200 landing page; login |
 
-Only the LWA clears a decade. Its `.inf` reports 4096 channels of 4.785 kHz
-across 19.6 MHz and an 843.14 s scan, so its drift resolution is **5.68 Hz/s**
-against STARE2's 3.17e+05 Hz/s — the LWA is 5.6e4 times finer. The ledger at
-`bands/lwa-drx.json` records the centre, the channel count, the resolution and
-the SHA-256 of both files; both hashes were recomputed from the downloads and
-match.
+## What the two LWA products actually are
 
-## What the payload actually is
+`presto_dat.py` decides from the numbers, not the extension. The `DM0.00` `.dat`
+is 4,034,560 float32 samples, exactly the `.inf` bin count, with lag-1
+autocorrelation +0.475 and channel means flat to 3 × 10⁻⁴ under the waterfall
+reading: a **single dedispersed power series**, no frequency axis.
 
-`scripts/presto_dat.py` reads the float32 payload, checks it against the `.inf`,
-and decides the shape from the numbers:
+`psrfits.py` then reads the 36 MB `drspec` product, which is a genuine PSRFITS
+`SUBINT` table: 1024 channels of **19.14 kHz** across 40.6–60.18 MHz, 709 rows,
+each row `TSUBINT` = 1.284 s, so 910 s of integration and a drift resolution of
+**21 Hz/s** — 15,000 times finer than STARE2. Two details cost a debugging pass
+each and are worth recording: FITS tables are **big-endian**, and `TDIM` lists
+dimensions fastest-varying first, so the numpy shape is that list reversed. The
+row's 32 stored values are phase bins; a row-mean spectrum advances by `TSUBINT`,
+not by one bin.
 
-- 4,034,560 float32 samples **exactly equals** the `.inf` bin count, and
-  4,034,560 × 208.98 µs = 843.14 s, the stated observation length;
-- lag-1 autocorrelation **+0.475**, the red noise of a 4.8 kHz-wide signal
-  sampled at 209 µs;
-- read as 985 rows × 4096 channels instead, the sample time becomes 0.856 s and
-  the channel means are flat to **3 × 10⁻⁴** — there is no channel structure to
-  be a frequency axis.
-
-So the `DM0.00_topo.dat` product is a **single dedispersed power series** at
-42 MHz, not a band. Converting it gives a one-channel SIGPROC file of 843.14 s
-whose every sample round-trips exactly through this project's parser — a valid
-conversion of a product that cannot carry a drift measurement.
-
-The 2-D product in the same directory is `drx_56797_B0329+54_b3t1_subs_0001.fits`
-(494 MB, search mode, sub-banded), with a 36 MB `drspec_*` dynamic spectrum
-beside it. Those are PSRFITS and need a reader this project does not have yet;
-the `.dat` route cannot substitute for it, because a time series has no
-frequency axis at all.
-
-## What the gate rejects
-
-`--get zenodo-vela` downloads cleanly and looks like a gift: 377 kB named `.sf`,
-i.e. SIGPROC by extension. It is FITS — `OBSFREQ 1520`, `OBSBW 320` — and **0.03
-decades** from the first band. Name and extension were both misleading; the
-header decided, and the ledger marks it `qualifies: false`.
+That gives the band axis and the time axis, at 1.45 decades. What it does not
+give is drifting lines: the 3σ search finds **1 candidate and 0 with resolved
+drift**. At 50 MHz the band is full of stationary terrestrial carriers, which is
+a statement about the sky and the site rather than about the reader.
 
 ## Band A: why a longer cadence cannot fix it
 
-Drift resolution is channel width over integration time: `Δν / T`. STARE2 stores
-122.07 kHz channels and 0.4 s integrations, so it resolves 3.17e+05 Hz/s — larger
-than any plausible narrowband drift, which is why every candidate in it has zero
-resolved drift. Holding the channel width fixed, resolving a drift `d` needs
+Drift resolution is `Δν / T`, so with channels fixed at 122.07 kHz:
 
-| drift | contiguous scan needed at 122.07 kHz | channel width needed in a 300 s scan |
+| drift | contiguous scan needed | channel width needed in a 300 s scan |
 | --- | --- | --- |
 | 0.1 Hz/s | 14.1 d | 30 Hz |
 | 1 Hz/s | 1.41 d | 300 Hz |
@@ -83,44 +63,40 @@ resolved drift. Holding the channel width fixed, resolving a drift `d` needs
 | 100 Hz/s | 20.3 min | 30 kHz |
 | 1000 Hz/s | 2.03 min | 300 kHz |
 
-At the drifts real beacons are expected to show, band A would need hours to days
-of contiguous integration, against the 0.4 s it records; STARE2's design is
-millisecond-cadence transients, not long narrowband stares. **The channel width
-is the limit, not the cadence**: to resolve 10 Hz/s in a 300 s scan the
-spectrometer would need 3 kHz channels, 40 times narrower than the 122 kHz it
-writes. `scripts/phi_twoband.py` prints this line on every run that has too few
-drifts, so the requirement cannot be forgotten.
+STARE2 records 0.4 s, so resolving a 10 Hz/s drift would need 12,207 s at that
+channel width. **The channel width is the limit, not the cadence**, which is why
+revision 2 replaces the high band instead of extending it.
 
-That leaves the registered test needing a *second* fine-channel band on the high
-side as well — a fine-channel 1.4 GHz dataset (BL L band writes 2.9 Hz channels,
-0.01 Hz/s over 300 s) paired with the LWA at 1.52 decades. The LWA half now has a
-verified band; the high half needs the BL archive's API, which returns 404 from
-here.
+## The golden axis in the registration
 
-## Why a decade, quantitatively
+The axis is used twice, both times as arithmetic that can fail. Its pitch,
+17.0324°, read as a log-log slope gives tan μ = 0.30635, i.e. **1.46587 rungs per
+decade** against **4.78497** for a flat rung rate. And it fixes where the bands
+should sit: at an integer rung offset the predicted drift ratio is a pure power
+of φ.
 
-The two statements differ by 3.3191 rungs per decade (4.7849 flat against 1.4659
-for the pitch), so a slope measured to better than `1.1064 × span` rungs/decade
-separates them at 3σ:
+Between the reachable bands the offset is **6.915 rungs**. The axis would place
+them 7 apart; the archive falls short by **0.085 rungs**. At that offset the two
+statements predict, for drift in the high band over the low band:
 
-| span (decades) | slope precision needed |
-| --- | --- |
-| 0.10 | 0.1106 |
-| 0.30 | 0.3319 |
-| 0.60 | 0.6638 |
-| 0.90 | 0.9957 |
-| 1.00 | 1.1064 |
-| 1.52 | 1.6816 |
+| statement | exponent | predicted ratio |
+| --- | --- | --- |
+| flat rung rate | 1.0000 | **27.877** |
+| golden axis | 0.30635 | **2.772** |
 
-At the LWA's 5.68 Hz/s resolution, a line drifting at 50 Hz/s is measured to
-about 11% (0.11 in ln), comfortably inside 1.68; a 10 Hz/s drift is only
-marginally resolved (57%), so the lines that carry weight are the faster ones.
+A slope known to better than **1.599 rungs/decade** separates them at 3σ, and
+the two ratios above are what the measurement would have to choose between. The
+deficit is recorded rather than absorbed: the prediction is evaluated at the
+offset the data have, not the offset that would be convenient.
+
+`scripts/phi_prereg_amend.py` writes `prereg/phi_2band_r2.json`, which keeps the
+statistic, the two predictions, the 5% decision rule and the seed byte-for-byte
+and records why the high band changed.
 
 ## Status
 
-- Band axis: **satisfied**, verified, ledgered at 1.52 decades.
-- Readable waterfall for that band: **missing** — needs a PSRFITS reader for the
-  494 MB `_subs` file, because the `.dat` is a time series.
-- Band A drift resolution: **structurally insufficient** at 122 kHz channels.
-- Registered test: **NOT MEASURED**, and it now says which of these is blocking
-  each time it runs.
+- Band axis: **satisfied and read** — 1.45 decades, 1024 × 19.14 kHz, 910 s.
+- Drifting lines in that band: **0**, so the test remains **NOT MEASURED**, now
+  for the only reason left: there is nothing drifting to measure.
+- High band: needs ≤ 3 kHz channels over ≥ 300 s (≤ 10 Hz/s). The BL L band
+  satisfies this at 2.9 Hz channels; its archive API returns 404 here.
