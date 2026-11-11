@@ -1,0 +1,33 @@
+{
+  "real_frequencies": {
+    "best_adjusted": 0.4549949939072748,
+    "best_p": 0.027212001090933285,
+    "median_p": 0.5167704037807246,
+    "n": 22,
+    "pass_rate": 0.2727272727272727
+  },
+  "real_sources": {
+    "best_adjusted": 0.9347290534495096,
+    "best_p": 0.055272266318939015,
+    "median_p": 0.5422722324255922,
+    "n": 48,
+    "pass_rate": 0.2916666666666667
+  },
+  "seed": 1729,
+  "theory_pass_rate": 0.26180339887498955,
+  "tolerance_rungs": 0.05,
+  "uniform_frequencies": {
+    "best_adjusted": 0.5032943514244352,
+    "best_p": 0.00017492412017312492,
+    "median_p": 0.4868272687693208,
+    "n": 4000,
+    "pass_rate": 0.26125
+  },
+  "uniform_positions": {
+    "best_adjusted": 0.617078639775432,
+    "best_p": 7.999060363670177e-05,
+    "median_p": 0.5261150188707899,
+    "n": 12000,
+    "pass_rate": 0.24683333333333332
+  }
+}

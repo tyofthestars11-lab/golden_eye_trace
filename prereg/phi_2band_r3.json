@@ -1,0 +1,143 @@
+{
+  "attribution": "framework: Tyree Jones (tyofthestarz), golden_eye_trace",
+  "bands": {
+    "high": {
+      "candidate": "Breakthrough Listen L band (2.9 Hz channels, 300 s, 0.01 Hz/s), whose archive API returns 404 from this workspace",
+      "channel_khz_at_most": 3.0,
+      "drift_resolution_hz_s_at_most": 10.0,
+      "requirement": "a fine-channel dataset near 1.4 GHz, at least one decade above the low band",
+      "role": "high band",
+      "scan_s_at_least": 300.0,
+      "verified": false
+    },
+    "low": {
+      "centre_mhz": 50.4,
+      "channel_khz": 19.14,
+      "channels": 1024,
+      "drift_resolution_hz_s": 22.7,
+      "file": "data/bands/lwa_drspec.fits",
+      "high_mhz": 60.2,
+      "instrument": "LWA1 DRX / DSPSR dynamic spectrum",
+      "low_mhz": 40.6,
+      "role": "low band",
+      "total_time_s": 843.1,
+      "verified": true
+    },
+    "separation_decades": 1.4452457877955733,
+    "separation_rungs": 6.915460579711102
+  },
+  "date": "2026-11-11",
+  "decision_rule": "p within 5% of 1.0000 keeps the flat-rung-rate statement and refutes the pitch; p within 5% of 0.3063 keeps the pitch and refutes the flat rung rate; neither means both are refuted by these data.",
+  "evidence_required": [
+    "two bands at least one decade apart",
+    "at least three resolved drifting lines in each band",
+    "drifts measured in the same unit and the same reference frame"
+  ],
+  "golden_axis": {
+    "actual_offset_rungs": 6.915460579711102,
+    "integer_offset_the_axis_would_place": 7,
+    "note": "no reachable archive band sits on an integer rung offset; the registered prediction is evaluated at the offset the data actually have, and the deficit is recorded rather than absorbed",
+    "offset_deficit_rungs": 0.08453942028889827,
+    "predicted_drift_ratio_axis": 2.7717227879415427,
+    "predicted_drift_ratio_flat": 27.876984126984127,
+    "ratio_definition": "high band drift over low band drift",
+    "use": "the axis fixes the band separation, so the predicted drift ratio between the bands is a pure power of phi"
+  },
+  "metric": {
+    "angle_step_exact": "2 - phi",
+    "angle_step_turns": 0.3819660112501051,
+    "calibration": {
+      "real_frequencies": {
+        "best_adjusted": 0.4549949939072748,
+        "best_p": 0.027212001090933285,
+        "median_p": 0.5167704037807246,
+        "n": 22,
+        "pass_rate": 0.2727272727272727
+      },
+      "real_sources": {
+        "best_adjusted": 0.9347290534495096,
+        "best_p": 0.055272266318939015,
+        "median_p": 0.5422722324255922,
+        "n": 48,
+        "pass_rate": 0.2916666666666667
+      },
+      "seed": 1729,
+      "theory_pass_rate": 0.26180339887498955,
+      "tolerance_rungs": 0.05,
+      "uniform_frequencies": {
+        "best_adjusted": 0.5032943514244352,
+        "best_p": 0.00017492412017312492,
+        "median_p": 0.4868272687693208,
+        "n": 4000,
+        "pass_rate": 0.26125
+      },
+      "uniform_positions": {
+        "best_adjusted": 0.617078639775432,
+        "best_p": 7.999060363670177e-05,
+        "median_p": 0.5261150188707899,
+        "n": 12000,
+        "pass_rate": 0.24683333333333332
+      }
+    },
+    "distance": "additive in rungs: |r - n*(2 - phi)|; turns for sky",
+    "frequency_ratio_per_step": 1.2017833293069158,
+    "lattice": "Z[phi]: addresses are multiples of phi**-2 = 2 - phi",
+    "look_elsewhere": "1 - (1-p)**N over the quantities tested",
+    "multiplicative_alternative": {
+      "distance": "|log_phi(r / (n*(2-phi)))|",
+      "measured_comparison": "0.213 additive against 0.214 multiplicative for the band separation; the apparent 0.30x improvement in distance is exactly cancelled",
+      "null": "2*d*ln(phi)*r/(2-phi)"
+    },
+    "null": "2*d/(2-phi)",
+    "predictions_restated": {
+      "axis_drift_ratio_high_over_low": 2.7717227879415427,
+      "flat_drift_ratio_high_over_low": 27.876984126984127
+    },
+    "rung_step": 0.3819660112501051,
+    "why_registered_now": "the metric cannot be chosen after seeing which reading favours the framework"
+  },
+  "note": "the statistic, the predictions and the decision rule are unchanged; only the band that cannot carry them is replaced, and the reason is recorded with its arithmetic",
+  "power": {
+    "rungs_per_decade_between_statements": 3.319099958733819,
+    "slope_sigma_ceiling_3sigma": 1.5989717448775043
+  },
+  "predictions": {
+    "golden_axis": {
+      "p": 0.3063491318704174,
+      "pitch_deg": 17.0324,
+      "rungs_per_decade": 1.4658720080478471,
+      "statement": "the golden axis read as a log-log slope: the rung rate falls 4.94x per decade"
+    },
+    "phi_lattice": {
+      "p": 1.0,
+      "rungs_per_decade": 4.784971966781666,
+      "statement": "flat rung rate"
+    }
+  },
+  "revision": 3,
+  "seed": 1729,
+  "statistic": "p = d ln|drift| / d ln f over confirmed drifting lines",
+  "supersedes": {
+    "also_supersedes": {
+      "path": "prereg/phi_2band.json",
+      "sha256": "5e4435f1ed0292fc79932c272eceaffec1cc7eb1412e5ecc196ae230a572eb61"
+    },
+    "path": "prereg/phi_2band_r2.json",
+    "sha256": "bacdee3d356d50fb7b6d4b55dead0b1f6660f5474fc1d828fafc7500ee1c6dde"
+  },
+  "test": "rung rate versus frequency, two bands",
+  "tolerance": 0.05,
+  "why_revised": {
+    "arithmetic": {
+      "channel_khz_needed_in_300_s": 3.0,
+      "conclusion": "the channel width is the limit, not the cadence",
+      "scan_needed_for_10_hz_s_at_122_khz_s": 12207.0
+    },
+    "measured": {
+      "stare2_channel_khz": 122.07,
+      "stare2_drift_resolution_hz_s": 317000.0,
+      "stare2_resolved_drifts": 0,
+      "stare2_total_time_s": 0.385
+    }
+  }
+}
