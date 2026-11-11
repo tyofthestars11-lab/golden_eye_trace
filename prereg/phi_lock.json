@@ -1,0 +1,56 @@
+{
+  "attribution": "framework: Tyree Jones (tyofthestarz), golden_eye_trace",
+  "band": {
+    "channel_hz": 19140.624999998578,
+    "drift_resolution_hz_s": 21.02590974754676,
+    "nchans": 1024,
+    "nints": 709,
+    "nyquist_hz_s": 7453.6850055053255,
+    "source": "lwa_drspec.fil",
+    "theta_drift_hz_s": 5694.1086613351745,
+    "theta_fraction_of_nyquist": 0.7639320225002103,
+    "tsamp_s": 1.283970612244898
+  },
+  "conditions": [
+    "tsamp is taken from the instrument header and never re-binned",
+    "the drift window is searched to Nyquist, not capped below the lock",
+    "the integer advance is bounded at |k| = 1, k = 2 being outside Nyquist",
+    "the echo contrast is quoted only when nints >= 987 (eleven lags)",
+    "the chance rate is applied as a binomial over candidates"
+  ],
+  "decision_rule": "A candidate is locked when its drift is resolved, |k| = 1, and the lock distance is within 0.05. Report the count against the binomial null. If no candidate has a resolved drift the verdict is NOT MEASURED: the rate is not quoted, a null is not claimed, and a failure to resolve is never reported as a non-detection.",
+  "echo_available_here": false,
+  "exploratory_excluded": {
+    "candidates": 11,
+    "date": "2026-11-11",
+    "file": "data/lwa_drspec.fil",
+    "resolved_drifts": 0,
+    "status": "exploratory, excluded from the confirmatory count",
+    "window_hz_s": 7453.7
+  },
+  "minimum_samples_for_echo": 987,
+  "multiplicity": {
+    "look_elsewhere": "1 - (1 - p)^N over evaluable candidates"
+  },
+  "predictions": {
+    "binomial_null": "P(locked >= m | N evaluable) with p = chance_per_candidate",
+    "chance_per_candidate": 0.07639320225002104,
+    "framework_locked_drift_hz_s": 5694.1086613351745,
+    "framework_window_hz_s": [
+      5409.403228268416,
+      5978.814094401933
+    ]
+  },
+  "revision": 1,
+  "seed": 1729,
+  "sha256": "c65734da9b4e6dbd77ef4073c3dc2c8dfc352fa80738a621b62c149676544817",
+  "statistic": {
+    "echo": "mean |autocorrelation| at Fibonacci lags minus mean over all non-Fibonacci lags, as in scripts/phi_echo.py",
+    "k_bound": 1,
+    "lock_distance": "|nu/theta - round(nu/theta)|, evaluated only for resolved drifts",
+    "rate": "nu = drift * tsamp / channel, cycles per sample",
+    "resolved_drift_requires": "|drift| > drift_resolution_hz_s"
+  },
+  "theta": 0.38196601125010515,
+  "tolerance_of_theta": 0.05
+}

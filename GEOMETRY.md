@@ -100,7 +100,13 @@ observation can refute it.
    re-binning, no block averaging chosen after the drift is known.
 2. **Search to 76.4% of Nyquist.** A pipeline that caps drift at a few Hz/s never
    reaches the lock; the window is `Δf/(2t)`, which for 19 kHz channels at 1.284 s
-   is 7,454 Hz/s.
+   is 7,454 Hz/s. `scripts/dedoppler_audit.py` checks the search can live there:
+   the grid reaches **99.0% of Nyquist**, a θ chirp comes back **0.0023 θ** from
+   its injected rate at **27.9σ** against zero hits in noise, and the worst rate
+   error over five injections is **0.0256 θ** — inside the 0.05 tolerance with a
+   factor of two to spare, though two and a half times the half-step rule. The
+   rate grid is `0.5·boxcar/n_ints` in cycles per sample, `0.0196 θ` here, so the
+   grid is not what limits the test.
 3. **Bound the integer `k`** to `|k| = 1` on the grounds that `k = 2` is outside
    Nyquist, and state that bound in the pre-registration.
 4. **Collect at least 987 samples** (eleven Fibonacci lags) — with `t` fixed, that

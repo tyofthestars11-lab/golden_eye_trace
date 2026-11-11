@@ -1,0 +1,98 @@
+{
+  "grid": {
+    "channel_hz": 19140.600000000002,
+    "n_steps": 66,
+    "nyquist_hz_s": 191406.0,
+    "reach_fraction": 0.99,
+    "reach_hz_s": 189491.94,
+    "step_hz_s": 2871.09,
+    "step_nu": 0.0075,
+    "step_nu_over_theta": 0.01963525491562421,
+    "total_time_s": 10.0
+  },
+  "null": {
+    "detected": false,
+    "label": "noise_only",
+    "nu": null
+  },
+  "reach_fraction": 0.99,
+  "rows": [
+    {
+      "best_snr": 18.784114837646484,
+      "detected": true,
+      "drift_hz_s": 0.0,
+      "error_nu": 0.0008508679874148836,
+      "error_over_theta": 0.0022276013109913833,
+      "found_hz_s": -325.7224759982665,
+      "kept": 1.0,
+      "label": "stationary",
+      "n_hits": 1,
+      "nu": 0.0,
+      "nu_recovered": 0.0008508679874148836,
+      "snr": 18.784114837646484
+    },
+    {
+      "best_snr": 16.364456176757812,
+      "detected": true,
+      "drift_hz_s": 73110.58634933764,
+      "error_nu": 0.009793346715591872,
+      "error_over_theta": 0.02563931456503167,
+      "found_hz_s": 76859.59699222678,
+      "kept": 0.8711859099136642,
+      "label": "half_theta",
+      "n_hits": 1,
+      "nu": 0.19098300562505258,
+      "nu_recovered": 0.20077635234064445,
+      "snr": 16.364456176757812
+    },
+    {
+      "best_snr": 21.587404251098633,
+      "detected": true,
+      "drift_hz_s": 118671.72,
+      "error_nu": 0.0003682800496912497,
+      "error_over_theta": 0.000964169687470192,
+      "found_hz_s": 118530.73797761761,
+      "kept": 1.1492372378300142,
+      "label": "arbitrary_0.31",
+      "n_hits": 1,
+      "nu": 0.31,
+      "nu_recovered": 0.30963171995030875,
+      "snr": 21.587404251098633
+    },
+    {
+      "best_snr": 27.941720962524414,
+      "detected": true,
+      "drift_hz_s": 146221.17269867528,
+      "error_nu": 0.000863797892022844,
+      "error_over_theta": 0.002261452240726317,
+      "found_hz_s": 146551.8448973163,
+      "kept": 1.487518640299439,
+      "label": "theta",
+      "n_hits": 1,
+      "nu": 0.38196601125010515,
+      "nu_recovered": 0.382829809142128,
+      "snr": 27.941720962524414
+    },
+    {
+      "best_snr": 25.035228729248047,
+      "detected": true,
+      "drift_hz_s": 191023.188,
+      "error_nu": 0.003999999999998338,
+      "error_over_theta": 0.01047213595499523,
+      "found_hz_s": 189491.94000000064,
+      "kept": 1.332787248461306,
+      "label": "near_Nyquist",
+      "n_hits": 1,
+      "nu": 0.499,
+      "nu_recovered": 0.49500000000000166,
+      "snr": 25.035228729248047
+    }
+  ],
+  "theta_kept_vs_stationary": 1.487518640299439,
+  "theta_snr": 27.941720962524414,
+  "tolerance_of_theta": 0.05,
+  "verdict": "resolves",
+  "worst_case": "half_theta",
+  "worst_error_in_grid_steps": 1.3057795620789163,
+  "worst_error_over_theta": 0.02563931456503167
+}
