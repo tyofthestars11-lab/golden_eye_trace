@@ -1,0 +1,109 @@
+{
+  "calibration": {
+    "AR(1) red noise": {
+      "contrast": 0.03772687517499764,
+      "p": 0.440279860069965,
+      "passes": true
+    },
+    "rate = 0.31 arbitrary": {
+      "contrast": 0.1421847481573027,
+      "p": 0.057971014492753624,
+      "passes": true
+    },
+    "rate = phi*theta": {
+      "contrast": 0.2658394574640786,
+      "p": 0.0004997501249375312,
+      "passes": true
+    },
+    "rate = theta": {
+      "contrast": 0.2657892177445939,
+      "p": 0.0004997501249375312,
+      "passes": true
+    },
+    "white noise": {
+      "contrast": -0.003003676892422944,
+      "p": 0.7261369315342329,
+      "passes": true
+    }
+  },
+  "calibration_n": 5872,
+  "calibration_passed": true,
+  "chance_rate": 0.07639320225002104,
+  "fibonacci_lags": [
+    13,
+    21,
+    34,
+    55,
+    89,
+    144,
+    233,
+    377,
+    610,
+    987
+  ],
+  "null_mean": 0.03483261739090553,
+  "null_std": 0.06260313568619721,
+  "resolution_hz_s": {
+    "LWA": 21.02590974754676,
+    "STARE2": 317207.9613812937
+  },
+  "rows": [
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 1287.6222518347709,
+      "rate": null,
+      "set": "STARE2",
+      "verdict": "not evaluable: drift below resolution"
+    },
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 1379.895069805649,
+      "rate": null,
+      "set": "STARE2",
+      "verdict": "not evaluable: drift below resolution"
+    },
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 1356.243741668213,
+      "rate": null,
+      "set": "STARE2",
+      "verdict": "not evaluable: drift below resolution"
+    },
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 55.251263157774325,
+      "rate": null,
+      "set": "LWA",
+      "verdict": "not evaluable: drift below resolution"
+    },
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 58.601579201915,
+      "rate": null,
+      "set": "LWA",
+      "verdict": "not evaluable: drift below resolution"
+    },
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 42.791084239797556,
+      "rate": null,
+      "set": "LWA",
+      "verdict": "not evaluable: drift below resolution"
+    },
+    {
+      "distance": null,
+      "drift_hz_s": 0.0,
+      "freq_mhz": 58.39213266335172,
+      "rate": null,
+      "set": "LWA",
+      "verdict": "not evaluable: drift below resolution"
+    }
+  ],
+  "theta": 0.38196601125010515
+}
