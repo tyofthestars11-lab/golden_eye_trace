@@ -1,0 +1,229 @@
+{
+  "any_full_detection": false,
+  "delta_drift_error_hz_s": NaN,
+  "delta_drift_hz_s": NaN,
+  "delta_frequency_channels": NaN,
+  "delta_frequency_hz": NaN,
+  "doppler_bounds": [
+    {
+      "accel_m_s2": null,
+      "drift_hz_s": 2.6327034994517108e-05,
+      "mechanism": "ionosphere, quiet, 0.01 TECU/min",
+      "offset_hz": 0.0047388662990130795,
+      "speed_m_s": null
+    },
+    {
+      "accel_m_s2": null,
+      "drift_hz_s": 0.00026327034994517106,
+      "mechanism": "ionosphere, active, 0.1 TECU/min",
+      "offset_hz": 0.047388662990130795,
+      "speed_m_s": null
+    },
+    {
+      "accel_m_s2": null,
+      "drift_hz_s": 0.0026327034994517106,
+      "mechanism": "ionosphere, storm, 1 TECU/min",
+      "offset_hz": 0.4738866299013079,
+      "speed_m_s": null
+    },
+    {
+      "accel_m_s2": null,
+      "drift_hz_s": 0.02632703499451711,
+      "mechanism": "ionosphere, severe, 10 TECU/min",
+      "offset_hz": 4.73886629901308,
+      "speed_m_s": null
+    },
+    {
+      "accel_m_s2": 9.81,
+      "drift_hz_s": 1.547059230889658,
+      "mechanism": "aircraft, 250 m/s, 1 g",
+      "offset_hz": 39.425566536433685,
+      "speed_m_s": 250.0
+    },
+    {
+      "accel_m_s2": 49.05,
+      "drift_hz_s": 7.735296154448289,
+      "mechanism": "aircraft, 250 m/s, 5 g",
+      "offset_hz": 39.425566536433685,
+      "speed_m_s": 250.0
+    },
+    {
+      "accel_m_s2": 9.0,
+      "drift_hz_s": 1.4193203953116127,
+      "mechanism": "LEO satellite, 7.7 km/s, 9 m/s2",
+      "offset_hz": 1214.3074493221577,
+      "speed_m_s": 7700.0
+    },
+    {
+      "accel_m_s2": 0.5,
+      "drift_hz_s": 0.07885113307286737,
+      "mechanism": "balloon, 30 m/s",
+      "offset_hz": 4.731067984372042,
+      "speed_m_s": 30.0
+    }
+  ],
+  "local_sigma": [
+    3.3345954593911267,
+    0.8159867820890846
+  ],
+  "local_sigma_all_below_3": false,
+  "max_terrestrial_drift_hz_s": 7.735296154448289,
+  "max_terrestrial_offset_hz": 1214.3074493221577,
+  "pair": [
+    {
+      "band_mhz": [
+        46.07783857729138,
+        48.49097127222982
+      ],
+      "best": null,
+      "channel_hz": 100547.19562243501,
+      "date": "20240322",
+      "drift_hz_s": -172.8,
+      "drift_sigma_zero": 0.0,
+      "freq_mhz": 47.2416,
+      "full_hits": [
+        {
+          "drift_hz_s": -901.3882491680461,
+          "freq_mhz": 46.07783857729138,
+          "snr": 33.249603271484375
+        },
+        {
+          "drift_hz_s": 625.4641770606969,
+          "freq_mhz": 48.39042407660739,
+          "snr": 10.256392478942871
+        }
+      ],
+      "full_n_hits": 2,
+      "g_units": null,
+      "integration_s": 717.312,
+      "noise_reference": {
+        "band_mad": 6.752539167561109e-07,
+        "local_channels": 24,
+        "local_floor": 1.5740815688390288e-05,
+        "local_mad": 8.006575802119208e-07,
+        "mad_ratio_local_over_band": 1.18571334477887,
+        "peak_excess_band_sigma": 3.9538743356390853,
+        "peak_excess_local_sigma": 3.3345954593911267,
+        "wide_channels": 96,
+        "windows_samples": 1000
+      },
+      "ntime": 2802,
+      "required_accel_m_s2": null,
+      "resolution_hz_s": 140.17219232695817,
+      "snr": 6.67,
+      "survey_drift_sigma_zero": 1.2327694753959184,
+      "survey_g_units": 111.78173228757488,
+      "survey_required_accel_m_s2": 1096.5787937411096,
+      "threshold": 4.0,
+      "windows": [
+        {
+          "best": null,
+          "integration_s": 256.0,
+          "n_hits": 1,
+          "near": [],
+          "resolution_hz_s": 392.7624829001368,
+          "start": 0
+        },
+        {
+          "best": null,
+          "integration_s": 256.0,
+          "n_hits": 1,
+          "near": [],
+          "resolution_hz_s": 392.7624829001368,
+          "start": 1000
+        },
+        {
+          "best": null,
+          "integration_s": 205.312,
+          "n_hits": 2,
+          "near": [],
+          "resolution_hz_s": 489.72878167099344,
+          "start": 2000
+        }
+      ],
+      "windows_scanned": 3,
+      "windows_with_hit": 0
+    },
+    {
+      "band_mhz": [
+        46.07783857729138,
+        48.49097127222982
+      ],
+      "best": null,
+      "channel_hz": 100547.19562243501,
+      "date": "20240324",
+      "drift_hz_s": -504.0,
+      "drift_sigma_zero": 0.0,
+      "freq_mhz": 47.3143,
+      "full_hits": [
+        {
+          "drift_hz_s": 58271.11557187312,
+          "freq_mhz": 46.145611007204046,
+          "snr": 6.526041507720947
+        }
+      ],
+      "full_n_hits": 1,
+      "g_units": null,
+      "integration_s": 1016.576,
+      "noise_reference": {
+        "band_mad": 8.253953051926183e-07,
+        "local_channels": 24,
+        "local_floor": 1.5887438512034714e-05,
+        "local_mad": 8.347338308187769e-07,
+        "mad_ratio_local_over_band": 1.0113140038081259,
+        "peak_excess_band_sigma": 0.825218859649021,
+        "peak_excess_local_sigma": 0.8159867820890846,
+        "wide_channels": 96,
+        "windows_samples": 1000
+      },
+      "ntime": 3971,
+      "required_accel_m_s2": null,
+      "resolution_hz_s": 98.907701561354,
+      "snr": 11.67,
+      "survey_drift_sigma_zero": 5.095659812571429,
+      "survey_g_units": 325.5290964558361,
+      "survey_required_accel_m_s2": 3193.4404362317523,
+      "threshold": 4.0,
+      "windows": [
+        {
+          "best": null,
+          "integration_s": 256.0,
+          "n_hits": 1,
+          "near": [],
+          "resolution_hz_s": 392.7624829001368,
+          "start": 0
+        },
+        {
+          "best": null,
+          "integration_s": 256.0,
+          "n_hits": 1,
+          "near": [],
+          "resolution_hz_s": 392.7624829001368,
+          "start": 1000
+        },
+        {
+          "best": null,
+          "integration_s": 256.0,
+          "n_hits": 1,
+          "near": [],
+          "resolution_hz_s": 392.7624829001368,
+          "start": 2000
+        },
+        {
+          "best": null,
+          "integration_s": 248.576,
+          "n_hits": 1,
+          "near": [],
+          "resolution_hz_s": 404.4927733266084,
+          "start": 3000
+        }
+      ],
+      "windows_scanned": 4,
+      "windows_with_hit": 0
+    }
+  ],
+  "threshold": 4.0,
+  "transient": true,
+  "verdict": "NOT A REPEAT (configuration-dependent transients; RFI unconfirmed)",
+  "window_samples": 1000
+}
