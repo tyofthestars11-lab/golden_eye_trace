@@ -317,6 +317,7 @@ def cmd_search(args) -> int:
         max_hits=args.max_hits,
         rfi_sigma=args.rfi_sigma,
         carrier_sigma=args.carrier_sigma,
+        require_flat_sensitivity=bool(args.require_flat_sensitivity),
     )
     if not args.quiet:
         tsamp_shown = args.tsamp if args.tsamp else fb.tsamp
@@ -355,6 +356,9 @@ def cmd_search(args) -> int:
                 f" wider than the robust estimate, so the sigmas below are nominal"
                 f" divided by {calibration:.3f}"
             )
+        window = meta.get("window_check") or {}
+        if window and not window.get("fits", True):
+            print(_window_note(window))
         tails = meta.get("snr_tail") or {}
         if tails:
             parts = []
@@ -430,6 +434,7 @@ def cmd_verify(args) -> int:
         max_hits=args.max_hits,
         rfi_sigma=args.rfi_sigma,
         carrier_sigma=args.carrier_sigma,
+        require_flat_sensitivity=bool(args.require_flat_sensitivity),
     )
 
     def progress(label):
@@ -784,6 +789,7 @@ def cmd_link(args) -> int:
         max_hits=args.max_hits,
         rfi_sigma=args.rfi_sigma,
         carrier_sigma=args.carrier_sigma,
+        require_flat_sensitivity=bool(args.require_flat_sensitivity),
     )
 
     sefd_flags = _resolve_quantity(args.sefd)
@@ -972,6 +978,17 @@ def cmd_link(args) -> int:
     _write_links(out, result.events, budgets)
     print(f"\nwrote {len(result.events)} event(s) to {out}")
     return 0
+
+
+def _window_note(window: dict) -> str:
+    """The geometry a truncated search never reports on itself."""
+    return (
+        f"  window: {window['window_channels']:,} channels x {window['samples']:,}"
+        f" samples holds {window['fraction_held']:.1%} of this drift trail, so the"
+        f" dedoppler loses {window['significance_loss']:.1%} of the significance above"
+        f" {window['trail_channels']:.0f} channels of travel\n"
+        f"  {window['note']}"
+    )
 
 
 def _band_trials(meta: dict, args) -> tuple[int, int]:
@@ -1187,6 +1204,12 @@ def _add_threshold_arguments(parser) -> None:
         "--false-alarm", type=float, default=None, metavar="P",
         help="set the threshold from a per-band chance P of any false alarm"
         " instead of --snr; P counts every channel-drift cell searched",
+    )
+    parser.add_argument(
+        "--require-flat-sensitivity", action="store_true",
+        help="refuse a drift range whose trail the search window cannot hold;"
+        " without it the window geometry is measured and printed, and the"
+        " sigmas above the window's limit are lower bounds",
     )
 
 

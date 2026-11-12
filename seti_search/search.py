@@ -27,6 +27,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from .filterbank import Filterbank
+from .stabilizer import WindowTooNarrow, check_window
 from .trials import tail_probability
 
 __all__ = [
@@ -78,6 +79,10 @@ class SearchConfig:
     max_hits: int = 50
     rfi_sigma: float = 6.0
     carrier_sigma: float = 20.0
+    #: Refuse a drift range whose trail the search window cannot hold. Off by
+    #: default so a fixture can deliberately search a truncated window and show
+    #: what that does; the geometry is measured and recorded either way.
+    require_flat_sensitivity: bool = False
 
 
 def smooth_bandpass(spectrum: np.ndarray, width: int = 101) -> tuple[np.ndarray, int]:
@@ -565,6 +570,22 @@ def search_file(
     drift_channels = abs(cfg.max_drift_hz_s) * 1e-6 * total_time / df_mhz
     pad = max(int(cfg.boxcar) * 2 + 8, min(int(np.ceil(drift_channels)) + 2, 8192))
 
+    # The chunk is padded by the whole drift excursion, so the window the
+    # dedoppler integrates over is chunk + 2*pad, not chunk. The pad is capped at
+    # 8192 channels, so a long integration at a fast drift is the case where the
+    # window stops being able to hold the trail - and that is measured here
+    # rather than assumed, because a sigma from a truncated window is a statement
+    # about the window.
+    window = check_window(
+        cfg.max_drift_hz_s,
+        min(fb.nchans, chunk + 2 * pad),
+        n_ints,
+        df_mhz * 1e6,
+        tsamp_s,
+    )
+    if not window.fits and cfg.require_flat_sensitivity:
+        raise WindowTooNarrow(window)
+
     hits: list[Candidate] = []
     blanked_channels = 0
     blanked_rows = 0
@@ -625,6 +646,7 @@ def search_file(
         "truncated": bool(n_ints < fb.nints),
         "snr_threshold": cfg.snr_threshold,
         "boxcar": cfg.boxcar,
+        "window_check": window.as_dict(),
         "snr_calibration": (
             float(
                 np.average(

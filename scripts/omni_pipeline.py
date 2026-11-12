@@ -345,7 +345,7 @@ def write_outputs(rows, payload, limit, nyquist, downgrades, escalations) -> Non
         lines.append(
             f"| {rec.observation_date} | {rec.frequency_hz / 1e6:.4f} | "
             f"{win.channel_rate:+.4f} | {win.trail_channels:.0f} | "
-            f"{win.fraction_held:.1%} | {win.amplitude_loss:.1%} | "
+            f"{win.fraction_held:.1%} | {win.significance_loss:.1%} | "
             f"{win.verdict} |")
     lines += ["",
               "The 20240325 group holds at 91.5% of its trail, so its sigma "
@@ -353,6 +353,10 @@ def write_outputs(rows, payload, limit, nyquist, downgrades, escalations) -> Non
               "trio sits at 0.4965 cycles per sample, holds 19% of its trail, "
               "and is the set this geometry is least able to measure - which is "
               "another reason its strength says nothing about its origin.", "",
+              "The measured cost of that loss, as drift rises past the window's "
+              "limit, is in DRIFT_SENSITIVITY.md: the guard's sqrt(held) form "
+              "overstates the loss, so a window it passes keeps at least the "
+              "significance it claims.", "",
               "## The gate matrix", "",
               "`.` pass, `F` fail, `U` untestable with this product, `-` not run.",
               "",

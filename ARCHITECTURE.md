@@ -72,6 +72,7 @@ spec_fits/YYYY/YYYYMMDD.fits        public bucket, CC BY 4.0, no WCS
 | `scripts/rfi_pair_test.py` | 2 day files | full-integration + window scan + Doppler bounds | `RFI_PAIR.md` | repeat or not-repeat |
 | `scripts/build_signal_records.py` | the three JSONs | join, validate | `signal_records.json/.csv` | nothing new; it only joins |
 | `scripts/omni_pipeline.py` | every JSON above | audit each disposition against its gates | `OMNI.md`, `omnipipeline.json` | the strongest disposition the gates permit |
+| `scripts/drift_sensitivity.py` | synthetic lanes | injection sweep over drift | `DRIFT_SENSITIVITY.md` | how completeness falls once the window cannot hold the trail |
 | `scripts/phi_echo.py` etc. | band samples | φ lock, echo, geometry | `prereg/phi_*.json` | feature values and their nulls |
 | `seti_search/search.py` | waterfall | dedoppler | SNR map, hits | significance of a cell |
 | `seti_search/signal_record.py` | — | validation | typed record | none; it constrains claims |
@@ -96,7 +97,8 @@ spec_fits/YYYY/YYYYMMDD.fits        public bucket, CC BY 4.0, no WCS
 6. **A window must hold the trail it is searching for.** A lane at `nu` cycles
    per sample crosses `|nu| × samples` channels, so a window narrower than that
    reports on itself. `seti_search/stabilizer.py` computes the four numbers and
-   refuses the search; `OMNI.md` carries them for every record.
+   refuses the search; `OMNI.md` carries them for every record, and
+   `DRIFT_SENSITIVITY.md` measures what the loss actually costs.
 
 ## Running it
 
@@ -108,5 +110,6 @@ python3 scripts/nonlinear_time.py
 python3 scripts/rfi_pair_test.py
 python3 scripts/build_signal_records.py
 python3 scripts/omni_pipeline.py        # audits every disposition, no re-search
+python3 scripts/drift_sensitivity.py    # ~90 s: the window's drift sensitivity
 python3 -m unittest discover -s tests -q   # 167 tests, ~23 s, no network
 ```

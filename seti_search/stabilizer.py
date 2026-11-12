@@ -7,11 +7,28 @@ That is the *best* case, because it assumes the lane enters the window at the
 right moment; in general it exits partway through and the rest of the
 integration contributes noise on top of a partial sum.
 
+The surviving significance goes as the **square root** of that fraction, and the
+reason is an implementation detail worth stating plainly. ``dedoppler`` shifts
+each integration by its accumulated offset and drops any integration whose shift
+runs past the band rather than wrapping it, so a lane that leaves the window
+takes its *noise* with it. With ``n_eff`` of ``n_t`` integrations surviving, the
+signal sums to ``A * n_eff`` and the noise to ``sigma * sqrt(n_eff)``, so
+
+    significance = A * n_eff / (sigma * sqrt(n_eff))
+                 = sqrt(n_eff) * (A / sigma)
+                 = sqrt(fraction) * significance_with_the_whole_trail
+
+A dedoppler that instead kept integrating the noise from integrations the signal
+had left would lose significance linearly in the fraction. This one does not, so
+the law here is the square root, and ``scripts/drift_sensitivity.py`` measures it
+rather than asserting it. If the shift convention in ``dedoppler`` ever changes
+to wrap or to pad, that measurement is the thing that will catch the change.
+
 The survey's numbers make the failure concrete. The 20240325 lanes drift
 0.10487 channels per sample, which is a 104.9-channel trail across 256 s of
 0.256 s integrations. A 96-channel window holds 91.5% of it and loses 4.3% of
-the amplitude - a footnote. A 32-channel window holds 30.5% and loses 44.7% of
-the amplitude, which is the invalid 0/10 run: the sigma it reported was a
+the significance - a footnote. A 32-channel window holds 30.5% and loses 44.7%
+of it, which is the invalid 0/10 run: the sigma it reported was a
 statement about the window rather than about the sky.
 
 So the guard computes four numbers before any search runs - chunk rate, trail,
@@ -20,11 +37,12 @@ hold the trail to within a declared tolerance. The tolerance is on *amplitude*,
 not on significance, because the loss is coherent: ``sqrt(fraction)`` of the
 signal survives and the noise does not shrink with it.
 
-Why 20%: the boxcar already costs more than that on an unresolved line (a
-3-channel boxcar spreads a 1-channel line over three times the width), so a
-window that loses less than 20% of the amplitude is not the limiting term in the
-budget. A window that loses more is the limiting term, and then the detection
-threshold means something different inside that window than outside it.
+Why 20%: at that loss the window keeps 64% of the trail (0.8^2), which is a
+factor of 0.89 in the trail length the search can hold - the point past which the
+stabilizer's own geometry, rather than the noise, is shaping the threshold. It is
+also well inside the spread of the local noise scale these candidates are
+measured against (0.30 to 31.18 of the band-wide estimate), so a smaller loss is
+not resolvable and a larger one has to be carried in the record.
 
 This is a pre-flight check, not a repair. It does not widen the window for you:
 silently searching something other than what was asked for is the same class of
@@ -45,22 +63,22 @@ from dataclasses import dataclass
 from .signal_record import channel_rate
 
 __all__ = [
-    "MAX_AMPLITUDE_LOSS",
+    "MAX_SIGNIFICANCE_LOSS",
     "WindowCheck",
     "WindowTooNarrow",
-    "amplitude_loss",
     "apparent_rate",
     "check_window",
     "fastest_rate_hz_s",
     "fraction_held",
     "require_window",
+    "significance_loss",
     "stabilize",
     "trail_channels",
 ]
 
-#: Largest share of a lane's amplitude a window may remove before the search is
-#: refused. See the module docstring for why 20%.
-MAX_AMPLITUDE_LOSS = 0.20
+#: Largest share of a lane's significance a window may remove before the search
+#: is refused. See the module docstring for why 20%.
+MAX_SIGNIFICANCE_LOSS = 0.20
 
 #: A dedoppler cannot resolve a rate faster than half a channel per sample; past
 #: that the drift folds and the apparent trail is shorter, not longer.
@@ -107,11 +125,14 @@ def fraction_held(window_channels: float, trail: float) -> float:
     return min(1.0, float(window_channels) / trail)
 
 
-def amplitude_loss(fraction: float) -> float:
-    """Coherent amplitude removed by holding only ``fraction`` of the trail.
+def significance_loss(fraction: float) -> float:
+    """Significance removed by holding only ``fraction`` of the trail.
 
-    The signal adds coherently and the noise does not, so the surviving
-    amplitude is ``sqrt(fraction)`` of the full-trail value, not ``fraction``.
+    Square root, because ``dedoppler`` drops the integrations whose shift leaves
+    the band, so the signal and the noise are truncated together and only the
+    surviving ``sqrt(n_eff)`` of each raises the significance. See the module
+    docstring for the derivation and for the linear law that would apply if the
+    noise were not truncated with the signal.
     """
     if not 0.0 <= fraction <= 1.0:
         raise ValueError(f"fraction must be in [0, 1], got {fraction}")
@@ -120,7 +141,7 @@ def amplitude_loss(fraction: float) -> float:
 
 def fastest_rate_hz_s(window_channels: float, samples: int, channel_hz: float,
                       tsamp_s: float,
-                      max_amplitude_loss: float = MAX_AMPLITUDE_LOSS) -> float:
+                      max_significance_loss: float = MAX_SIGNIFICANCE_LOSS) -> float:
     """The fastest drift this window can search without exceeding the tolerance.
 
     This is the honest drift range of a search, as opposed to the Nyquist range
@@ -128,11 +149,11 @@ def fastest_rate_hz_s(window_channels: float, samples: int, channel_hz: float,
     window it is 58.9 kHz/s, while the dedoppler runs to the fold at 196.4 kHz/s:
     a rate between those two is searched, found and under-measured.
     """
-    if not 0.0 <= max_amplitude_loss < 1.0:
-        raise ValueError("max_amplitude_loss must be in [0, 1)")
+    if not 0.0 <= max_significance_loss < 1.0:
+        raise ValueError("max_significance_loss must be in [0, 1)")
     if samples <= 0 or channel_hz <= 0 or tsamp_s <= 0 or window_channels <= 0:
         raise ValueError("window, samples, channel width and sample time must be positive")
-    hold = (1.0 - max_amplitude_loss) ** 2
+    hold = (1.0 - max_significance_loss) ** 2
     nu = min(NYQUIST_CHANNELS_PER_SAMPLE,
              float(window_channels) / (float(samples) * hold))
     return nu * channel_hz / tsamp_s
@@ -140,9 +161,9 @@ def fastest_rate_hz_s(window_channels: float, samples: int, channel_hz: float,
 
 def narrowest_window(samples: int, channel_hz: float, tsamp_s: float,
                      drift_hz_per_s: float,
-                     max_amplitude_loss: float = MAX_AMPLITUDE_LOSS) -> int:
+                     max_significance_loss: float = MAX_SIGNIFICANCE_LOSS) -> int:
     """The narrowest window that holds this lane to the tolerance, in channels."""
-    hold = (1.0 - max_amplitude_loss) ** 2
+    hold = (1.0 - max_significance_loss) ** 2
     trail = trail_channels(drift_hz_per_s, channel_hz, tsamp_s, samples)
     return max(1, int(math.ceil(trail * hold - 1e-9)))
 
@@ -156,7 +177,7 @@ class WindowCheck:
     channel_rate: float
     trail_channels: float
     fraction_held: float
-    amplitude_loss: float
+    significance_loss: float
     fits: bool
     verdict: str
     note: str
@@ -168,7 +189,7 @@ class WindowCheck:
             "channel_rate": self.channel_rate,
             "trail_channels": self.trail_channels,
             "fraction_held": self.fraction_held,
-            "amplitude_loss": self.amplitude_loss,
+            "significance_loss": self.significance_loss,
             "fits": self.fits,
             "verdict": self.verdict,
             "note": self.note,
@@ -177,24 +198,24 @@ class WindowCheck:
 
 def check_window(drift_hz_per_s: float, window_channels: int, samples: int,
                  channel_hz: float, tsamp_s: float,
-                 max_amplitude_loss: float = MAX_AMPLITUDE_LOSS) -> WindowCheck:
+                 max_significance_loss: float = MAX_SIGNIFICANCE_LOSS) -> WindowCheck:
     """Decide whether this window can hold a lane at this drift."""
     if window_channels <= 0:
         raise ValueError(f"window must be positive, got {window_channels}")
     nu = apparent_rate(drift_hz_per_s, channel_hz, tsamp_s)
     trail = abs(nu) * float(samples)
     held = fraction_held(window_channels, trail)
-    lost = amplitude_loss(held)
-    fits = lost <= max_amplitude_loss + 1e-12
+    lost = significance_loss(held)
+    fits = lost <= max_significance_loss + 1e-12
     if fits:
         note = (f"{held:.1%} of the trail fits in the window, so the dedoppler "
-                f"loses at most {lost:.1%} of its amplitude to the window edge")
+                f"loses at most {lost:.1%} of its significance to the window edge")
         verdict = "HOLDS"
     else:
         note = (f"a {trail:.0f}-channel trail in a {window_channels}-channel "
                 f"window: at most {held:.1%} of the integration can contain the "
                 f"lane, so a sigma from this window is a statement about the "
-                f"window (limit {max_amplitude_loss:.0%} amplitude loss)")
+                f"window (limit {max_significance_loss:.0%} of the significance)")
         verdict = "TRUNCATES"
     return WindowCheck(
         window_channels=int(window_channels),
@@ -202,7 +223,7 @@ def check_window(drift_hz_per_s: float, window_channels: int, samples: int,
         channel_rate=nu,
         trail_channels=trail,
         fraction_held=held,
-        amplitude_loss=lost,
+        significance_loss=lost,
         fits=fits,
         verdict=verdict,
         note=note,
@@ -219,10 +240,10 @@ class WindowTooNarrow(ValueError):
 
 def require_window(drift_hz_per_s: float, window_channels: int, samples: int,
                    channel_hz: float, tsamp_s: float,
-                   max_amplitude_loss: float = MAX_AMPLITUDE_LOSS) -> WindowCheck:
+                   max_significance_loss: float = MAX_SIGNIFICANCE_LOSS) -> WindowCheck:
     """``check_window``, but refusing to continue on a truncated search."""
     check = check_window(drift_hz_per_s, window_channels, samples, channel_hz,
-                         tsamp_s, max_amplitude_loss)
+                         tsamp_s, max_significance_loss)
     if not check.fits:
         raise WindowTooNarrow(check)
     return check
@@ -230,13 +251,13 @@ def require_window(drift_hz_per_s: float, window_channels: int, samples: int,
 
 def stabilize(drift_hz_per_s: float, samples: int, channel_hz: float,
               tsamp_s: float,
-              max_amplitude_loss: float = MAX_AMPLITUDE_LOSS) -> WindowCheck:
+              max_significance_loss: float = MAX_SIGNIFICANCE_LOSS) -> WindowCheck:
     """The narrowest window that would hold this lane, checked.
 
     Returned rather than applied: a caller that widens its own search has to say
     so, because the wider window tests more cells and reports a different sigma.
     """
     width = narrowest_window(samples, channel_hz, tsamp_s, drift_hz_per_s,
-                             max_amplitude_loss)
+                             max_significance_loss)
     return check_window(drift_hz_per_s, width, samples, channel_hz, tsamp_s,
-                        max_amplitude_loss)
+                        max_significance_loss)

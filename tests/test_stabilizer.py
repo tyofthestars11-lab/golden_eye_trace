@@ -3,7 +3,7 @@
 import unittest
 
 from seti_search.stabilizer import (
-    MAX_AMPLITUDE_LOSS,
+    MAX_SIGNIFICANCE_LOSS,
     WindowTooNarrow,
     apparent_rate,
     check_window,
@@ -11,6 +11,7 @@ from seti_search.stabilizer import (
     fraction_held,
     narrowest_window,
     require_window,
+    significance_loss,
     stabilize,
     trail_channels,
 )
@@ -21,6 +22,21 @@ SAMPLES = 1000
 LANE = 41190.2        # Hz/s, the 20240325 burst group
 ALIAS = 195015.7      # Hz/s, the 20240920 trio, 0.4965 channels per sample
 SLOW = 500.0          # Hz/s, an ordinary slow line
+
+
+class LossLawTests(unittest.TestCase):
+    def test_the_loss_is_a_square_root_of_the_fraction_held(self):
+        # dedoppler drops the integrations the lane leaves, so signal and noise
+        # are truncated together and significance goes as sqrt(n_eff)
+        self.assertAlmostEqual(significance_loss(1.0), 0.0)
+        self.assertAlmostEqual(significance_loss(0.64), 0.2)
+        self.assertAlmostEqual(significance_loss(0.25), 0.5)
+        self.assertAlmostEqual(significance_loss(0.0), 1.0)
+
+    def test_a_bad_fraction_is_refused(self):
+        for bad in (-0.1, 1.1):
+            with self.assertRaises(ValueError):
+                significance_loss(bad)
 
 
 class TrailGeometryTests(unittest.TestCase):
@@ -78,7 +94,9 @@ class WindowVerdictTests(unittest.TestCase):
         self.assertTrue(check.fits)
         self.assertEqual(check.verdict, "HOLDS")
         self.assertAlmostEqual(check.fraction_held, 0.915, delta=0.005)
-        self.assertAlmostEqual(check.amplitude_loss, 0.043, delta=0.005)
+        # 1 - sqrt(0.9154): dedoppler drops the integrations the lane leaves, so
+        # the noise is truncated with the signal
+        self.assertAlmostEqual(check.significance_loss, 0.043, delta=0.005)
         self.assertIn("4.3%", check.note)
 
     def test_the_narrow_window_is_refused_for_the_burst_group(self):
@@ -86,6 +104,7 @@ class WindowVerdictTests(unittest.TestCase):
         self.assertFalse(check.fits)
         self.assertEqual(check.verdict, "TRUNCATES")
         self.assertAlmostEqual(check.fraction_held, 0.305, delta=0.005)
+        self.assertAlmostEqual(check.significance_loss, 0.447, delta=0.005)
         with self.assertRaises(WindowTooNarrow) as caught:
             require_window(LANE, 32, SAMPLES, CHANNEL_HZ, TSAMP_S)
         message = str(caught.exception)
@@ -106,12 +125,12 @@ class WindowVerdictTests(unittest.TestCase):
         for window in (32, 48, 96, 128):
             check = check_window(LANE, window, SAMPLES, CHANNEL_HZ, TSAMP_S)
             self.assertEqual(check.fits,
-                             check.amplitude_loss <= MAX_AMPLITUDE_LOSS + 1e-12)
+                             check.significance_loss <= MAX_SIGNIFICANCE_LOSS + 1e-12)
 
     def test_a_stricter_tolerance_refuses_more(self):
         self.assertTrue(check_window(LANE, 96, SAMPLES, CHANNEL_HZ, TSAMP_S).fits)
         strict = check_window(LANE, 96, SAMPLES, CHANNEL_HZ, TSAMP_S,
-                              max_amplitude_loss=0.01)
+                              max_significance_loss=0.01)
         self.assertFalse(strict.fits)
 
     def test_a_zero_window_is_a_bug_not_a_verdict(self):
@@ -124,7 +143,7 @@ class RateLimitTests(unittest.TestCase):
         limit = fastest_rate_hz_s(96, SAMPLES, CHANNEL_HZ, TSAMP_S)
         self.assertAlmostEqual(limit / 1000.0, 58.9, delta=0.2)
         at = check_window(limit, 96, SAMPLES, CHANNEL_HZ, TSAMP_S)
-        self.assertAlmostEqual(at.amplitude_loss, MAX_AMPLITUDE_LOSS, places=9)
+        self.assertAlmostEqual(at.significance_loss, MAX_SIGNIFICANCE_LOSS, places=9)
         self.assertTrue(at.fits)
         just_over = check_window(limit * 1.05, 96, SAMPLES, CHANNEL_HZ, TSAMP_S)
         self.assertFalse(just_over.fits)
@@ -172,6 +191,7 @@ class StabilizeTests(unittest.TestCase):
         self.assertEqual(payload["verdict"], "HOLDS")
         self.assertEqual(payload["window_channels"], 96)
         self.assertAlmostEqual(payload["trail_channels"], 104.9, delta=0.2)
+        self.assertAlmostEqual(payload["significance_loss"], 0.043, delta=0.005)
 
 
 if __name__ == "__main__":

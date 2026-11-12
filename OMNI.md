@@ -23,6 +23,8 @@ The survey's window is 96 channels by 1000 samples, and the stabilizer asks whet
 
 The 20240325 group holds at 91.5% of its trail, so its sigma carries a 4.3% truncation footnote and no more. The 20240920 trio sits at 0.4965 cycles per sample, holds 19% of its trail, and is the set this geometry is least able to measure - which is another reason its strength says nothing about its origin.
 
+The measured cost of that loss, as drift rises past the window's limit, is in DRIFT_SENSITIVITY.md: the guard's sqrt(held) form overstates the loss, so a window it passes keeps at least the significance it claims.
+
 ## The gate matrix
 
 `.` pass, `F` fail, `U` untestable with this product, `-` not run.

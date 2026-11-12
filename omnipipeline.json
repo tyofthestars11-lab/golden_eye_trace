@@ -21,7 +21,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -116,12 +116,12 @@
       "source_file": "data/20240207.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.0,
         "channel_rate": 0.01774838244131849,
         "fits": true,
         "fraction_held": 1.0,
-        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.0,
         "trail_channels": 17.74838244131849,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -137,7 +137,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -232,12 +232,12 @@
       "source_file": "data/20240322.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.0,
         "channel_rate": -0.0004400158722079328,
         "fits": true,
         "fraction_held": 1.0,
-        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.0,
         "trail_channels": 0.4400158722079328,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -251,7 +251,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -346,12 +346,12 @@
       "source_file": "data/20240324.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.0,
         "channel_rate": -0.00128318237004732,
         "fits": true,
         "fraction_held": 1.0,
-        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.0,
         "trail_channels": 1.28318237004732,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -365,7 +365,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "evidence": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -460,12 +460,12 @@
       "source_file": "data/20240325.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.04323868271885911,
         "channel_rate": 0.10487307854112549,
         "fits": true,
         "fraction_held": 0.9153922182455438,
-        "note": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "note": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.04323868271885911,
         "trail_channels": 104.87307854112548,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -479,7 +479,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "evidence": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -574,12 +574,12 @@
       "source_file": "data/20240325.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.04318253077357914,
         "channel_rate": 0.10486076970530123,
         "fits": true,
         "fraction_held": 0.9154996694168528,
-        "note": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "note": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.04318253077357914,
         "trail_channels": 104.86076970530122,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -593,7 +593,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "evidence": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -688,12 +688,12 @@
       "source_file": "data/20240325.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.04316769794700415,
         "channel_rate": 0.10485751862451631,
         "fits": true,
         "fraction_held": 0.9155280542520355,
-        "note": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "note": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.04316769794700415,
         "trail_channels": 104.85751862451632,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -707,7 +707,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "evidence": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
             "id": "window",
             "layer": "measurement",
             "status": "PASS"
@@ -802,12 +802,12 @@
       "source_file": "data/20240325.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.043109920662882883,
         "channel_rate": 0.10484485635562413,
         "fits": true,
         "fraction_held": 0.9156386239337942,
-        "note": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "note": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its significance to the window edge",
         "samples": 1000,
+        "significance_loss": 0.043109920662882883,
         "trail_channels": 104.84485635562413,
         "verdict": "HOLDS",
         "window_channels": 96
@@ -821,7 +821,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "a 497-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+            "evidence": "a 497-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% of the significance)",
             "id": "window",
             "layer": "measurement",
             "status": "FAIL"
@@ -916,12 +916,12 @@
       "source_file": "data/20240920.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.5602905156112935,
         "channel_rate": 0.4965232237184616,
         "fits": false,
         "fraction_held": 0.1933444306613821,
-        "note": "a 497-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+        "note": "a 497-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% of the significance)",
         "samples": 1000,
+        "significance_loss": 0.5602905156112935,
         "trail_channels": 496.52322371846157,
         "verdict": "TRUNCATES",
         "window_channels": 96
@@ -935,7 +935,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+            "evidence": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% of the significance)",
             "id": "window",
             "layer": "measurement",
             "status": "FAIL"
@@ -1030,12 +1030,12 @@
       "source_file": "data/20240920.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.5601564306849435,
         "channel_rate": 0.4962205427803159,
         "fits": false,
         "fraction_held": 0.19346236546780896,
-        "note": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+        "note": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% of the significance)",
         "samples": 1000,
+        "significance_loss": 0.5601564306849435,
         "trail_channels": 496.2205427803159,
         "verdict": "TRUNCATES",
         "window_channels": 96
@@ -1049,7 +1049,7 @@
         "escalation": false,
         "gates": [
           {
-            "evidence": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+            "evidence": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% of the significance)",
             "id": "window",
             "layer": "measurement",
             "status": "FAIL"
@@ -1144,12 +1144,12 @@
       "source_file": "data/20240920.fits",
       "transform_version": "ovro-local-noise-v1",
       "window_check": {
-        "amplitude_loss": 0.5601663895301594,
         "channel_rate": 0.4962430141849907,
         "fits": false,
         "fraction_held": 0.19345360489893543,
-        "note": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+        "note": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% of the significance)",
         "samples": 1000,
+        "significance_loss": 0.5601663895301594,
         "trail_channels": 496.2430141849907,
         "verdict": "TRUNCATES",
         "window_channels": 96
