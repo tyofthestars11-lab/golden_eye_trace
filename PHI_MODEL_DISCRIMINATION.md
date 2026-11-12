@@ -1,5 +1,12 @@
 # Comb or scale family
 
+> **Superseded premise (see [LIGHT_PATH.md](LIGHT_PATH.md)).** The four
+> frequencies this document fits are not validated candidates. Under an
+> honestly scaled excision mask they sit at 1.44, 0.54, -0.15 and -0.87 sigma,
+> against 954 sigma under the theory-scaled mask that produced them. Everything
+> below is a correct statement about four chosen frequencies and carries no
+> evidential weight about the sky.
+
 Does the regularly spaced group at 45.98-48.99 MHz keep its regularity when
 the frequency coverage is widened, and does the wider coverage say whether it
 is a frequency comb or a scale family?

@@ -139,3 +139,23 @@ second separated group. `synthetic_calibration` reports the rate at which the
 pipeline recovers a known model at the data's own residual size and span; when
 that rate is near half, the label is INDETERMINATE DUE TO LIMITED SPAN and the
 number is printed beside it.
+
+## The light path (`scripts/light_path.py`)
+
+**Input.** A day file, a set of frequencies, and the drift each peaks at.
+
+**Transform.** Eight stages, each recording the number it produces: A raw power,
+B bandpass ratio, C dedoppler sigma with nothing removed, D the excision mask and
+its counts, E sigma after blanking, F the calibration factor, G the local-scale
+sigma, H whether peak extraction returns the cell. Each stage is repeated for
+three masks - none, the theory-scaled row test, and an empirical one scaled by the
+measured scatter of row medians - in both a 96-channel and a 731-channel window.
+Both Stokes planes go through the same aligned sum.
+
+**Output.** `LIGHT_PATH.md`, `results/light_path_ledger.csv` (42 rows),
+`results/light_path_stages.json`.
+
+**Claim.** Only about the processing. It attributes a candidate's significance to
+a stage; it does not confirm or refute a source. What it found is that the
+excision mask, not the sky, supplies the sigma, and that is a statement about this
+pipeline's arithmetic.

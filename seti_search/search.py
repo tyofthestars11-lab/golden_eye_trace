@@ -135,6 +135,7 @@ def excise_rfi(
     sigma: float = 6.0,
     carrier_sigma: float = 20.0,
     pad: int = 1,
+    row_noise: str = "theory",
 ):
     """Blank samples that cannot hold a narrowband signal.
 
@@ -185,8 +186,20 @@ def excise_rfi(
         # row_noise small, and then every row of a wide band is thrown away.
         row_median = np.median(data, axis=1)
         row_excess = row_median - float(np.median(row_median))
-        row_noise = 1.25 / np.sqrt(n_f) * typical_std
-        bad_rows = np.abs(row_excess) > sigma * row_noise
+        if row_noise == "empirical":
+            # The theoretical 1.25/sqrt(n_f) assumes independent channels. On a
+            # real solar product the channel gains are correlated, so the row
+            # medians scatter far more than that, and a threshold built on the
+            # theoretical value flags most integrations instead of the few
+            # anomalous ones. The empirical scatter of the row medians is what
+            # "one integration far brighter than the rest" has to be measured
+            # against.
+            scale = 1.4826 * float(np.median(np.abs(row_excess)))
+            if not np.isfinite(scale) or scale <= 0:
+                scale = 1.25 / np.sqrt(n_f) * typical_std
+        else:
+            scale = 1.25 / np.sqrt(n_f) * typical_std
+        bad_rows = np.abs(row_excess) > sigma * scale
 
     clean = data.copy()
     if bad_channels.any():
@@ -195,6 +208,7 @@ def excise_rfi(
         clean[bad_rows, :] = 0.0
 
     return clean, {
+        "row_noise": row_noise,
         "blanked_channels": int(bad_channels.sum()),
         "blanked_rows": int(bad_rows.sum()),
         "total_channels": int(n_f),

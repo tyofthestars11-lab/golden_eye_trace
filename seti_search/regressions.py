@@ -218,4 +218,37 @@ REGRESSIONS = (
         "fixture": "scripts/band_calibration_check.py",
         "artifact": "prereg/band_calibration.json",
     },
+    {
+        "id": "theory-scaled-row-test",
+        "date": "2026-11-12",
+        "method": "row excision at sigma * 1.25/sqrt(n_f) * typical_std",
+        "result": (
+            "505 of 1000 integrations blanked on 20240325 and 228 on 20240920; the "
+            "four-line group reads 954 sigma through that mask and 1.44 sigma with no "
+            "mask at all, at the same cells and the same drift"
+        ),
+        "verdict": "INVALID: the mask manufactures the candidates",
+        "why": (
+            "1.25/sqrt(n_f) is the standard error of a median only if the channels are "
+            "independent. In a solar dynamic spectrum one source spans the band, so the "
+            "channel gains are correlated, the row medians scatter far more, and a "
+            "two-sided 6 sigma threshold flags ordinary integrations. It removes both "
+            "bright and faint rows, so the surviving subset is selected on the same "
+            "quantity the dedoppler then measures, and the sum over that subset is a "
+            "much quieter statistic. The same data, the same drift and the same "
+            "calibration read 1.44 sigma without the mask."
+        ),
+        "tell": "A sigma that shrinks to 1.5 when nothing but the excision threshold changes.",
+        "superseded_by": (
+            "row_noise=\"empirical\", which scales the same test by "
+            "1.4826 * MAD(row medians); scripts/light_path.py traces every stage with "
+            "all three masks and results/light_path_ledger.csv carries the numbers"
+        ),
+        "superseded_result": (
+            "0 of 1000 rows blanked on 20240325 and 1 on 20240920; no cell in the 2x2 "
+            "reaches 1.5 sigma, so the group is not a candidate"
+        ),
+        "fixture": "scripts/light_path.py",
+        "artifact": "results/light_path_stages.json",
+    },
 )

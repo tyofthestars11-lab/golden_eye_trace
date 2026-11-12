@@ -76,6 +76,7 @@ spec_fits/YYYY/YYYYMMDD.fits        public bucket, CC BY 4.0, no WCS
 | `scripts/phi_address.py` | the ten records | rung address for every quantity, four rung tests | `PHI_ADDRESS.md`, `prereg/phi_address.json` | whether a group is a comb or a scale family |
 | `scripts/expanded_search.py` | every OVRO day file | whole-band and all-integration dedoppler, three preregistered variants | `prereg/expanded_search*.json` | what the unsearched 87% of the band holds |
 | `scripts/band_calibration_check.py` | one day | same cells in a narrow and a wide window | `prereg/band_calibration.json` | how much a candidate's significance is the window's |
+| `scripts/light_path.py` | two day files | eight stages per cell, three masks, both Stokes planes | `LIGHT_PATH.md`, `results/light_path_*` | which stage a candidate's sigma comes from |
 | `scripts/phi_model_discrimination.py` | the records and the expanded searches | comb against scale family, with a null and a calibration | `PHI_MODEL_DISCRIMINATION.md`, `results/*` | which model the data can actually separate |
 | `scripts/phi_echo.py` etc. | band samples | φ lock, echo, geometry | `prereg/phi_*.json` | feature values and their nulls |
 | `seti_search/search.py` | waterfall | dedoppler | SNR map, hits | significance of a cell |
@@ -118,5 +119,6 @@ python3 scripts/drift_sensitivity.py    # ~90 s: the window's drift sensitivity
 python3 scripts/phi_address.py          # rung address for every measured quantity
 python3 scripts/expanded_search.py --variant B   # whole band, guard holds at 100%
 python3 scripts/phi_model_discrimination.py      # ~10 s: comb against scale family
+python3 scripts/light_path.py                    # ~11 s: the eight stages, three masks
 python3 -m unittest discover -s tests -q   # 167 tests, ~23 s, no network
 ```

@@ -125,6 +125,30 @@ every result, keep the window fixed within a comparison, and report a masked
 candidate as masked - `prereg/band_calibration.json` records both gates per
 candidate, and regression fixture `window-dependent-visibility` pins it.
 
+## 11. An excision threshold that fabricates candidates
+
+The row test in `excise_rfi` flags an integration when its band median departs
+from the median of medians by more than `sigma * 1.25/sqrt(n_f) * typical_std`.
+That denominator assumes independent channels; in a solar dynamic spectrum the
+Sun spans the band, the gains are correlated, and the row medians scatter far
+more. The threshold is also two-sided, so it deletes bright *and* faint
+integrations and keeps a subset selected on the very quantity the search measures.
+
+Measured at the candidates' own drift, same window, same calibration:
+
+| day | no mask | theory row test | empirical row test |
+| --- | --- | --- | --- |
+| 20240325 | 1.44 0.54 -0.15 -0.87 | **954.18 604.16 447.18 171.27** | 1.44 0.54 -0.15 -0.87 |
+| 20240920 | -1.20 -0.42 0.11 | **8.65 7.90 6.49** | -1.20 -0.42 0.11 |
+| rows blanked | 0 / 0 | 505 / 228 | 0 / 1 |
+
+**Tell:** a candidate whose sigma collapses when only the excision threshold
+changes, and a mask that removes a large fraction of integrations rather than a
+handful. **Fix:** `row_noise="empirical"` scales the same test by the measured
+scatter of the row medians. It is opt-in, because switching the default rewrites
+every sigma this repository has published - a decision to take deliberately, not
+as a side effect.
+
 ## Checklist before believing a result
 
 1. Does any single number move by more than 2× when the noise reference changes?
