@@ -71,9 +71,12 @@ spec_fits/YYYY/YYYYMMDD.fits        public bucket, CC BY 4.0, no WCS
 | `scripts/nonlinear_time.py` | confirm rows | 5 time coordinates, split-half | `NONLINEAR_TIME.md` | coherence vs a warp null |
 | `scripts/rfi_pair_test.py` | 2 day files | full-integration + window scan + Doppler bounds | `RFI_PAIR.md` | repeat or not-repeat |
 | `scripts/build_signal_records.py` | the three JSONs | join, validate | `signal_records.json/.csv` | nothing new; it only joins |
+| `scripts/omni_pipeline.py` | every JSON above | audit each disposition against its gates | `OMNI.md`, `omnipipeline.json` | the strongest disposition the gates permit |
 | `scripts/phi_echo.py` etc. | band samples | φ lock, echo, geometry | `prereg/phi_*.json` | feature values and their nulls |
 | `seti_search/search.py` | waterfall | dedoppler | SNR map, hits | significance of a cell |
 | `seti_search/signal_record.py` | — | validation | typed record | none; it constrains claims |
+| `seti_search/stabilizer.py` | a drift rate and a window | trail vs window geometry | a verdict, or a refusal | whether the window can hold the trail at all |
+| `seti_search/omni.py` | a claimed disposition + its gates | requirement check | an audit | which claims the gates permit |
 
 ## Invariants
 
@@ -87,7 +90,13 @@ spec_fits/YYYY/YYYYMMDD.fits        public bucket, CC BY 4.0, no WCS
 4. **The verdict vocabulary is closed.** `DISPOSITIONS` in
    `seti_search/signal_record.py`; anything else fails validation.
 5. **No layer may promote a candidate past an untestable gate.** In practice that
-   means the headline stays NULL RESULT.
+   means the headline stays NULL RESULT. `seti_search/omni.py` enforces this
+   mechanically: a disposition names the gates it requires, and a claim whose
+   gates are missing or non-PASS is lowered rather than accepted.
+6. **A window must hold the trail it is searching for.** A lane at `nu` cycles
+   per sample crosses `|nu| × samples` channels, so a window narrower than that
+   reports on itself. `seti_search/stabilizer.py` computes the four numbers and
+   refuses the search; `OMNI.md` carries them for every record.
 
 ## Running it
 
@@ -98,5 +107,6 @@ python3 scripts/local_noise_survey.py
 python3 scripts/nonlinear_time.py
 python3 scripts/rfi_pair_test.py
 python3 scripts/build_signal_records.py
-python3 -m unittest discover -s tests -q   # 120 tests, ~23 s, no network
+python3 scripts/omni_pipeline.py        # audits every disposition, no re-search
+python3 -m unittest discover -s tests -q   # 167 tests, ~23 s, no network
 ```

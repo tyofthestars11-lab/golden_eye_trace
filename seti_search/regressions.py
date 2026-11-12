@@ -24,7 +24,11 @@ REGRESSIONS = (
             "the window cut the signal in half."
         ),
         "tell": "A 954 sigma line reporting 0 sigma is a statement about the window.",
-        "superseded_by": "per-channel local scale on the survey's own 96-channel window",
+        "superseded_by": (
+            "per-channel local scale on the survey's own 96-channel window, "
+            "plus a pre-flight guard (seti_search/stabilizer.py) that refuses a "
+            "window which cannot hold the trail"
+        ),
         "superseded_result": "9 of 10 survive",
         "fixture": "tests/test_window_truncation.py",
         "artifact": "prereg/regression_narrow_window.json",

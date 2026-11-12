@@ -1,0 +1,1194 @@
+{
+  "layers": [
+    "measurement",
+    "calibration",
+    "timedomain",
+    "phi",
+    "interpretation",
+    "confirmation"
+  ],
+  "max_drift_hz_s_for_window": 58914.3724350205,
+  "n_downgraded": 1,
+  "n_escalations": 0,
+  "n_records": 10,
+  "nyquist_hz_s": 196381.2414500684,
+  "records": [
+    {
+      "audit": {
+        "claimed": "UNRESOLVED",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "9.66 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.0177 cycles per sample, 0.4823 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 0.74, 7.16 -> 9.66 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 4.22 over the linear coordinate, best score 9.34, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.281, k=1, lock distance 0.9535 (+0.0177 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "UNRESOLVED"
+      },
+      "channel_rate": 0.01774838244131847,
+      "claimed_disposition": "UNRESOLVED",
+      "disposition": "UNRESOLVED",
+      "drift_hz_per_s": 6970.898755113434,
+      "duration_s": 256.0,
+      "frequency_hz": 53783296.4055797,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 0.7411160139799118,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.9535341315232964,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.01774838244131847,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240207",
+      "on_source_status": "on-source",
+      "permitted_disposition": "UNRESOLVED",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 9.659404135018272,
+      "snr_global": 7.158594608306885,
+      "source_file": "data/20240207.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.0,
+        "channel_rate": 0.01774838244131849,
+        "fits": true,
+        "fraction_held": 1.0,
+        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 17.74838244131849,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "UNRESOLVED",
+        "deficits": [
+          "detected: FAIL (5.16 sigma at the reported cell against a 5.5 sigma threshold)"
+        ],
+        "downgraded": true,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "5.16 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "0.0004 cycles per sample, 0.4996 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 1.29, 6.67 -> 5.16 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain -0.02 over the linear coordinate, best score 7.52, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.012, k=1, lock distance 0.9988 (-0.0004 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "the pair test at full integration and across windows: NOT A REPEAT (configuration-dependent transients; RFI unconfirmed)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "NULL RESULT"
+      },
+      "channel_rate": -0.00044001587220794246,
+      "claimed_disposition": "UNRESOLVED",
+      "disposition": "UNRESOLVED",
+      "drift_hz_per_s": -172.82172648386077,
+      "duration_s": 256.0,
+      "frequency_hz": 47241613.52507386,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 1.2919301921705715,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.9988480234909701,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.00044001587220794246,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240322",
+      "on_source_status": "on-source",
+      "permitted_disposition": "NULL RESULT",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 5.160142922434523,
+      "snr_global": 6.666425704956055,
+      "source_file": "data/20240322.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.0,
+        "channel_rate": -0.0004400158722079328,
+        "fits": true,
+        "fraction_held": 1.0,
+        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 0.4400158722079328,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "UNRESOLVED",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "8.97 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.0013 cycles per sample, 0.4987 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 1.30, 11.67 -> 8.97 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 7.56 over the linear coordinate, best score 12.65, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.015, k=1, lock distance 0.9966 (-0.0013 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "the pair test at full integration and across windows: NOT A REPEAT (configuration-dependent transients; RFI unconfirmed)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "UNRESOLVED"
+      },
+      "channel_rate": -0.0012831823700473258,
+      "claimed_disposition": "UNRESOLVED",
+      "disposition": "UNRESOLVED",
+      "drift_hz_per_s": -503.98589367346983,
+      "duration_s": 256.0,
+      "frequency_hz": 47314257.48363759,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 1.300742279291153,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.9966405849414515,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.0012831823700473258,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240324",
+      "on_source_status": "on-source",
+      "permitted_disposition": "UNRESOLVED",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 8.97064855945306,
+      "snr_global": 11.667951583862305,
+      "source_file": "data/20240324.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.0,
+        "channel_rate": -0.00128318237004732,
+        "fits": true,
+        "fraction_held": 1.0,
+        "note": "100.0% of the trail fits in the window, so the dedoppler loses at most 0.0% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 1.28318237004732,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "ASTROPHYSICAL",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "30.60 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.1049 cycles per sample, 0.3951 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 31.18, 953.98 -> 30.60 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 1.64 over the linear coordinate, best score 8.57, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 7.956, k=1, lock distance 0.7254 (+0.1049 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,190 Hz/s implies a 125 km/s coronal exciter",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "PASS"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "ASTROPHYSICAL"
+      },
+      "channel_rate": 0.10487307854112549,
+      "claimed_disposition": "ASTROPHYSICAL",
+      "disposition": "ASTROPHYSICAL",
+      "drift_hz_per_s": 41190.2107171935,
+      "duration_s": 256.0,
+      "frequency_hz": 45984284.47741178,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 31.17854253951907,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.7254387158744963,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.10487307854112549,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240325",
+      "on_source_status": "on-source",
+      "permitted_disposition": "ASTROPHYSICAL",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 30.598105485106785,
+      "snr_global": 953.9804077148438,
+      "source_file": "data/20240325.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.04323868271885911,
+        "channel_rate": 0.10487307854112549,
+        "fits": true,
+        "fraction_held": 0.9153922182455438,
+        "note": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 104.87307854112548,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "ASTROPHYSICAL",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "21.81 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.1049 cycles per sample, 0.3951 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 27.69, 604.03 -> 21.81 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 0.02 over the linear coordinate, best score 8.56, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.000, k=1, lock distance 0.7255 (+0.1049 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,185 Hz/s implies a 122 km/s coronal exciter",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "PASS"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "ASTROPHYSICAL"
+      },
+      "channel_rate": 0.10486076970530125,
+      "claimed_disposition": "ASTROPHYSICAL",
+      "disposition": "ASTROPHYSICAL",
+      "drift_hz_per_s": 41185.37626827356,
+      "duration_s": 256.0,
+      "frequency_hz": 46982763.33789329,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 27.69330391350103,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.725470940825046,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.10486076970530125,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240325",
+      "on_source_status": "on-source",
+      "permitted_disposition": "ASTROPHYSICAL",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 21.812087462607092,
+      "snr_global": 604.0343017578125,
+      "source_file": "data/20240325.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.04318253077357914,
+        "channel_rate": 0.10486076970530123,
+        "fits": true,
+        "fraction_held": 0.9154996694168528,
+        "note": "91.5% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 104.86076970530122,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "ASTROPHYSICAL",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "22.88 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.1049 cycles per sample, 0.3951 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 19.54, 447.08 -> 22.88 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain -0.10 over the linear coordinate, best score 4.02, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.042, k=1, lock distance 0.7255 (+0.1049 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,184 Hz/s implies a 120 km/s coronal exciter",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "PASS"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "ASTROPHYSICAL"
+      },
+      "channel_rate": 0.10485751862451627,
+      "claimed_disposition": "ASTROPHYSICAL",
+      "disposition": "ASTROPHYSICAL",
+      "drift_hz_per_s": 41184.09936571234,
+      "duration_s": 256.0,
+      "frequency_hz": 47937961.69630643,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 19.54013985168656,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.7254794522650413,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.10485751862451627,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240325",
+      "on_source_status": "on-source",
+      "permitted_disposition": "ASTROPHYSICAL",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 22.88073871866718,
+      "snr_global": 447.08184814453125,
+      "source_file": "data/20240325.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.04316769794700415,
+        "channel_rate": 0.10485751862451631,
+        "fits": true,
+        "fraction_held": 0.9155280542520355,
+        "note": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 104.85751862451632,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "ASTROPHYSICAL",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+            "id": "window",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "13.97 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.1048 cycles per sample, 0.3952 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 12.26, 171.23 -> 13.97 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 8.62 over the linear coordinate, best score 7.04, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.087, k=1, lock distance 0.7255 (+0.1048 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,179 Hz/s implies a 117 km/s coronal exciter",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "PASS"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "ASTROPHYSICAL"
+      },
+      "channel_rate": 0.10484485635562417,
+      "claimed_disposition": "ASTROPHYSICAL",
+      "disposition": "ASTROPHYSICAL",
+      "drift_hz_per_s": 41179.12610154313,
+      "duration_s": 256.0,
+      "frequency_hz": 48993707.25034199,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 12.256119718362863,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.7255126025153755,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.10484485635562417,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240325",
+      "on_source_status": "on-source",
+      "permitted_disposition": "ASTROPHYSICAL",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 13.971244552470985,
+      "snr_global": 171.2290496826172,
+      "source_file": "data/20240325.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.043109920662882883,
+        "channel_rate": 0.10484485635562413,
+        "fits": true,
+        "fraction_held": 0.9156386239337942,
+        "note": "91.6% of the trail fits in the window, so the dedoppler loses at most 4.3% of its amplitude to the window edge",
+        "samples": 1000,
+        "trail_channels": 104.84485635562413,
+        "verdict": "HOLDS",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "INSTRUMENTAL ALIAS",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "a 497-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+            "id": "window",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "14.74 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.4965 cycles per sample, 0.0035 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 0.59, 8.66 -> 14.74 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 5.23 over the linear coordinate, best score -6.60, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 7.930, k=1, lock distance 0.2999 (+0.4965 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "INSTRUMENTAL ALIAS"
+      },
+      "channel_rate": 0.49652322371846164,
+      "claimed_disposition": "INSTRUMENTAL ALIAS",
+      "disposition": "INSTRUMENTAL ALIAS",
+      "drift_hz_per_s": 195015.69416524307,
+      "duration_s": 256.0,
+      "frequency_hz": 45420638.86601793,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 0.5873871223211288,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.29991467589860044,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.49652322371846164,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240920",
+      "on_source_status": "on-source",
+      "permitted_disposition": "INSTRUMENTAL ALIAS",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 14.738741106977884,
+      "snr_global": 8.65757942199707,
+      "source_file": "data/20240920.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.5602905156112935,
+        "channel_rate": 0.4965232237184616,
+        "fits": false,
+        "fraction_held": 0.1933444306613821,
+        "note": "a 497-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+        "samples": 1000,
+        "trail_channels": 496.52322371846157,
+        "verdict": "TRUNCATES",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "INSTRUMENTAL ALIAS",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+            "id": "window",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "23.35 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.4962 cycles per sample, 0.0038 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 0.34, 7.91 -> 23.35 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 5.32 over the linear coordinate, best score -7.71, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 7.983, k=1, lock distance 0.2991 (+0.4962 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "INSTRUMENTAL ALIAS"
+      },
+      "channel_rate": 0.4962205427803159,
+      "claimed_disposition": "INSTRUMENTAL ALIAS",
+      "disposition": "INSTRUMENTAL ALIAS",
+      "drift_hz_per_s": 194896.81244845042,
+      "duration_s": 256.0,
+      "frequency_hz": 46588955.98498063,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 0.33862547464370724,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.2991222469147883,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.4962205427803159,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240920",
+      "on_source_status": "on-source",
+      "permitted_disposition": "INSTRUMENTAL ALIAS",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 23.345984949886542,
+      "snr_global": 7.905753135681152,
+      "source_file": "data/20240920.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.5601564306849435,
+        "channel_rate": 0.4962205427803159,
+        "fits": false,
+        "fraction_held": 0.19346236546780896,
+        "note": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+        "samples": 1000,
+        "trail_channels": 496.2205427803159,
+        "verdict": "TRUNCATES",
+        "window_channels": 96
+      }
+    },
+    {
+      "audit": {
+        "claimed": "INSTRUMENTAL ALIAS",
+        "deficits": [],
+        "downgraded": false,
+        "escalation": false,
+        "gates": [
+          {
+            "evidence": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+            "id": "window",
+            "layer": "measurement",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "22.05 sigma at the reported cell against a 5.5 sigma threshold",
+            "id": "detected",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "0.4962 cycles per sample, 0.0038 from the fold",
+            "id": "alias_signature",
+            "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "ovro-local-noise-v1: local scale 0.30, 6.49 -> 22.05 sigma",
+            "id": "noise_reference",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
+            "evidence": "gain 6.70 over the linear coordinate, best score -7.19, warp control not beaten",
+            "id": "nonlinear_beats_control",
+            "layer": "timedomain",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "rung 8.024, k=1, lock distance 0.2992 (+0.4962 cycles per sample)",
+            "id": "phi_lock",
+            "layer": "phi",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
+            "id": "astrophysical_explanation",
+            "layer": "interpretation",
+            "status": "FAIL"
+          },
+          {
+            "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
+            "id": "off_source",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "every candidate here comes from one instrument at one epoch",
+            "id": "independent_telescope",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "no world coordinate system and no sky position, so no barycentric velocity can be removed",
+            "id": "barycentric",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
+          },
+          {
+            "evidence": "same position and drift on 0 other day(s)",
+            "id": "repeat",
+            "layer": "confirmation",
+            "status": "FAIL"
+          }
+        ],
+        "permitted": "INSTRUMENTAL ALIAS"
+      },
+      "channel_rate": 0.4962430141849908,
+      "claimed_disposition": "INSTRUMENTAL ALIAS",
+      "disposition": "INSTRUMENTAL ALIAS",
+      "drift_hz_per_s": 194905.63837314476,
+      "duration_s": 256.0,
+      "frequency_hz": 47535772.91381668,
+      "instrument": "OVRO-LWA (spec_fits, single disk-integrated beam)",
+      "local_scale": 0.3025177763521671,
+      "metadata": {
+        "barycentric_reducible": false,
+        "drift_resolution_hz_s": 392.7624829001368,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "phi_lock_distance": 0.299181077816002,
+        "phi_locked": false,
+        "rate_cycles_per_sample": 0.4962430141849908,
+        "survey_threshold_sigma": 5.5
+      },
+      "observation_date": "20240920",
+      "on_source_status": "on-source",
+      "permitted_disposition": "INSTRUMENTAL ALIAS",
+      "resolution_hz_per_s": 392.7624829001368,
+      "snr_at_cell": 22.054378760314897,
+      "snr_global": 6.492942810058594,
+      "source_file": "data/20240920.fits",
+      "transform_version": "ovro-local-noise-v1",
+      "window_check": {
+        "amplitude_loss": 0.5601663895301594,
+        "channel_rate": 0.4962430141849907,
+        "fits": false,
+        "fraction_held": 0.19345360489893543,
+        "note": "a 496-channel trail in a 96-channel window: at most 19.3% of the integration can contain the lane, so a sigma from this window is a statement about the window (limit 20% amplitude loss)",
+        "samples": 1000,
+        "trail_channels": 496.2430141849907,
+        "verdict": "TRUNCATES",
+        "window_channels": 96
+      }
+    }
+  ],
+  "required": {
+    "ASTROPHYSICAL": [
+      "detected",
+      "astrophysical_explanation"
+    ],
+    "CONFIRMED TECHNOSIGNATURE CANDIDATE": [
+      "detected",
+      "window",
+      "repeat",
+      "off_source",
+      "independent_telescope",
+      "barycentric"
+    ],
+    "INSTRUMENTAL ALIAS": [
+      "detected",
+      "alias_signature"
+    ],
+    "NONLINEAR-COHERENT BUT UNRESOLVED": [
+      "detected",
+      "nonlinear_beats_control"
+    ],
+    "NULL RESULT": [],
+    "PIPELINE ARTIFACT": [
+      "detected"
+    ],
+    "TERRESTRIAL RFI": [
+      "detected"
+    ],
+    "UNRESOLVED": [
+      "detected"
+    ]
+  },
+  "samples": 1000,
+  "transform_version": "ovro-local-noise-v1",
+  "window_channels": 96
+}
