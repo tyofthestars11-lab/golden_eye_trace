@@ -79,10 +79,10 @@ BOXCAR = 3
 LANE_WIDTH = 1.5
 F0_MHZ = 47.0
 INJECTIONS = 5
+UNIFORM_INJECTIONS = 3
 TARGETS = (6.0, 10.0, 18.0)      # stationary sigma, one per bracket of threshold
 AMPLITUDE_GRID = (0.04, 0.06, 0.09, 0.13, 0.18, 0.25, 0.35, 0.45)
-RATES = (0.0, 500.0, 2000.0, 5000.0, 10000.0, 20000.0, 30000.0, 41190.2,
-         47131.0, 58914.0, 80000.0, 100000.0, 150000.0, 190000.0)
+RATES = (0.0, 5000.0, 20000.0, 41190.2, 58914.0, 100000.0, 150000.0, 190000.0)
 PLACEMENTS = ("same-entry", "uniform")
 #: One entry channel for every rate, so the only thing the ladder changes is the
 #: drift. An earlier version compared an edge entry against a central reference
@@ -138,8 +138,13 @@ def cell_significance(rate_hz_s: float, data: np.ndarray,
     freqs_mhz = F0_MHZ + np.arange(CHANNELS) * df_mhz
     normalised, _ = control_bandpass(data)
     clean, _rfi = excise_rfi(normalised)
+    # One drift range for the whole ladder - the fold, as a survey runs it - so
+    # the map holds the same trials at every rate. Varying the range with the
+    # injection changed the map's composition, and the calibration that
+    # normalises the map then moved with it: that confound produced a 1.5x
+    # excess over the guard's prediction that had nothing to do with truncation.
     snr_map, drifts = dedoppler(clean, TSAMP_S, df_mhz,
-                                max_drift_hz_s=max(float(rate_hz_s), 3000.0),
+                                max_drift_hz_s=0.5 * CHANNEL_HZ / TSAMP_S,
                                 boxcar=BOXCAR)
     live = ~(clean == 0).all(axis=0)
     snr_map, _calibration = calibrate_map(snr_map, live)
@@ -194,12 +199,14 @@ def main() -> int:
             result = {"amplitude": bracket["amplitude"],
                       "stationary_snr": bracket["stationary_snr"]}
             for placement in PLACEMENTS:
+                count = INJECTIONS if placement == "same-entry" else UNIFORM_INJECTIONS
                 values = [measure(rate, bracket["amplitude"], placement,
                                   9000 + 7 * index)
-                          for index in range(INJECTIONS)]
+                          for index in range(count)]
                 result[placement] = {
+                    "n_injections": count,
                     "n_recovered": sum(r["recovered"] for r in values),
-                    "fraction": sum(r["recovered"] for r in values) / INJECTIONS,
+                    "fraction": sum(r["recovered"] for r in values) / count,
                     "median_snr": float(np.median([r["snr"] for r in values])),
                     "mean_held": float(np.mean([r["held"] for r in values])),
                 }

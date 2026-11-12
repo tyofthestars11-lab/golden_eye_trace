@@ -34,6 +34,31 @@ REGRESSIONS = (
         "artifact": "prereg/regression_narrow_window.json",
     },
     {
+        "id": "per-trial-calibration",
+        "date": "2026-11-12",
+        "method": "calibrating each drift trial of the map by its own spread",
+        "result": (
+            "a 32-channel window reported 174 sigma for a lane the 96-channel "
+            "window reported at 135"
+        ),
+        "verdict": "INVALID",
+        "why": (
+            "A trial whose accumulated shift leaves the band sums fewer "
+            "integrations, so its spread really is smaller - and dividing each "
+            "trial by its own spread normalises away exactly the sensitivity loss "
+            "truncation causes. The truncated search then outscored the complete "
+            "one, which inverts the quantity being measured."
+        ),
+        "tell": (
+            "The narrow window scoring higher than the wide window on the same "
+            "synthetic lane."
+        ),
+        "superseded_by": "one spread for the whole map, in calibrate_map()",
+        "superseded_result": "narrow below 0.8x the wide, as the fixture requires",
+        "fixture": "tests/test_window_truncation.py",
+        "artifact": "prereg/regression_narrow_window.json",
+    },
+    {
         "id": "chi2-lock-k0",
         "date": "2026-11-11",
         "method": "golden-ratio lock distance scored over all integer k",

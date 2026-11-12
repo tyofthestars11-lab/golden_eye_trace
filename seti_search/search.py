@@ -303,6 +303,15 @@ def calibrate_map(
     would otherwise bias the spread low). Returns (map, spread); the map is
     returned unchanged with spread 1.0 when the input is too small to measure.
 
+    One scale is used for the whole map, and that is a deliberate choice against
+    the obvious-looking alternative. Scaling each drift trial by its own spread
+    would give every trial the noise it actually has, since a trial whose shift
+    runs off the band sums fewer integrations - but it also normalises away the
+    sensitivity loss that truncation causes, and then a truncated trial comes out
+    *stronger* than a complete one: on the truncation fixture, a 32-channel window
+    reported 174 sigma against the 96-channel window's 135. A common scale keeps
+    the comparison honest, even though it is not the noise the fast trial has.
+
     The spread is measured robustly, by sigma-clipping around the bulk: a plain
     standard deviation is driven by the very peaks being judged. On a 4,096-cell
     band holding one 219-sigma injection, the standard deviation read 3.73
