@@ -1,0 +1,682 @@
+{
+  "candidates": [
+    {
+      "band_note": "inside the 54-60 MHz TV channel 2 allocation (55.25 video, 59.75 audio)",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 7823.7007183908045,
+      "date": "20240207",
+      "disposition": "UNRESOLVED (in a TV band, but no repeat across days)",
+      "drift_hz_s": 8194.663463845607,
+      "duration_s": 409.6,
+      "earth_drift_max_hz_s": 0.005540453363742524,
+      "freq_mhz": 54.452957,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": true,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 110.45306187263895,
+        "golden_separation_deg": 27.054702177361037,
+        "k": 1,
+        "lock_distance": 0.9453768921198882,
+        "locked": false,
+        "rate": 0.020864170639050498,
+        "rung": 8.30681406075733
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 45115.976021450384,
+      "resolution_hz_s": 245.47655181258548,
+      "snr": 7.682220935821533,
+      "source": "published pair",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "inside the 50-54 MHz amateur 6 m allocation",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 7727.48511574421,
+      "date": "20240207",
+      "disposition": "UNRESOLVED",
+      "drift_hz_s": 6970.898755113434,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.00547231705862099,
+      "freq_mhz": 53.7832964055797,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 101.19577461379458,
+        "golden_separation_deg": 36.31198943620541,
+        "k": 1,
+        "lock_distance": 0.9535341315232964,
+        "locked": false,
+        "rate": 0.01774838244131847,
+        "rung": 8.281099373927207
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 38856.35526140398,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 7.158594608306885,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "inside the 54-60 MHz TV channel 2 allocation (55.25 video, 59.75 audio)",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 8031.753017241379,
+      "date": "20240207",
+      "disposition": "UNRESOLVED (in a TV band; repeat untestable, outside survey coverage)",
+      "drift_hz_s": 7866.859885523896,
+      "duration_s": 409.6,
+      "earth_drift_max_hz_s": 0.0056877882504530325,
+      "freq_mhz": 55.901001,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": true,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": false,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 130.08734174908795,
+        "golden_separation_deg": 7.420422300912037,
+        "k": 1,
+        "lock_distance": 0.9475619300169479,
+        "locked": false,
+        "rate": 0.02002956042908027,
+        "rung": 8.3613537270808
+      },
+      "repeat_testable": false,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 42189.32075693613,
+      "resolution_hz_s": 245.47655181258548,
+      "snr": 7.001245498657227,
+      "source": "published pair",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6787.588150154291,
+      "date": "20240322",
+      "disposition": "UNRESOLVED",
+      "drift_hz_s": -172.82172648386077,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.004787768082113323,
+      "freq_mhz": 47.241613525073866,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": true
+      },
+      "phi": {
+        "golden_phase_deg": 4.174869608265908,
+        "golden_separation_deg": 133.33289444173408,
+        "k": 1,
+        "lock_distance": 0.9988480234909701,
+        "locked": false,
+        "rate": 0.00044001587220794246,
+        "rung": 8.01159686002296
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 1,
+      "required_accel_m_s2": 1096.716354764246,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 6.666425704956055,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6798.025500522643,
+      "date": "20240324",
+      "disposition": "UNRESOLVED",
+      "drift_hz_s": -503.98589367346983,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.004784020675971876,
+      "freq_mhz": 47.3142574836376,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": true
+      },
+      "phi": {
+        "golden_phase_deg": 5.32436515589734,
+        "golden_separation_deg": 132.18339889410265,
+        "k": 1,
+        "lock_distance": 0.9966405849414515,
+        "locked": false,
+        "rate": 0.0012831823700473258,
+        "rung": 8.014789903210826
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 1,
+      "required_accel_m_s2": 3193.3539253775066,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 11.667951583862305,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6606.937424915485,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL (bright burst group)",
+      "drift_hz_s": 41190.2107171935,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.0046443748672920695,
+      "freq_mhz": 45.98428447741178,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 343.9942306172552,
+        "golden_separation_deg": 153.5135334327448,
+        "k": 1,
+        "lock_distance": 0.7254387158744963,
+        "locked": false,
+        "rate": 0.10487307854112549,
+        "rung": 7.955539529492376
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 268537.7114546856,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 953.9804077148438,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6750.397031306507,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL (bright burst group)",
+      "drift_hz_s": 41185.37626827356,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.004745220410021362,
+      "freq_mhz": 46.982763337893296,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 0.06448455771260342,
+        "golden_separation_deg": 137.4432794922874,
+        "k": 1,
+        "lock_distance": 0.725470940825046,
+        "locked": false,
+        "rate": 0.10486076970530125,
+        "rung": 8.000179123771424
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 262799.89315064927,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 604.0343017578125,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6887.63817475667,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL (bright burst group)",
+      "drift_hz_s": 41184.09936571234,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.0048416946576802945,
+      "freq_mhz": 47.93796169630643,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 15.121655694068977,
+        "golden_separation_deg": 122.38610835593101,
+        "k": 1,
+        "lock_distance": 0.7254794522650413,
+        "locked": false,
+        "rate": 0.10485751862451627,
+        "rung": 8.042004599150191
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 257555.43086251916,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 447.08184814453125,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 7039.325754359481,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL (bright burst group)",
+      "drift_hz_s": 41179.12610154313,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.004948324089303323,
+      "freq_mhz": 48.99370725034199,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 31.418628856238684,
+        "golden_separation_deg": 106.08913519376131,
+        "k": 1,
+        "lock_distance": 0.7255126025153755,
+        "locked": false,
+        "rate": 0.10484485635562417,
+        "rung": 8.087273969045107
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 251975.04179860567,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 171.2290496826172,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6525.953860060048,
+      "date": "20240920",
+      "disposition": "INSTRUMENTAL ALIASING (rate at Nyquist)",
+      "drift_hz_s": 195015.69416524307,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.00455573886616494,
+      "freq_mhz": 45.42063886601793,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 334.76770373494446,
+        "golden_separation_deg": 162.74006031505553,
+        "k": 1,
+        "lock_distance": 0.29991467589860044,
+        "locked": false,
+        "rate": 0.49652322371846164,
+        "rung": 7.929910288152623
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 1287173.3150833175,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 8.65757942199707,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6693.815515083424,
+      "date": "20240920",
+      "disposition": "INSTRUMENTAL ALIASING (rate at Nyquist)",
+      "drift_hz_s": 194896.81244845042,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.004672922328127348,
+      "freq_mhz": 46.58895598498063,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 353.76742238918496,
+        "golden_separation_deg": 143.74034166081503,
+        "k": 1,
+        "lock_distance": 0.2991222469147883,
+        "locked": false,
+        "rate": 0.4962205427803159,
+        "rung": 7.982687284414403
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 1254129.722913778,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 7.905753135681152,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    },
+    {
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "bandwidth_hz": 301641.58686730504,
+      "channel_hz": 100547.19562243501,
+      "coronal_20kms_drift_hz_s": 6829.852430146075,
+      "date": "20240920",
+      "disposition": "INSTRUMENTAL ALIASING (rate at Nyquist)",
+      "drift_hz_s": 194905.63837314476,
+      "duration_s": 256.0,
+      "earth_drift_max_hz_s": 0.004767889083098918,
+      "freq_mhz": 47.535772913816686,
+      "gates": {
+        "barycentric_reducible": false,
+        "explained_by_rfi": false,
+        "independent_telescope": false,
+        "off_source_available": false,
+        "physically_possible_orbital": false,
+        "repeat_testable": true,
+        "repeats_same_position": false
+      },
+      "phi": {
+        "golden_phase_deg": 8.818691835291247,
+        "golden_separation_deg": 128.68907221470874,
+        "k": 1,
+        "lock_distance": 0.299181077816002,
+        "locked": false,
+        "rate": 0.4962430141849908,
+        "rung": 8.024496366209142
+      },
+      "repeat_testable": true,
+      "repeats_other_days": 0,
+      "required_accel_m_s2": 1229205.645017726,
+      "resolution_hz_s": 392.7624829001368,
+      "snr": 6.492942810058594,
+      "source": "survey",
+      "survey_config": [
+        1000,
+        96
+      ],
+      "threshold": 5.5
+    }
+  ],
+  "completeness": {
+    "0.0000": 1.0,
+    "0.0200": 1.0,
+    "0.3820": 1.0,
+    "0.6000": 0.0
+  },
+  "coverage": [
+    {
+      "freq_mhz": 54.452957,
+      "in_survey_band": true,
+      "in_wide_band": true
+    },
+    {
+      "freq_mhz": 55.901001,
+      "in_survey_band": false,
+      "in_wide_band": true
+    }
+  ],
+  "false_positive_detail": [
+    {
+      "max_snr": 0.0,
+      "n_hits": 0,
+      "seed": 21
+    },
+    {
+      "max_snr": 0.0,
+      "n_hits": 0,
+      "seed": 22
+    },
+    {
+      "max_snr": 0.0,
+      "n_hits": 0,
+      "seed": 23
+    }
+  ],
+  "false_positive_hits": 0,
+  "false_positive_runs": 3,
+  "headline": "NULL RESULT",
+  "injections": [
+    {
+      "aliased": false,
+      "error_hz_s": 10.861176281852824,
+      "expected_hz_s": 0.0,
+      "expected_nu": 0.0,
+      "found_hz_s": -10.861176281852824,
+      "injected_hz_s": 0.0,
+      "nu": 0.0,
+      "recovered": true,
+      "seed": 11,
+      "snr": 14.864627838134766
+    },
+    {
+      "aliased": false,
+      "error_hz_s": 25.64630936447381,
+      "expected_hz_s": 0.0,
+      "expected_nu": 0.0,
+      "found_hz_s": 25.64630936447381,
+      "injected_hz_s": 0.0,
+      "nu": 0.0,
+      "recovered": true,
+      "seed": 12,
+      "snr": 15.278263092041016
+    },
+    {
+      "aliased": false,
+      "error_hz_s": 25.034441736635927,
+      "expected_hz_s": 7855.2496580027355,
+      "expected_nu": 0.02,
+      "found_hz_s": 7880.284099739371,
+      "injected_hz_s": 7855.2496580027355,
+      "nu": 0.02,
+      "recovered": true,
+      "seed": 11,
+      "snr": 14.2369384765625
+    },
+    {
+      "aliased": false,
+      "error_hz_s": 125.50384501466215,
+      "expected_hz_s": 7855.2496580027355,
+      "expected_nu": 0.02,
+      "found_hz_s": 7980.753503017398,
+      "injected_hz_s": 7855.2496580027355,
+      "nu": 0.02,
+      "recovered": true,
+      "seed": 12,
+      "snr": 14.720011711120605
+    },
+    {
+      "aliased": false,
+      "error_hz_s": 163.43303013287368,
+      "expected_hz_s": 150021.91896205285,
+      "expected_nu": 0.38196601125010515,
+      "found_hz_s": 149858.48593191997,
+      "injected_hz_s": 150021.91896205285,
+      "nu": 0.38196601125010515,
+      "recovered": true,
+      "seed": 11,
+      "snr": 45.562095642089844
+    },
+    {
+      "aliased": false,
+      "error_hz_s": 1466.9743730336195,
+      "expected_hz_s": 150021.91896205285,
+      "expected_nu": 0.38196601125010515,
+      "found_hz_s": 151488.89333508647,
+      "injected_hz_s": 150021.91896205285,
+      "nu": 0.38196601125010515,
+      "recovered": true,
+      "seed": 12,
+      "snr": 45.45855712890625
+    },
+    {
+      "aliased": true,
+      "error_hz_s": null,
+      "expected_hz_s": -157104.99316005473,
+      "expected_nu": -0.4,
+      "found_hz_s": null,
+      "injected_hz_s": 235657.48974008203,
+      "nu": 0.6,
+      "recovered": false,
+      "seed": 11,
+      "snr": null
+    },
+    {
+      "aliased": true,
+      "error_hz_s": null,
+      "expected_hz_s": -157104.99316005473,
+      "expected_nu": -0.4,
+      "found_hz_s": null,
+      "injected_hz_s": 235657.48974008203,
+      "nu": 0.6,
+      "recovered": false,
+      "seed": 12,
+      "snr": null
+    }
+  ],
+  "phi_best_distance": 0.2991222469147883,
+  "phi_control_p": 1.0,
+  "reproduction": [
+    {
+      "found": {
+        "distance": 0.05462310788011182,
+        "drift_hz_s": 8194.663463845607,
+        "freq_mhz": 54.45311313164136,
+        "k": 0,
+        "locked": false,
+        "rate": 0.020864170639050498,
+        "resolved": true,
+        "snr": 7.682220935821533
+      },
+      "known": {
+        "date": "20240207",
+        "drift_hz_s": 8194.7,
+        "freq_mhz": 54.452957,
+        "snr": 7.68
+      },
+      "reproduced": true
+    },
+    {
+      "found": {
+        "distance": 0.052438069983052074,
+        "drift_hz_s": 7866.859885523896,
+        "freq_mhz": 55.90148879488332,
+        "k": 0,
+        "locked": false,
+        "rate": 0.02002956042908027,
+        "resolved": true,
+        "snr": 7.001245498657227
+      },
+      "known": {
+        "date": "20240207",
+        "drift_hz_s": 7866.9,
+        "freq_mhz": 55.901001,
+        "snr": 7.0
+      },
+      "reproduced": true
+    }
+  ],
+  "survey_band_mhz": [
+    45.273461012311905,
+    54.925991792065666
+  ],
+  "wide_band_mhz": [
+    40.447195622435025,
+    59.75225718194255
+  ]
+}

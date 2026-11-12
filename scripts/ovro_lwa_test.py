@@ -194,10 +194,12 @@ def main() -> int:
     for hit in sorted(hits, key=lambda h: -h.snr)[:10]:
         resolved = abs(hit.drift_hz_s) > resolution
         nu, distance = drift_lock(hit.drift_hz_s, channel_hz, TSAMP_S)
+        k = round(nu / THETA)
         rows.append({"freq_mhz": hit.freq_mhz, "drift_hz_s": hit.drift_hz_s,
                      "snr": hit.snr, "resolved": bool(resolved), "rate": nu,
-                     "distance": distance,
-                     "locked": bool(resolved and distance <= LOCK_TOLERANCE)})
+                     "k": int(k), "distance": distance,
+                     "locked": bool(resolved and k != 0
+                                    and distance <= LOCK_TOLERANCE)})
         print(f"      {hit.freq_mhz:9.4f} MHz  drift {hit.drift_hz_s:>12.1f} Hz/s"
               f"  snr {hit.snr:5.2f}  rate {nu:.4f}  dist {distance:.3f}"
               f"  {'resolved' if resolved else 'below resolution'}")

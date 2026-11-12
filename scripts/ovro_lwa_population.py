@@ -125,10 +125,13 @@ def search_day(path: str, samples: int, chans: int, threshold: float) -> dict:
     for hit in hits:
         resolved = abs(hit.drift_hz_s) > resolution
         nu, distance = drift_lock(hit.drift_hz_s, channel_hz, TSAMP_S)
+        # registered criterion: k = 0 is a stationary line and never counts
+        k = round(nu / THETA)
         rows.append({"freq_mhz": hit.freq_mhz, "drift_hz_s": hit.drift_hz_s,
                      "snr": hit.snr, "resolved": bool(resolved), "rate": nu,
-                     "distance": distance,
-                     "locked": bool(resolved and distance <= LOCK_TOLERANCE)})
+                     "k": int(k), "distance": distance,
+                     "locked": bool(resolved and k != 0
+                                    and distance <= LOCK_TOLERANCE)})
     return {"ntime": ntime, "nfreq": nfreq, "channel_hz": channel_hz,
             "samples_used": int(ntime_use), "channels_used": int(nch_use),
             "hours": meta["hours"], "nyquist_hz_s": nyquist,
