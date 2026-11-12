@@ -1,0 +1,38 @@
+{
+  "band_mhz": [
+    13.4,
+    86.9
+  ],
+  "boxcar": 3,
+  "channel_hz": 100547.19562243501,
+  "channels": 731,
+  "declared": "2026-11-12",
+  "drift_range": "Nyquist, 0.5 channel per sample",
+  "drift_step": "library default: half a boxcar of smear over the integration",
+  "files": [
+    "data/20240207.fits",
+    "data/20240322.fits",
+    "data/20240324.fits",
+    "data/20240325.fits",
+    "data/20240326.fits",
+    "data/20240920.fits"
+  ],
+  "group_ratio": 1.05,
+  "grouping_rule": "sort a day's candidates by frequency; chain neighbours whose ratio is at most GROUP_RATIO; any chain of three or more is a group to fit",
+  "integrations": "every integration present in each file",
+  "models": {
+    "comb": "f_n = f_0 + n*df (two parameters)",
+    "scale": "f_n = f_0 * q**n (two parameters)"
+  },
+  "no_inspection_before_declaration": true,
+  "purpose": "expand frequency coverage from the survey's 96-channel window to all 731 channels of every available day, and from 1000 samples to every integration, before inspecting anything in the new coverage",
+  "threshold_sigma": 5.5,
+  "tsamp_s": 0.256,
+  "verdict_rules": {
+    "decisive": "delta AIC > 10 and the same model wins held-out prediction",
+    "noise": "RMS residual above half a channel means neither model fits",
+    "replication": "SCALE FAMILY SUPPORTED additionally needs the same q on at least two separated groups or dates",
+    "span": "a group spanning under one phi rung cannot return SCALE FAMILY SUPPORTED or FREQUENCY COMB SUPPORTED; at most BOTH MODELS FIT or INDETERMINATE DUE TO LIMITED SPAN"
+  },
+  "window_guard": "seti_search.stabilizer, 20% significance tolerance"
+}

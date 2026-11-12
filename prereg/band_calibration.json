@@ -1,0 +1,204 @@
+{
+  "days": {
+    "20240207": {
+      "narrow": {
+        "calibration_factor": 1.1307,
+        "cells": {
+          "54.4530": {
+            "channel": 91,
+            "detected": false,
+            "drift_hz_s": 2356.6,
+            "live": true,
+            "significance": 4.47
+          },
+          "55.9010": {
+            "outside_window": true
+          }
+        },
+        "channels": 96
+      },
+      "wide": {
+        "calibration_factor": 1.1533,
+        "cells": {
+          "54.4530": {
+            "channel": 408,
+            "detected": false,
+            "drift_hz_s": -189115.1,
+            "live": true,
+            "significance": 2.29
+          },
+          "55.9010": {
+            "channel": 423,
+            "detected": false,
+            "drift_hz_s": -136681.3,
+            "live": true,
+            "significance": 2.32
+          }
+        },
+        "channels": 731
+      }
+    },
+    "20240325": {
+      "narrow": {
+        "calibration_factor": 0.3765,
+        "cells": {
+          "45.9843": {
+            "channel": 7,
+            "detected": true,
+            "drift_hz_s": 41240.1,
+            "live": true,
+            "significance": 954.18
+          },
+          "46.9828": {
+            "channel": 17,
+            "detected": true,
+            "drift_hz_s": 41240.1,
+            "live": true,
+            "significance": 604.16
+          },
+          "47.9380": {
+            "channel": 27,
+            "detected": true,
+            "drift_hz_s": 41240.1,
+            "live": true,
+            "significance": 447.18
+          },
+          "48.9937": {
+            "channel": 37,
+            "detected": true,
+            "drift_hz_s": 41240.1,
+            "live": true,
+            "significance": 171.27
+          }
+        },
+        "channels": 96
+      },
+      "wide": {
+        "calibration_factor": 1.9646,
+        "cells": {
+          "45.9843": {
+            "channel": 324,
+            "detected": true,
+            "drift_hz_s": -137270.5,
+            "live": false,
+            "significance": 13.99
+          },
+          "46.9828": {
+            "channel": 334,
+            "detected": true,
+            "drift_hz_s": -121363.6,
+            "live": false,
+            "significance": 13.67
+          },
+          "47.9380": {
+            "channel": 344,
+            "detected": true,
+            "drift_hz_s": -149642.5,
+            "live": false,
+            "significance": 12.8
+          },
+          "48.9937": {
+            "channel": 354,
+            "detected": true,
+            "drift_hz_s": -155533.9,
+            "live": false,
+            "significance": 11.04
+          }
+        },
+        "channels": 731
+      }
+    },
+    "20240920": {
+      "narrow": {
+        "calibration_factor": 0.8928,
+        "cells": {
+          "45.4206": {
+            "channel": 1,
+            "detected": true,
+            "drift_hz_s": 195006.6,
+            "live": true,
+            "significance": 8.65
+          },
+          "46.5890": {
+            "channel": 13,
+            "detected": true,
+            "drift_hz_s": 195006.6,
+            "live": true,
+            "significance": 7.9
+          },
+          "47.5358": {
+            "channel": 23,
+            "detected": true,
+            "drift_hz_s": 195006.6,
+            "live": true,
+            "significance": 6.49
+          }
+        },
+        "channels": 96
+      },
+      "wide": {
+        "calibration_factor": 1.6745,
+        "cells": {
+          "45.4206": {
+            "channel": 318,
+            "detected": false,
+            "drift_hz_s": 101332.7,
+            "live": true,
+            "significance": -0.04
+          },
+          "46.5890": {
+            "channel": 330,
+            "detected": false,
+            "drift_hz_s": 193828.3,
+            "live": true,
+            "significance": 0.06
+          },
+          "47.5358": {
+            "channel": 340,
+            "detected": false,
+            "drift_hz_s": 187936.8,
+            "live": true,
+            "significance": 0.06
+          }
+        },
+        "channels": 731
+      }
+    }
+  },
+  "excision": {
+    "20240325": {
+      "narrow": {
+        "blanked_time_samples": 505,
+        "carrier_channels_reported": 0,
+        "fully_blanked_channels": 0,
+        "total_channels": 96,
+        "total_time_samples": 1000
+      },
+      "wide": {
+        "blanked_time_samples": 530,
+        "carrier_channels_reported": 208,
+        "fully_blanked_channels": 208,
+        "total_channels": 731,
+        "total_time_samples": 1000
+      }
+    },
+    "20240920": {
+      "narrow": {
+        "blanked_time_samples": 228,
+        "carrier_channels_reported": 0,
+        "fully_blanked_channels": 0,
+        "total_channels": 96,
+        "total_time_samples": 1000
+      },
+      "wide": {
+        "blanked_time_samples": 504,
+        "carrier_channels_reported": 79,
+        "fully_blanked_channels": 79,
+        "total_channels": 731,
+        "total_time_samples": 1000
+      }
+    }
+  },
+  "integrations": 1000,
+  "narrow_channels": 96
+}

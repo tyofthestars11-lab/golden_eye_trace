@@ -36,6 +36,9 @@ and every claim about "the archive" means "these six days".
 - axes `(time, freq, 1, Stokes)`; layout inferred from axis sizes because the
   header carries **no CTYPE/CRVAL/CDELT**
 - 731 channels, width `100547.19562243501` Hz, span 73.5 MHz
+- the survey searched 96 of those 731 channels per day (a 9.7 MHz window at the
+  band centre, channels 317-412); `scripts/expanded_search.py` searches all 731,
+  and `prereg/expanded_search*.json` records which variant produced which rows
 - cadence `0.256` s; the largest file is `0.50` h
 - one **disk-integrated beam per file**: there is no off-source product, no
   second beam, and no second instrument in this archive

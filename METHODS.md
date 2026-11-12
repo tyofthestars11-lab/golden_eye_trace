@@ -113,3 +113,29 @@ Closed vocabulary in `seti_search/signal_record.py`. Order of precedence follows
 evidence, not preference: a near-Nyquist rate is an alias regardless of how
 strong it is, four parallel lanes at one drift are astrophysical regardless of
 how significant they are, and "confirmed" is never available here.
+
+## Comb against scale family (`seti_search/model_select.py`)
+
+**Input.** A group of three or more line frequencies in Hz, and the channel width.
+
+**Transform.** Fit `f_n = f0 + n*df` and `f_n = f0*q**n` to the same quantity by
+least squares - the scale fit is profiled, so for each `q` the best `f0` is closed
+form and the single nonlinear parameter is searched exhaustively. Both models take
+two parameters, so AIC and BIC are comparable; leave-one-out refits from scratch
+per fold and predicts the omitted line in Hz and in φ rungs; a sign-flip bootstrap
+of the better model's residuals puts a 95% interval on the AIC gap; dropping each
+line in turn tests whether the preference is an artefact of one measurement. Two
+physical readings outrank the fit: spacings on the channel grid are instrumental,
+and one drift shared across many spacings is one broadband event.
+
+**Output.** `results/comb_vs_scale.csv`, `results/heldout_predictions.csv`,
+`results/expanded_phi_groups.json`, two figures, and exactly one of seven labels
+per group.
+
+**Claim.** Nothing about a source. A named model requires a group spanning at
+least one φ rung, a decisive AIC gap, agreement from held-out prediction, a
+bootstrap interval excluding zero, and - for a scale family - the same `q` on a
+second separated group. `synthetic_calibration` reports the rate at which the
+pipeline recovers a known model at the data's own residual size and span; when
+that rate is near half, the label is INDETERMINATE DUE TO LIMITED SPAN and the
+number is printed beside it.

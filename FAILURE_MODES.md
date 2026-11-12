@@ -101,6 +101,30 @@ number here, and are preserved unaltered in `phi-quantum-pulses/`.
 The general lesson, which is why they are listed at all: a verification that can
 only pass is not a test. Every fixture above failed at least once.
 
+## 10. Reading a candidate out of one window width
+
+Widening the band from the survey's 96 channels to all 731 moves the same four
+lines from 954 sigma to 14 sigma with no change to the data, the threshold or the
+integration count, and at full band they are gone entirely. Two gates do this and
+neither is the sky:
+
+- `calibrate_map` measures **one** spread for the whole map. The 73.5 MHz band's
+  spread is `1.965` where the 96-channel window's is `0.377` - a factor 5.2, so
+  every significance scales with the window.
+- `excise_rfi`'s carrier test compares each channel against the band around it.
+  In the full band it blanks **208 of 731** channels, and the channels holding the
+  group are among them. In the 96-channel window it blanks none.
+
+The 20240920 trio shows the third version: its channels survive, but the wide
+band blanks **504** of 1000 time samples against **228** in the narrow window, so
+the integrations the peak was built from are not in the wide-band data.
+
+**Tell:** a candidate whose significance or existence depends on the window,
+reported as if the window were the sky. **Fix:** print the window guard beside
+every result, keep the window fixed within a comparison, and report a masked
+candidate as masked - `prereg/band_calibration.json` records both gates per
+candidate, and regression fixture `window-dependent-visibility` pins it.
+
 ## Checklist before believing a result
 
 1. Does any single number move by more than 2× when the noise reference changes?

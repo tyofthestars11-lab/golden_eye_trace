@@ -1,0 +1,16 @@
+{
+  "declared": "2026-11-12",
+  "declared_after_variant_A": true,
+  "grouping_rule": "as declared in expanded_prereg.json",
+  "held_constant": {
+    "boxcar": 3,
+    "channel_hz": 100547.19562243501,
+    "drift_range": "Nyquist",
+    "threshold_sigma": 5.5
+  },
+  "variants": {
+    "B": "all 731 channels, first 1000 integrations (256 s), Nyquist drift",
+    "C": "survey's 96-channel centre window (317:413), every integration"
+  },
+  "why": "variant A changed both frequency coverage and integration count at once, and the window guard showed the two cannot be separated from its result: A holds 21-52% of the Nyquist drift window, so candidates that vanish in A could have been lost to duration, to bandwidth, or to the drift range. B and C hold one axis at the survey's setting so each expansion is measured alone. Declaring them after seeing A is recorded here rather than hidden; neither variant's threshold, band or drift range was chosen from A's candidates."
+}

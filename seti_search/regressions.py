@@ -182,4 +182,40 @@ REGRESSIONS = (
         "fixture": "tests/test_rungs.py",
         "artifact": "prereg/phi_lock.json",
     },
+    {
+        "id": "window-dependent-visibility",
+        "date": "2026-11-12",
+        "method": "reading a candidate's sigma, or its existence, from one window width",
+        "result": (
+            "the 20240325 four-line group scores 954 sigma in a 96-channel window "
+            "and 14 sigma in the 731-channel band, same data, same threshold, same "
+            "1000 integrations; at full band the wide-band carrier test blanks 208 "
+            "of 731 channels and the group's channels are among them, so the "
+            "expanded search does not find it at all"
+        ),
+        "verdict": "INVALID as a verdict either way",
+        "why": (
+            "Two gates depend on the window's extent, not on the sky. calibrate_map "
+            "measures one spread for the whole map, and the spread of a 73.5 MHz band "
+            "full of low-frequency interference is 1.965 where the 96-channel window's "
+            "is 0.377 - a factor 5.2. Separately, the carrier test compares each "
+            "channel against the band it sits in, so widening the band changes which "
+            "channels are blanked. A candidate that disappears when the band widens "
+            "has been masked, not refuted, and one that brightens has not been "
+            "confirmed."
+        ),
+        "tell": "The same cell scoring 954 sigma and 14 sigma in two runs of the same pipeline.",
+        "superseded_by": (
+            "the preregistered 2x2 (96 or 731 channels) x (1000 or all integrations) "
+            "with the window guard printed beside every result, and "
+            "scripts/band_calibration_check.py recording both gates per candidate"
+        ),
+        "superseded_result": (
+            "variant B holds the drift window at 100% and finds no group in "
+            "45.4-54.5 MHz; the group is reported as masked, and the label for it "
+            "stays INDETERMINATE DUE TO LIMITED SPAN rather than becoming a null"
+        ),
+        "fixture": "scripts/band_calibration_check.py",
+        "artifact": "prereg/band_calibration.json",
+    },
 )

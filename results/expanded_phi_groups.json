@@ -1,0 +1,1533 @@
+{
+  "calibration": {
+    "jitter_sweep_hz": {
+      "1000": {
+        "confusion": {
+          "comb": {
+            "comb": 200,
+            "scale": 0,
+            "tie": 0
+          },
+          "scale": {
+            "comb": 0,
+            "scale": 200,
+            "tie": 0
+          }
+        },
+        "correct": {
+          "comb": 1.0,
+          "scale": 1.0
+        }
+      },
+      "5000": {
+        "confusion": {
+          "comb": {
+            "comb": 166,
+            "scale": 0,
+            "tie": 34
+          },
+          "scale": {
+            "comb": 0,
+            "scale": 162,
+            "tie": 38
+          }
+        },
+        "correct": {
+          "comb": 0.83,
+          "scale": 0.81
+        }
+      },
+      "10000": {
+        "confusion": {
+          "comb": {
+            "comb": 111,
+            "scale": 1,
+            "tie": 88
+          },
+          "scale": {
+            "comb": 1,
+            "scale": 107,
+            "tie": 92
+          }
+        },
+        "correct": {
+          "comb": 0.555,
+          "scale": 0.535
+        }
+      },
+      "20000": {
+        "confusion": {
+          "comb": {
+            "comb": 66,
+            "scale": 2,
+            "tie": 132
+          },
+          "scale": {
+            "comb": 1,
+            "scale": 53,
+            "tie": 146
+          }
+        },
+        "correct": {
+          "comb": 0.33,
+          "scale": 0.265
+        }
+      },
+      "40000": {
+        "confusion": {
+          "comb": {
+            "comb": 36,
+            "scale": 4,
+            "tie": 160
+          },
+          "scale": {
+            "comb": 2,
+            "scale": 34,
+            "tie": 164
+          }
+        },
+        "correct": {
+          "comb": 0.18,
+          "scale": 0.17
+        }
+      },
+      "80000": {
+        "confusion": {
+          "comb": {
+            "comb": 14,
+            "scale": 1,
+            "tie": 185
+          },
+          "scale": {
+            "comb": 1,
+            "scale": 15,
+            "tie": 184
+          }
+        },
+        "correct": {
+          "comb": 0.07,
+          "scale": 0.075
+        }
+      }
+    },
+    "note": "groups generated from a known model, fitted both ways; a rate near 0.5 means the pipeline cannot tell the models apart at that residual size and span",
+    "span_sweep_hz": {
+      "3000000.0": {
+        "confusion": {
+          "comb": {
+            "comb": 66,
+            "scale": 2,
+            "tie": 132
+          },
+          "scale": {
+            "comb": 1,
+            "scale": 53,
+            "tie": 146
+          }
+        },
+        "correct": {
+          "comb": 0.33,
+          "scale": 0.265
+        }
+      },
+      "10000000.0": {
+        "confusion": {
+          "comb": {
+            "comb": 200,
+            "scale": 0,
+            "tie": 0
+          },
+          "scale": {
+            "comb": 0,
+            "scale": 200,
+            "tie": 0
+          }
+        },
+        "correct": {
+          "comb": 1.0,
+          "scale": 1.0
+        }
+      },
+      "30000000.0": {
+        "confusion": {
+          "comb": {
+            "comb": 200,
+            "scale": 0,
+            "tie": 0
+          },
+          "scale": {
+            "comb": 0,
+            "scale": 200,
+            "tie": 0
+          }
+        },
+        "correct": {
+          "comb": 1.0,
+          "scale": 1.0
+        }
+      },
+      "60000000.0": {
+        "confusion": {
+          "comb": {
+            "comb": 200,
+            "scale": 0,
+            "tie": 0
+          },
+          "scale": {
+            "comb": 0,
+            "scale": 200,
+            "tie": 0
+          }
+        },
+        "correct": {
+          "comb": 1.0,
+          "scale": 1.0
+        }
+      }
+    }
+  },
+  "channel_hz": 100547.19562243501,
+  "group_ratio": 1.05,
+  "groups": [
+    {
+      "comparison": {
+        "bootstrap": {
+          "delta_aic_ci95": [
+            -12.52691403218462,
+            6.9323198221592435
+          ],
+          "draws": 800,
+          "excludes_zero": false,
+          "resampled_model": "scale"
+        },
+        "comb": {
+          "aic": 95.16918352227479,
+          "bic": 93.94177224451457,
+          "df": 998346.6677203808,
+          "f0": 45977159.18890779,
+          "ln_like": -45.584591761137396,
+          "model": "comb",
+          "residuals_hz": [
+            7125.288503989577,
+            7257.481265127659,
+            -35890.82804211974,
+            21508.05827306211
+          ],
+          "rms_hz": 21530.146764509114,
+          "rss": 1854188878.8052092
+        },
+        "delta_aic": 2.138710397177462,
+        "delta_bic": 2.138710397177462,
+        "drop_one": [
+          {
+            "delta_aic": 1.411778388903599,
+            "dropped_hz": 45984284.47741178,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": -0.3084921288577789,
+            "dropped_hz": 46982763.33789329,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": 0.29150956521074534,
+            "dropped_hz": 47937961.69630643,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": -2.3087839220801243,
+            "dropped_hz": 48993707.25034199,
+            "prefers": "comb"
+          }
+        ],
+        "drop_one_stable": false,
+        "loo": {
+          "comb": {
+            "max_error_hz": 71693.52757681906,
+            "mean_error_hz": 39271.232781047,
+            "mean_error_rung": 0.0016992078309180803
+          },
+          "comb_wins": 1,
+          "folds": [
+            {
+              "actual_hz": 45984284.47741178,
+              "error_hz": {
+                "comb": 23750.9616798684,
+                "scale": 10399.034223876894
+              },
+              "error_rung": {
+                "comb": 0.0010736127387883142,
+                "scale": 0.0004698921411852814
+              },
+              "index": 0,
+              "predicted": {
+                "comb": 45960533.51573191,
+                "scale": 45994683.51163565
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 46982763.33789329,
+              "error_hz": {
+                "comb": 10367.830378733575,
+                "scale": 25479.130417443812
+              },
+              "error_rung": {
+                "comb": 0.0004586284151683754,
+                "scale": 0.0011272689415602877
+              },
+              "index": 1,
+              "predicted": {
+                "comb": 46972395.50751456,
+                "scale": 46957284.20747585
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 47937961.69630643,
+              "error_hz": {
+                "comb": 51272.61148876697,
+                "scale": 36015.851464524865
+              },
+              "error_rung": {
+                "comb": 0.0022214545600666795,
+                "scale": 0.0015606831431689363
+              },
+              "index": 2,
+              "predicted": {
+                "comb": 47989234.3077952,
+                "scale": 47973977.547770955
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 48993707.25034199,
+              "error_hz": {
+                "comb": 71693.52757681906,
+                "scale": 37859.93993644416
+              },
+              "error_rung": {
+                "comb": 0.0030431356096489517,
+                "scale": 0.0016064646805512375
+              },
+              "index": 3,
+              "predicted": {
+                "comb": 48922013.72276517,
+                "scale": 48955847.310405545
+              },
+              "winner": "scale"
+            }
+          ],
+          "majority": "scale",
+          "scale": {
+            "max_error_hz": 37859.93993644416,
+            "mean_error_hz": 27438.489010572433,
+            "mean_error_rung": 0.0011910772266164357
+          },
+          "scale_wins": 3
+        },
+        "n_lines": 4,
+        "rms_in_channels": {
+          "comb": 0.21412975897763487,
+          "scale": 0.1638978523064241
+        },
+        "scale": {
+          "aic": 93.03047312509733,
+          "bic": 91.8030618473371,
+          "f0": 45987536.242821835,
+          "ln_like": -44.515236562548665,
+          "model": "scale",
+          "q": 1.0212558178330475,
+          "residuals_hz": [
+            -3251.7654100582004,
+            17724.402103364468,
+            -25357.55162461847,
+            10888.425808615983
+          ],
+          "rms_hz": 16479.469417950986,
+          "rss": 1086291649.1887271
+        },
+        "span": {
+          "10": 0.02753086966177891,
+          "2": 0.0914555694061455,
+          "e": 0.06339217008037415,
+          "phi": 0.13173443955273192,
+          "phi_rungs": 0.13173443955273192,
+          "sqrt2": 0.18291113881229099
+        },
+        "span_rungs": 0.13173443955273192
+      },
+      "controls": {
+        "drift_hz_s": [
+          41190.2107171935,
+          41185.37626827356,
+          41184.09936571234,
+          41179.12610154313
+        ],
+        "drift_spread": 0.0002691437711616306,
+        "grid_comb": false,
+        "half_integer_steps": 0,
+        "half_integer_suspected": false,
+        "integer_grid_steps": 0,
+        "median_step_hz": 998478.8604815155,
+        "one_event": false,
+        "span_over_spacing": 3.0140074988457153,
+        "steps_hz": [
+          998478.8604815155,
+          955198.3584131375,
+          1055745.5540355593
+        ],
+        "steps_in_channels": [
+          9.93044961921072,
+          9.500000000000048,
+          10.499999999999917
+        ],
+        "steps_off_integer_channels": [
+          0.06955038078928055,
+          0.49999999999995204,
+          0.4999999999999165
+        ]
+      },
+      "date": "20240325",
+      "drifts_hz_s": [
+        41190.21,
+        41185.38,
+        41184.1,
+        41179.13
+      ],
+      "freqs_mhz": [
+        45.984284,
+        46.982763,
+        47.937962,
+        48.993707
+      ],
+      "n_lines": 4,
+      "null": {
+        "draws": 1500,
+        "note": "uniform lines inside the group's own span, same line count",
+        "null_median": 0.09175719039990327,
+        "observed_abs_delta_aic": 2.1387243416183566,
+        "p_value": 0.002
+      },
+      "snr": [
+        30.6,
+        21.81,
+        22.88,
+        13.97
+      ],
+      "source": "survey-96ch-1000int",
+      "verdict": {
+        "label": "INDETERMINATE DUE TO LIMITED SPAN",
+        "reasons": [
+          "the group spans 0.132 phi rungs; under one rung the two models differ by less than the line spacing itself, so no fit can separate them (delta AIC 2.14, bootstrap CI [-12.5, 6.9])"
+        ]
+      }
+    },
+    {
+      "comparison": {
+        "bootstrap": {
+          "delta_aic_ci95": [
+            -1.6894667762583282,
+            2.3678679856045903
+          ],
+          "draws": 800,
+          "excludes_zero": false,
+          "resampled_model": "comb"
+        },
+        "comb": {
+          "aic": 77.69158828649866,
+          "bic": 75.88881286383487,
+          "df": 1057567.0238993831,
+          "f0": 45457555.56437236,
+          "ln_like": -36.84579414324933,
+          "model": "comb",
+          "residuals_hz": [
+            -36916.6983544305,
+            73833.39670888335,
+            -36916.6983544454
+          ],
+          "rms_hz": 52208.095490886175,
+          "rss": 8177055704.356469
+        },
+        "delta_aic": -0.6178498284745473,
+        "delta_bic": -0.6178498284745473,
+        "drop_one": [],
+        "drop_one_stable": null,
+        "loo": {
+          "applicable": false,
+          "comb": {
+            "max_error_hz": null,
+            "mean_error_hz": null,
+            "mean_error_rung": null
+          },
+          "comb_wins": 0,
+          "folds": [],
+          "majority": "undefined",
+          "scale": {
+            "max_error_hz": null,
+            "mean_error_hz": null,
+            "mean_error_rung": null
+          },
+          "scale_wins": 0,
+          "why": "three lines cannot be held out one at a time; two points fit a comb and a scale family exactly"
+        },
+        "n_lines": 3,
+        "rms_in_channels": {
+          "comb": 0.5192396980113986,
+          "scale": 0.5755583389042902
+        },
+        "scale": {
+          "aic": 78.3094381149732,
+          "bic": 76.50666269230942,
+          "f0": 45462492.76130137,
+          "ln_like": -37.1547190574866,
+          "model": "scale",
+          "q": 1.0229779671353185,
+          "residuals_hz": [
+            -41853.895283438265,
+            81827.55912041664,
+            -39994.780570968986
+          ],
+          "rms_hz": 57870.77689393342,
+          "rss": 10047080454.922255
+        },
+        "span": {
+          "10": 0.0197673212535323,
+          "2": 0.06566561983277303,
+          "e": 0.04551593924680785,
+          "phi": 0.09458607805651947,
+          "phi_rungs": 0.09458607805651947,
+          "sqrt2": 0.13133123966554602
+        },
+        "span_rungs": 0.09458607805651947
+      },
+      "controls": {
+        "drift_hz_s": [
+          195015.69416524307,
+          194896.81244845042,
+          194905.63837314476
+        ],
+        "drift_spread": 0.0006099449856091313,
+        "grid_comb": false,
+        "half_integer_steps": 0,
+        "half_integer_suspected": false,
+        "integer_grid_steps": 0,
+        "median_step_hz": 1057567.0238993764,
+        "one_event": false,
+        "span_over_spacing": 2.0,
+        "steps_hz": [
+          1168317.1189626977,
+          946816.9288360551
+        ],
+        "steps_in_channels": [
+          11.619589305601798,
+          9.416641836451106
+        ],
+        "steps_off_integer_channels": [
+          0.3804106943982024,
+          0.416641836451106
+        ]
+      },
+      "date": "20240920",
+      "drifts_hz_s": [
+        195015.69,
+        194896.81,
+        194905.64
+      ],
+      "freqs_mhz": [
+        45.420639,
+        46.588956,
+        47.535773
+      ],
+      "n_lines": 3,
+      "snr": [
+        14.74,
+        23.35,
+        22.05
+      ],
+      "source": "survey-96ch-1000int",
+      "verdict": {
+        "label": "NEITHER MODEL FIT",
+        "reasons": [
+          "even the better model leaves 0.52 channels of residual, above the 0.5-channel noise floor, and neither the grid nor a single drifting event explains the group"
+        ]
+      }
+    },
+    {
+      "comparison": {
+        "bootstrap": {
+          "delta_aic_ci95": [
+            1.215582368607608,
+            14.128624285988693
+          ],
+          "draws": 800,
+          "excludes_zero": true,
+          "resampled_model": "scale"
+        },
+        "comb": {
+          "aic": 409.4274330171255,
+          "bic": 410.70554767635605,
+          "df": 1729732.7203686023,
+          "f0": 53704479.16224293,
+          "ln_like": -202.71371650856275,
+          "model": "comb",
+          "residuals_hz": [
+            862278.6311732158,
+            -114373.56988851726,
+            -266834.0802066028,
+            574927.9133295864,
+            -272480.57163018733,
+            -509468.4381681755,
+            -465252.90904431045,
+            -375180.4294299558,
+            -721046.467689082,
+            681454.2820869088,
+            80848.6346487552,
+            -960.3069274574518,
+            23471.89230030775,
+            502615.4194454551
+          ],
+          "rms_hz": 470058.5996301058,
+          "rss": 3093371219207.025
+        },
+        "delta_aic": 5.873711186526862,
+        "delta_bic": 5.873711186526862,
+        "drop_one": [
+          {
+            "delta_aic": 0.9926458048979612,
+            "dropped_hz": 54566757.79341614,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": -3.2957567430270274,
+            "dropped_hz": 55319838.31272301,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": -4.683317016493106,
+            "dropped_hz": 56897110.52277353,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": -7.065848421590033,
+            "dropped_hz": 59468605.23667832,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": -7.5654658030869655,
+            "dropped_hz": 60350929.47208715,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": -4.0027124469572755,
+            "dropped_hz": 61843674.32591776,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": -0.02956013205863428,
+            "dropped_hz": 63617622.57541023,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": 3.0976107695086625,
+            "dropped_hz": 65437427.77539319,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 4.43712128919077,
+            "dropped_hz": 66821294.45750266,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 8.054521447040543,
+            "dropped_hz": 69953527.92764726,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 10.1419124463618,
+            "dropped_hz": 71082655.0005777,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 9.846609688758917,
+            "dropped_hz": 72730578.7793701,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 7.771061040358177,
+            "dropped_hz": 74484743.69896646,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 4.0430026373887245,
+            "dropped_hz": 76693619.94648021,
+            "prefers": "scale"
+          }
+        ],
+        "drop_one_stable": false,
+        "loo": {
+          "comb": {
+            "max_error_hz": 1160759.6958100945,
+            "mean_error_hz": 455964.6968105595,
+            "mean_error_rung": 0.015117305055814422
+          },
+          "comb_wins": 7,
+          "folds": [
+            {
+              "actual_hz": 54566757.79341614,
+              "error_hz": {
+                "comb": 1160759.6958100945,
+                "scale": 348122.46907384694
+              },
+              "error_rung": {
+                "comb": 0.04468261379290051,
+                "scale": 0.013300153608612248
+              },
+              "index": 0,
+              "predicted": {
+                "comb": 53405998.09760605,
+                "scale": 54218635.324342296
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 55319838.31272301,
+              "error_hz": {
+                "comb": 143756.83508084714,
+                "scale": 543159.4837457314
+              },
+              "error_rung": {
+                "comb": 0.005393213717376291,
+                "scale": 0.020304241884472538
+              },
+              "index": 1,
+              "predicted": {
+                "comb": 55463595.14780386,
+                "scale": 55862997.79646874
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 56897110.52277353,
+              "error_hz": {
+                "comb": 317825.9332303703,
+                "scale": 440935.6393914744
+              },
+              "error_rung": {
+                "comb": 0.011575843925526966,
+                "scale": 0.016042471732095078
+              },
+              "index": 2,
+              "predicted": {
+                "comb": 57214936.4560039,
+                "scale": 57338046.162165
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 59468605.23667832,
+              "error_hz": {
+                "comb": 657266.8355903476,
+                "scale": 745549.6902358457
+              },
+              "error_rung": {
+                "comb": 0.02309557532345079,
+                "scale": 0.026217376082329883
+              },
+              "index": 3,
+              "predicted": {
+                "comb": 58811338.40108797,
+                "scale": 58723055.54644247
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 60350929.47208715,
+              "error_hz": {
+                "comb": 302386.97583349794,
+                "scale": 63963.78552530706
+              },
+              "error_rung": {
+                "comb": 0.01038620955698011,
+                "scale": 0.0022013234466165426
+              },
+              "index": 4,
+              "predicted": {
+                "comb": 60653316.44792065,
+                "scale": 60414893.25761246
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 61843674.32591776,
+              "error_hz": {
+                "comb": 554564.9267141744,
+                "scale": 216457.56349672377
+              },
+              "error_rung": {
+                "comb": 0.018551577992260527,
+                "scale": 0.007260763055652612
+              },
+              "index": 5,
+              "predicted": {
+                "comb": 62398239.25263193,
+                "scale": 62060131.88941448
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 63617622.57541023,
+              "error_hz": {
+                "comb": 501635.24553355575,
+                "scale": 109171.39699460566
+              },
+              "error_rung": {
+                "comb": 0.016321785825175107,
+                "scale": 0.003563057007074741
+              },
+              "index": 6,
+              "predicted": {
+                "comb": 64119257.82094379,
+                "scale": 63726793.97240484
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 65437427.77539319,
+              "error_hz": {
+                "comb": 404519.18339011073,
+                "scale": 3935.8253101482987
+              },
+              "error_rung": {
+                "comb": 0.0128067137222549,
+                "scale": 0.00012498567594858555
+              },
+              "index": 7,
+              "predicted": {
+                "comb": 65841946.9587833,
+                "scale": 65441363.60070334
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 66821294.45750266,
+              "error_hz": {
+                "comb": 784871.1550204158,
+                "scale": 421635.48355047405
+              },
+              "error_rung": {
+                "comb": 0.024266604684910854,
+                "scale": 0.013071318268741508
+              },
+              "index": 8,
+              "predicted": {
+                "comb": 67606165.61252308,
+                "scale": 67242929.94105314
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 69953527.92764726,
+              "error_hz": {
+                "comb": 756248.0447550267,
+                "scale": 1021732.5823743939
+              },
+              "error_rung": {
+                "comb": 0.022587934179243763,
+                "scale": 0.030576123832311904
+              },
+              "index": 9,
+              "predicted": {
+                "comb": 69197279.88289224,
+                "scale": 68931795.34527287
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 71082655.0005777,
+              "error_hz": {
+                "comb": 92427.4592089951,
+                "scale": 215512.52239497006
+              },
+              "error_rung": {
+                "comb": 0.0027038561871314958,
+                "scale": 0.006310035043528869
+              },
+              "index": 10,
+              "predicted": {
+                "comb": 70990227.54136871,
+                "scale": 70867142.47818273
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 72730578.7793701,
+              "error_hz": {
+                "comb": 1143.8210785090923,
+                "scale": 94670.46476280689
+              },
+              "error_rung": {
+                "comb": 3.2681452183696365e-05,
+                "scale": 0.002703203094834318
+              },
+              "index": 11,
+              "predicted": {
+                "comb": 72731722.60044861,
+                "scale": 72825249.2441329
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 74484743.69896646,
+              "error_hz": {
+                "comb": 29501.964079156518,
+                "scale": 376715.2156457156
+              },
+              "error_rung": {
+                "comb": 0.0008232530213678309,
+                "scale": 0.010483676307756967
+              },
+              "index": 12,
+              "predicted": {
+                "comb": 74455241.7348873,
+                "scale": 74861458.91461217
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 76693619.94648021,
+              "error_hz": {
+                "comb": 676597.6800227314,
+                "scale": 151010.24110536277
+              },
+              "error_rung": {
+                "comb": 0.01841440740063907,
+                "scale": 0.004087743711127631
+              },
+              "index": 13,
+              "predicted": {
+                "comb": 76017022.26645748,
+                "scale": 76844630.18758558
+              },
+              "winner": "scale"
+            }
+          ],
+          "majority": "tie",
+          "scale": {
+            "max_error_hz": 1021732.5823743939,
+            "mean_error_hz": 339469.4545433862,
+            "mean_error_rung": 0.01116046233936453
+          },
+          "scale_wins": 7
+        },
+        "n_lines": 14,
+        "rms_in_channels": {
+          "comb": 4.675004575913025,
+          "scale": 3.7903362748294915
+        },
+        "scale": {
+          "aic": 403.55372183059865,
+          "bic": 404.8318364898292,
+          "f0": 54294578.490321994,
+          "ln_like": -199.77686091529932,
+          "model": "scale",
+          "q": 1.0270340805040843,
+          "residuals_hz": [
+            272179.30309414864,
+            -442544.18344166875,
+            -372756.71089202166,
+            650499.801759623,
+            -57269.36025685072,
+            -197604.616766572,
+            -100885.29678697139,
+            -3651.368221141398,
+            -388924.08795428276,
+            926342.9233353138,
+            189383.51988886297,
+            -79227.10972557962,
+            -293408.3440217972,
+            -106090.67878484726
+          ],
+          "rms_hz": 381107.6829000925,
+          "rss": 2033402923516.684
+        },
+        "span": {
+          "10": 0.14783108702933676,
+          "2": 0.49108424130049255,
+          "e": 0.34039365727485627,
+          "phi": 0.7073676072542372,
+          "phi_rungs": 0.7073676072542372,
+          "sqrt2": 0.982168482600985
+        },
+        "span_rungs": 0.7073676072542372
+      },
+      "controls": {
+        "drift_hz_s": [
+          -152435.217,
+          -152437.985,
+          -152440.692,
+          -152435.679,
+          -152436.099,
+          -152437.113,
+          -152431.349,
+          -152439.257,
+          -152436.313,
+          -152425.964,
+          -152442.918,
+          -152436.305,
+          -152450.472,
+          -152436.118
+        ],
+        "drift_spread": 0.0001607753438847803,
+        "grid_comb": false,
+        "half_integer_steps": 0,
+        "half_integer_suspected": false,
+        "integer_grid_steps": 0,
+        "median_step_hz": 1647923.7787923962,
+        "one_event": true,
+        "span_over_spacing": 13.427115038827043,
+        "steps_hz": [
+          753080.5193068683,
+          1577272.2100505158,
+          2571494.7139047906,
+          882324.2354088351,
+          1492744.8538306057,
+          1773948.249492474,
+          1819805.199982956,
+          1383866.6821094751,
+          3132233.4701445997,
+          1129127.0729304403,
+          1647923.7787923962,
+          1754164.9195963591,
+          2208876.247513756
+        ],
+        "steps_in_channels": [
+          7.489821219228854,
+          15.68688415710105,
+          25.575001848495265,
+          8.775224708623925,
+          14.846210723131604,
+          17.642941093591816,
+          18.099014982143416,
+          13.763354348598998,
+          31.151873015995953,
+          11.229821636900025,
+          16.389554861186962,
+          17.44618443843454,
+          21.968551522891918
+        ],
+        "steps_off_integer_channels": [
+          0.4898212192288538,
+          0.31311584289895045,
+          0.4249981515047345,
+          0.22477529137607455,
+          0.15378927686839639,
+          0.3570589064081844,
+          0.09901498214341586,
+          0.2366456514010018,
+          0.15187301599595315,
+          0.22982163690002544,
+          0.38955486118696214,
+          0.44618443843453903,
+          0.031448477108082074
+        ]
+      },
+      "date": "20240326",
+      "drifts_hz_s": [
+        -152435.22,
+        -152437.98,
+        -152440.69,
+        -152435.68,
+        -152436.1,
+        -152437.11,
+        -152431.35,
+        -152439.26,
+        -152436.31,
+        -152425.96,
+        -152442.92,
+        -152436.3,
+        -152450.47,
+        -152436.12
+      ],
+      "freqs_mhz": [
+        54.566758,
+        55.319838,
+        56.897111,
+        59.468605,
+        60.350929,
+        61.843674,
+        63.617623,
+        65.437428,
+        66.821294,
+        69.953528,
+        71.082655,
+        72.730579,
+        74.484744,
+        76.69362
+      ],
+      "n_lines": 14,
+      "snr": [
+        63.61,
+        71.68,
+        243.7,
+        134.79,
+        2752.04,
+        663.17,
+        727.29,
+        2650.91,
+        295.23,
+        183.84,
+        245.66,
+        1802.64,
+        597.86,
+        1865.34
+      ],
+      "source": "expanded-A-731ch-allint",
+      "verdict": {
+        "label": "ASTROPHYSICAL STRUCTURE",
+        "reasons": [
+          "all 14 lines share one drift to within 0.0% across 13 times their own spacing: one event crossing the band, not several lines at a scale"
+        ]
+      }
+    },
+    {
+      "comparison": {
+        "bootstrap": {
+          "delta_aic_ci95": [
+            -0.6425074826455983,
+            0.8613687829006835
+          ],
+          "draws": 800,
+          "excludes_zero": false,
+          "resampled_model": "scale"
+        },
+        "comb": {
+          "aic": 112.54571674105851,
+          "bic": 111.31830546329829,
+          "df": 1315054.1543199327,
+          "f0": 81926096.72791882,
+          "ln_like": -54.272858370529256,
+          "model": "comb",
+          "residuals_hz": [
+            192830.5158583969,
+            -313193.60431297123,
+            47895.66105085611,
+            72467.42740379274
+          ],
+          "rms_hz": 188957.24649427176,
+          "rss": 142819364010.7879
+        },
+        "delta_aic": 0.3050011290506376,
+        "delta_bic": 0.3050011290506376,
+        "drop_one": [
+          {
+            "delta_aic": -0.46127903385111324,
+            "dropped_hz": 82118927.24377722,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": -0.2227310274969625,
+            "dropped_hz": 82927957.27792577,
+            "prefers": "comb"
+          },
+          {
+            "delta_aic": 0.12057920253140253,
+            "dropped_hz": 84604100.69760954,
+            "prefers": "scale"
+          },
+          {
+            "delta_aic": 0.13000501264187392,
+            "dropped_hz": 85943726.61828241,
+            "prefers": "scale"
+          }
+        ],
+        "drop_one_stable": false,
+        "loo": {
+          "comb": {
+            "max_error_hz": 642768.386194557,
+            "mean_error_hz": 350042.0713007748,
+            "mean_error_rung": 0.008760451531608152
+          },
+          "comb_wins": 1,
+          "folds": [
+            {
+              "actual_hz": 82118927.24377722,
+              "error_hz": {
+                "comb": 642768.386194557,
+                "scale": 596288.9274298251
+              },
+              "error_rung": {
+                "comb": 0.01632977471307432,
+                "scale": 0.01514463274076985
+              },
+              "index": 0,
+              "predicted": {
+                "comb": 81476158.85758266,
+                "scale": 81522638.31634739
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 82927957.27792577,
+              "error_hz": {
+                "comb": 447419.43473285437,
+                "scale": 433597.6055354774
+              },
+              "error_rung": {
+                "comb": 0.011181720734177315,
+                "scale": 0.010837190433980173
+              },
+              "index": 1,
+              "predicted": {
+                "comb": 83375376.71265863,
+                "scale": 83361554.88346125
+              },
+              "winner": "scale"
+            },
+            {
+              "actual_hz": 84604100.69760954,
+              "error_hz": {
+                "comb": 68422.37292979658,
+                "scale": 81830.53625029325
+              },
+              "error_rung": {
+                "comb": 0.00168130343888725,
+                "scale": 0.0020109339489231244
+              },
+              "index": 2,
+              "predicted": {
+                "comb": 84535678.32467975,
+                "scale": 84522270.16135925
+              },
+              "winner": "comb"
+            },
+            {
+              "actual_hz": 85943726.61828241,
+              "error_hz": {
+                "comb": 241558.09134589136,
+                "scale": 206027.93216356635
+              },
+              "error_rung": {
+                "comb": 0.0058490072402937205,
+                "scale": 0.004987658461114862
+              },
+              "index": 3,
+              "predicted": {
+                "comb": 85702168.52693652,
+                "scale": 85737698.68611884
+              },
+              "winner": "scale"
+            }
+          ],
+          "majority": "scale",
+          "scale": {
+            "max_error_hz": 596288.9274298251,
+            "mean_error_hz": 329436.2503447905,
+            "mean_error_rung": 0.008245103896197002
+          },
+          "scale_wins": 3
+        },
+        "n_lines": 4,
+        "rms_in_channels": {
+          "comb": 1.8792890773784037,
+          "scale": 1.8089895213071598
+        },
+        "scale": {
+          "aic": 112.24071561200788,
+          "bic": 111.01330433424765,
+          "f0": 81934105.99194063,
+          "ln_like": -54.12035780600394,
+          "model": "scale",
+          "q": 1.0158174005024205,
+          "residuals_hz": [
+            184821.25183658302,
+            -302133.2832971513,
+            57526.46012699604,
+            59845.354977965355
+          ],
+          "rms_hz": 181888.82327780608,
+          "rss": 132334176133.53989
+        },
+        "span": {
+          "10": 0.019770913908796095,
+          "2": 0.06567755437522907,
+          "e": 0.04552421164126253,
+          "phi": 0.09460326881124305,
+          "phi_rungs": 0.09460326881124305,
+          "sqrt2": 0.13135510875045814
+        },
+        "span_rungs": 0.09460326881124305
+      },
+      "controls": {
+        "drift_hz_s": [
+          -152434.643,
+          -152437.138,
+          -152434.837,
+          -152430.575
+        ],
+        "drift_spread": 4.3054490072241047e-05,
+        "grid_comb": false,
+        "half_integer_steps": 0,
+        "half_integer_suspected": false,
+        "integer_grid_steps": 0,
+        "median_step_hz": 1339625.9206728637,
+        "one_event": false,
+        "span_over_spacing": 2.855124938597845,
+        "steps_hz": [
+          809030.034148559,
+          1676143.4196837693,
+          1339625.9206728637
+        ],
+        "steps_in_channels": [
+          8.04627149608975,
+          16.670215507331093,
+          13.32335439471923
+        ],
+        "steps_off_integer_channels": [
+          0.046271496089749675,
+          0.32978449266890664,
+          0.3233543947192299
+        ]
+      },
+      "date": "20240326",
+      "drifts_hz_s": [
+        -152434.64,
+        -152437.14,
+        -152434.84,
+        -152430.58
+      ],
+      "freqs_mhz": [
+        82.118927,
+        82.927957,
+        84.604101,
+        85.943727
+      ],
+      "n_lines": 4,
+      "null": {
+        "draws": 1500,
+        "note": "uniform lines inside the group's own span, same line count",
+        "null_median": 0.06615026765258847,
+        "observed_abs_delta_aic": 0.305000947318419,
+        "p_value": 0.038
+      },
+      "snr": [
+        2098.9,
+        214.62,
+        1889.1,
+        711.06
+      ],
+      "source": "expanded-A-731ch-allint",
+      "verdict": {
+        "label": "NEITHER MODEL FIT",
+        "reasons": [
+          "even the better model leaves 1.81 channels of residual, above the 0.5-channel noise floor, and neither the grid nor a single drifting event explains the group"
+        ]
+      }
+    }
+  ],
+  "null_draws": 1500,
+  "window_controls": {
+    "days": {
+      "20240207": {
+        "narrow": {
+          "calibration_factor": 1.1307,
+          "cells": {
+            "54.4530": {
+              "channel": 91,
+              "detected": false,
+              "drift_hz_s": 2356.6,
+              "live": true,
+              "significance": 4.47
+            },
+            "55.9010": {
+              "outside_window": true
+            }
+          },
+          "channels": 96
+        },
+        "wide": {
+          "calibration_factor": 1.1533,
+          "cells": {
+            "54.4530": {
+              "channel": 408,
+              "detected": false,
+              "drift_hz_s": -189115.1,
+              "live": true,
+              "significance": 2.29
+            },
+            "55.9010": {
+              "channel": 423,
+              "detected": false,
+              "drift_hz_s": -136681.3,
+              "live": true,
+              "significance": 2.32
+            }
+          },
+          "channels": 731
+        }
+      },
+      "20240325": {
+        "narrow": {
+          "calibration_factor": 0.3765,
+          "cells": {
+            "45.9843": {
+              "channel": 7,
+              "detected": true,
+              "drift_hz_s": 41240.1,
+              "live": true,
+              "significance": 954.18
+            },
+            "46.9828": {
+              "channel": 17,
+              "detected": true,
+              "drift_hz_s": 41240.1,
+              "live": true,
+              "significance": 604.16
+            },
+            "47.9380": {
+              "channel": 27,
+              "detected": true,
+              "drift_hz_s": 41240.1,
+              "live": true,
+              "significance": 447.18
+            },
+            "48.9937": {
+              "channel": 37,
+              "detected": true,
+              "drift_hz_s": 41240.1,
+              "live": true,
+              "significance": 171.27
+            }
+          },
+          "channels": 96
+        },
+        "wide": {
+          "calibration_factor": 1.9646,
+          "cells": {
+            "45.9843": {
+              "channel": 324,
+              "detected": true,
+              "drift_hz_s": -137270.5,
+              "live": false,
+              "significance": 13.99
+            },
+            "46.9828": {
+              "channel": 334,
+              "detected": true,
+              "drift_hz_s": -121363.6,
+              "live": false,
+              "significance": 13.67
+            },
+            "47.9380": {
+              "channel": 344,
+              "detected": true,
+              "drift_hz_s": -149642.5,
+              "live": false,
+              "significance": 12.8
+            },
+            "48.9937": {
+              "channel": 354,
+              "detected": true,
+              "drift_hz_s": -155533.9,
+              "live": false,
+              "significance": 11.04
+            }
+          },
+          "channels": 731
+        }
+      },
+      "20240920": {
+        "narrow": {
+          "calibration_factor": 0.8928,
+          "cells": {
+            "45.4206": {
+              "channel": 1,
+              "detected": true,
+              "drift_hz_s": 195006.6,
+              "live": true,
+              "significance": 8.65
+            },
+            "46.5890": {
+              "channel": 13,
+              "detected": true,
+              "drift_hz_s": 195006.6,
+              "live": true,
+              "significance": 7.9
+            },
+            "47.5358": {
+              "channel": 23,
+              "detected": true,
+              "drift_hz_s": 195006.6,
+              "live": true,
+              "significance": 6.49
+            }
+          },
+          "channels": 96
+        },
+        "wide": {
+          "calibration_factor": 1.6745,
+          "cells": {
+            "45.4206": {
+              "channel": 318,
+              "detected": false,
+              "drift_hz_s": 101332.7,
+              "live": true,
+              "significance": -0.04
+            },
+            "46.5890": {
+              "channel": 330,
+              "detected": false,
+              "drift_hz_s": 193828.3,
+              "live": true,
+              "significance": 0.06
+            },
+            "47.5358": {
+              "channel": 340,
+              "detected": false,
+              "drift_hz_s": 187936.8,
+              "live": true,
+              "significance": 0.06
+            }
+          },
+          "channels": 731
+        }
+      }
+    },
+    "excision": {
+      "20240325": {
+        "narrow": {
+          "blanked_time_samples": 505,
+          "carrier_channels_reported": 0,
+          "fully_blanked_channels": 0,
+          "total_channels": 96,
+          "total_time_samples": 1000
+        },
+        "wide": {
+          "blanked_time_samples": 530,
+          "carrier_channels_reported": 208,
+          "fully_blanked_channels": 208,
+          "total_channels": 731,
+          "total_time_samples": 1000
+        }
+      },
+      "20240920": {
+        "narrow": {
+          "blanked_time_samples": 228,
+          "carrier_channels_reported": 0,
+          "fully_blanked_channels": 0,
+          "total_channels": 96,
+          "total_time_samples": 1000
+        },
+        "wide": {
+          "blanked_time_samples": 504,
+          "carrier_channels_reported": 79,
+          "fully_blanked_channels": 79,
+          "total_channels": 731,
+          "total_time_samples": 1000
+        }
+      }
+    },
+    "integrations": 1000,
+    "narrow_channels": 96
+  }
+}
