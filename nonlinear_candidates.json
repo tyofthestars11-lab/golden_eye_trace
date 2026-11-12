@@ -1,0 +1,2017 @@
+{
+  "alias_probe": [
+    {
+      "exact": true,
+      "folded_expected": 0.09999999999999998,
+      "injected_nu": 0.1,
+      "measured_nu": 0.09999999999999604
+    },
+    {
+      "exact": true,
+      "folded_expected": 0.30000000000000004,
+      "injected_nu": 0.3,
+      "measured_nu": 0.2999999999999881
+    },
+    {
+      "exact": true,
+      "folded_expected": 0.49649999999999994,
+      "injected_nu": 0.4965,
+      "measured_nu": 0.49649999999998073
+    },
+    {
+      "exact": true,
+      "folded_expected": -0.49650000000000016,
+      "injected_nu": 0.5035,
+      "measured_nu": -0.49650000000002037
+    },
+    {
+      "exact": true,
+      "folded_expected": -0.3999999999999999,
+      "injected_nu": 0.6,
+      "measured_nu": -0.4000000000000237
+    },
+    {
+      "exact": true,
+      "folded_expected": -0.10000000000000009,
+      "injected_nu": 0.9,
+      "measured_nu": -0.09999999999996328
+    }
+  ],
+  "bootstrap": 200,
+  "candidates": [
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "",
+      "band_note": "inside the 54-60 MHz TV channel 2 allocation (55.25 video, 59.75 audio)",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "chirp",
+      "best_plv_envelope": 0.1229520432852362,
+      "best_score": 7.326502169997882,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.6990741169294572,
+          "circvar": 0.8802084820621368,
+          "concentration": 0.5349677216497638,
+          "drift_residual": 0.13253374969996057,
+          "dtw_to_linear": 0.07765085023474684,
+          "kurtosis": 77.28307139740733,
+          "matched_filter_snr": 6.7780399753134954,
+          "null_median_plv": 0.05077160707556135,
+          "null_p95_plv": 0.10026704993567241,
+          "null_percentile": 0.985,
+          "plv": 0.11979151793786326,
+          "plv_ci": [
+            0.030552683572542604,
+            0.20340295046925944
+          ],
+          "ridge_continuity": 0.8043052837573386
+        },
+        "chirp": {
+          "acf_peak": 0.870443179683487,
+          "circvar": 0.8770479567147638,
+          "concentration": 0.5345663999476106,
+          "drift_residual": 0.08799833522859929,
+          "dtw_to_linear": 0.3913427785243348,
+          "kurtosis": 33.97667753238167,
+          "matched_filter_snr": 7.326502169997882,
+          "null_median_plv": 0.045932128868761884,
+          "null_p95_plv": 0.0966349933434568,
+          "null_percentile": 1.0,
+          "plv": 0.1229520432852362,
+          "plv_ci": [
+            0.029853093305154,
+            0.20179393703485
+          ],
+          "ridge_continuity": 0.8043052837573386
+        },
+        "energy": {
+          "acf_peak": 0.9948046789741857,
+          "circvar": 0.8940726768870545,
+          "concentration": 0.41007645038228036,
+          "drift_residual": 0.014048474355683342,
+          "dtw_to_linear": 0.44811750348767937,
+          "kurtosis": 1.6575281641503912,
+          "matched_filter_snr": 3.967638425953302,
+          "null_median_plv": 0.04522591375108573,
+          "null_p95_plv": 0.10307673656782315,
+          "null_percentile": 0.96,
+          "plv": 0.10592732311294548,
+          "plv_ci": [
+            0.03027682055514716,
+            0.26952567534925087
+          ],
+          "ridge_continuity": 0.9843444227005871
+        },
+        "linear": {
+          "acf_peak": 0.7961353954664084,
+          "circvar": 0.8886271903323482,
+          "concentration": 0.5466863472404084,
+          "drift_residual": 0.11180093173154376,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 57.75432780959465,
+          "matched_filter_snr": 6.759323851022791,
+          "null_median_plv": 0.044295730069932676,
+          "null_p95_plv": 0.10108409534852614,
+          "null_percentile": 0.985,
+          "plv": 0.11137280966765183,
+          "plv_ci": [
+            0.02548810171003563,
+            0.22992328609098822
+          ],
+          "ridge_continuity": 0.7827788649706457
+        },
+        "phase": {
+          "acf_peak": 0.9255305557338498,
+          "circvar": 0.9848033553599677,
+          "concentration": 0.4794332736404701,
+          "drift_residual": 0.04754438433144654,
+          "dtw_to_linear": 0.425254130404844,
+          "kurtosis": 34.70139979530136,
+          "matched_filter_snr": 5.750536919098749,
+          "null_median_plv": 0.0436778353075007,
+          "null_p95_plv": 0.10249700809878645,
+          "null_percentile": 0.065,
+          "plv": 0.01519664464003231,
+          "plv_ci": [
+            0.027202655123942758,
+            0.21667162689934433
+          ],
+          "ridge_continuity": 0.8610567514677103
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 6.801606640447023,
+        "phase_scrambled_plv": 1.5097621046396121,
+        "reversed_plv": 7.697397277147304,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 0.7174487396646341,
+        "warp_gain_p95": 1.4085141938730277,
+        "warp_median": 7.476772590687425,
+        "warp_p95": 8.167838044895818,
+        "warp_plv_p95": 0.9035863784176161
+      },
+      "corrected_drift_hz_s": 8194.663463845607,
+      "cross_day_repeats": 0,
+      "date": "20240207",
+      "disposition": "UNRESOLVED",
+      "freq_mhz": 54.452957,
+      "gain_over_linear": 0.567178318975091,
+      "instrumental_explanation": "",
+      "linear_plv": 0.11137280966765183,
+      "linear_score": 6.759323851022791,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.020864170639050498,
+      "raw_drift_hz_s": 8194.663463845607,
+      "samples_used": 1600,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 7.682220935821533,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.4192924497626987,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": true,
+      "amplitude_statistic_invariance": 1.7763568394002505e-15,
+      "astrophysical_explanation": "",
+      "band_note": "inside the 50-54 MHz amateur 6 m allocation",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "phase",
+      "best_plv_envelope": 0.8259209279886471,
+      "best_score": 9.341834623493778,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9366108803907947,
+          "circvar": 0.10821783481445735,
+          "concentration": 0.707621524620885,
+          "drift_residual": 0.039300097819129395,
+          "dtw_to_linear": 0.04624631931064662,
+          "kurtosis": 40.96217377141991,
+          "matched_filter_snr": 5.09270067037779,
+          "null_median_plv": 0.044123656064221084,
+          "null_p95_plv": 0.09456895448028405,
+          "null_percentile": 1.0,
+          "plv": 0.8917821651855427,
+          "plv_ci": [
+            0.04348893954565014,
+            0.2531724761609873
+          ],
+          "ridge_continuity": 0.9549902152641878
+        },
+        "chirp": {
+          "acf_peak": 0.9198762679620989,
+          "circvar": 0.11919179710357553,
+          "concentration": 0.7267239084842892,
+          "drift_residual": 0.051596091829771866,
+          "dtw_to_linear": 0.09779012471897593,
+          "kurtosis": 57.50975158100238,
+          "matched_filter_snr": 4.359970001958475,
+          "null_median_plv": 0.04366636757711455,
+          "null_p95_plv": 0.09382269390932656,
+          "null_percentile": 1.0,
+          "plv": 0.8808082028964245,
+          "plv_ci": [
+            0.03581337560504051,
+            0.27434139401901136
+          ],
+          "ridge_continuity": 0.9354207436399217
+        },
+        "energy": {
+          "acf_peak": 0.9871527001525603,
+          "circvar": 0.388945575388034,
+          "concentration": 0.21703451750476122,
+          "drift_residual": 0.0057180176591743,
+          "dtw_to_linear": 1.3312402773761849,
+          "kurtosis": -0.4291127726470547,
+          "matched_filter_snr": -6.833099922583636,
+          "null_median_plv": 0.04844023588460457,
+          "null_p95_plv": 0.10130833482241045,
+          "null_percentile": 1.0,
+          "plv": 0.611054424611966,
+          "plv_ci": [
+            0.03257751195467297,
+            0.27345007286713363
+          ],
+          "ridge_continuity": 1.0
+        },
+        "linear": {
+          "acf_peak": 0.9572020673444752,
+          "circvar": 0.10830670141532117,
+          "concentration": 0.7050675568299084,
+          "drift_residual": 0.029298857578558296,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 38.14611950865944,
+          "matched_filter_snr": 5.11777047623471,
+          "null_median_plv": 0.04533013735389865,
+          "null_p95_plv": 0.09870615812368787,
+          "null_percentile": 1.0,
+          "plv": 0.8916932985846788,
+          "plv_ci": [
+            0.03176468756121716,
+            0.27382515920012224
+          ],
+          "ridge_continuity": 0.9569471624266145
+        },
+        "phase": {
+          "acf_peak": 0.997658255605098,
+          "circvar": 0.17407907201135286,
+          "concentration": 0.3926316178699546,
+          "drift_residual": 0.005563215108232984,
+          "dtw_to_linear": 0.6529767215911773,
+          "kurtosis": 3.1693364828384567,
+          "matched_filter_snr": 9.341834623493778,
+          "null_median_plv": 0.04703189543909861,
+          "null_p95_plv": 0.09755536085241627,
+          "null_percentile": 1.0,
+          "plv": 0.8259209279886471,
+          "plv_ci": [
+            0.03565425071504933,
+            0.25455119797736653
+          ],
+          "ridge_continuity": 1.0
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": true,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 5.148574140622822,
+        "phase_scrambled_plv": -0.7302385432241854,
+        "reversed_plv": 8.719002162011222,
+        "shuffled_channels_plv": 7.817625634874258,
+        "warp_gain_median": 4.543719874598404,
+        "warp_gain_p95": 9.507600381383229,
+        "warp_median": 9.661490350833112,
+        "warp_p95": 14.625370857617938,
+        "warp_plv_p95": 0.9683381038575793
+      },
+      "corrected_drift_hz_s": 6970.898755113434,
+      "cross_day_repeats": 0,
+      "date": "20240207",
+      "disposition": "UNRESOLVED",
+      "freq_mhz": 53.7832964055797,
+      "gain_over_linear": 4.224064147259068,
+      "instrumental_explanation": "",
+      "linear_plv": 0.8916932985846788,
+      "linear_score": 5.11777047623471,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.01774838244131847,
+      "raw_drift_hz_s": 6970.898755113434,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 7.158594608306885,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.6764767412116092,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 8.881784197001252e-16,
+      "astrophysical_explanation": "",
+      "band_note": "inside the 54-60 MHz TV channel 2 allocation (55.25 video, 59.75 audio)",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "accel",
+      "best_plv_envelope": 0.1613693538873919,
+      "best_score": 7.392483106303801,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.913288112739367,
+          "circvar": 0.8386306461126081,
+          "concentration": 0.5202103242628874,
+          "drift_residual": 0.09153717172710456,
+          "dtw_to_linear": 0.3509317685868523,
+          "kurtosis": 20.506603253236403,
+          "matched_filter_snr": 7.392483106303801,
+          "null_median_plv": 0.044402274812472504,
+          "null_p95_plv": 0.10348240506661728,
+          "null_percentile": 1.0,
+          "plv": 0.1613693538873919,
+          "plv_ci": [
+            0.028479319941633694,
+            0.21888283220354593
+          ],
+          "ridge_continuity": 0.8180039138943248
+        },
+        "chirp": {
+          "acf_peak": 0.9132881127394867,
+          "circvar": 0.8386306461126577,
+          "concentration": 0.5202103242629035,
+          "drift_residual": 0.09153717172700486,
+          "dtw_to_linear": 0.3509317685871008,
+          "kurtosis": 20.506603253218735,
+          "matched_filter_snr": 7.392483106303741,
+          "null_median_plv": 0.0441346989276169,
+          "null_p95_plv": 0.1003026898915545,
+          "null_percentile": 1.0,
+          "plv": 0.1613693538873423,
+          "plv_ci": [
+            0.029712257675304072,
+            0.19837528425729192
+          ],
+          "ridge_continuity": 0.8180039138943248
+        },
+        "energy": {
+          "acf_peak": 0.9937374828687491,
+          "circvar": 0.7027620195378039,
+          "concentration": 0.2848275457356611,
+          "drift_residual": 0.008569223436533966,
+          "dtw_to_linear": 0.33916949935641,
+          "kurtosis": -0.7137356386160176,
+          "matched_filter_snr": 1.5010960644156313,
+          "null_median_plv": 0.04999308153380182,
+          "null_p95_plv": 0.10345970251832902,
+          "null_percentile": 1.0,
+          "plv": 0.297237980462196,
+          "plv_ci": [
+            0.0332267691677036,
+            0.287035180296947
+          ],
+          "ridge_continuity": 0.9941291585127201
+        },
+        "linear": {
+          "acf_peak": 0.851814789504795,
+          "circvar": 0.9586565579677301,
+          "concentration": 0.5075765372463485,
+          "drift_residual": 0.08634259310292362,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 33.539614956898795,
+          "matched_filter_snr": 6.798859595592208,
+          "null_median_plv": 0.04431795995632083,
+          "null_p95_plv": 0.09326584742237828,
+          "null_percentile": 0.445,
+          "plv": 0.041343442032269924,
+          "plv_ci": [
+            0.02620629821249285,
+            0.21368867608106396
+          ],
+          "ridge_continuity": 0.8043052837573386
+        },
+        "phase": {
+          "acf_peak": 0.9488311083079762,
+          "circvar": 0.7684486115493205,
+          "concentration": 0.5205180260199397,
+          "drift_residual": 0.046674479404022695,
+          "dtw_to_linear": 0.3059720982805743,
+          "kurtosis": 18.09606410530376,
+          "matched_filter_snr": 7.281735879699052,
+          "null_median_plv": 0.046773350656048304,
+          "null_p95_plv": 0.10127243530915832,
+          "null_percentile": 1.0,
+          "plv": 0.23155138845067944,
+          "plv_ci": [
+            0.03431481157229576,
+            0.208396828092646
+          ],
+          "ridge_continuity": 0.8904109589041096
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 7.242114303223854,
+        "phase_scrambled_plv": 0.3972120567876209,
+        "reversed_plv": 9.088637489849313,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 1.3100333893301874,
+        "warp_gain_p95": 5.0550224931222045,
+        "warp_median": 8.108892984922395,
+        "warp_p95": 11.853882088714412,
+        "warp_plv_p95": 0.5892304940966182
+      },
+      "corrected_drift_hz_s": 7866.859885523896,
+      "cross_day_repeats": 0,
+      "date": "20240207",
+      "disposition": "UNRESOLVED",
+      "freq_mhz": 55.901001,
+      "gain_over_linear": 0.593623510711593,
+      "instrumental_explanation": "",
+      "linear_plv": 0.041343442032269924,
+      "linear_score": 6.798859595592208,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.02002956042908027,
+      "raw_drift_hz_s": 7866.859885523896,
+      "samples_used": 1600,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 7.001245498657227,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.14185361035088762,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 1.7763568394002505e-15,
+      "astrophysical_explanation": "",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "chirp",
+      "best_plv_envelope": 0.7666039711979294,
+      "best_score": 7.515497104762917,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.966608672364709,
+          "circvar": 0.23339602880207055,
+          "concentration": 0.22870696534275783,
+          "drift_residual": 0.04962532287490288,
+          "dtw_to_linear": 0.051582490603028164,
+          "kurtosis": -0.17780314059086688,
+          "matched_filter_snr": 7.515497104762917,
+          "null_median_plv": 0.049740094066756294,
+          "null_p95_plv": 0.10481991545363675,
+          "null_percentile": 1.0,
+          "plv": 0.7666039711979294,
+          "plv_ci": [
+            0.02756401880385197,
+            0.2775348868962911
+          ],
+          "ridge_continuity": 0.913894324853229
+        },
+        "chirp": {
+          "acf_peak": 0.966608672364709,
+          "circvar": 0.23339602880207055,
+          "concentration": 0.22870696534275783,
+          "drift_residual": 0.04962532287490288,
+          "dtw_to_linear": 0.051582490603028164,
+          "kurtosis": -0.17780314059086688,
+          "matched_filter_snr": 7.515497104762917,
+          "null_median_plv": 0.045943962354451556,
+          "null_p95_plv": 0.09676490609491195,
+          "null_percentile": 1.0,
+          "plv": 0.7666039711979294,
+          "plv_ci": [
+            0.030872478311017557,
+            0.2590026184302194
+          ],
+          "ridge_continuity": 0.913894324853229
+        },
+        "energy": {
+          "acf_peak": 0.9793264699587304,
+          "circvar": 0.6257584834086001,
+          "concentration": 0.21875146445757476,
+          "drift_residual": 0.022954273738113116,
+          "dtw_to_linear": 0.7459150053505381,
+          "kurtosis": -1.1533350423400708,
+          "matched_filter_snr": -7.43926009440192,
+          "null_median_plv": 0.05267363227103959,
+          "null_p95_plv": 0.10207779808570902,
+          "null_percentile": 1.0,
+          "plv": 0.37424151659139987,
+          "plv_ci": [
+            0.036881449385002256,
+            0.2723517370770423
+          ],
+          "ridge_continuity": 0.9530332681017613
+        },
+        "linear": {
+          "acf_peak": 0.9784663109219002,
+          "circvar": 0.23414597310979124,
+          "concentration": 0.22939788510733755,
+          "drift_residual": 0.03111498247208071,
+          "dtw_to_linear": 0.0,
+          "kurtosis": -0.2702551964474349,
+          "matched_filter_snr": 7.538421471971316,
+          "null_median_plv": 0.05346147773188558,
+          "null_p95_plv": 0.10746536133260456,
+          "null_percentile": 1.0,
+          "plv": 0.7658540268902088,
+          "plv_ci": [
+            0.04257398583607894,
+            0.2599702192911022
+          ],
+          "ridge_continuity": 0.958904109589041
+        },
+        "phase": {
+          "acf_peak": 0.985164835631681,
+          "circvar": 0.6048471604642247,
+          "concentration": 0.24655110453902737,
+          "drift_residual": 0.03759151666711101,
+          "dtw_to_linear": 0.20972168224119023,
+          "kurtosis": -0.3215201808291148,
+          "matched_filter_snr": 6.846069009716147,
+          "null_median_plv": 0.05135413734325951,
+          "null_p95_plv": 0.1064951898306071,
+          "null_percentile": 1.0,
+          "plv": 0.3951528395357753,
+          "plv_ci": [
+            0.035331655293541396,
+            0.2651639376438228
+          ],
+          "ridge_continuity": 0.9315068493150684
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": true,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": true
+      },
+      "controls": {
+        "off_band_plv": 8.943146180707467,
+        "phase_scrambled_plv": -1.1359035538637612,
+        "reversed_plv": 10.627146318665563,
+        "shuffled_channels_plv": 6.938285784053576,
+        "warp_gain_median": 0.19579631417710264,
+        "warp_gain_p95": 1.4443483552499825,
+        "warp_median": 7.7342177861484185,
+        "warp_p95": 8.982769827221299,
+        "warp_plv_p95": 0.832657384100163
+      },
+      "corrected_drift_hz_s": -172.82172648386077,
+      "cross_day_repeats": 1,
+      "date": "20240322",
+      "disposition": "UNRESOLVED",
+      "freq_mhz": 47.241613525073866,
+      "gain_over_linear": -0.02292436720839852,
+      "instrumental_explanation": "",
+      "linear_plv": 0.7658540268902088,
+      "linear_score": 7.538421471971316,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.00044001587220794246,
+      "raw_drift_hz_s": -172.82172648386077,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 6.666425704956055,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.2938590915797188,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": true,
+      "amplitude_statistic_invariance": 1.7763568394002505e-15,
+      "astrophysical_explanation": "",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "energy",
+      "best_plv_envelope": 0.9042983263505219,
+      "best_score": 12.648029948693956,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.8820693316548711,
+          "circvar": 0.9222362431443187,
+          "concentration": 0.41259421028837623,
+          "drift_residual": 0.12048212587861472,
+          "dtw_to_linear": 0.1290305538040641,
+          "kurtosis": 52.68822789124728,
+          "matched_filter_snr": 5.190642447090463,
+          "null_median_plv": 0.04815282242623613,
+          "null_p95_plv": 0.1027421568991204,
+          "null_percentile": 0.825,
+          "plv": 0.07776375685568124,
+          "plv_ci": [
+            0.022073078349537076,
+            0.16747442190765827
+          ],
+          "ridge_continuity": 0.6731898238747553
+        },
+        "chirp": {
+          "acf_peak": 0.8494177160790292,
+          "circvar": 0.9123269352984624,
+          "concentration": 0.42365569885387505,
+          "drift_residual": 0.09835288028658608,
+          "dtw_to_linear": 0.32450748921379985,
+          "kurtosis": 46.28977868119013,
+          "matched_filter_snr": 5.158062917902352,
+          "null_median_plv": 0.04474224100609209,
+          "null_p95_plv": 0.0881467477027933,
+          "null_percentile": 0.945,
+          "plv": 0.08767306470153755,
+          "plv_ci": [
+            0.034279460771432554,
+            0.17834393582048846
+          ],
+          "ridge_continuity": 0.7573385518590998
+        },
+        "energy": {
+          "acf_peak": 0.9967504658557351,
+          "circvar": 0.09570167364947813,
+          "concentration": 0.234363296061767,
+          "drift_residual": 0.011889251711581844,
+          "dtw_to_linear": 0.6183525377455007,
+          "kurtosis": -0.9325261640161062,
+          "matched_filter_snr": 12.648029948693956,
+          "null_median_plv": 0.05178207608762081,
+          "null_p95_plv": 0.10409456356656302,
+          "null_percentile": 1.0,
+          "plv": 0.9042983263505219,
+          "plv_ci": [
+            0.04621512822835344,
+            0.27387211306787496
+          ],
+          "ridge_continuity": 0.9921722113502935
+        },
+        "linear": {
+          "acf_peak": 0.9099917950006153,
+          "circvar": 0.8020394454382704,
+          "concentration": 0.40882790222708637,
+          "drift_residual": 0.09132442346966677,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 49.15363376021041,
+          "matched_filter_snr": 5.087370926257736,
+          "null_median_plv": 0.04521760591676957,
+          "null_p95_plv": 0.09198433664145558,
+          "null_percentile": 1.0,
+          "plv": 0.1979605545617295,
+          "plv_ci": [
+            0.02526662893707541,
+            0.20312019021007843
+          ],
+          "ridge_continuity": 0.7181996086105675
+        },
+        "phase": {
+          "acf_peak": 0.9292500767825651,
+          "circvar": 0.9123601736465349,
+          "concentration": 0.3443862263516474,
+          "drift_residual": 0.06165093122597658,
+          "dtw_to_linear": 0.2571337054025294,
+          "kurtosis": 42.30303781793541,
+          "matched_filter_snr": 5.216338141400088,
+          "null_median_plv": 0.044612481017330466,
+          "null_p95_plv": 0.09036682149928775,
+          "null_percentile": 0.945,
+          "plv": 0.08763982635346516,
+          "plv_ci": [
+            0.02686574386405153,
+            0.20894761178785123
+          ],
+          "ridge_continuity": 0.7984344422700587
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": true,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": true,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": true
+      },
+      "controls": {
+        "off_band_plv": 3.6632269009358143,
+        "phase_scrambled_plv": -0.4886477102134473,
+        "reversed_plv": 8.229795859865735,
+        "shuffled_channels_plv": 5.9312447982808445,
+        "warp_gain_median": 2.9664720490057066,
+        "warp_gain_p95": 8.48679218285031,
+        "warp_median": 8.053842975263443,
+        "warp_p95": 13.574163109108047,
+        "warp_plv_p95": 0.9203094068752637
+      },
+      "corrected_drift_hz_s": -503.98589367346983,
+      "cross_day_repeats": 1,
+      "date": "20240324",
+      "disposition": "UNRESOLVED",
+      "freq_mhz": 47.3142574836376,
+      "gain_over_linear": 7.56065902243622,
+      "instrumental_explanation": "",
+      "linear_plv": 0.1979605545617295,
+      "linear_score": 5.087370926257736,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.0012831823700473258,
+      "raw_drift_hz_s": -503.98589367346983,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 11.667951583862305,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.23518194896290398,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": true,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "solar burst: parallel lanes sharing one drift, and the drift matches a 125 km/s coronal exciter",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "phase",
+      "best_plv_envelope": 0.13400665139607987,
+      "best_score": 8.572308653496112,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9424517742767218,
+          "circvar": 0.8866084056575562,
+          "concentration": 0.349276178593339,
+          "drift_residual": 0.04402536671370266,
+          "dtw_to_linear": 0.024755120423777043,
+          "kurtosis": 5.022820936559253,
+          "matched_filter_snr": 7.218548868187928,
+          "null_median_plv": 0.05204003346160192,
+          "null_p95_plv": 0.09859073121222026,
+          "null_percentile": 0.975,
+          "plv": 0.11339159434244388,
+          "plv_ci": [
+            0.040923543841438106,
+            0.2461284756124949
+          ],
+          "ridge_continuity": 0.8923679060665362
+        },
+        "chirp": {
+          "acf_peak": 0.9449858543389856,
+          "circvar": 0.8100830392509172,
+          "concentration": 0.3949843612211229,
+          "drift_residual": 0.04328318166832128,
+          "dtw_to_linear": 0.16183660781446274,
+          "kurtosis": 5.921574044535696,
+          "matched_filter_snr": 7.224578641897267,
+          "null_median_plv": 0.04705412595109014,
+          "null_p95_plv": 0.1026746449845937,
+          "null_percentile": 1.0,
+          "plv": 0.1899169607490828,
+          "plv_ci": [
+            0.025991454113642055,
+            0.2411039170624816
+          ],
+          "ridge_continuity": 0.8825831702544031
+        },
+        "energy": {
+          "acf_peak": 0.9788298812180372,
+          "circvar": 0.7873494810679988,
+          "concentration": 0.33542579069096184,
+          "drift_residual": 0.05339555981050022,
+          "dtw_to_linear": 0.25041931338577894,
+          "kurtosis": 1.0900992749820873,
+          "matched_filter_snr": 7.120720088504089,
+          "null_median_plv": 0.05080087120931485,
+          "null_p95_plv": 0.09554510362705641,
+          "null_percentile": 1.0,
+          "plv": 0.21265051893200118,
+          "plv_ci": [
+            0.034088886600362085,
+            0.26907239364537483
+          ],
+          "ridge_continuity": 0.9354207436399217
+        },
+        "linear": {
+          "acf_peak": 0.9379975327731005,
+          "circvar": 0.8896475245168948,
+          "concentration": 0.3531290523365522,
+          "drift_residual": 0.04553499887824061,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 5.019887324307112,
+          "matched_filter_snr": 6.928717624316562,
+          "null_median_plv": 0.04914329860708636,
+          "null_p95_plv": 0.1027281371962757,
+          "null_percentile": 0.95,
+          "plv": 0.11035247548310519,
+          "plv_ci": [
+            0.0279190075463952,
+            0.23693898878967762
+          ],
+          "ridge_continuity": 0.8747553816046967
+        },
+        "phase": {
+          "acf_peak": 0.9857994358309136,
+          "circvar": 0.8659933486039202,
+          "concentration": 0.35117973594302965,
+          "drift_residual": 0.05298912976632803,
+          "dtw_to_linear": 0.27207331190881,
+          "kurtosis": 4.310333727170445,
+          "matched_filter_snr": 8.572308653496112,
+          "null_median_plv": 0.046444577829743025,
+          "null_p95_plv": 0.09707374713785785,
+          "null_percentile": 0.995,
+          "plv": 0.13400665139607987,
+          "plv_ci": [
+            0.03941360227594509,
+            0.2500080458765826
+          ],
+          "ridge_continuity": 0.9217221135029354
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": true,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 7.4157302938064085,
+        "phase_scrambled_plv": -1.7297190600389036,
+        "reversed_plv": 3.865036164381576,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 1.9211881749708537,
+        "warp_gain_p95": 2.762880283600744,
+        "warp_median": 8.849905799287416,
+        "warp_p95": 9.691597907917306,
+        "warp_plv_p95": 0.3036331426492223
+      },
+      "corrected_drift_hz_s": 41190.2107171935,
+      "cross_day_repeats": 0,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL",
+      "freq_mhz": 45.98428447741178,
+      "gain_over_linear": 1.6435910291795501,
+      "instrumental_explanation": "",
+      "linear_plv": 0.11035247548310519,
+      "linear_score": 6.928717624316562,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.10487307854112549,
+      "raw_drift_hz_s": 41190.2107171935,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 953.9804077148438,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.2597806760886877,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "solar burst: parallel lanes sharing one drift, and the drift matches a 125 km/s coronal exciter",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "chirp",
+      "best_plv_envelope": 0.319072182159727,
+      "best_score": 8.562074366627858,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9802813206792428,
+          "circvar": 0.2860971594317454,
+          "concentration": 0.25519922619860436,
+          "drift_residual": 0.057272612899396266,
+          "dtw_to_linear": 0.02445688815450048,
+          "kurtosis": 0.37945518767951913,
+          "matched_filter_snr": 8.470049235401653,
+          "null_median_plv": 0.05103624194736732,
+          "null_p95_plv": 0.10506537597662341,
+          "null_percentile": 1.0,
+          "plv": 0.7139028405682546,
+          "plv_ci": [
+            0.034745945632554405,
+            0.25457578184113855
+          ],
+          "ridge_continuity": 0.923679060665362
+        },
+        "chirp": {
+          "acf_peak": 0.9813833696440348,
+          "circvar": 0.680927817840273,
+          "concentration": 0.24817313218017073,
+          "drift_residual": 0.04676347059632928,
+          "dtw_to_linear": 0.1692588350717826,
+          "kurtosis": 0.7834407929909197,
+          "matched_filter_snr": 8.562074366627858,
+          "null_median_plv": 0.05063746922070374,
+          "null_p95_plv": 0.10452904687402223,
+          "null_percentile": 1.0,
+          "plv": 0.319072182159727,
+          "plv_ci": [
+            0.03498339665358339,
+            0.25763760310732536
+          ],
+          "ridge_continuity": 0.923679060665362
+        },
+        "energy": {
+          "acf_peak": 0.9857253004465711,
+          "circvar": 0.7919354986544528,
+          "concentration": 0.28864536980758587,
+          "drift_residual": 0.047304399624731194,
+          "dtw_to_linear": 0.24565535860629065,
+          "kurtosis": -0.4009258264030908,
+          "matched_filter_snr": 3.566938524219927,
+          "null_median_plv": 0.052269395083002254,
+          "null_p95_plv": 0.10055582276902808,
+          "null_percentile": 1.0,
+          "plv": 0.20806450134554721,
+          "plv_ci": [
+            0.043340386352996176,
+            0.2516639864585114
+          ],
+          "ridge_continuity": 0.9412915851272016
+        },
+        "linear": {
+          "acf_peak": 0.9822944762116105,
+          "circvar": 0.28634603372890155,
+          "concentration": 0.25344960345074835,
+          "drift_residual": 0.05606823758852212,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 0.323854283509875,
+          "matched_filter_snr": 8.546378964857366,
+          "null_median_plv": 0.04880689261885854,
+          "null_p95_plv": 0.0982386677123952,
+          "null_percentile": 1.0,
+          "plv": 0.7136539662710984,
+          "plv_ci": [
+            0.042118729070671726,
+            0.27264964484922133
+          ],
+          "ridge_continuity": 0.9315068493150684
+        },
+        "phase": {
+          "acf_peak": 0.9787873777520741,
+          "circvar": 0.6246287738173386,
+          "concentration": 0.3242792059443236,
+          "drift_residual": 0.0483740966790634,
+          "dtw_to_linear": 0.25431280923510163,
+          "kurtosis": 2.6591371316659576,
+          "matched_filter_snr": 7.866308300166015,
+          "null_median_plv": 0.0479822221344203,
+          "null_p95_plv": 0.10302315148752272,
+          "null_percentile": 1.0,
+          "plv": 0.37537122618266144,
+          "plv_ci": [
+            0.037977304955706115,
+            0.28206940121963314
+          ],
+          "ridge_continuity": 0.8884540117416829
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 6.1360026071290275,
+        "phase_scrambled_plv": -0.9176092332230203,
+        "reversed_plv": 12.003860229610469,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 0.2592090568967773,
+        "warp_gain_p95": 0.9683788075838121,
+        "warp_median": 8.805588021754144,
+        "warp_p95": 9.514757772441179,
+        "warp_plv_p95": 0.8801863951131211
+      },
+      "corrected_drift_hz_s": 41185.37626827356,
+      "cross_day_repeats": 0,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL",
+      "freq_mhz": 46.982763337893296,
+      "gain_over_linear": 0.015695401770491557,
+      "instrumental_explanation": "",
+      "linear_plv": 0.7136539662710984,
+      "linear_score": 8.546378964857366,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.10486076970530125,
+      "raw_drift_hz_s": 41185.37626827356,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 604.0343017578125,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.8312466457583234,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 8.881784197001252e-16,
+      "astrophysical_explanation": "solar burst: parallel lanes sharing one drift, and the drift matches a 125 km/s coronal exciter",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "chirp",
+      "best_plv_envelope": 0.08489490479024146,
+      "best_score": 4.024979955249863,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9689876623140455,
+          "circvar": 0.927608145845056,
+          "concentration": 0.3097495413355145,
+          "drift_residual": 0.09618179988040733,
+          "dtw_to_linear": 0.031982005542119614,
+          "kurtosis": 0.7523272697826275,
+          "matched_filter_snr": 3.926423854367201,
+          "null_median_plv": 0.04959295355053362,
+          "null_p95_plv": 0.11288486516439773,
+          "null_percentile": 0.725,
+          "plv": 0.07239185415494397,
+          "plv_ci": [
+            0.026209361677138145,
+            0.247792655596841
+          ],
+          "ridge_continuity": 0.8238747553816047
+        },
+        "chirp": {
+          "acf_peak": 0.9734236195186918,
+          "circvar": 0.9151050952097586,
+          "concentration": 0.29087069343780914,
+          "drift_residual": 0.08535260385013499,
+          "dtw_to_linear": 0.200591353792,
+          "kurtosis": 1.0723149973114232,
+          "matched_filter_snr": 4.024979955249863,
+          "null_median_plv": 0.04967742597025641,
+          "null_p95_plv": 0.10188451476656685,
+          "null_percentile": 0.875,
+          "plv": 0.08489490479024146,
+          "plv_ci": [
+            0.039277799795486346,
+            0.28006299490149655
+          ],
+          "ridge_continuity": 0.8571428571428571
+        },
+        "energy": {
+          "acf_peak": 0.9763979083767772,
+          "circvar": 0.8327828375078481,
+          "concentration": 0.34563137597155275,
+          "drift_residual": 0.08937654785778958,
+          "dtw_to_linear": 0.2065460233969744,
+          "kurtosis": 0.3573551201680636,
+          "matched_filter_snr": 2.9443532458880446,
+          "null_median_plv": 0.052306969556526715,
+          "null_p95_plv": 0.10281530649473643,
+          "null_percentile": 0.995,
+          "plv": 0.16721716249215196,
+          "plv_ci": [
+            0.03274262759749807,
+            0.2704684981593637
+          ],
+          "ridge_continuity": 0.8669275929549902
+        },
+        "linear": {
+          "acf_peak": 0.9739022628767388,
+          "circvar": 0.7501696867467983,
+          "concentration": 0.30815410137203825,
+          "drift_residual": 0.10068390588559345,
+          "dtw_to_linear": 0.0,
+          "kurtosis": 0.7555391279384573,
+          "matched_filter_snr": 4.120269211430461,
+          "null_median_plv": 0.047558659891928604,
+          "null_p95_plv": 0.1010263877530266,
+          "null_percentile": 1.0,
+          "plv": 0.24983031325320174,
+          "plv_ci": [
+            0.03984970271165219,
+            0.26123671210756294
+          ],
+          "ridge_continuity": 0.8434442270058709
+        },
+        "phase": {
+          "acf_peak": 0.9753450892622723,
+          "circvar": 0.7552626673788768,
+          "concentration": 0.2783521463276372,
+          "drift_residual": 0.08263676586952554,
+          "dtw_to_linear": 0.243096153728505,
+          "kurtosis": 1.008883452191574,
+          "matched_filter_snr": 3.839449080060135,
+          "null_median_plv": 0.04941420745330377,
+          "null_p95_plv": 0.09403329720379303,
+          "null_percentile": 1.0,
+          "plv": 0.2447373326211232,
+          "plv_ci": [
+            0.04035365270241311,
+            0.2507005877795206
+          ],
+          "ridge_continuity": 0.8414872798434442
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 6.69047004531608,
+        "phase_scrambled_plv": -2.060919938625968,
+        "reversed_plv": 4.6920598677692045,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 0.9301718957080296,
+        "warp_gain_p95": 2.1094724892337897,
+        "warp_median": 5.050441107138491,
+        "warp_p95": 6.229741700664251,
+        "warp_plv_p95": 0.4377928492020953
+      },
+      "corrected_drift_hz_s": 41184.09936571234,
+      "cross_day_repeats": 0,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL",
+      "freq_mhz": 47.93796169630643,
+      "gain_over_linear": -0.0952892561805978,
+      "instrumental_explanation": "",
+      "linear_plv": 0.24983031325320174,
+      "linear_score": 4.120269211430461,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.10485751862451627,
+      "raw_drift_hz_s": 41184.09936571234,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 447.08184814453125,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.4691971022421719,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "solar burst: parallel lanes sharing one drift, and the drift matches a 125 km/s coronal exciter",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "phase",
+      "best_plv_envelope": 0.09546109852885143,
+      "best_score": 7.039112350272224,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9543246747405684,
+          "circvar": 0.7671678996621988,
+          "concentration": 0.21530259494181767,
+          "drift_residual": 0.09475906557405801,
+          "dtw_to_linear": 0.03620042970483313,
+          "kurtosis": -0.7888402818018432,
+          "matched_filter_snr": -1.1323358622362554,
+          "null_median_plv": 0.04860763206290565,
+          "null_p95_plv": 0.10009952942875266,
+          "null_percentile": 1.0,
+          "plv": 0.23283210033780122,
+          "plv_ci": [
+            0.02721310440697019,
+            0.25327333623793763
+          ],
+          "ridge_continuity": 0.8023483365949119
+        },
+        "chirp": {
+          "acf_peak": 0.9649037012542016,
+          "circvar": 0.8715921904954784,
+          "concentration": 0.2286444986790138,
+          "drift_residual": 0.07642353027079529,
+          "dtw_to_linear": 0.1877562193384964,
+          "kurtosis": -0.7349125155636957,
+          "matched_filter_snr": -1.305096935489703,
+          "null_median_plv": 0.048728160396044114,
+          "null_p95_plv": 0.11083999312501527,
+          "null_percentile": 0.985,
+          "plv": 0.12840780950452152,
+          "plv_ci": [
+            0.02577771781206016,
+            0.239621395333037
+          ],
+          "ridge_continuity": 0.8140900195694716
+        },
+        "energy": {
+          "acf_peak": 0.9599282305443475,
+          "circvar": 0.8913414642302755,
+          "concentration": 0.22480149257801796,
+          "drift_residual": 0.10277143429373459,
+          "dtw_to_linear": 0.19076205023817353,
+          "kurtosis": -0.7838838666302754,
+          "matched_filter_snr": -1.107214055501066,
+          "null_median_plv": 0.05153302089578025,
+          "null_p95_plv": 0.1111105826854678,
+          "null_percentile": 0.935,
+          "plv": 0.10865853576972452,
+          "plv_ci": [
+            0.035984730551355364,
+            0.27879536731480115
+          ],
+          "ridge_continuity": 0.786692759295499
+        },
+        "linear": {
+          "acf_peak": 0.9600898309891198,
+          "circvar": 0.7612279086057399,
+          "concentration": 0.21810202466844528,
+          "drift_residual": 0.09422446458534507,
+          "dtw_to_linear": 0.0,
+          "kurtosis": -0.7964146890121819,
+          "matched_filter_snr": -1.578523897755107,
+          "null_median_plv": 0.05426022142398858,
+          "null_p95_plv": 0.10338678638360067,
+          "null_percentile": 1.0,
+          "plv": 0.23877209139426017,
+          "plv_ci": [
+            0.03258414557261281,
+            0.25881069071486285
+          ],
+          "ridge_continuity": 0.812133072407045
+        },
+        "phase": {
+          "acf_peak": 0.9756201966716317,
+          "circvar": 0.9045389014711486,
+          "concentration": 0.20380061790738377,
+          "drift_residual": 0.06217757306980837,
+          "dtw_to_linear": 0.30848802674088494,
+          "kurtosis": -0.5920063211036388,
+          "matched_filter_snr": 7.039112350272224,
+          "null_median_plv": 0.0517073768682446,
+          "null_p95_plv": 0.10934696650312742,
+          "null_percentile": 0.89,
+          "plv": 0.09546109852885143,
+          "plv_ci": [
+            0.04246385702374155,
+            0.2841587349466956
+          ],
+          "ridge_continuity": 0.8688845401174168
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 8.235101423427194,
+        "phase_scrambled_plv": -0.9383053956046066,
+        "reversed_plv": 7.973905266329484,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 8.80058167407787,
+        "warp_gain_p95": 10.359596998910405,
+        "warp_median": 7.222057776322764,
+        "warp_p95": 8.781073101155298,
+        "warp_plv_p95": 0.2772720457491699
+      },
+      "corrected_drift_hz_s": 41179.12610154313,
+      "cross_day_repeats": 0,
+      "date": "20240325",
+      "disposition": "ASTROPHYSICAL",
+      "freq_mhz": 48.99370725034199,
+      "gain_over_linear": 8.617636248027331,
+      "instrumental_explanation": "",
+      "linear_plv": 0.23877209139426017,
+      "linear_score": -1.578523897755107,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.10484485635562417,
+      "raw_drift_hz_s": 41179.12610154313,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 171.2290496826172,
+      "split_half_holds": true,
+      "tau_phi_feature": {
+        "mean_fraction": 0.0,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "energy",
+      "best_plv_envelope": 0.1251175092390374,
+      "best_score": -6.595294983009657,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9917972830616746,
+          "circvar": 0.06712649517337343,
+          "concentration": 0.21239399796732164,
+          "drift_residual": 0.007948332888055475,
+          "dtw_to_linear": 0.036086212877750434,
+          "kurtosis": -1.5052196765817458,
+          "matched_filter_snr": -11.802370633006726,
+          "null_median_plv": 0.05345830664784698,
+          "null_p95_plv": 0.10671794036509732,
+          "null_percentile": 1.0,
+          "plv": 0.9328735048266266,
+          "plv_ci": [
+            0.049366479344450806,
+            0.2816246998033378
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "chirp": {
+          "acf_peak": 0.9947220321796688,
+          "circvar": 0.0421671984063825,
+          "concentration": 0.20107481164742758,
+          "drift_residual": 0.005163622894785109,
+          "dtw_to_linear": 0.11663619570445558,
+          "kurtosis": -1.8163080073886706,
+          "matched_filter_snr": -12.841035972601063,
+          "null_median_plv": 0.04883605658302628,
+          "null_p95_plv": 0.1135560192682823,
+          "null_percentile": 1.0,
+          "plv": 0.9578328015936175,
+          "plv_ci": [
+            0.03298158177150166,
+            0.3016501212640034
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "energy": {
+          "acf_peak": 0.7699321775786919,
+          "circvar": 0.8748824907609626,
+          "concentration": 0.204077355635266,
+          "drift_residual": 0.04090816545494447,
+          "dtw_to_linear": 0.11490068316217897,
+          "kurtosis": 18.003765186957498,
+          "matched_filter_snr": -6.595294983009657,
+          "null_median_plv": 0.05970423617825737,
+          "null_p95_plv": 0.10507844751077702,
+          "null_percentile": 0.995,
+          "plv": 0.1251175092390374,
+          "plv_ci": [
+            0.03723542270321771,
+            0.27544210145744136
+          ],
+          "ridge_continuity": 0.958904109589041
+        },
+        "linear": {
+          "acf_peak": 0.9922492619766291,
+          "circvar": 0.06713151966925135,
+          "concentration": 0.21370021045363138,
+          "drift_residual": 0.006259076337053058,
+          "dtw_to_linear": 0.0,
+          "kurtosis": -1.5049202981413834,
+          "matched_filter_snr": -11.825556842098838,
+          "null_median_plv": 0.05132436307369,
+          "null_p95_plv": 0.10884279615624864,
+          "null_percentile": 1.0,
+          "plv": 0.9328684803307487,
+          "plv_ci": [
+            0.038337544305927146,
+            0.2873256009412445
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "phase": {
+          "acf_peak": 0.9966635410840208,
+          "circvar": 0.11193266760127685,
+          "concentration": 0.23288132950480733,
+          "drift_residual": 0.0036524225403078985,
+          "dtw_to_linear": 0.21287820317894912,
+          "kurtosis": -0.7301643042043193,
+          "matched_filter_snr": -10.164445301947516,
+          "null_median_plv": 0.05288057527568074,
+          "null_p95_plv": 0.10610666909502726,
+          "null_percentile": 1.0,
+          "plv": 0.8880673323987232,
+          "plv_ci": [
+            0.05757163338326372,
+            0.3181482777259415
+          ],
+          "ridge_continuity": 1.0
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 20.92693478593767,
+        "phase_scrambled_plv": 3.244642782989514,
+        "reversed_plv": 5.6506257020319675,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 4.787611433977013,
+        "warp_gain_p95": 5.727178354027404,
+        "warp_median": -7.037945408121825,
+        "warp_p95": -6.098378488071433,
+        "warp_plv_p95": 0.9631612203407366
+      },
+      "corrected_drift_hz_s": 195015.69416524307,
+      "cross_day_repeats": 0,
+      "date": "20240920",
+      "disposition": "INSTRUMENTAL ALIAS",
+      "freq_mhz": 45.42063886601793,
+      "gain_over_linear": 5.230261859089181,
+      "instrumental_explanation": "rate 0.4965 cycles/sample, 0.0035 below Nyquist; the sampler cannot distinguish it from -0.5035",
+      "linear_plv": 0.9328684803307487,
+      "linear_score": -11.825556842098838,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.49652322371846164,
+      "raw_drift_hz_s": 195015.69416524307,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 8.65757942199707,
+      "split_half_holds": false,
+      "tau_phi_feature": {
+        "mean_fraction": 0.2457541654089203,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "energy",
+      "best_plv_envelope": 0.19936751330104957,
+      "best_score": -7.7057850418589355,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9954523144405708,
+          "circvar": 0.0345857513256046,
+          "concentration": 0.19514203684726192,
+          "drift_residual": 0.005764280639390528,
+          "dtw_to_linear": 0.10339865753223702,
+          "kurtosis": -1.915731081450259,
+          "matched_filter_snr": -13.53482263139471,
+          "null_median_plv": 0.05447069557480552,
+          "null_p95_plv": 0.10381716617841334,
+          "null_percentile": 1.0,
+          "plv": 0.9654142486743954,
+          "plv_ci": [
+            0.03915745039500383,
+            0.29917690720455226
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "chirp": {
+          "acf_peak": 0.995452314440569,
+          "circvar": 0.0345857513256046,
+          "concentration": 0.1951420368472617,
+          "drift_residual": 0.005764280639388983,
+          "dtw_to_linear": 0.10339865753223165,
+          "kurtosis": -1.9157310814502657,
+          "matched_filter_snr": -13.534822631394741,
+          "null_median_plv": 0.04976673404815221,
+          "null_p95_plv": 0.10286674363720887,
+          "null_percentile": 1.0,
+          "plv": 0.9654142486743954,
+          "plv_ci": [
+            0.04400254572426752,
+            0.2954620172318039
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "energy": {
+          "acf_peak": 0.7361066468939738,
+          "circvar": 0.8006324866989505,
+          "concentration": 0.22071304875780548,
+          "drift_residual": 0.04050185020943849,
+          "dtw_to_linear": 0.09817064489746583,
+          "kurtosis": 23.74793573465155,
+          "matched_filter_snr": -7.7057850418589355,
+          "null_median_plv": 0.05403830363731666,
+          "null_p95_plv": 0.10497575446797397,
+          "null_percentile": 1.0,
+          "plv": 0.19936751330104957,
+          "plv_ci": [
+            0.039499339626206775,
+            0.28248889525232035
+          ],
+          "ridge_continuity": 0.9569471624266145
+        },
+        "linear": {
+          "acf_peak": 0.9949740515685324,
+          "circvar": 0.052458734487377146,
+          "concentration": 0.20915193412097027,
+          "drift_residual": 0.006566482107594781,
+          "dtw_to_linear": 0.0,
+          "kurtosis": -1.7254199115479962,
+          "matched_filter_snr": -13.027701417935036,
+          "null_median_plv": 0.05534159766671125,
+          "null_p95_plv": 0.10869518601259907,
+          "null_percentile": 1.0,
+          "plv": 0.9475412655126229,
+          "plv_ci": [
+            0.024420916239793398,
+            0.3035197848888711
+          ],
+          "ridge_continuity": 1.0
+        },
+        "phase": {
+          "acf_peak": 0.9967152500307399,
+          "circvar": 0.13454197594999062,
+          "concentration": 0.19853622830356235,
+          "drift_residual": 0.004023723546850885,
+          "dtw_to_linear": 0.6009714796666313,
+          "kurtosis": -0.7857172887352819,
+          "matched_filter_snr": -9.402876050465654,
+          "null_median_plv": 0.05133427409088694,
+          "null_p95_plv": 0.10840213968732564,
+          "null_percentile": 1.0,
+          "plv": 0.8654580240500094,
+          "plv_ci": [
+            0.05081961070507965,
+            0.3162160227383146
+          ],
+          "ridge_continuity": 1.0
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 22.404616654674637,
+        "phase_scrambled_plv": 4.820557951121565,
+        "reversed_plv": 4.9632073498670435,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 6.123382647590541,
+        "warp_gain_p95": 8.139425186476737,
+        "warp_median": -6.904318770344496,
+        "warp_p95": -4.8882762314583,
+        "warp_plv_p95": 0.9673302192165948
+      },
+      "corrected_drift_hz_s": 194896.81244845042,
+      "cross_day_repeats": 0,
+      "date": "20240920",
+      "disposition": "INSTRUMENTAL ALIAS",
+      "freq_mhz": 46.58895598498063,
+      "gain_over_linear": 5.321916376076101,
+      "instrumental_explanation": "rate 0.4965 cycles/sample, 0.0035 below Nyquist; the sampler cannot distinguish it from -0.5035",
+      "linear_plv": 0.9475412655126229,
+      "linear_score": -13.027701417935036,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.4962205427803159,
+      "raw_drift_hz_s": 194896.81244845042,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 7.905753135681152,
+      "split_half_holds": false,
+      "tau_phi_feature": {
+        "mean_fraction": 0.274716062765439,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    },
+    {
+      "absent_from_controls": false,
+      "amplitude_statistic_invariance": 0.0,
+      "astrophysical_explanation": "",
+      "band_note": "below the 6 m band; no allocated broadcast service here",
+      "beats_warp_gain": false,
+      "best_nonlinear_coordinate": "energy",
+      "best_plv_envelope": 0.21919721999044509,
+      "best_score": -7.1851472564163155,
+      "coherence": {
+        "accel": {
+          "acf_peak": 0.9959633170144315,
+          "circvar": 0.03173540749981585,
+          "concentration": 0.17729822367080256,
+          "drift_residual": 0.0037106908983684413,
+          "dtw_to_linear": 0.09592226273539416,
+          "kurtosis": -1.9383584546357322,
+          "matched_filter_snr": -11.31414354233631,
+          "null_median_plv": 0.05372738322308354,
+          "null_p95_plv": 0.10696374907485892,
+          "null_percentile": 1.0,
+          "plv": 0.9682645925001842,
+          "plv_ci": [
+            0.03153714217474107,
+            0.2881978244352816
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "chirp": {
+          "acf_peak": 0.9959633170144344,
+          "circvar": 0.03173540749981585,
+          "concentration": 0.17729822367067502,
+          "drift_residual": 0.0037106908983678397,
+          "dtw_to_linear": 0.09592226273538033,
+          "kurtosis": -1.9383584546357255,
+          "matched_filter_snr": -11.314143542309266,
+          "null_median_plv": 0.05108159624822059,
+          "null_p95_plv": 0.10707941042047897,
+          "null_percentile": 1.0,
+          "plv": 0.9682645925001842,
+          "plv_ci": [
+            0.04342140167646587,
+            0.30968919121083904
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "energy": {
+          "acf_peak": 0.7211285795812372,
+          "circvar": 0.7808027800095549,
+          "concentration": 0.22054067054321055,
+          "drift_residual": 0.036832466955592086,
+          "dtw_to_linear": 0.06713824124429345,
+          "kurtosis": 29.160250288709683,
+          "matched_filter_snr": -7.1851472564163155,
+          "null_median_plv": 0.054303784084973494,
+          "null_p95_plv": 0.10712870848685696,
+          "null_percentile": 1.0,
+          "plv": 0.21919721999044509,
+          "plv_ci": [
+            0.040138172182359044,
+            0.2714233499510892
+          ],
+          "ridge_continuity": 0.9726027397260274
+        },
+        "linear": {
+          "acf_peak": 0.9934086083825525,
+          "circvar": 0.040194021922032586,
+          "concentration": 0.20917355056880907,
+          "drift_residual": 0.005670868689730048,
+          "dtw_to_linear": 0.0,
+          "kurtosis": -1.8491522616227054,
+          "matched_filter_snr": -13.885475863294955,
+          "null_median_plv": 0.04892372367536101,
+          "null_p95_plv": 0.10902885749487781,
+          "null_percentile": 1.0,
+          "plv": 0.9598059780779674,
+          "plv_ci": [
+            0.043325069150459965,
+            0.288536505197662
+          ],
+          "ridge_continuity": 0.9980430528375733
+        },
+        "phase": {
+          "acf_peak": 0.9976358537646044,
+          "circvar": 0.05435071962566196,
+          "concentration": 0.21644977261632628,
+          "drift_residual": 0.0028886053840697255,
+          "dtw_to_linear": 0.0682110866281439,
+          "kurtosis": -1.4464578338664473,
+          "matched_filter_snr": -12.091934928487175,
+          "null_median_plv": 0.05030116904699409,
+          "null_p95_plv": 0.11146397093752357,
+          "null_percentile": 1.0,
+          "plv": 0.945649280374338,
+          "plv_ci": [
+            0.04230525283447377,
+            0.29520613181758454
+          ],
+          "ridge_continuity": 1.0
+        }
+      },
+      "confirmation_status": {
+        "absent_from_controls": false,
+        "barycentric": "UNTESTABLE (no WCS, no sky position)",
+        "confirmation": "UNTESTABLE",
+        "independent_telescope": "UNTESTABLE",
+        "later_observation": false,
+        "nonlinear_coherent": false,
+        "off_source": "UNTESTABLE",
+        "repeat_same_position": false
+      },
+      "controls": {
+        "off_band_plv": 20.893007328186243,
+        "phase_scrambled_plv": 4.144822971871386,
+        "reversed_plv": 4.657340445195509,
+        "shuffled_channels_plv": 0.0,
+        "warp_gain_median": 10.541403252443988,
+        "warp_gain_p95": 36.07849198461221,
+        "warp_median": -3.3440726108509664,
+        "warp_p95": 22.193016121317253,
+        "warp_plv_p95": 0.9690508785826968
+      },
+      "corrected_drift_hz_s": 194905.63837314476,
+      "cross_day_repeats": 0,
+      "date": "20240920",
+      "disposition": "INSTRUMENTAL ALIAS",
+      "freq_mhz": 47.535772913816686,
+      "gain_over_linear": 6.70032860687864,
+      "instrumental_explanation": "rate 0.4965 cycles/sample, 0.0035 below Nyquist; the sampler cannot distinguish it from -0.5035",
+      "linear_plv": 0.9598059780779674,
+      "linear_score": -13.885475863294955,
+      "plv_role": "envelope proxy, no decision role",
+      "rate": 0.4962430141849908,
+      "raw_drift_hz_s": 194905.63837314476,
+      "samples_used": 1000,
+      "separate_segments": true,
+      "shuffle_invariant": true,
+      "snr": 6.492942810058594,
+      "split_half_holds": false,
+      "tau_phi_feature": {
+        "mean_fraction": 0.28460832219183724,
+        "used_for_ranking": false
+      },
+      "tested_on": "second half",
+      "trained_on": "first half"
+    }
+  ],
+  "coordinates": {
+    "accel": "tau with the survey-grid drift model removed",
+    "chirp": "tau = integral (f - f0)/B dt = drift t^2 / (2B)",
+    "energy": "tau = cumulative excess power / total excess",
+    "linear": "tau = t",
+    "phase": "tau = cumulative |dphi| / (2 pi f_ref)",
+    "phi": "tau_phi = frac(tau_event / PHI^2), feature only"
+  },
+  "gain_min": 0.05,
+  "headline": "NULL RESULT",
+  "injections": [
+    {
+      "accel": 6.276409168830902,
+      "accel_plv": 0.11889896830461404,
+      "best": 6.276409168830902,
+      "chirp": 6.276409168830902,
+      "chirp_plv": 0.11889896830461404,
+      "detected": true,
+      "energy": 3.5856197407355124,
+      "energy_plv": 0.11944892957511646,
+      "gain": 8.837375276016246e-13,
+      "linear": 6.2764091688300185,
+      "linear_plv": 0.11889896830461992,
+      "nu": 0.0,
+      "phase": 5.133346066761207,
+      "phase_plv": 0.07738765289760091,
+      "reported_nu": 0.0,
+      "seed": 11,
+      "shuffled_p95": 6.2934946905921265
+    },
+    {
+      "accel": 5.991196385219968,
+      "accel_plv": 0.04074859740073708,
+      "best": 5.991196385219968,
+      "chirp": 5.991196385219968,
+      "chirp_plv": 0.04074859740073708,
+      "detected": true,
+      "energy": 1.2770130649784037,
+      "energy_plv": 0.0925782869317436,
+      "gain": 5.542233338928781e-13,
+      "linear": 5.991196385219414,
+      "linear_plv": 0.040748597400733,
+      "nu": 0.0,
+      "phase": 4.959576859084528,
+      "phase_plv": 0.044657784653187614,
+      "reported_nu": 0.0,
+      "seed": 12,
+      "shuffled_p95": 5.171663551566494
+    },
+    {
+      "accel": 6.6079250717267515,
+      "accel_plv": 0.10156380911163032,
+      "best": 6.758690302820148,
+      "chirp": 6.758690302820148,
+      "chirp_plv": 0.04089973108208764,
+      "detected": true,
+      "energy": 1.80535347360255,
+      "energy_plv": 0.11926917657277837,
+      "gain": 0.8660627626986246,
+      "linear": 5.892627540121524,
+      "linear_plv": 0.1253615111884432,
+      "nu": 0.02,
+      "phase": 5.092978360616965,
+      "phase_plv": 0.03415071535759738,
+      "reported_nu": 0.020000000000000018,
+      "seed": 11,
+      "shuffled_p95": 5.821032743640001
+    },
+    {
+      "accel": 5.762278807543334,
+      "accel_plv": 0.06881914287789412,
+      "best": 5.8021908068559584,
+      "chirp": 5.8021908068559584,
+      "chirp_plv": 0.07976129758091632,
+      "detected": true,
+      "energy": 3.3324970605000654,
+      "energy_plv": 0.09146500964958001,
+      "gain": 0.6513557419694438,
+      "linear": 5.150835064886515,
+      "linear_plv": 0.013449119862525756,
+      "nu": 0.02,
+      "phase": 5.526599428957052,
+      "phase_plv": 0.05869135266521879,
+      "reported_nu": 0.020000000000000018,
+      "seed": 12,
+      "shuffled_p95": 5.852202301707501
+    },
+    {
+      "accel": 6.572577064537841,
+      "accel_plv": 0.12128858463533813,
+      "best": 6.703183291504924,
+      "chirp": 6.703183291504924,
+      "chirp_plv": 0.07302130026281692,
+      "detected": true,
+      "energy": -3.8187546211758927,
+      "energy_plv": 0.36516273484274625,
+      "gain": 0.09255477539190426,
+      "linear": 6.61062851611302,
+      "linear_plv": 0.04743768381059141,
+      "nu": 0.38196601125010515,
+      "phase": 3.619530725034013,
+      "phase_plv": 0.0931666538759615,
+      "reported_nu": 0.3819660112501051,
+      "seed": 11,
+      "shuffled_p95": 6.864756608770817
+    },
+    {
+      "accel": 6.307769706990851,
+      "accel_plv": 0.028355329826750188,
+      "best": 6.3319605637582415,
+      "chirp": 6.302434288791408,
+      "chirp_plv": 0.1787809055434812,
+      "detected": true,
+      "energy": -1.6491878175482062,
+      "energy_plv": 0.21812968315460762,
+      "gain": 0.0,
+      "linear": 6.3319605637582415,
+      "linear_plv": 0.035281314228962024,
+      "nu": 0.38196601125010515,
+      "phase": 4.5788298882098974,
+      "phase_plv": 0.051794065422794924,
+      "reported_nu": 0.3819660112501051,
+      "seed": 12,
+      "shuffled_p95": 6.197359222850228
+    },
+    {
+      "accel": 4.878996484173612,
+      "accel_plv": 0.03742945348985011,
+      "best": 5.615656518155592,
+      "chirp": 5.615656518155592,
+      "chirp_plv": 0.08251328995653402,
+      "detected": true,
+      "energy": 1.648796472742326,
+      "energy_plv": 0.7948156142727761,
+      "gain": 0.7366600339793417,
+      "linear": 4.87899648417625,
+      "linear_plv": 0.0374294534898472,
+      "nu": 0.45,
+      "phase": 4.054718929418579,
+      "phase_plv": 0.1552422377436607,
+      "reported_nu": 0.44999999999999996,
+      "seed": 11,
+      "shuffled_p95": 5.98724581301719
+    },
+    {
+      "accel": 4.768349082384736,
+      "accel_plv": 0.08768930891279444,
+      "best": 5.470372936281438,
+      "chirp": 5.470372936281438,
+      "chirp_plv": 0.026504064206475317,
+      "detected": true,
+      "energy": 0.012694180412549718,
+      "energy_plv": 0.9066204706687433,
+      "gain": 0.7020238538991617,
+      "linear": 4.768349082382277,
+      "linear_plv": 0.0876893089127821,
+      "nu": 0.45,
+      "phase": 3.571899715116362,
+      "phase_plv": 0.10155109430618368,
+      "reported_nu": 0.44999999999999996,
+      "seed": 12,
+      "shuffled_p95": 5.431121287686802
+    },
+    {
+      "accel": 5.020201749757065,
+      "accel_plv": 0.03630037275685398,
+      "best": 5.587633644880567,
+      "chirp": 0.0,
+      "chirp_plv": 0.0,
+      "detected": true,
+      "energy": 3.1309872310087528,
+      "energy_plv": 0.1332382560080381,
+      "gain": 0.0,
+      "linear": 5.587633644880567,
+      "linear_plv": 0.05901247127159201,
+      "nu": 0.6,
+      "phase": 4.629433564117895,
+      "phase_plv": 0.0662690442069538,
+      "reported_nu": -0.3999999999999999,
+      "seed": 11,
+      "shuffled_p95": 5.056132967142979
+    },
+    {
+      "accel": 6.241421714640752,
+      "accel_plv": 0.06520903191689556,
+      "best": 6.241421714640752,
+      "chirp": 0.0,
+      "chirp_plv": 0.0,
+      "detected": true,
+      "energy": 2.9744097019862217,
+      "energy_plv": 0.10004374892055311,
+      "gain": 0.7678927543984733,
+      "linear": 5.4735289602422785,
+      "linear_plv": 0.0671641799103858,
+      "nu": 0.6,
+      "phase": 5.090226013444963,
+      "phase_plv": 0.04507138133490525,
+      "reported_nu": -0.3999999999999999,
+      "seed": 12,
+      "shuffled_p95": 5.634961878661011
+    }
+  ],
+  "linear_result_preserved": "NULL RESULT",
+  "nulls": 200,
+  "solar_template": {
+    "coronal_125kms_hz_s": 42631.71622709085,
+    "drifts_hz_s": [
+      41190.2107171935,
+      41185.37626827356,
+      41184.09936571234,
+      41179.12610154313
+    ],
+    "lanes": 4,
+    "parallel": true,
+    "spread_hz_s": 11.084615650368505,
+    "spread_over_resolution": 0.028222185501324635
+  },
+  "split": {
+    "tested_on": "second half",
+    "trained_on": "first half"
+  },
+  "warps": 100
+}

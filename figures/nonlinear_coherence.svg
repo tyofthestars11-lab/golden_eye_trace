@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300" font-family="Helvetica,Arial,sans-serif">
+<rect width="800" height="300" fill="#ffffff"/>
+<text x="20" y="28" font-size="15" font-weight="bold">Phase locking per candidate: best nonlinear against linear and against the warp null</text>
+<text x="50" y="60" font-size="10" font-weight="bold">candidate index</text>
+<rect x="52" y="66" width="708" height="174" fill="#fbfbfd" stroke="#c9ccd6"/>
+<circle cx="52.0" cy="137.7" r="2.6" fill="#cc5500"/>
+<circle cx="116.4" cy="128.0" r="2.6" fill="#cc5500"/>
+<circle cx="180.7" cy="137.4" r="2.6" fill="#cc5500"/>
+<circle cx="245.1" cy="136.8" r="2.6" fill="#cc5500"/>
+<circle cx="309.5" cy="112.0" r="2.6" fill="#cc5500"/>
+<circle cx="373.8" cy="131.7" r="2.6" fill="#cc5500"/>
+<circle cx="438.2" cy="131.7" r="2.6" fill="#cc5500"/>
+<circle cx="502.5" cy="153.6" r="2.6" fill="#cc5500"/>
+<circle cx="566.9" cy="139.1" r="2.6" fill="#cc5500"/>
+<circle cx="631.3" cy="204.8" r="2.6" fill="#cc5500"/>
+<circle cx="695.6" cy="210.2" r="2.6" fill="#cc5500"/>
+<circle cx="760.0" cy="207.7" r="2.6" fill="#cc5500"/>
+<text x="56" y="252" font-size="7.5" fill="#cc5500">best nonlinear</text>
+<circle cx="52.0" cy="140.4" r="2.6" fill="#2255aa"/>
+<circle cx="116.4" cy="148.4" r="2.6" fill="#2255aa"/>
+<circle cx="180.7" cy="140.2" r="2.6" fill="#2255aa"/>
+<circle cx="245.1" cy="136.7" r="2.6" fill="#2255aa"/>
+<circle cx="309.5" cy="148.5" r="2.6" fill="#2255aa"/>
+<circle cx="373.8" cy="139.6" r="2.6" fill="#2255aa"/>
+<circle cx="438.2" cy="131.8" r="2.6" fill="#2255aa"/>
+<circle cx="502.5" cy="153.2" r="2.6" fill="#2255aa"/>
+<circle cx="566.9" cy="180.6" r="2.6" fill="#2255aa"/>
+<circle cx="631.3" cy="230.1" r="2.6" fill="#2255aa"/>
+<circle cx="695.6" cy="235.9" r="2.6" fill="#2255aa"/>
+<circle cx="760.0" cy="240.0" r="2.6" fill="#2255aa"/>
+<text x="160" y="252" font-size="7.5" fill="#2255aa">linear</text>
+<circle cx="52.0" cy="133.6" r="2.6" fill="#228833"/>
+<circle cx="116.4" cy="102.5" r="2.6" fill="#228833"/>
+<circle cx="180.7" cy="115.9" r="2.6" fill="#228833"/>
+<circle cx="245.1" cy="129.7" r="2.6" fill="#228833"/>
+<circle cx="309.5" cy="107.6" r="2.6" fill="#228833"/>
+<circle cx="373.8" cy="126.3" r="2.6" fill="#228833"/>
+<circle cx="438.2" cy="127.1" r="2.6" fill="#228833"/>
+<circle cx="502.5" cy="143.0" r="2.6" fill="#228833"/>
+<circle cx="566.9" cy="130.7" r="2.6" fill="#228833"/>
+<circle cx="631.3" cy="202.4" r="2.6" fill="#228833"/>
+<circle cx="695.6" cy="196.6" r="2.6" fill="#228833"/>
+<circle cx="760.0" cy="66.0" r="2.6" fill="#228833"/>
+<text x="264" y="252" font-size="7.5" fill="#228833">warp p95</text>
+<text x="406" y="266" font-size="8" text-anchor="middle" fill="#555">candidate index</text>
+<text x="48" y="74" font-size="8" text-anchor="end" fill="#555">matched-filter score</text>
+<text x="52" y="278" font-size="7" fill="#888">-13.9 to 22.2</text>
+</svg>
