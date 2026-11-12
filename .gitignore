@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 data/
 *.hits.csv
+
+# audit-only clone; not vendored into this repository
+/phi-quantum-pulses/

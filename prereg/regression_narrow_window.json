@@ -1,0 +1,33 @@
+{
+  "id": "narrow-window-truncation",
+  "valid": false,
+  "date": "2026-11-12",
+  "method": "32-channel search windows with a local noise reference",
+  "why_invalid": "Bright drift trails span about 105 channels across the 1000-sample integration, so a 32-channel window truncates them mid-flight and the dedoppler sum collapses. The 954 sigma lane reporting 0 sigma is a statement about the window, not about the sky.",
+  "superseded_by": "per-channel local scale on the survey's own 96-channel window",
+  "superseded_result": "9 of 10 survive",
+  "setting": {"window_channels": 32, "samples": 1000, "threshold": 4.0,
+              "drift_resolution_hz_s": 392.8},
+  "result": {"survived": 0, "of": 10},
+  "candidates_lost": [
+    {"date": "20240207", "freq_mhz": 53.783, "survey_snr": 7.16, "narrow_snr": null},
+    {"date": "20240322", "freq_mhz": 47.242, "survey_snr": 6.67, "narrow_snr": null},
+    {"date": "20240324", "freq_mhz": 47.314, "survey_snr": 11.67, "narrow_snr": null},
+    {"date": "20240325", "freq_mhz": 45.984, "survey_snr": 953.98, "narrow_snr": null},
+    {"date": "20240325", "freq_mhz": 46.983, "survey_snr": 604.03, "narrow_snr": null},
+    {"date": "20240325", "freq_mhz": 47.938, "survey_snr": 447.08, "narrow_snr": null},
+    {"date": "20240325", "freq_mhz": 48.994, "survey_snr": 171.23, "narrow_snr": null},
+    {"date": "20240920", "freq_mhz": 45.421, "survey_snr": 8.66, "narrow_snr": null},
+    {"date": "20240920", "freq_mhz": 46.589, "survey_snr": 7.91, "narrow_snr": null},
+    {"date": "20240920", "freq_mhz": 47.536, "survey_snr": 6.49, "narrow_snr": null}
+  ],
+  "geometry": {
+    "channel_hz": 100547.19562243501,
+    "tsamp_s": 0.256,
+    "lane_drift_hz_s": 41190.2,
+    "lane_rate_cycles_per_sample": 0.10487,
+    "channels_traversed_in_1000_samples": 104.9,
+    "fraction_inside_32_channel_window": 0.305
+  },
+  "note": "Kept as a fixture. A zero that includes a 954 sigma line must never be believed."
+}
