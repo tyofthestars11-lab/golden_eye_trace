@@ -1,0 +1,311 @@
+{
+  "candidates": [
+    {
+      "at_candidate": {
+        "drift_hz_s": 7069.724692202795,
+        "freq_mhz": 53.81997264021887,
+        "global_snr": 7.15873908996582,
+        "j": 85,
+        "k": 345,
+        "local_snr": 9.659404135018272,
+        "scale": 0.7411160139799118
+      },
+      "channel": 85,
+      "date": "20240207",
+      "drift_hz_s": 6970.898755113434,
+      "freq_mhz": 53.7832964055797,
+      "global_snr": 7.15873908996582,
+      "local_drift_hz_s": 6970.9037611528765,
+      "local_found": true,
+      "local_freq_mhz": 53.78202668769031,
+      "local_snr": 9.659404135018272,
+      "scale_at_candidate": 0.7411160139799118,
+      "snr_ratio": 1.3493436440456386,
+      "survey_snr": 7.158594608306885,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 0.0,
+        "freq_mhz": 47.2844049247606,
+        "global_snr": 6.666544437408447,
+        "j": 20,
+        "k": 333,
+        "local_snr": 5.160142922434523,
+        "scale": 1.2919301921705715
+      },
+      "channel": 20,
+      "date": "20240322",
+      "drift_hz_s": -172.82172648386077,
+      "freq_mhz": 47.241613525073866,
+      "global_snr": 6.666544437408447,
+      "local_drift_hz_s": null,
+      "local_found": false,
+      "local_freq_mhz": null,
+      "local_snr": null,
+      "scale_at_candidate": 1.2919301921705715,
+      "survey_snr": 6.666425704956055,
+      "survives_local": false
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": -589.1437243502329,
+        "freq_mhz": 47.2844049247606,
+        "global_snr": 11.668501853942871,
+        "j": 20,
+        "k": 332,
+        "local_snr": 8.97064855945306,
+        "scale": 1.300742279291153
+      },
+      "channel": 20,
+      "date": "20240324",
+      "drift_hz_s": -503.98589367346983,
+      "freq_mhz": 47.3142574836376,
+      "global_snr": 11.668501853942871,
+      "local_drift_hz_s": null,
+      "local_found": false,
+      "local_freq_mhz": null,
+      "local_snr": null,
+      "scale_at_candidate": 1.300742279291153,
+      "survey_snr": 11.667951583862305,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 41240.060704516305,
+        "freq_mhz": 45.97729138166894,
+        "global_snr": 954.0043334960938,
+        "j": 7,
+        "k": 403,
+        "local_snr": 30.598105485106785,
+        "scale": 31.17854253951907
+      },
+      "channel": 7,
+      "date": "20240325",
+      "drift_hz_s": 41190.2107171935,
+      "freq_mhz": 45.98428447741178,
+      "global_snr": 954.0043334960938,
+      "local_drift_hz_s": 41190.21073239987,
+      "local_found": true,
+      "local_freq_mhz": 45.99628368062649,
+      "local_snr": 30.598105485106785,
+      "scale_at_candidate": 31.17854253951907,
+      "snr_ratio": 0.032074144539719865,
+      "survey_snr": 953.9804077148438,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 41240.060704516305,
+        "freq_mhz": 46.98276333789329,
+        "global_snr": 604.0487670898438,
+        "j": 17,
+        "k": 403,
+        "local_snr": 21.812087462607092,
+        "scale": 27.69330391350103
+      },
+      "channel": 17,
+      "date": "20240325",
+      "drift_hz_s": 41185.37626827356,
+      "freq_mhz": 46.982763337893296,
+      "global_snr": 604.0487670898438,
+      "local_drift_hz_s": null,
+      "local_found": false,
+      "local_freq_mhz": null,
+      "local_snr": null,
+      "scale_at_candidate": 27.69330391350103,
+      "survey_snr": 604.0343017578125,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 41240.060704516305,
+        "freq_mhz": 47.98823529411764,
+        "global_snr": 447.09283447265625,
+        "j": 27,
+        "k": 403,
+        "local_snr": 22.88073871866718,
+        "scale": 19.54013985168656
+      },
+      "channel": 27,
+      "date": "20240325",
+      "drift_hz_s": 41184.09936571234,
+      "freq_mhz": 47.93796169630643,
+      "global_snr": 447.09283447265625,
+      "local_drift_hz_s": 41185.354382808895,
+      "local_found": true,
+      "local_freq_mhz": 47.88359412775599,
+      "local_snr": 23.162827703344124,
+      "scale_at_candidate": 19.54013985168656,
+      "snr_ratio": 0.051808919998595236,
+      "survey_snr": 447.08184814453125,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 41240.060704516305,
+        "freq_mhz": 48.993707250342,
+        "global_snr": 171.23324584960938,
+        "j": 37,
+        "k": 403,
+        "local_snr": 13.971244552470985,
+        "scale": 12.256119718362863
+      },
+      "channel": 37,
+      "date": "20240325",
+      "drift_hz_s": 41179.12610154313,
+      "freq_mhz": 48.99370725034199,
+      "global_snr": 171.23324584960938,
+      "local_drift_hz_s": 41179.82863159906,
+      "local_found": true,
+      "local_freq_mhz": 48.84288645690834,
+      "local_snr": 15.79366195563242,
+      "scale_at_candidate": 12.256119718362863,
+      "snr_ratio": 0.09223704730538931,
+      "survey_snr": 171.2290496826172,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 195006.57275992708,
+        "freq_mhz": 45.37400820793434,
+        "global_snr": 8.657346725463867,
+        "j": 1,
+        "k": 664,
+        "local_snr": 14.738741106977884,
+        "scale": 0.5873871223211288
+      },
+      "channel": 1,
+      "date": "20240920",
+      "drift_hz_s": 195015.69416524307,
+      "freq_mhz": 45.42063886601793,
+      "global_snr": 8.657346725463867,
+      "local_drift_hz_s": null,
+      "local_found": false,
+      "local_freq_mhz": null,
+      "local_snr": null,
+      "scale_at_candidate": 0.5873871223211288,
+      "survey_snr": 8.65757942199707,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 195006.57275992708,
+        "freq_mhz": 46.58057455540355,
+        "global_snr": 7.905545234680176,
+        "j": 13,
+        "k": 664,
+        "local_snr": 23.345984949886542,
+        "scale": 0.33862547464370724
+      },
+      "channel": 13,
+      "date": "20240920",
+      "drift_hz_s": 194896.81244845042,
+      "freq_mhz": 46.58895598498063,
+      "global_snr": 7.905545234680176,
+      "local_drift_hz_s": 194871.87571971162,
+      "local_found": true,
+      "local_freq_mhz": 46.71030124783065,
+      "local_snr": 24.110363215637147,
+      "scale_at_candidate": 0.33862547464370724,
+      "snr_ratio": 3.049723764687198,
+      "survey_snr": 7.905753135681152,
+      "survives_local": true
+    },
+    {
+      "at_candidate": {
+        "drift_hz_s": 195006.57275992708,
+        "freq_mhz": 47.485499316005466,
+        "global_snr": 6.671841621398926,
+        "j": 22,
+        "k": 664,
+        "local_snr": 22.054378760314897,
+        "scale": 0.3025177763521671
+      },
+      "channel": 23,
+      "date": "20240920",
+      "drift_hz_s": 194905.63837314476,
+      "freq_mhz": 47.535772913816686,
+      "global_snr": 6.492774486541748,
+      "local_drift_hz_s": 195039.1563666638,
+      "local_found": true,
+      "local_freq_mhz": 47.73686730506156,
+      "local_snr": 19.601761218611568,
+      "scale_at_candidate": 0.3043696106672287,
+      "snr_ratio": 3.0189332929662256,
+      "survey_snr": 6.492942810058594,
+      "survives_local": true
+    }
+  ],
+  "local_half": 16,
+  "n_candidates": 10,
+  "n_survived": 9,
+  "samples": 1000,
+  "survivors": [
+    {
+      "date": "20240207",
+      "drift_hz_s": 6970.898755113434,
+      "freq_mhz": 53.7832964055797,
+      "local_snr": 9.659404135018272,
+      "survey_snr": 7.158594608306885
+    },
+    {
+      "date": "20240324",
+      "drift_hz_s": -503.98589367346983,
+      "freq_mhz": 47.3142574836376,
+      "local_snr": 8.97064855945306,
+      "survey_snr": 11.667951583862305
+    },
+    {
+      "date": "20240325",
+      "drift_hz_s": 41190.2107171935,
+      "freq_mhz": 45.98428447741178,
+      "local_snr": 30.598105485106785,
+      "survey_snr": 953.9804077148438
+    },
+    {
+      "date": "20240325",
+      "drift_hz_s": 41185.37626827356,
+      "freq_mhz": 46.982763337893296,
+      "local_snr": 21.812087462607092,
+      "survey_snr": 604.0343017578125
+    },
+    {
+      "date": "20240325",
+      "drift_hz_s": 41184.09936571234,
+      "freq_mhz": 47.93796169630643,
+      "local_snr": 22.88073871866718,
+      "survey_snr": 447.08184814453125
+    },
+    {
+      "date": "20240325",
+      "drift_hz_s": 41179.12610154313,
+      "freq_mhz": 48.99370725034199,
+      "local_snr": 13.971244552470985,
+      "survey_snr": 171.2290496826172
+    },
+    {
+      "date": "20240920",
+      "drift_hz_s": 195015.69416524307,
+      "freq_mhz": 45.42063886601793,
+      "local_snr": 14.738741106977884,
+      "survey_snr": 8.65757942199707
+    },
+    {
+      "date": "20240920",
+      "drift_hz_s": 194896.81244845042,
+      "freq_mhz": 46.58895598498063,
+      "local_snr": 23.345984949886542,
+      "survey_snr": 7.905753135681152
+    },
+    {
+      "date": "20240920",
+      "drift_hz_s": 194905.63837314476,
+      "freq_mhz": 47.535772913816686,
+      "local_snr": 22.054378760314897,
+      "survey_snr": 6.492942810058594
+    }
+  ],
+  "threshold": 5.5,
+  "window_channels": 96
+}
