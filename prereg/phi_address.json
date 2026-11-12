@@ -1,0 +1,724 @@
+{
+  "addresses": [
+    {
+      "date": "20240207",
+      "freq_mhz": 53.7832964055797,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.390029,
+          "nearest": 18,
+          "rung": 18.390029,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 6970.898755113434
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.009069,
+          "nearest": 37,
+          "rung": 36.990931,
+          "unit": "Hz",
+          "value": 53783296.4055797
+        },
+        "local_scale": {
+          "drift": 0.377409,
+          "nearest": -1,
+          "rung": -0.622591,
+          "unit": "ratio",
+          "value": 0.7411160139799118
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.28704,
+          "nearest": 5,
+          "rung": 4.71296,
+          "unit": "sigma",
+          "value": 9.659404135018272
+        },
+        "snr_global": {
+          "drift": 0.090327,
+          "nearest": 4,
+          "rung": 4.090327,
+          "unit": "sigma",
+          "value": 7.158594608306885
+        }
+      }
+    },
+    {
+      "date": "20240322",
+      "freq_mhz": 47.241613525073866,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.293155,
+          "nearest": 11,
+          "rung": 10.706845,
+          "sign": "negative",
+          "unit": "Hz/s",
+          "value": 172.82172648386077
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.278571,
+          "nearest": 37,
+          "rung": 36.721429,
+          "unit": "Hz",
+          "value": 47241613.52507386
+        },
+        "local_scale": {
+          "drift": 0.467724,
+          "nearest": 1,
+          "rung": 0.532276,
+          "unit": "ratio",
+          "value": 1.2919301921705715
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.410066,
+          "nearest": 3,
+          "rung": 3.410066,
+          "unit": "sigma",
+          "value": 5.160142922434523
+        },
+        "snr_global": {
+          "drift": 0.057695,
+          "nearest": 4,
+          "rung": 3.942305,
+          "unit": "sigma",
+          "value": 6.666425704956055
+        }
+      }
+    },
+    {
+      "date": "20240324",
+      "freq_mhz": 47.3142574836376,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.069004,
+          "nearest": 13,
+          "rung": 12.930996,
+          "sign": "negative",
+          "unit": "Hz/s",
+          "value": 503.98589367346983
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.275378,
+          "nearest": 37,
+          "rung": 36.724622,
+          "unit": "Hz",
+          "value": 47314257.48363759
+        },
+        "local_scale": {
+          "drift": 0.453598,
+          "nearest": 1,
+          "rung": 0.546402,
+          "unit": "ratio",
+          "value": 1.300742279291153
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.440765,
+          "nearest": 5,
+          "rung": 4.559235,
+          "unit": "sigma",
+          "value": 8.97064855945306
+        },
+        "snr_global": {
+          "drift": 0.105539,
+          "nearest": 5,
+          "rung": 5.105539,
+          "unit": "sigma",
+          "value": 11.667951583862305
+        }
+      }
+    },
+    {
+      "date": "20240325",
+      "freq_mhz": 45.98428447741178,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.08166,
+          "nearest": 22,
+          "rung": 22.08166,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 41190.2107171935
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.334629,
+          "nearest": 37,
+          "rung": 36.665371,
+          "unit": "Hz",
+          "value": 45984284.47741178
+        },
+        "local_scale": {
+          "drift": 0.148058,
+          "nearest": 7,
+          "rung": 7.148058,
+          "unit": "ratio",
+          "value": 31.17854253951907
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.109007,
+          "nearest": 7,
+          "rung": 7.109007,
+          "unit": "sigma",
+          "value": 30.598105485106785
+        },
+        "snr_global": {
+          "drift": 0.257013,
+          "nearest": 14,
+          "rung": 14.257013,
+          "unit": "sigma",
+          "value": 953.9804077148438
+        }
+      }
+    },
+    {
+      "date": "20240325",
+      "freq_mhz": 46.982763337893296,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.081416,
+          "nearest": 22,
+          "rung": 22.081416,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 41185.37626827356
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.289989,
+          "nearest": 37,
+          "rung": 36.710011,
+          "unit": "Hz",
+          "value": 46982763.33789329
+        },
+        "local_scale": {
+          "drift": 0.098277,
+          "nearest": 7,
+          "rung": 6.901723,
+          "unit": "ratio",
+          "value": 27.69330391350103
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.405629,
+          "nearest": 6,
+          "rung": 6.405629,
+          "unit": "sigma",
+          "value": 21.812087462607092
+        },
+        "snr_global": {
+          "drift": 0.307302,
+          "nearest": 13,
+          "rung": 13.307302,
+          "unit": "sigma",
+          "value": 604.0343017578125
+        }
+      }
+    },
+    {
+      "date": "20240325",
+      "freq_mhz": 47.93796169630643,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.081352,
+          "nearest": 22,
+          "rung": 22.081352,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 41184.09936571234
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.248164,
+          "nearest": 37,
+          "rung": 36.751836,
+          "unit": "Hz",
+          "value": 47937961.69630643
+        },
+        "local_scale": {
+          "drift": 0.177053,
+          "nearest": 6,
+          "rung": 6.177053,
+          "unit": "ratio",
+          "value": 19.54013985168656
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.494974,
+          "nearest": 7,
+          "rung": 6.505026,
+          "unit": "sigma",
+          "value": 22.88073871866718
+        },
+        "snr_global": {
+          "drift": 0.317972,
+          "nearest": 13,
+          "rung": 12.682028,
+          "unit": "sigma",
+          "value": 447.08184814453125
+        }
+      }
+    },
+    {
+      "date": "20240325",
+      "freq_mhz": 48.99370725034199,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.081101,
+          "nearest": 22,
+          "rung": 22.081101,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 41179.12610154313
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.202894,
+          "nearest": 37,
+          "rung": 36.797106,
+          "unit": "Hz",
+          "value": 48993707.25034199
+        },
+        "local_scale": {
+          "drift": 0.207739,
+          "nearest": 5,
+          "rung": 5.207739,
+          "unit": "ratio",
+          "value": 12.256119718362863
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.479918,
+          "nearest": 5,
+          "rung": 5.479918,
+          "unit": "sigma",
+          "value": 13.971244552470985
+        },
+        "snr_global": {
+          "drift": 0.312395,
+          "nearest": 11,
+          "rung": 10.687605,
+          "unit": "sigma",
+          "value": 171.2290496826172
+        }
+      }
+    },
+    {
+      "date": "20240920",
+      "freq_mhz": 45.42063886601793,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.312835,
+          "nearest": 25,
+          "rung": 25.312835,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 195015.69416524307
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.360258,
+          "nearest": 37,
+          "rung": 36.639742,
+          "unit": "Hz",
+          "value": 45420638.86601793
+        },
+        "local_scale": {
+          "drift": 0.10569,
+          "nearest": -1,
+          "rung": -1.10569,
+          "unit": "ratio",
+          "value": 0.5873871223211288
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.40895,
+          "nearest": 6,
+          "rung": 5.59105,
+          "unit": "sigma",
+          "value": 14.738741106977884
+        },
+        "snr_global": {
+          "drift": 0.485416,
+          "nearest": 4,
+          "rung": 4.485416,
+          "unit": "sigma",
+          "value": 8.65757942199707
+        }
+      }
+    },
+    {
+      "date": "20240920",
+      "freq_mhz": 46.58895598498063,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.311567,
+          "nearest": 25,
+          "rung": 25.311567,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 194896.81244845042
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.307481,
+          "nearest": 37,
+          "rung": 36.692519,
+          "unit": "Hz",
+          "value": 46588955.98498063
+        },
+        "local_scale": {
+          "drift": 0.250278,
+          "nearest": -2,
+          "rung": -2.250278,
+          "unit": "ratio",
+          "value": 0.33862547464370724
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.453143,
+          "nearest": 7,
+          "rung": 6.546857,
+          "unit": "sigma",
+          "value": 23.345984949886542
+        },
+        "snr_global": {
+          "drift": 0.296633,
+          "nearest": 4,
+          "rung": 4.296633,
+          "unit": "sigma",
+          "value": 7.905753135681152
+        }
+      }
+    },
+    {
+      "date": "20240920",
+      "freq_mhz": 47.535772913816686,
+      "quantities": {
+        "drift_hz_per_s": {
+          "drift": 0.311661,
+          "nearest": 25,
+          "rung": 25.311661,
+          "sign": "positive",
+          "unit": "Hz/s",
+          "value": 194905.63837314476
+        },
+        "duration_s": {
+          "drift": 0.476639,
+          "nearest": 12,
+          "rung": 11.523361,
+          "unit": "s",
+          "value": 256.0
+        },
+        "frequency_hz": {
+          "drift": 0.265672,
+          "nearest": 37,
+          "rung": 36.734328,
+          "unit": "Hz",
+          "value": 47535772.91381668
+        },
+        "local_scale": {
+          "drift": 0.484592,
+          "nearest": -2,
+          "rung": -2.484592,
+          "unit": "ratio",
+          "value": 0.3025177763521671
+        },
+        "resolution_hz_per_s": {
+          "drift": 0.412839,
+          "nearest": 12,
+          "rung": 12.412839,
+          "unit": "Hz/s",
+          "value": 392.7624829001368
+        },
+        "snr_at_cell": {
+          "drift": 0.428585,
+          "nearest": 6,
+          "rung": 6.428585,
+          "unit": "sigma",
+          "value": 22.054378760314897
+        },
+        "snr_global": {
+          "drift": 0.11249,
+          "nearest": 4,
+          "rung": 3.88751,
+          "unit": "sigma",
+          "value": 6.492942810058594
+        }
+      }
+    }
+  ],
+  "attribution": "Tyree Jones (tyofthestarz), prior art from December 2025",
+  "base_invariance": {
+    "10": {
+      "band_span_rungs": 0.07339417831757766,
+      "median_fractional_distance": 0.3253416243091394,
+      "n": 10,
+      "uniform_expectation": 0.25
+    },
+    "2": {
+      "band_span_rungs": 0.24381018295433415,
+      "median_fractional_distance": 0.4794097169531977,
+      "n": 10,
+      "uniform_expectation": 0.25
+    },
+    "e": {
+      "band_span_rungs": 0.16899634090660115,
+      "median_fractional_distance": 0.32844603031232644,
+      "n": 10,
+      "uniform_expectation": 0.25
+    },
+    "phi": {
+      "band_span_rungs": 0.3511890857745839,
+      "median_fractional_distance": 0.27697481769311594,
+      "n": 10,
+      "uniform_expectation": 0.25
+    },
+    "phi_median": 0.27697481769311594,
+    "spread_across_bases": 0.438229150859593,
+    "sqrt2": {
+      "band_span_rungs": 0.48762036590866825,
+      "median_fractional_distance": 0.041180566093604654,
+      "n": 10,
+      "uniform_expectation": 0.25
+    }
+  },
+  "drift_rung_uniformity": {
+    "n": 10,
+    "p_value": 0.1649934311747553,
+    "statistic": 0.3366800240722725
+  },
+  "framework": "phi^2 = phi + 1; rung(x) = ln(x)/ln(phi)",
+  "groups": [
+    {
+      "date": "20240325",
+      "n": 4,
+      "pairs": [
+        {
+          "delta_rung": 0.04464,
+          "factor": 1.021713,
+          "from_mhz": 45.9843,
+          "integer_step": false,
+          "residual": 5.8494875609937935e-15,
+          "to_mhz": 46.9828
+        },
+        {
+          "delta_rung": 0.041825,
+          "factor": 1.020331,
+          "from_mhz": 46.9828,
+          "integer_step": false,
+          "residual": -2.2967738821932926e-15,
+          "to_mhz": 47.938
+        },
+        {
+          "delta_rung": 0.045269,
+          "factor": 1.022023,
+          "from_mhz": 47.938,
+          "integer_step": false,
+          "residual": 1.5890067039947553e-15,
+          "to_mhz": 48.9937
+        }
+      ],
+      "repeated_scales": [],
+      "rung_uniformity": {
+        "n": 4,
+        "p_value": 0.00317173917812408,
+        "statistic": 0.825452061909786
+      },
+      "spacing": {
+        "basis": "cannot distinguish",
+        "factor": 1.0213555579415583,
+        "frequencies_mhz": [
+          45.9843,
+          46.9828,
+          47.938,
+          48.9937
+        ],
+        "n": 4,
+        "p_comb": 0.0025,
+        "p_scale": 0.00175,
+        "p_value": 0.00175,
+        "rung_spread": 0.07842811328249104,
+        "rung_steps": [
+          0.04464,
+          0.041825,
+          0.045269
+        ],
+        "step_spread": 0.10023237332439477,
+        "steps_mhz": [
+          0.9985,
+          0.9552,
+          1.0557
+        ],
+        "verdict": "regular; comb and scale family fit equally"
+      }
+    },
+    {
+      "date": "20240920",
+      "n": 3,
+      "pairs": [
+        {
+          "delta_rung": 0.052777,
+          "factor": 1.025722,
+          "from_mhz": 45.4206,
+          "integer_step": false,
+          "residual": 4.1147640850169864e-15,
+          "to_mhz": 46.589
+        },
+        {
+          "delta_rung": 0.041809,
+          "factor": 1.020323,
+          "from_mhz": 46.589,
+          "integer_step": false,
+          "residual": -8.007483565108942e-15,
+          "to_mhz": 47.5358
+        }
+      ],
+      "repeated_scales": [],
+      "rung_uniformity": {
+        "n": 3,
+        "p_value": NaN,
+        "statistic": NaN
+      },
+      "spacing": {
+        "basis": "neither",
+        "factor": 1.0230189079296883,
+        "frequencies_mhz": [
+          45.4206,
+          46.589,
+          47.5358
+        ],
+        "n": 3,
+        "p_comb": 0.09725,
+        "p_scale": 0.10825,
+        "p_value": 0.09725,
+        "rung_spread": 0.23191392840045735,
+        "rung_steps": [
+          0.052777,
+          0.041809
+        ],
+        "step_spread": 0.2094431701453233,
+        "steps_mhz": [
+          1.1683,
+          0.9468
+        ],
+        "verdict": "not regular at 5%"
+      }
+    }
+  ],
+  "n_records": 10,
+  "null_draws": 4000
+}

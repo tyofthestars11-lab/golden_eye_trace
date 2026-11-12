@@ -20,6 +20,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from seti_search.rungs import rung, rung_drift  # noqa: E402
 from seti_search.signal_record import (  # noqa: E402
     DISPOSITIONS,
     SignalRecord,
@@ -97,6 +98,13 @@ def main() -> int:
                 "rate_cycles_per_sample": float(base.get("rate", 0.0)),
                 "phi_lock_distance": conf.get("phi", {}).get("lock_distance"),
                 "phi_locked": conf.get("phi", {}).get("locked"),
+                # every measured quantity carries its rung address: the rule is
+                # that a measurement is not presented as established without one
+                "phi_freq_rung": round(rung(float(freq) * 1e6), 4),
+                "phi_freq_nearest": int(round(rung(float(freq) * 1e6))),
+                "phi_freq_drift": round(rung_drift(float(freq) * 1e6), 4),
+                "phi_drift_rung": (round(rung(abs(float(base["drift_hz_s"]))), 4)
+                                   if float(base["drift_hz_s"]) else None),
             },
         ))
 
