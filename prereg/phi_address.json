@@ -664,7 +664,8 @@
           1.0557
         ],
         "verdict": "regular; comb and scale family fit equally"
-      }
+      },
+      "status": "MASK-MANUFACTURED SIGNAL"
     },
     {
       "date": "20240920",
@@ -716,7 +717,8 @@
           0.9468
         ],
         "verdict": "not regular at 5%"
-      }
+      },
+      "status": "MASK-MANUFACTURED SIGNAL"
     }
   ],
   "n_records": 10,

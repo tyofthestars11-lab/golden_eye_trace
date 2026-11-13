@@ -41,6 +41,7 @@ from seti_search.model_select import (  # noqa: E402
     DECISIVE_AIC,
 )
 from seti_search.rungs import PHI, rung  # noqa: E402
+from seti_search.signal_record import INVALID_CANDIDATE  # noqa: E402
 
 CHANNEL_HZ = 100547.19562243501
 GROUP_RATIO = 1.05
@@ -74,6 +75,7 @@ def survey_lines():
             "freq_hz": float(rec["frequency_hz"]),
             "drift_hz_s": float(rec["drift_hz_per_s"]),
             "snr": float(rec["snr_at_cell"]),
+            "disposition": rec.get("disposition"),
             "source": "survey",
         })
     return out
@@ -471,7 +473,21 @@ def main() -> int:
                     controls = structure_controls(freqs, drifts, CHANNEL_HZ)
                     record["comparison"] = comp
                     record["controls"] = controls
-                    record["verdict"] = verdict(comp, controls, channel_hz=CHANNEL_HZ)
+                    invalid = [ln for ln in chain_lines
+                               if ln.get("disposition") in INVALID_CANDIDATE]
+                    if invalid:
+                        record["verdict"] = {
+                            "label": "MASK-MANUFACTURED SIGNAL",
+                            "diagnostic_only": True,
+                            "reasons": [
+                                f"{len(invalid)} of {len(chain_lines)} lines were "
+                                "selected by the excision mask, so the fits below "
+                                "measure the mask: kept as the worked example of "
+                                "selection bias, never as a claim",
+                            ],
+                        }
+                    else:
+                        record["verdict"] = verdict(comp, controls, channel_hz=CHANNEL_HZ)
                     del record["comparison"]["freqs_hz"]
                 groups.append(record)
 

@@ -20,7 +20,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from seti_search.rungs import rung, rung_drift  # noqa: E402
+from seti_search.rungs import phi_coordinates  # noqa: E402
 from seti_search.signal_record import (  # noqa: E402
     DISPOSITIONS,
     SignalRecord,
@@ -43,6 +43,51 @@ def match(rows: list, date: str, freq_mhz: float) -> dict | None:
         if row["date"] == date and abs(row["freq_mhz"] - freq_mhz) < 0.01:
             return row
     return None
+
+
+
+LIGHT_PATH = os.path.join(ROOT, "results", "light_path_stages.json")
+
+
+def _light_path():
+    """The traced cells, keyed by date and frequency, for the survey window."""
+    if not os.path.exists(LIGHT_PATH):
+        return {}
+    with open(LIGHT_PATH, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    out: dict = {}
+    for day, windows in doc.get("configurations", {}).items():
+        narrow = windows.get("narrow-96", {})
+        theory = {round(c["freq_mhz"], 4): c for c in narrow.get("theory", {}).get("cells", [])}
+        for mask in ("none", "theory", "empirical"):
+            for cell in narrow.get(mask, {}).get("cells", []):
+                key = (day, round(cell["freq_mhz"], 4))
+                out.setdefault(key, {})[mask] = cell
+        for key, cell in theory.items():
+            out.setdefault((day, key), {})["rows_theory"] = narrow["theory"].get("blanked_rows")
+    return out
+
+
+_TRACED = _light_path()
+
+
+def mask_metadata(date: str, freq_mhz: float) -> dict:
+    """The mask numbers for a record, or an empty mapping if it was not traced."""
+    cell = _TRACED.get((date, round(float(freq_mhz), 4)))
+    if not cell or "theory" not in cell or "empirical" not in cell:
+        return {}
+    theory = cell["theory"]
+    empirical = cell["empirical"]
+    return {
+        "mask_theory_sigma": theory["E_sigma_calibrated"],
+        "mask_empirical_sigma": empirical["E_sigma_calibrated"],
+        "mask_none_sigma": cell.get("none", {}).get("E_sigma_calibrated"),
+        "mask_blanked_rows_theory": theory["D_blanked_samples"],
+        "mask_blanked_rows_empirical": empirical["D_blanked_samples"],
+        "mask_total_rows": theory["D_total_samples"],
+        "mask_row_test_theory": theory["D_row_test"],
+        "mask_row_test_empirical": empirical["D_row_test"],
+    }
 
 
 def main() -> int:
@@ -73,6 +118,14 @@ def main() -> int:
             disposition = "UNRESOLVED"
         if disposition not in DISPOSITIONS:
             disposition = "UNRESOLVED"
+        # a candidate whose significance is produced by the excision mask was not
+        # selected by a valid detection, so its disposition is not a judgement
+        # about the sky and it leaves every downstream claim
+        mask = mask_metadata(date, float(freq))
+        if mask.get("mask_theory_sigma") and mask.get("mask_empirical_sigma"):
+            if (mask["mask_theory_sigma"] / max(mask["mask_empirical_sigma"], 1e-9) >= 3.0
+                    and mask["mask_empirical_sigma"] < 5.5):
+                disposition = "MASK-MANUFACTURED SIGNAL"
         records.append(SignalRecord(
             source_file=os.path.join("data", f"{date}.fits"),
             observation_date=date,
@@ -100,11 +153,8 @@ def main() -> int:
                 "phi_locked": conf.get("phi", {}).get("locked"),
                 # every measured quantity carries its rung address: the rule is
                 # that a measurement is not presented as established without one
-                "phi_freq_rung": round(rung(float(freq) * 1e6), 4),
-                "phi_freq_nearest": int(round(rung(float(freq) * 1e6))),
-                "phi_freq_drift": round(rung_drift(float(freq) * 1e6), 4),
-                "phi_drift_rung": (round(rung(abs(float(base["drift_hz_s"]))), 4)
-                                   if float(base["drift_hz_s"]) else None),
+                **phi_coordinates(float(freq) * 1e6, float(base["drift_hz_s"])),
+                **mask_metadata(date, float(freq)),
             },
         ))
 

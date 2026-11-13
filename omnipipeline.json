@@ -39,6 +39,12 @@
             "status": "FAIL"
           },
           {
+            "evidence": "no mask measurement was carried for this record",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "NOT RUN"
+          },
+          {
             "evidence": "ovro-local-noise-v1: local scale 0.74, 7.16 -> 9.66 sigma",
             "id": "noise_reference",
             "layer": "calibration",
@@ -102,10 +108,12 @@
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
         "off_source_available": false,
-        "phi_drift_rung": 18.39,
-        "phi_freq_drift": 0.0091,
+        "phi_drift_nearest": 18,
+        "phi_drift_residual": 0.390029,
+        "phi_drift_rung": 18.390029,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.9909,
+        "phi_freq_residual": -0.009069,
+        "phi_freq_rung": 36.990931,
         "phi_lock_distance": 0.9535341315232964,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.01774838244131847,
@@ -157,6 +165,12 @@
             "id": "alias_signature",
             "layer": "measurement",
             "status": "FAIL"
+          },
+          {
+            "evidence": "no mask measurement was carried for this record",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "NOT RUN"
           },
           {
             "evidence": "ovro-local-noise-v1: local scale 1.29, 6.67 -> 5.16 sigma",
@@ -222,10 +236,12 @@
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
         "off_source_available": false,
-        "phi_drift_rung": 10.7068,
-        "phi_freq_drift": 0.2786,
+        "phi_drift_nearest": 11,
+        "phi_drift_residual": -0.293155,
+        "phi_drift_rung": 10.706845,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.7214,
+        "phi_freq_residual": -0.278571,
+        "phi_freq_rung": 36.721429,
         "phi_lock_distance": 0.9988480234909701,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.00044001587220794246,
@@ -275,6 +291,12 @@
             "id": "alias_signature",
             "layer": "measurement",
             "status": "FAIL"
+          },
+          {
+            "evidence": "no mask measurement was carried for this record",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "NOT RUN"
           },
           {
             "evidence": "ovro-local-noise-v1: local scale 1.30, 11.67 -> 8.97 sigma",
@@ -340,10 +362,12 @@
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
         "off_source_available": false,
-        "phi_drift_rung": 12.931,
-        "phi_freq_drift": 0.2754,
+        "phi_drift_nearest": 13,
+        "phi_drift_residual": -0.069004,
+        "phi_drift_rung": 12.930996,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.7246,
+        "phi_freq_residual": -0.275378,
+        "phi_freq_rung": 36.724622,
         "phi_lock_distance": 0.9966405849414515,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.0012831823700473258,
@@ -371,7 +395,7 @@
     },
     {
       "audit": {
-        "claimed": "ASTROPHYSICAL",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -395,6 +419,12 @@
             "status": "FAIL"
           },
           {
+            "evidence": "954.18 sigma through the theory mask against 1.44 through the empirical one, a factor 662.6; 505 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
             "evidence": "ovro-local-noise-v1: local scale 31.18, 953.98 -> 30.60 sigma",
             "id": "noise_reference",
             "layer": "calibration",
@@ -413,10 +443,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,190 Hz/s implies a 125 km/s coronal exciter",
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
             "id": "astrophysical_explanation",
             "layer": "interpretation",
-            "status": "PASS"
+            "status": "FAIL"
           },
           {
             "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
@@ -443,11 +473,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "ASTROPHYSICAL"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.10487307854112549,
-      "claimed_disposition": "ASTROPHYSICAL",
-      "disposition": "ASTROPHYSICAL",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 41190.2107171935,
       "duration_s": 256.0,
       "frequency_hz": 45984284.47741178,
@@ -457,11 +487,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 0,
+        "mask_blanked_rows_theory": 505,
+        "mask_empirical_sigma": 1.44,
+        "mask_none_sigma": 1.44,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 954.18,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 22.0817,
-        "phi_freq_drift": 0.3346,
+        "phi_drift_nearest": 22,
+        "phi_drift_residual": 0.08166,
+        "phi_drift_rung": 22.08166,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.6654,
+        "phi_freq_residual": -0.334629,
+        "phi_freq_rung": 36.665371,
         "phi_lock_distance": 0.7254387158744963,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.10487307854112549,
@@ -469,7 +509,7 @@
       },
       "observation_date": "20240325",
       "on_source_status": "on-source",
-      "permitted_disposition": "ASTROPHYSICAL",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 30.598105485106785,
       "snr_global": 953.9804077148438,
@@ -489,7 +529,7 @@
     },
     {
       "audit": {
-        "claimed": "ASTROPHYSICAL",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -513,6 +553,12 @@
             "status": "FAIL"
           },
           {
+            "evidence": "604.16 sigma through the theory mask against 0.54 through the empirical one, a factor 1118.8; 505 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
             "evidence": "ovro-local-noise-v1: local scale 27.69, 604.03 -> 21.81 sigma",
             "id": "noise_reference",
             "layer": "calibration",
@@ -531,10 +577,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,185 Hz/s implies a 122 km/s coronal exciter",
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
             "id": "astrophysical_explanation",
             "layer": "interpretation",
-            "status": "PASS"
+            "status": "FAIL"
           },
           {
             "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
@@ -561,11 +607,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "ASTROPHYSICAL"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.10486076970530125,
-      "claimed_disposition": "ASTROPHYSICAL",
-      "disposition": "ASTROPHYSICAL",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 41185.37626827356,
       "duration_s": 256.0,
       "frequency_hz": 46982763.33789329,
@@ -575,11 +621,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 0,
+        "mask_blanked_rows_theory": 505,
+        "mask_empirical_sigma": 0.54,
+        "mask_none_sigma": 0.54,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 604.16,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 22.0814,
-        "phi_freq_drift": 0.29,
+        "phi_drift_nearest": 22,
+        "phi_drift_residual": 0.081416,
+        "phi_drift_rung": 22.081416,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.71,
+        "phi_freq_residual": -0.289989,
+        "phi_freq_rung": 36.710011,
         "phi_lock_distance": 0.725470940825046,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.10486076970530125,
@@ -587,7 +643,7 @@
       },
       "observation_date": "20240325",
       "on_source_status": "on-source",
-      "permitted_disposition": "ASTROPHYSICAL",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 21.812087462607092,
       "snr_global": 604.0343017578125,
@@ -607,7 +663,7 @@
     },
     {
       "audit": {
-        "claimed": "ASTROPHYSICAL",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -631,6 +687,12 @@
             "status": "FAIL"
           },
           {
+            "evidence": "447.18 sigma through the theory mask against -0.15 through the empirical one, a factor 447180000000.0; 505 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
             "evidence": "ovro-local-noise-v1: local scale 19.54, 447.08 -> 22.88 sigma",
             "id": "noise_reference",
             "layer": "calibration",
@@ -649,10 +711,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,184 Hz/s implies a 120 km/s coronal exciter",
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
             "id": "astrophysical_explanation",
             "layer": "interpretation",
-            "status": "PASS"
+            "status": "FAIL"
           },
           {
             "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
@@ -679,11 +741,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "ASTROPHYSICAL"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.10485751862451627,
-      "claimed_disposition": "ASTROPHYSICAL",
-      "disposition": "ASTROPHYSICAL",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 41184.09936571234,
       "duration_s": 256.0,
       "frequency_hz": 47937961.69630643,
@@ -693,11 +755,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 0,
+        "mask_blanked_rows_theory": 505,
+        "mask_empirical_sigma": -0.15,
+        "mask_none_sigma": -0.15,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 447.18,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 22.0814,
-        "phi_freq_drift": 0.2482,
+        "phi_drift_nearest": 22,
+        "phi_drift_residual": 0.081352,
+        "phi_drift_rung": 22.081352,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.7518,
+        "phi_freq_residual": -0.248164,
+        "phi_freq_rung": 36.751836,
         "phi_lock_distance": 0.7254794522650413,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.10485751862451627,
@@ -705,7 +777,7 @@
       },
       "observation_date": "20240325",
       "on_source_status": "on-source",
-      "permitted_disposition": "ASTROPHYSICAL",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 22.88073871866718,
       "snr_global": 447.08184814453125,
@@ -725,7 +797,7 @@
     },
     {
       "audit": {
-        "claimed": "ASTROPHYSICAL",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -749,6 +821,12 @@
             "status": "FAIL"
           },
           {
+            "evidence": "171.27 sigma through the theory mask against -0.87 through the empirical one, a factor 171270000000.0; 505 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
+            "status": "PASS"
+          },
+          {
             "evidence": "ovro-local-noise-v1: local scale 12.26, 171.23 -> 13.97 sigma",
             "id": "noise_reference",
             "layer": "calibration",
@@ -767,10 +845,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "4 lanes on this date, spread 11.1 Hz/s (0.028 of a resolution element); 41,179 Hz/s implies a 117 km/s coronal exciter",
+            "evidence": "one lane on this date: no parallel structure to test the mechanism against",
             "id": "astrophysical_explanation",
             "layer": "interpretation",
-            "status": "PASS"
+            "status": "FAIL"
           },
           {
             "evidence": "the product is one disk-integrated beam, so there is no off-source scan",
@@ -797,11 +875,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "ASTROPHYSICAL"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.10484485635562417,
-      "claimed_disposition": "ASTROPHYSICAL",
-      "disposition": "ASTROPHYSICAL",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 41179.12610154313,
       "duration_s": 256.0,
       "frequency_hz": 48993707.25034199,
@@ -811,11 +889,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 0,
+        "mask_blanked_rows_theory": 505,
+        "mask_empirical_sigma": -0.87,
+        "mask_none_sigma": -0.87,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 171.27,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 22.0811,
-        "phi_freq_drift": 0.2029,
+        "phi_drift_nearest": 22,
+        "phi_drift_residual": 0.081101,
+        "phi_drift_rung": 22.081101,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.7971,
+        "phi_freq_residual": -0.202894,
+        "phi_freq_rung": 36.797106,
         "phi_lock_distance": 0.7255126025153755,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.10484485635562417,
@@ -823,7 +911,7 @@
       },
       "observation_date": "20240325",
       "on_source_status": "on-source",
-      "permitted_disposition": "ASTROPHYSICAL",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 13.971244552470985,
       "snr_global": 171.2290496826172,
@@ -843,7 +931,7 @@
     },
     {
       "audit": {
-        "claimed": "INSTRUMENTAL ALIAS",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -864,6 +952,12 @@
             "evidence": "0.4965 cycles per sample, 0.0035 from the fold",
             "id": "alias_signature",
             "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "8.65 sigma through the theory mask against -1.20 through the empirical one, a factor 8650000000.0; 228 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
             "status": "PASS"
           },
           {
@@ -915,11 +1009,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "INSTRUMENTAL ALIAS"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.49652322371846164,
-      "claimed_disposition": "INSTRUMENTAL ALIAS",
-      "disposition": "INSTRUMENTAL ALIAS",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 195015.69416524307,
       "duration_s": 256.0,
       "frequency_hz": 45420638.86601793,
@@ -929,11 +1023,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 1,
+        "mask_blanked_rows_theory": 228,
+        "mask_empirical_sigma": -1.2,
+        "mask_none_sigma": -1.2,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 8.65,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 25.3128,
-        "phi_freq_drift": 0.3603,
+        "phi_drift_nearest": 25,
+        "phi_drift_residual": 0.312835,
+        "phi_drift_rung": 25.312835,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.6397,
+        "phi_freq_residual": -0.360258,
+        "phi_freq_rung": 36.639742,
         "phi_lock_distance": 0.29991467589860044,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.49652322371846164,
@@ -941,7 +1045,7 @@
       },
       "observation_date": "20240920",
       "on_source_status": "on-source",
-      "permitted_disposition": "INSTRUMENTAL ALIAS",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 14.738741106977884,
       "snr_global": 8.65757942199707,
@@ -961,7 +1065,7 @@
     },
     {
       "audit": {
-        "claimed": "INSTRUMENTAL ALIAS",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -982,6 +1086,12 @@
             "evidence": "0.4962 cycles per sample, 0.0038 from the fold",
             "id": "alias_signature",
             "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "7.90 sigma through the theory mask against -0.42 through the empirical one, a factor 7900000000.0; 228 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
             "status": "PASS"
           },
           {
@@ -1033,11 +1143,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "INSTRUMENTAL ALIAS"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.4962205427803159,
-      "claimed_disposition": "INSTRUMENTAL ALIAS",
-      "disposition": "INSTRUMENTAL ALIAS",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 194896.81244845042,
       "duration_s": 256.0,
       "frequency_hz": 46588955.98498063,
@@ -1047,11 +1157,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 1,
+        "mask_blanked_rows_theory": 228,
+        "mask_empirical_sigma": -0.42,
+        "mask_none_sigma": -0.42,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 7.9,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 25.3116,
-        "phi_freq_drift": 0.3075,
+        "phi_drift_nearest": 25,
+        "phi_drift_residual": 0.311567,
+        "phi_drift_rung": 25.311567,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.6925,
+        "phi_freq_residual": -0.307481,
+        "phi_freq_rung": 36.692519,
         "phi_lock_distance": 0.2991222469147883,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.4962205427803159,
@@ -1059,7 +1179,7 @@
       },
       "observation_date": "20240920",
       "on_source_status": "on-source",
-      "permitted_disposition": "INSTRUMENTAL ALIAS",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 23.345984949886542,
       "snr_global": 7.905753135681152,
@@ -1079,7 +1199,7 @@
     },
     {
       "audit": {
-        "claimed": "INSTRUMENTAL ALIAS",
+        "claimed": "MASK-MANUFACTURED SIGNAL",
         "deficits": [],
         "downgraded": false,
         "escalation": false,
@@ -1100,6 +1220,12 @@
             "evidence": "0.4962 cycles per sample, 0.0038 from the fold",
             "id": "alias_signature",
             "layer": "measurement",
+            "status": "PASS"
+          },
+          {
+            "evidence": "6.49 sigma through the theory mask against 0.11 through the empirical one, a factor 59.0; 228 of 1000 integrations blanked by the theory test",
+            "id": "mask_dependence",
+            "layer": "calibration",
             "status": "PASS"
           },
           {
@@ -1151,11 +1277,11 @@
             "status": "FAIL"
           }
         ],
-        "permitted": "INSTRUMENTAL ALIAS"
+        "permitted": "MASK-MANUFACTURED SIGNAL"
       },
       "channel_rate": 0.4962430141849908,
-      "claimed_disposition": "INSTRUMENTAL ALIAS",
-      "disposition": "INSTRUMENTAL ALIAS",
+      "claimed_disposition": "MASK-MANUFACTURED SIGNAL",
+      "disposition": "MASK-MANUFACTURED SIGNAL",
       "drift_hz_per_s": 194905.63837314476,
       "duration_s": 256.0,
       "frequency_hz": 47535772.91381668,
@@ -1165,11 +1291,21 @@
         "barycentric_reducible": false,
         "drift_resolution_hz_s": 392.7624829001368,
         "independent_telescope": false,
+        "mask_blanked_rows_empirical": 1,
+        "mask_blanked_rows_theory": 228,
+        "mask_empirical_sigma": 0.11,
+        "mask_none_sigma": 0.11,
+        "mask_row_test_empirical": "empirical",
+        "mask_row_test_theory": "theory",
+        "mask_theory_sigma": 6.49,
+        "mask_total_rows": 1000,
         "off_source_available": false,
-        "phi_drift_rung": 25.3117,
-        "phi_freq_drift": 0.2657,
+        "phi_drift_nearest": 25,
+        "phi_drift_residual": 0.311661,
+        "phi_drift_rung": 25.311661,
         "phi_freq_nearest": 37,
-        "phi_freq_rung": 36.7343,
+        "phi_freq_residual": -0.265672,
+        "phi_freq_rung": 36.734328,
         "phi_lock_distance": 0.299181077816002,
         "phi_locked": false,
         "rate_cycles_per_sample": 0.4962430141849908,
@@ -1177,7 +1313,7 @@
       },
       "observation_date": "20240920",
       "on_source_status": "on-source",
-      "permitted_disposition": "INSTRUMENTAL ALIAS",
+      "permitted_disposition": "MASK-MANUFACTURED SIGNAL",
       "resolution_hz_per_s": 392.7624829001368,
       "snr_at_cell": 22.054378760314897,
       "snr_global": 6.492942810058594,
@@ -1212,6 +1348,10 @@
     "INSTRUMENTAL ALIAS": [
       "detected",
       "alias_signature"
+    ],
+    "MASK-MANUFACTURED SIGNAL": [
+      "detected",
+      "mask_dependence"
     ],
     "NONLINEAR-COHERENT BUT UNRESOLVED": [
       "detected",

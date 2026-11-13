@@ -268,3 +268,39 @@ def rung_uniformity(values) -> dict:
         "statistic": d_stat,
         "p_value": float(min(max(p_value, 0.0), 1.0)),
     }
+
+
+def phi_coordinates(frequency_hz: float, drift_hz_per_s: float | None = None) -> dict:
+    """The full coordinate set for one measurement, in one call.
+
+    A rung is `ln(x)/ln(phi)`, so an integer difference is a factor of phi and a
+    fractional part is where the value sits inside that step. The residual is the
+    fractional part signed to [-0.5, 0.5], which is the number a ladder claim is
+    actually about: 0.49 is not "nearly on the rung", it is half a rung away.
+    """
+    out: dict = {}
+    if frequency_hz and frequency_hz > 0:
+        value = math.log(float(frequency_hz)) / LN_PHI
+        nearest = int(round(value))
+        out.update({
+            "phi_freq_rung": round(value, 6),
+            "phi_freq_nearest": nearest,
+            "phi_freq_residual": round(value - nearest, 6),
+        })
+    else:
+        out.update({"phi_freq_rung": None, "phi_freq_nearest": None,
+                    "phi_freq_residual": None})
+    if drift_hz_per_s:
+        value = math.log(abs(float(drift_hz_per_s))) / LN_PHI
+        nearest = int(round(value))
+        out.update({
+            "phi_drift_rung": round(value, 6),
+            "phi_drift_nearest": nearest,
+            "phi_drift_residual": round(value - nearest, 6),
+        })
+    else:
+        # a zero drift has no logarithm; it is a statement about the coordinate,
+        # not a measurement of zero, and it is recorded as absent
+        out.update({"phi_drift_rung": None, "phi_drift_nearest": None,
+                    "phi_drift_residual": None})
+    return out

@@ -417,9 +417,10 @@
       ],
       "source": "survey-96ch-1000int",
       "verdict": {
-        "label": "INDETERMINATE DUE TO LIMITED SPAN",
+        "diagnostic_only": true,
+        "label": "MASK-MANUFACTURED SIGNAL",
         "reasons": [
-          "the group spans 0.132 phi rungs; under one rung the two models differ by less than the line spacing itself, so no fit can separate them (delta AIC 2.14, bootstrap CI [-12.5, 6.9])"
+          "4 of 4 lines were selected by the excision mask, so the fits below measure the mask: kept as the worked example of selection bias, never as a claim"
         ]
       }
     },
@@ -547,9 +548,10 @@
       ],
       "source": "survey-96ch-1000int",
       "verdict": {
-        "label": "NEITHER MODEL FIT",
+        "diagnostic_only": true,
+        "label": "MASK-MANUFACTURED SIGNAL",
         "reasons": [
-          "even the better model leaves 0.52 channels of residual, above the 0.5-channel noise floor, and neither the grid nor a single drifting event explains the group"
+          "3 of 3 lines were selected by the excision mask, so the fits below measure the mask: kept as the worked example of selection bias, never as a claim"
         ]
       }
     },

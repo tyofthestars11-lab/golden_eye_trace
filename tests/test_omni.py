@@ -224,10 +224,9 @@ class PipelineTests(unittest.TestCase):
             if name != "signal_records.json":
                 return payload
             records = [dict(r) for r in payload["records"]]
-            for record in records:
-                if record["disposition"] == "ASTROPHYSICAL":
-                    record["disposition"] = disposition
-                    break
+            # doctor one record whatever it currently is: the fixture must not
+            # depend on which disposition the data happens to carry this week
+            records[0] = {**records[0], "disposition": disposition}
             return {**payload, "records": records}
 
         module.load = load

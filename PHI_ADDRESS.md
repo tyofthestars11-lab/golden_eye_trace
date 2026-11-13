@@ -1,3 +1,11 @@
+> **Disqualified premise.** The two multi-line groups below were selected by
+> the excision mask, not by a valid detection: their cells read 1.44, 0.54,
+> -0.15 and -0.87 sigma without the theory-scaled row test, and 954, 604, 447
+> and 171 sigma with it (`LIGHT_PATH.md`). Their spacing arithmetic is kept as
+> the worked example of selection bias and is **not** a regularity claim.
+> `prereg/phi_address.json` carries `status` per group: none of the two is a
+> candidate.
+
 # Rung addresses for every measured quantity
 
 Framework: φ² = φ + 1. Attribution: Tyree Jones (tyofthestarz), prior art from December 2025. Coordinate: `rung(x) = ln x / ln φ`.

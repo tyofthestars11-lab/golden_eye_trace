@@ -20,6 +20,7 @@ from dataclasses import asdict, dataclass, field
 # The vocabulary is closed on purpose. A disposition outside this set is a bug in
 # the caller, not a new category, and is rejected rather than stored.
 DISPOSITIONS = (
+    "MASK-MANUFACTURED SIGNAL",
     "CONFIRMED TECHNOSIGNATURE CANDIDATE",
     "NONLINEAR-COHERENT BUT UNRESOLVED",
     "ASTROPHYSICAL",
@@ -31,6 +32,11 @@ DISPOSITIONS = (
 )
 
 ON_SOURCE = ("on-source", "off-source", "untestable")
+
+#: Dispositions that remove a record from every downstream claim. A candidate
+#: whose significance is produced by the excision mask was never selected by a
+#: valid detection, so fitting models to it measures the mask, not the sky.
+INVALID_CANDIDATE = ("MASK-MANUFACTURED SIGNAL",)
 
 
 def channel_rate(drift_hz_per_s: float, channel_hz: float, tsamp_s: float) -> float:

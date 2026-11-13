@@ -45,9 +45,13 @@ class AddressTests(unittest.TestCase):
         for record in records:
             meta = record["metadata"]
             self.assertIn("phi_freq_rung", meta)
-            self.assertIn("phi_freq_drift", meta)
-            self.assertGreaterEqual(meta["phi_freq_drift"], 0.0)
-            self.assertLessEqual(meta["phi_freq_drift"], 0.5)
+            self.assertIn("phi_freq_residual", meta)
+            self.assertEqual(meta["phi_freq_nearest"], round(meta["phi_freq_rung"]))
+            self.assertGreaterEqual(meta["phi_freq_residual"], -0.5)
+            self.assertLessEqual(meta["phi_freq_residual"], 0.5)
+            # the drift coordinate is present and labelled, or explicitly absent
+            self.assertIn("phi_drift_rung", meta)
+            self.assertIn("phi_drift_residual", meta)
 
 
 class LadderTests(unittest.TestCase):

@@ -312,6 +312,9 @@ def synthetic_calibration(n_lines: int = 4, span_hz: float = 3.0e6,
 # --- the seven labels -------------------------------------------------------
 
 LABELS = (
+    # not one of the seven: a group whose members were selected by an artefact of
+    # the processing is disqualified before any model is fitted to it
+    "MASK-MANUFACTURED SIGNAL",
     "SCALE FAMILY SUPPORTED",
     "FREQUENCY COMB SUPPORTED",
     "BOTH MODELS FIT",

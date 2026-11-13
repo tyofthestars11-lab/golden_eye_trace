@@ -68,6 +68,33 @@ def find(rows: list, date: str, freq_mhz: float, tol_mhz: float = TOL_MHZ):
     return None
 
 
+def gate_mask_dependence(record: SignalRecord) -> Gate:
+    """Does the candidate's significance survive an honestly scaled mask?
+
+    The gate passes when the dependence it is auditing is *demonstrated*: the
+    theory-scaled row test and the empirical one disagree by a factor, and the
+    empirical value is below threshold. A candidate with no mask measurement is
+    NOT RUN rather than PASS, because absence of the test is not absence of the
+    artifact.
+    """
+    theory = record.metadata.get("mask_theory_sigma")
+    empirical = record.metadata.get("mask_empirical_sigma")
+    if theory is None or empirical is None:
+        return Gate(id="mask_dependence", layer="calibration", status="NOT RUN",
+                    evidence="no mask measurement was carried for this record")
+    ratio = float(theory) / max(float(empirical), 1e-9)
+    rows = (f"{record.metadata.get('mask_blanked_rows_theory', '?')} of "
+            f"{record.metadata.get('mask_total_rows', '?')} integrations blanked "
+            f"by the theory test")
+    passes = ratio >= 3.0 and float(empirical) < THRESHOLD
+    return Gate(
+        id="mask_dependence", layer="calibration",
+        status="PASS" if passes else "FAIL",
+        evidence=(f"{float(theory):.2f} sigma through the theory mask against "
+                  f"{float(empirical):.2f} through the empirical one, a factor "
+                  f"{ratio:.1f}; {rows}"))
+
+
 def gate_measurement(record: SignalRecord) -> list[Gate]:
     window = check_window(record.drift_hz_per_s, WINDOW_CHANNELS, SAMPLES,
                           CHANNEL_HZ, TSAMP_S)
@@ -85,6 +112,7 @@ def gate_measurement(record: SignalRecord) -> list[Gate]:
              status="PASS" if gap <= 0.5 - ALIAS_GAP else "FAIL",
              evidence=(f"{abs(record.channel_rate):.4f} cycles per sample, "
                        f"{gap:.4f} from the fold")),
+        gate_mask_dependence(record),
         Gate(id="noise_reference", layer="calibration",
              status="PASS" if record.transform_version.startswith(
                  "ovro-local-noise") else "NOT RUN",
@@ -285,7 +313,8 @@ def run(strict: bool) -> int:
 
 
 def write_outputs(rows, payload, limit, nyquist, downgrades, escalations) -> None:
-    gate_ids = ["window", "detected", "alias_signature", "noise_reference",
+    gate_ids = ["window", "detected", "alias_signature", "mask_dependence",
+                "noise_reference",
                 "nonlinear_beats_control", "phi_lock",
                 "astrophysical_explanation", "off_source",
                 "independent_telescope", "barycentric", "repeat"]

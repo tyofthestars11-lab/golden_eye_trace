@@ -78,8 +78,10 @@ class VerdictTests(unittest.TestCase):
         cls.out = compare(GROUP, channel_hz=CHANNEL, bootstrap=300)
         cls.controls = structure_controls(GROUP, [41240.0] * 4, CHANNEL)
 
-    def test_every_label_is_one_of_the_seven(self):
-        self.assertEqual(len(LABELS), 7)
+    def test_the_vocabulary_is_seven_verdicts_plus_a_disqualification(self):
+        self.assertEqual(len(LABELS), 8)
+        self.assertIn("MASK-MANUFACTURED SIGNAL", LABELS)
+        self.assertEqual(len([l for l in LABELS if l != "MASK-MANUFACTURED SIGNAL"]), 7)
 
     def test_the_real_group_cannot_be_named_at_its_span(self):
         self.assertLess(self.out["span_rungs"], BAND_SPAN_REQUIRED)

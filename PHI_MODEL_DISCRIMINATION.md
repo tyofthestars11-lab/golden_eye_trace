@@ -68,8 +68,8 @@ this does not change that.
 
 | source | date | lines | span (phi rungs) | dAIC (+ = scale) | boot CI | held-out | null p | label |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| survey-96ch-1000int | 20240325 | 4 | 0.132 | 2.14 | [-12.5, 6.9] | scale | 0.002 | INDETERMINATE DUE TO LIMITED SPAN |
-| survey-96ch-1000int | 20240920 | 3 | 0.095 | -0.62 | [-1.7, 2.4] | undefined | - | NEITHER MODEL FIT |
+| survey-96ch-1000int | 20240325 | 4 | 0.132 | 2.14 | [-12.5, 6.9] | scale | 0.002 | MASK-MANUFACTURED SIGNAL |
+| survey-96ch-1000int | 20240920 | 3 | 0.095 | -0.62 | [-1.7, 2.4] | undefined | - | MASK-MANUFACTURED SIGNAL |
 | expanded-A-731ch-allint | 20240326 | 14 | 0.707 | 5.87 | [1.2, 14.1] | tie | - | ASTROPHYSICAL STRUCTURE |
 | expanded-A-731ch-allint | 20240326 | 4 | 0.095 | 0.30 | [-0.6, 0.9] | scale | 0.038 | NEITHER MODEL FIT |
 

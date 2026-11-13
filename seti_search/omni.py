@@ -68,6 +68,9 @@ DETRACTING_LAYERS = ("phi",)
 #: "this is what the run produced", which is why only the negative dispositions
 #: are free.
 REQUIRED = {
+    # the claim is that the significance depends on the mask, so that dependence
+    # is the gate: it has to be demonstrated, not assumed
+    "MASK-MANUFACTURED SIGNAL": ("detected", "mask_dependence"),
     "CONFIRMED TECHNOSIGNATURE CANDIDATE": (
         "detected",
         "window",

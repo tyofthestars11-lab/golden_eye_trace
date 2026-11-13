@@ -39,6 +39,7 @@ sys.path.insert(0, ROOT)
 
 import numpy as np  # noqa: E402
 
+from seti_search.signal_record import INVALID_CANDIDATE  # noqa: E402
 from seti_search.rungs import (  # noqa: E402
     LN_PHI,
     PHI,
@@ -186,6 +187,8 @@ def base_invariance(records: list[dict]) -> dict:
 
 def main() -> int:
     records = load_records()
+    invalid = {id(r) for r in records
+               if r.get("disposition") in INVALID_CANDIDATE}
     addresses = [address_record(r) for r in records]
 
     by_date: dict[str, list[dict]] = {}
@@ -211,7 +214,10 @@ def main() -> int:
             })
         low = min(freqs) - 0.2
         high = max(freqs) + 0.2
+        status = ("MASK-MANUFACTURED SIGNAL"
+                  if any(id(r) in invalid for r in rows) else "candidate")
         groups.append({
+            "status": status,
             "date": date,
             "n": len(freqs),
             "pairs": pairs,
@@ -255,7 +261,23 @@ def main() -> int:
     print(f"   median fractional distance across bases: "
           + ", ".join(f"{k} {v['median_fractional_distance']:.3f}"
                       for k, v in bases.items() if k in BASES))
+    banner_path = os.path.join(ROOT, "PHI_ADDRESS.md")
+    banner = (
+        "> **Disqualified premise.** The two multi-line groups below were selected by\n"
+        "> the excision mask, not by a valid detection: their cells read 1.44, 0.54,\n"
+        "> -0.15 and -0.87 sigma without the theory-scaled row test, and 954, 604, 447\n"
+        "> and 171 sigma with it (`LIGHT_PATH.md`). Their spacing arithmetic is kept as\n"
+        "> the worked example of selection bias and is **not** a regularity claim.\n"
+        "> `prereg/phi_address.json` carries `status` per group: none of the two is a\n"
+        "> candidate.\n\n"
+    )
+    with open(banner_path, encoding="utf-8") as fh:
+        body = fh.read()
+    if not body.startswith("> **Disqualified premise.**"):
+        with open(banner_path, "w", encoding="utf-8") as fh:
+            fh.write(banner + body)
     print("   wrote prereg/phi_address.json and PHI_ADDRESS.md")
+
     return 0
 
 
