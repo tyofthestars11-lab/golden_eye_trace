@@ -1,0 +1,296 @@
+{
+  "phi": 1.618033988749895,
+  "probes": [
+    {
+      "freq_mhz": 47.5358,
+      "rung": 36.73432935100584,
+      "rung_nearest": 37,
+      "residual": -0.2656706489941598,
+      "round_trip_relative_error": 1.5673619875806925e-15,
+      "phase_deg": 264.35856636210247,
+      "distance_to_137.5": 126.85856636210247,
+      "distance_to_17.0324": 112.67383363789753,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240920",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 46.589,
+      "rung": 36.69252104838069,
+      "rung_nearest": 37,
+      "residual": -0.30747895161930927,
+      "round_trip_relative_error": 0.0,
+      "phase_deg": 249.30757741704866,
+      "distance_to_137.5": 111.80757741704866,
+      "distance_to_17.0324": 127.72482258295133,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240920",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 45.4206,
+      "rung": 36.639740310642225,
+      "rung_nearest": 37,
+      "residual": -0.3602596893577754,
+      "round_trip_relative_error": 3.116670218833585e-15,
+      "phase_deg": 230.30651183120085,
+      "distance_to_137.5": 92.80651183120085,
+      "distance_to_17.0324": 146.72588816879914,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240920",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 48.9937,
+      "rung": 36.79710546220904,
+      "rung_nearest": 37,
+      "residual": -0.20289453779096078,
+      "round_trip_relative_error": 1.2165777390846298e-15,
+      "phase_deg": 286.9579663952541,
+      "distance_to_137.5": 149.45796639525412,
+      "distance_to_17.0324": 90.07443360474588,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240325",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 47.938,
+      "rung": 36.751838060285685,
+      "rung_nearest": 37,
+      "residual": -0.24816193971431488,
+      "round_trip_relative_error": 7.771059073098406e-16,
+      "phase_deg": 270.66170170284664,
+      "distance_to_137.5": 133.16170170284664,
+      "distance_to_17.0324": 106.37069829715335,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240325",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 46.9828,
+      "rung": 36.71001254605643,
+      "rung_nearest": 37,
+      "residual": -0.2899874539435672,
+      "round_trip_relative_error": 7.929051266552683e-16,
+      "phase_deg": 255.60451658031582,
+      "distance_to_137.5": 118.10451658031582,
+      "distance_to_17.0324": 121.42788341968418,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240325",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 45.9843,
+      "rung": 36.665372031667296,
+      "rung_nearest": 37,
+      "residual": -0.33462796833270403,
+      "round_trip_relative_error": 3.0784644181068915e-15,
+      "phase_deg": 239.53393140022655,
+      "distance_to_137.5": 102.03393140022655,
+      "distance_to_17.0324": 137.49846859977345,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240325",
+      "disposition": "MASK-MANUFACTURED SIGNAL"
+    },
+    {
+      "freq_mhz": 47.3143,
+      "rung": 36.72462357125881,
+      "rung_nearest": 37,
+      "residual": -0.2753764287411897,
+      "round_trip_relative_error": 1.8896394359228803e-15,
+      "phase_deg": 260.8644856531717,
+      "distance_to_137.5": 123.3644856531717,
+      "distance_to_17.0324": 116.1679143468283,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240324",
+      "disposition": "UNRESOLVED"
+    },
+    {
+      "freq_mhz": 47.2416,
+      "rung": 36.72142806576539,
+      "rung_nearest": 37,
+      "residual": -0.2785719342346127,
+      "round_trip_relative_error": 1.1039859822374093e-15,
+      "phase_deg": 259.71410367553943,
+      "distance_to_137.5": 122.21410367553943,
+      "distance_to_17.0324": 117.31829632446056,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240322",
+      "disposition": "UNRESOLVED"
+    },
+    {
+      "freq_mhz": 53.7833,
+      "rung": 36.99093131349893,
+      "rung_nearest": 37,
+      "residual": -0.009068686501066736,
+      "round_trip_relative_error": 1.2467666612557143e-15,
+      "phase_deg": 356.735272859616,
+      "distance_to_137.5": 140.76472714038403,
+      "distance_to_17.0324": 20.29712714038402,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      },
+      "hit": {
+        "0.5": false,
+        "1.0": false,
+        "2.0": false
+      },
+      "date": "20240207",
+      "disposition": "UNRESOLVED"
+    }
+  ],
+  "group_20240325": {
+    "freqs_mhz": [
+      45.9843,
+      46.9828,
+      47.938,
+      48.9937
+    ],
+    "ratios": [
+      1.021713932798803,
+      1.0203308444792563,
+      1.0220221953356416
+    ],
+    "arithmetic_steps_mhz": [
+      0.9984999999999999,
+      0.9552000000000049,
+      1.0556999999999945
+    ],
+    "rung_steps": [
+      0.044640514389136854,
+      0.04182551422925229,
+      0.0452674019233541
+    ],
+    "closest_fibonacci_ratio": 1.0,
+    "closest_ratio_gap": 0.02033084447925626,
+    "phi_squared_step_rungs": 2.0,
+    "mean_rung_step": 0.04391114351391442,
+    "step_is_constant": 0.1004999999999896,
+    "null_for_ratio": {
+      "note": "probability that a random ratio lands within 1% of a Fibonacci ratio, taking the five canonical ones",
+      "p": 0.1
+    }
+  },
+  "trio_20240920": {
+    "freqs_mhz": [
+      45.4206,
+      46.589,
+      47.5358
+    ],
+    "ratios": [
+      1.0257240106911842,
+      1.0203223936980834
+    ],
+    "arithmetic_steps_mhz": [
+      1.1683999999999983,
+      0.9468000000000032
+    ],
+    "rung_steps": [
+      0.052780737738466144,
+      0.04180830262514945
+    ],
+    "closest_fibonacci_ratio": 1.0,
+    "closest_ratio_gap": 0.02032239369808342,
+    "phi_squared_step_rungs": 2.0,
+    "mean_rung_step": 0.0472945201818078,
+    "step_is_constant": 0.22159999999999513,
+    "null_for_ratio": {
+      "note": "probability that a random ratio lands within 1% of a Fibonacci ratio, taking the five canonical ones",
+      "p": 0.1
+    }
+  },
+  "tolerances_deg": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "null_phase": {
+    "0.5": 0.005555555555555556,
+    "1.0": 0.011111111111111112,
+    "2.0": 0.022222222222222223
+  },
+  "rule": "phi may only detract from a candidate, never support one: no result here can raise a disposition"
+}
