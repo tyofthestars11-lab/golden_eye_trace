@@ -97,6 +97,12 @@
             "id": "neutrino_counterpart",
             "layer": "confirmation",
             "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "UNRESOLVED"
@@ -231,6 +237,12 @@
             "id": "neutrino_counterpart",
             "layer": "confirmation",
             "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "NULL RESULT"
@@ -363,6 +375,12 @@
             "id": "neutrino_counterpart",
             "layer": "confirmation",
             "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "UNRESOLVED"
@@ -494,6 +512,12 @@
             "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
+            "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
             "status": "NOT RUN"
           }
         ],
@@ -635,6 +659,12 @@
             "id": "neutrino_counterpart",
             "layer": "confirmation",
             "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -774,6 +804,12 @@
             "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
+            "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
             "status": "NOT RUN"
           }
         ],
@@ -915,6 +951,12 @@
             "id": "neutrino_counterpart",
             "layer": "confirmation",
             "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -1054,6 +1096,12 @@
             "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
+            "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
             "status": "NOT RUN"
           }
         ],
@@ -1195,6 +1243,12 @@
             "id": "neutrino_counterpart",
             "layer": "confirmation",
             "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -1334,6 +1388,12 @@
             "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
+            "status": "NOT RUN"
+          },
+          {
+            "evidence": "NOT TESTABLE: no NV sensor record was supplied",
+            "id": "local_field",
+            "layer": "calibration",
             "status": "NOT RUN"
           }
         ],

@@ -228,6 +228,35 @@ def gate_neutrino(record: SignalRecord) -> Gate:
                 evidence=(f"{status}: {limits}" if limits else status))
 
 
+def gate_local_field(record: SignalRecord) -> Gate:
+    """The NV-centre lane's verdict, which may only ever detract.
+
+    No disposition requires this gate, and ``seti_search.nv.guard_support``
+    raises if a caller tries to cite it: a null in a millimetre of diamond is
+    compatible with a real local emitter, so it is never evidence of an
+    astrophysical origin.
+    """
+    path = os.path.join(ROOT, "results", "nv_lane.json")
+    if not os.path.exists(path):
+        return Gate(id="local_field", layer="calibration", status="NOT RUN",
+                    evidence="no NV sensor record exists for this observation")
+    ledger = json.load(open(path, encoding="utf-8"))
+    freq_mhz = record.frequency_hz / 1e6
+    row = next((r for r in ledger.get("records", [])
+                if r.get("observation_date") == record.observation_date
+                and abs(r.get("freq_mhz", -1.0) - freq_mhz) <= 0.05), None)
+    if row is None:
+        return Gate(id="local_field", layer="calibration", status="NOT RUN",
+                    evidence="this record is not in the local-field ledger")
+    reasons = "; ".join(row.get("reasons") or [])
+    if row.get("verdict") == "LOCAL TRANSIENT (DETRACTS)":
+        return Gate(id="local_field", layer="calibration", status="PASS",
+                    evidence=f"detracts only: {reasons}")
+    return Gate(id="local_field", layer="calibration", status="NOT RUN",
+                evidence=(f"{row.get('verdict')}: {reasons}"
+                          if reasons else str(row.get("verdict"))))
+
+
 def gates_confirmation(record: SignalRecord, confirm: dict,
                        rfi: dict | None) -> list[Gate]:
     g = confirm.get("gates", {})
@@ -263,7 +292,8 @@ def gates_confirmation(record: SignalRecord, confirm: dict,
                   status="PASS" if (repeats and testable) else (
                       "FAIL" if testable else "UNTESTABLE"),
                   evidence=evidence)
-    return [off, telescope, bary, repeat, gate_neutrino(record)]
+    return [off, telescope, bary, repeat, gate_neutrino(record),
+            gate_local_field(record)]
 
 
 def run(strict: bool) -> int:
@@ -370,7 +400,7 @@ def write_outputs(rows, payload, limit, nyquist, downgrades, escalations) -> Non
                 "nonlinear_beats_control", "phi_lock",
                 "astrophysical_explanation", "off_source",
                 "independent_telescope", "barycentric",
-                "neutrino_counterpart", "repeat"]
+                "neutrino_counterpart", "local_field", "repeat"]
 
     out = {
         "transform_version": payload["transform_version"],

@@ -1,0 +1,227 @@
+{
+  "band_hz": [
+    13400000.0,
+    86900000.0
+  ],
+  "bias": [
+    {
+      "frequency_hz": 13400000.0,
+      "frequency_mhz": 13.4,
+      "bias_field_t": 0.10202142857142857,
+      "bias_field_mt": 102.02142857142857
+    },
+    {
+      "frequency_hz": 45984300.0,
+      "frequency_mhz": 45.9843,
+      "bias_field_t": 0.10085770357142858,
+      "bias_field_mt": 100.85770357142857
+    },
+    {
+      "frequency_hz": 47241600.0,
+      "frequency_mhz": 47.2416,
+      "bias_field_t": 0.1008128,
+      "bias_field_mt": 100.8128
+    },
+    {
+      "frequency_hz": 53783300.0,
+      "frequency_mhz": 53.7833,
+      "bias_field_t": 0.10057916785714285,
+      "bias_field_mt": 100.57916785714285
+    },
+    {
+      "frequency_hz": 86900000.0,
+      "frequency_mhz": 86.9,
+      "bias_field_t": 0.09939642857142857,
+      "bias_field_mt": 99.39642857142857
+    }
+  ],
+  "feasibility": [
+    {
+      "mode": "cw-odmr",
+      "sensitivity_t_sqrt_hz": 1e-09,
+      "sensitivity_v_m_sqrt_hz": 0.29979245800000004,
+      "bandwidth_hz": 1000.0,
+      "band_low_hz": 0.0,
+      "band_high_hz": 10000000.0,
+      "coverage_of_lwa_band": 0.0,
+      "threshold_b_t": 3.162277660168379e-08,
+      "threshold_e_v_m": 9.48026992620367,
+      "snr_for_1v_per_m": 0.10548222864793948,
+      "note": "broadband continuous readout, 7.5 MHz demonstrated bandwidth with RF-dressed states (J. Appl. Phys. 135, 044401, 2024)"
+    },
+    {
+      "mode": "ramsey",
+      "sensitivity_t_sqrt_hz": 5e-10,
+      "sensitivity_v_m_sqrt_hz": 0.14989622900000002,
+      "bandwidth_hz": 10000.0,
+      "band_low_hz": 1000.0,
+      "band_high_hz": 100000.0,
+      "coverage_of_lwa_band": 0.0,
+      "threshold_b_t": 5.0000000000000004e-08,
+      "threshold_e_v_m": 14.9896229,
+      "snr_for_1v_per_m": 0.0667128190396304,
+      "note": "broadband DC-sensitive mode; 460 fT/sqrt(Hz) reported for the best ensemble (Phys. Rev. Applied 22, 044069, 2024)"
+    },
+    {
+      "mode": "hahn-echo",
+      "sensitivity_t_sqrt_hz": 2.1e-13,
+      "sensitivity_v_m_sqrt_hz": 6.295641617999999e-05,
+      "bandwidth_hz": 100000.0,
+      "band_low_hz": 1000.0,
+      "band_high_hz": 1000000.0,
+      "coverage_of_lwa_band": 0.0,
+      "threshold_b_t": 6.640783086353597e-11,
+      "threshold_e_v_m": 0.01990856684502771,
+      "snr_for_1v_per_m": 50.229632689494984,
+      "note": "narrowband AC; 210 fT/sqrt(Hz) reported for the best ensemble (Phys. Rev. Applied 22, 044069, 2024)"
+    },
+    {
+      "mode": "cpmg",
+      "sensitivity_t_sqrt_hz": 2.3e-10,
+      "sensitivity_v_m_sqrt_hz": 0.06895226534,
+      "bandwidth_hz": 100000.0,
+      "band_low_hz": 10000.0,
+      "band_high_hz": 10000000.0,
+      "coverage_of_lwa_band": 0.0,
+      "threshold_b_t": 7.273238618387274e-08,
+      "threshold_e_v_m": 21.804620830268448,
+      "snr_for_1v_per_m": 0.04586183854258238,
+      "note": "229 pT/sqrt(Hz) at 1 MHz with XY4-4 (Sensors 23, 7566, 2023)"
+    },
+    {
+      "mode": "rf-dressed",
+      "sensitivity_t_sqrt_hz": 1e-09,
+      "sensitivity_v_m_sqrt_hz": 0.29979245800000004,
+      "bandwidth_hz": 7500000.0,
+      "band_low_hz": 1000000.0,
+      "band_high_hz": 100000000.0,
+      "coverage_of_lwa_band": 1.0,
+      "threshold_b_t": 2.738612787525831e-06,
+      "threshold_e_v_m": 821.0154590826006,
+      "snr_for_1v_per_m": 0.00121800386209219,
+      "note": "frequency-tunable CW-ODMR, 7.5 MHz bandwidth (J. Appl. Phys. 135, 044401, 2024)"
+    },
+    {
+      "mode": "quantum-heterodyne",
+      "sensitivity_t_sqrt_hz": 1e-12,
+      "sensitivity_v_m_sqrt_hz": 0.000299792458,
+      "bandwidth_hz": 1000000.0,
+      "band_low_hz": 1000000.0,
+      "band_high_hz": 1000000000.0,
+      "coverage_of_lwa_band": 1.0,
+      "threshold_b_t": 1e-09,
+      "threshold_e_v_m": 0.29979245800000004,
+      "snr_for_1v_per_m": 3.33564095198152,
+      "note": "representative order of magnitude for heterodyne readout at high frequency; treat as indicative"
+    }
+  ],
+  "records": [
+    {
+      "observation_date": "20240207",
+      "freq_mhz": 53.7833,
+      "disposition": "UNRESOLVED",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240322",
+      "freq_mhz": 47.2416,
+      "disposition": "UNRESOLVED",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240324",
+      "freq_mhz": 47.3143,
+      "disposition": "UNRESOLVED",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 45.9843,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 46.9828,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 47.938,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 48.9937,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 45.4206,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 46.589,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 47.5358,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "verdict": "NOT TESTABLE",
+      "reasons": [
+        "no NV sensor record was supplied"
+      ]
+    }
+  ],
+  "sensing_modes": [
+    "cw-odmr",
+    "ramsey",
+    "hahn-echo",
+    "cpmg",
+    "rf-dressed",
+    "quantum-heterodyne"
+  ],
+  "note": "a local-field record may only detract; absence of a transient is compatible with a real local emitter, so it is never evidence for an astrophysical origin",
+  "sources": [
+    "broadband continuous readout, 7.5 MHz demonstrated bandwidth with RF-dressed states (J. Appl. Phys. 135, 044401, 2024)",
+    "broadband DC-sensitive mode; 460 fT/sqrt(Hz) reported for the best ensemble (Phys. Rev. Applied 22, 044069, 2024)",
+    "narrowband AC; 210 fT/sqrt(Hz) reported for the best ensemble (Phys. Rev. Applied 22, 044069, 2024)",
+    "229 pT/sqrt(Hz) at 1 MHz with XY4-4 (Sensors 23, 7566, 2023)",
+    "frequency-tunable CW-ODMR, 7.5 MHz bandwidth (J. Appl. Phys. 135, 044401, 2024)",
+    "representative order of magnitude for heterodyne readout at high frequency; treat as indicative"
+  ]
+}
