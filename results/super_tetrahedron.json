@@ -1,0 +1,185 @@
+{
+  "lanes": [
+    {
+      "lane": "radio",
+      "unit": "Hz",
+      "n": 10,
+      "rung": 36.723025182306884,
+      "source": "signal_records.json (10 cells)"
+    },
+    {
+      "lane": "neutrino",
+      "unit": "GeV",
+      "n": 2,
+      "rung": 24.325844838231937,
+      "source": "results/icecube_ingest.json (2 alerts)"
+    },
+    {
+      "lane": "local field",
+      "unit": "T",
+      "n": 5,
+      "rung": -4.7681495503471645,
+      "source": "results/nv_lane.json (5 priced cells)"
+    },
+    {
+      "lane": "phi geometry",
+      "unit": "dimensionless",
+      "n": 1,
+      "rung": -2.0,
+      "source": "frozen target 1/phi^2"
+    }
+  ],
+  "simplex": {
+    "separations": [
+      12.397180344074947,
+      41.491174732654045,
+      38.723025182306884,
+      29.0939943885791,
+      26.325844838231937,
+      2.7681495503471645
+    ],
+    "mean": 25.133228172699013,
+    "sd": 13.734255580029538,
+    "cv": 0.5464580787496444,
+    "max_min": 14.988776429167446,
+    "equal_edge_deviation": 0.8898609628923805
+  },
+  "null": {
+    "observed_cv": 0.5464580787496444,
+    "draws": 20000,
+    "null_median_cv": 0.5592258328304752,
+    "p_as_equal_or_more": 0.43387830608469574
+  },
+  "angle_facts": {
+    "tetrahedral_deg": 109.47122063449069,
+    "golden_angle_deg": 137.5077641,
+    "difference_deg": 28.03654346550931,
+    "three_tetrahedral_from_full_circle_deg": 31.586338096527925,
+    "golden_pitch_deg": 17.0324,
+    "note": "these are exact geometric constants; none of them is a measurement of any dataset in this repository"
+  },
+  "impossibility": {
+    "sorted": [
+      -4.7681495503471645,
+      -2.0,
+      24.325844838231937,
+      36.723025182306884
+    ],
+    "gaps": [
+      2.7681495503471645,
+      26.325844838231937,
+      12.397180344074947
+    ],
+    "outer_separation": 41.491174732654045,
+    "sum_of_gaps": 41.491174732654045,
+    "outer_exceeds_largest_gap": true,
+    "impossible": true,
+    "reason": "on a line the outer separation is the sum of the interior gaps, so it exceeds every other separation unless all gaps are zero; a regular simplex of four vertices is therefore unreachable in a one-dimensional rung coordinate"
+  },
+  "ledger": {
+    "records": {
+      "n": 10,
+      "dispositions": {
+        "UNRESOLVED": 3,
+        "MASK-MANUFACTURED SIGNAL": 7
+      }
+    },
+    "rung_law": {
+      "round_trip_max_rel_error": 3.116670218833585e-15
+    },
+    "phi_phase": {
+      "hits": 0,
+      "tested": 10,
+      "tolerance_deg": 1.0,
+      "null": {
+        "0.5": 0.005555555555555556,
+        "1.0": 0.011111111111111112,
+        "2.0": 0.022222222222222223
+      }
+    },
+    "phi_cross_domain": {
+      "hits": 0,
+      "tests": 15,
+      "p_values": [
+        1.0
+      ],
+      "cross_domain_status": "NOT RUNNABLE",
+      "phi_median_rung_error": 0.3366966413551892,
+      "fitted_median_rung_error": 0.002036358710537583,
+      "power": [
+        {
+          "series": "survey_cells",
+          "fraction": 0.0,
+          "detection_rate": 0.0
+        },
+        {
+          "series": "survey_cells",
+          "fraction": 0.25,
+          "detection_rate": 1.0
+        },
+        {
+          "series": "survey_cells",
+          "fraction": 0.5,
+          "detection_rate": 1.0
+        },
+        {
+          "series": "survey_cells",
+          "fraction": 0.75,
+          "detection_rate": 1.0
+        },
+        {
+          "series": "survey_cells",
+          "fraction": 1.0,
+          "detection_rate": 1.0
+        },
+        {
+          "series": "group_20240325",
+          "fraction": 0.0,
+          "detection_rate": 0.0
+        },
+        {
+          "series": "group_20240325",
+          "fraction": 0.25,
+          "detection_rate": 0.0
+        },
+        {
+          "series": "group_20240325",
+          "fraction": 0.5,
+          "detection_rate": 0.005
+        },
+        {
+          "series": "group_20240325",
+          "fraction": 0.75,
+          "detection_rate": 0.005
+        },
+        {
+          "series": "group_20240325",
+          "fraction": 1.0,
+          "detection_rate": 0.82
+        }
+      ]
+    },
+    "neutrino": {
+      "n_records": 10,
+      "n_testable": 0,
+      "restoration_refusals": 7,
+      "catalog": "real"
+    },
+    "nv": {
+      "n_records": 10,
+      "n_testable": 0,
+      "band_low_mhz": 13.4,
+      "band_high_mhz": 86.9,
+      "modes": 6
+    },
+    "comb_vs_scale": {
+      "delta_aic": 2.139,
+      "boot_lo": -12.527,
+      "boot_hi": 6.932,
+      "null_p": 0.002,
+      "verdict": "MASK-MANUFACTURED SIGNAL",
+      "span_rungs_phi": 0.131734
+    }
+  },
+  "definition": "four lanes at the phi-rung of a declared quantity; the tetrahedral content is equality of the six separations"
+}

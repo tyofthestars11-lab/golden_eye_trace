@@ -85,7 +85,7 @@ python3 scripts/phi_cross_domain_test.py \
   --dataset group_20240325=data/phi_cross_domain/group_20240325.csv \
   --dataset trio_20240920=data/phi_cross_domain/trio_20240920.csv \
   --out results/phi_cross_domain --permutations 100000
-python3 scripts/phi_cross_domain_report.py
+python3 scripts/phi_cross_domain_report.py && python3 scripts/super_tetrahedron.py
 python3 -m unittest discover -s tests -q
 ```
 
