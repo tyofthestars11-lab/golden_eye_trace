@@ -1,0 +1,133 @@
+{
+  "posterior": {
+    "observed_hits": 0,
+    "pairs": 14,
+    "posterior": "Beta(1, 15)",
+    "median": 0.04515839608958344,
+    "upper_95": 0.1810362725220846,
+    "p_rate_above_0.02": 0.7385691026454038,
+    "p_rate_above_0.10": 0.20589113209464904,
+    "p_rate_above_0.381966": 0.0007331374358574561
+  },
+  "scale_ladder": [
+    {
+      "scale": "one channel",
+      "step_hz": 100547.19562243501,
+      "frequency_hz": 13400000.0,
+      "ratio": 1.0075035220613757,
+      "delta_r": 0.01553476096357602
+    },
+    {
+      "scale": "one channel",
+      "step_hz": 100547.19562243501,
+      "frequency_hz": 30000000.0,
+      "ratio": 1.0033515731874145,
+      "delta_r": 0.006953214800111944
+    },
+    {
+      "scale": "one channel",
+      "step_hz": 100547.19562243501,
+      "frequency_hz": 47000000.0,
+      "ratio": 1.00213930203452,
+      "delta_r": 0.004440907049647792
+    },
+    {
+      "scale": "one channel",
+      "step_hz": 100547.19562243501,
+      "frequency_hz": 60000000.0,
+      "ratio": 1.0016757865937072,
+      "delta_r": 0.0034795155540055054
+    },
+    {
+      "scale": "one channel",
+      "step_hz": 100547.19562243501,
+      "frequency_hz": 86900000.0,
+      "ratio": 1.0011570448287967,
+      "delta_r": 0.0024030497757827466
+    },
+    {
+      "scale": "comb step (1 MHz)",
+      "step_hz": 1000000.0,
+      "frequency_hz": 13400000.0,
+      "ratio": 1.0746268656716418,
+      "delta_r": 0.1495671882464121
+    },
+    {
+      "scale": "comb step (1 MHz)",
+      "step_hz": 1000000.0,
+      "frequency_hz": 45984300.0,
+      "ratio": 1.0217465526277447,
+      "delta_r": 0.04470685953296578
+    },
+    {
+      "scale": "comb step (1 MHz)",
+      "step_hz": 1000000.0,
+      "frequency_hz": 47241600.0,
+      "ratio": 1.021167784325679,
+      "delta_r": 0.04352939374365659
+    },
+    {
+      "scale": "comb step (1 MHz)",
+      "step_hz": 1000000.0,
+      "frequency_hz": 53783300.0,
+      "ratio": 1.0185931320688764,
+      "delta_r": 0.038283333796104116
+    },
+    {
+      "scale": "comb step (1 MHz)",
+      "step_hz": 1000000.0,
+      "frequency_hz": 86900000.0,
+      "ratio": 1.0115074798619101,
+      "delta_r": 0.02377699762130257
+    },
+    {
+      "scale": "whole band",
+      "step_hz": 13400000.0,
+      "frequency_hz": 13400000.0,
+      "ratio": 6.485074626865671,
+      "delta_r": 3.8849904095414147,
+      "note": "band width 73.50 MHz"
+    }
+  ],
+  "invariance": {
+    "one channel": {
+      "delta_r_min": 0.0024030497757827466,
+      "delta_r_max": 0.01553476096357602,
+      "spread_factor": 6.464602240091291
+    },
+    "comb step (1 MHz)": {
+      "delta_r_min": 0.02377699762130257,
+      "delta_r_max": 0.1495671882464121,
+      "spread_factor": 6.290415242015674
+    },
+    "whole band": {
+      "delta_r_min": 3.8849904095414147,
+      "delta_r_max": 3.8849904095414147,
+      "spread_factor": 1.0
+    },
+    "phi_target": {
+      "delta_r_min": 0.38196601125010515,
+      "delta_r_max": 0.38196601125010515,
+      "spread_factor": 1.0
+    }
+  },
+  "channel_check": {
+    "channels": [
+      317,
+      412
+    ],
+    "delta_r_at_low": 0.006524611078040231,
+    "delta_r_at_high": 0.005025605644628764,
+    "spread_factor": 1.298273589176971,
+    "note": "constant step in Hz, so the rung interval shrinks as 1/f"
+  },
+  "crossover": {
+    "step_hz": 1000000.0,
+    "frequency_hz": 4955810.786920769,
+    "frequency_mhz": 4.955810786920769,
+    "in_band": false,
+    "note": "the only frequency at which this comb's step equals the frozen rung interval; the survey searched no cell there"
+  },
+  "phi_target": 0.38196601125010515,
+  "note": "a ratio does not terminate and does not vary with scale; the first is why the answer is a posterior, the second is why this dataset cannot satisfy the prediction"
+}
