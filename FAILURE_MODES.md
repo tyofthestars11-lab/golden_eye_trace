@@ -149,6 +149,40 @@ scatter of the row medians. It is opt-in, because switching the default rewrites
 every sigma this repository has published - a decision to take deliberately, not
 as a side effect.
 
+## 12. Absence of a neutrino treated as evidence of artificiality
+
+A neutrino detector has an energy threshold of order TeV, an angular resolution
+of 0.5-15 degrees, a duty cycle below unity and a sky coverage that depends on
+whether the event is up-going or down-going. A radio feature with no coincident
+neutrino is therefore compatible with a real source that is neutrino-quiet, one
+below threshold, one in a part of the sky seen through the Earth, and one that
+sent its event while the detector was not taking data. "No neutrino, so it must
+be RFI" is not an inference; it is a preference.
+
+**Tell:** a claim that a signal is artificial because a catalog query returned
+nothing, with no statement of the detector's exposure, threshold or coverage.
+**Fix:** `Coincidence.absence_is_informative` is a field fixed at `False`, an
+empty query must name the limit that made it empty, and `guard_support` refuses
+to attach an absence to a record at all. When the radio record has no pointing
+or no UTC timestamp the lane reports `UNINFORMATIVE`, not a null.
+
+## 13. A neutrino coincidence used to restore an invalid candidate
+
+The seven cells at 45-49 MHz were manufactured by the excision mask. A neutrino
+that happens to point at that part of the sky is a real particle coincident with
+an artifact, which is a statement about the catalog's density and nothing about
+the radio data. Allowing it to restore the record would launder a selection
+effect through an independent instrument, and the independence of that instrument
+is exactly what would make the laundering hard to see.
+
+**Tell:** a disposition that rises when a second messenger is added, with the
+radio gates that failed still failing. **Fix:** `guard_support` raises
+`NeutrinoAsEvidence` for any record in `INVALID_CANDIDATE`, before it considers
+any claim; `scripts/neutrino_crossmatch.py` calls the guard on all seven and
+records the refusals (7 of 7) in `results/neutrino_crossmatch.json`; and the
+OMNI gate `neutrino_counterpart` is not required by any disposition, so a
+coincidence can never be the reason for one.
+
 ## Checklist before believing a result
 
 1. Does any single number move by more than 2× when the noise reference changes?

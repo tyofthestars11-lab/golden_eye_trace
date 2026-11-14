@@ -176,6 +176,51 @@ def gate_interpretation(record: SignalRecord, confirm: dict,
                   f"{speed_kms:.0f} km/s coronal exciter"))
 
 
+def gate_neutrino(record: SignalRecord) -> Gate:
+    """The neutrino lane's verdict, which can only ever be a counterpart.
+
+    A coincidence is not a required gate for any disposition: the radio gates
+    are checks on the radio, and a particle does not perform them. What this
+    gate must never become is a PASS used to carry a claim, and it must never
+    report an empty query as a null, so both are refused by construction here.
+    """
+    path = os.path.join(ROOT, "results", "neutrino_crossmatch.json")
+    if not os.path.exists(path):
+        return Gate(id="neutrino_counterpart", layer="confirmation",
+                    status="NOT RUN",
+                    evidence=("no neutrino catalog was supplied; absence of a "
+                              "neutrino is not evidence about this record"))
+    ledger = json.load(open(path, encoding="utf-8"))
+    freq_mhz = record.frequency_hz / 1e6
+    row = next((r for r in ledger.get("records", [])
+                if r.get("observation_date") == record.observation_date
+                and abs(r.get("freq_mhz", -1.0) - freq_mhz) <= 0.05), None)
+    if row is None:
+        return Gate(id="neutrino_counterpart", layer="confirmation",
+                    status="NOT RUN",
+                    evidence="this record is not in the neutrino ledger")
+    status = row.get("status")
+    if status == "EXCLUDED_FROM_CROSSMATCH":
+        return Gate(id="neutrino_counterpart", layer="confirmation",
+                    status="NOT RUN",
+                    evidence=("the record is excluded from discovery claims, so "
+                              "the lane does not run on it: a coincidence cannot "
+                              "restore an artifact"))
+    if status == "COINCIDENT":
+        p = row.get("chance_probability")
+        ok = p is not None and p < 0.01
+        return Gate(id="neutrino_counterpart", layer="confirmation",
+                    status="PASS" if ok else "UNTESTABLE",
+                    evidence=(f"chance p {p:.2e} against the stated exposure; a "
+                              "counterpart to follow up, never a disposition"
+                              if p is not None else
+                              "coincident but with no exposure, so no null"))
+    limits = "; ".join(row.get("limits") or []) or row.get("note", "")
+    return Gate(id="neutrino_counterpart", layer="confirmation",
+                status="UNTESTABLE",
+                evidence=(f"{status}: {limits}" if limits else status))
+
+
 def gates_confirmation(record: SignalRecord, confirm: dict,
                        rfi: dict | None) -> list[Gate]:
     g = confirm.get("gates", {})
@@ -211,7 +256,7 @@ def gates_confirmation(record: SignalRecord, confirm: dict,
                   status="PASS" if (repeats and testable) else (
                       "FAIL" if testable else "UNTESTABLE"),
                   evidence=evidence)
-    return [off, telescope, bary, repeat]
+    return [off, telescope, bary, repeat, gate_neutrino(record)]
 
 
 def run(strict: bool) -> int:
@@ -317,7 +362,8 @@ def write_outputs(rows, payload, limit, nyquist, downgrades, escalations) -> Non
                 "noise_reference",
                 "nonlinear_beats_control", "phi_lock",
                 "astrophysical_explanation", "off_source",
-                "independent_telescope", "barycentric", "repeat"]
+                "independent_telescope", "barycentric",
+                "neutrino_counterpart", "repeat"]
 
     out = {
         "transform_version": payload["transform_version"],

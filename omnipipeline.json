@@ -91,6 +91,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "UNINFORMATIVE: the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
           }
         ],
         "permitted": "UNRESOLVED"
@@ -219,6 +225,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "UNINFORMATIVE: the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
           }
         ],
         "permitted": "NULL RESULT"
@@ -345,6 +357,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "UNINFORMATIVE: the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "UNTESTABLE"
           }
         ],
         "permitted": "UNRESOLVED"
@@ -471,6 +489,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -605,6 +629,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -739,6 +769,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -873,6 +909,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -1007,6 +1049,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -1141,6 +1189,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"
@@ -1275,6 +1329,12 @@
             "id": "repeat",
             "layer": "confirmation",
             "status": "FAIL"
+          },
+          {
+            "evidence": "the record is excluded from discovery claims, so the lane does not run on it: a coincidence cannot restore an artifact",
+            "id": "neutrino_counterpart",
+            "layer": "confirmation",
+            "status": "NOT RUN"
           }
         ],
         "permitted": "MASK-MANUFACTURED SIGNAL"

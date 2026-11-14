@@ -77,6 +77,7 @@ detection and is not treated as one; see [FAILURE_MODES.md](FAILURE_MODES.md).
 python3 scripts/ovro_survey.py && python3 scripts/ovro_confirm.py
 python3 scripts/local_noise_survey.py && python3 scripts/nonlinear_time.py
 python3 scripts/rfi_pair_test.py && python3 scripts/build_signal_records.py
+python3 scripts/neutrino_crossmatch.py   # SYNTHETIC catalog unless data/neutrino_events.json exists
 python3 -m unittest discover -s tests -q
 ```
 

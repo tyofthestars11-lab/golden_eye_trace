@@ -1,0 +1,192 @@
+{
+  "catalog": {
+    "kind": "synthetic",
+    "path": "data/neutrino_events_synthetic.json",
+    "n_events": 3,
+    "detectors": [
+      "SYNTHETIC-FIXTURE"
+    ],
+    "data_release": [
+      "synthetic-fixture: not a real event, built to exercise the crossmatch"
+    ],
+    "synthetic": true
+  },
+  "records": [
+    {
+      "observation_date": "20240207",
+      "freq_mhz": 53.7833,
+      "disposition": "UNRESOLVED",
+      "status": "UNINFORMATIVE",
+      "separation_deg": null,
+      "dt_s": null,
+      "chance_probability": null,
+      "limits": [
+        "the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle"
+      ],
+      "note": ""
+    },
+    {
+      "observation_date": "20240322",
+      "freq_mhz": 47.2416,
+      "disposition": "UNRESOLVED",
+      "status": "UNINFORMATIVE",
+      "separation_deg": null,
+      "dt_s": null,
+      "chance_probability": null,
+      "limits": [
+        "the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle"
+      ],
+      "note": ""
+    },
+    {
+      "observation_date": "20240324",
+      "freq_mhz": 47.3143,
+      "disposition": "UNRESOLVED",
+      "status": "UNINFORMATIVE",
+      "separation_deg": null,
+      "dt_s": null,
+      "chance_probability": null,
+      "limits": [
+        "the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle"
+      ],
+      "note": ""
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 45.9843,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 46.9828,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 47.938,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 48.9937,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 45.4206,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 46.589,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 47.5358,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "status": "EXCLUDED_FROM_CROSSMATCH",
+      "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
+    }
+  ],
+  "demo": {
+    "synthetic_geometry": true,
+    "note": "HYPOTHETICAL geometry, chosen to be inside the synthetic cone",
+    "record": {
+      "observation_date": "20240322",
+      "freq_mhz": 47.2416,
+      "disposition": "UNRESOLVED"
+    },
+    "exposure": {
+      "livetime_s": 31560000.0,
+      "n_events": 100,
+      "sky_fraction": 1.0,
+      "density_per_sr_s": 2.5214661453088615e-07,
+      "note": "order-of-magnitude alert rate, stated for the worked example only"
+    },
+    "result": {
+      "status": "COINCIDENT",
+      "event": {
+        "event_id": "SYN-0001",
+        "detector": "SYNTHETIC-FIXTURE",
+        "event_time_utc": "2024-03-22T08:15:04+00:00",
+        "time_uncertainty_s": 0.5,
+        "ra_deg": 100.4,
+        "dec_deg": -20.3,
+        "angular_error_deg": 1.2,
+        "energy_estimate_gev": 120000000000000.0,
+        "energy_class": "track",
+        "event_type": "through-going",
+        "alert_status": "test",
+        "public_source_url": "https://example.invalid/synthetic/SYN-0001",
+        "data_release": "synthetic-fixture: not a real event, built to exercise the crossmatch"
+      },
+      "separation_deg": 0.48063806145059623,
+      "dt_s": 4.0,
+      "allowed_separation_deg": 4.686149805543993,
+      "allowed_dt_s": 768.001464842353,
+      "chance_probability": 8.134638387335968e-06,
+      "absence_is_informative": false,
+      "limits": [],
+      "note": ""
+    }
+  },
+  "refusals": [
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 45.9843,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240325 45.9843 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 46.9828,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240325 46.9828 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 47.938,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240325 47.9380 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    },
+    {
+      "observation_date": "20240325",
+      "freq_mhz": 48.9937,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240325 48.9937 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 45.4206,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240920 45.4206 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 46.589,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240920 46.5890 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    },
+    {
+      "observation_date": "20240920",
+      "freq_mhz": 47.5358,
+      "disposition": "MASK-MANUFACTURED SIGNAL",
+      "refused": "20240920 47.5358 MHz is MASK-MANUFACTURED SIGNAL: it is excluded from discovery claims and a neutrino coincidence cannot restore it, because the radio event it would be coincident with does not exist in the data"
+    }
+  ],
+  "absence_is_informative": false,
+  "note": "a neutrino coincidence may add a counterpart to a valid record; it may never restore an invalid one, and absence proves nothing"
+}
