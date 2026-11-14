@@ -1,0 +1,16 @@
+dataset,base,hit_count,pair_count,hit_fraction,null_mean_hit_count,p_value,odds_ratio_vs_null_mean
+survey_cells,phi,0,9,0.0,0,1.0,1.0
+survey_cells,base_2,0,9,0.0,0,1.0,1.0
+survey_cells,base_e,0,9,0.0,0,1.0,1.0
+survey_cells,base_10,0,9,0.0,0,1.0,1.0
+survey_cells,base_sqrt2,0,9,0.0,0.201,1.0,0.6981755387041069
+group_20240325,phi,0,3,0.0,0,1.0,1.0
+group_20240325,base_2,0,3,0.0,0,1.0,1.0
+group_20240325,base_e,0,3,0.0,0,1.0,1.0
+group_20240325,base_10,0,3,0.0,0,1.0,1.0
+group_20240325,base_sqrt2,0,3,0.0,0,1.0,1.0
+trio_20240920,phi,0,2,0.0,0,1.0,1.0
+trio_20240920,base_2,0,2,0.0,0,1.0,1.0
+trio_20240920,base_e,0,2,0.0,0,1.0,1.0
+trio_20240920,base_10,0,2,0.0,0,1.0,1.0
+trio_20240920,base_sqrt2,0,2,0.0,0,1.0,1.0

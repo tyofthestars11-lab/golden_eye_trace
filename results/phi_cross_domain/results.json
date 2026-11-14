@@ -1,0 +1,461 @@
+{
+  "config": {
+    "phi": 1.618033988749895,
+    "primary_target_rung": 0.38196601125010515,
+    "tolerance": 0.01,
+    "control_bases": {
+      "base_2": 2.0,
+      "base_e": 2.718281828459045,
+      "base_10": 10.0,
+      "base_sqrt2": 1.4142135623730951
+    },
+    "permutations": 100000,
+    "seed": 20261114,
+    "input_order_rule": "numeric order if possible, else lexical order",
+    "null": "shuffle observed values across fixed declared order"
+  },
+  "datasets": [
+    {
+      "name": "survey_cells",
+      "path": "/workspace/chats/7be591bd41b39817e6814ddf/data/phi_cross_domain/survey_cells.csv",
+      "n_observations": 10,
+      "n_adjacent_pairs": 9,
+      "order": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "values": [
+        53.783296,
+        47.241614,
+        47.314257,
+        45.984284,
+        46.982763,
+        47.937962,
+        48.993707,
+        45.420639,
+        46.588956,
+        47.535773
+      ],
+      "tests": {
+        "phi": {
+          "base": 1.618033988749895,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 9,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            -0.2695024773421177,
+            0.0031930010547652015,
+            -0.05925037405146121,
+            0.04463960090857671,
+            0.04182550348903626,
+            0.04526934611159843,
+            -0.15736366414418027,
+            0.05277699080176146,
+            0.041809084892418434
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_2": {
+          "base": 2.0,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 9,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            -0.18709991559818387,
+            0.002216715162484773,
+            -0.0411340930648163,
+            0.030990681958477338,
+            0.0290370175807926,
+            0.03142787747332284,
+            -0.10924845133138146,
+            0.036639999089880367,
+            0.02902561910285751
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_e": {
+          "base": 2.718281828459045,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 9,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            -0.12968777897988487,
+            0.0015365098649808015,
+            -0.02851198063276782,
+            0.02148110382314853,
+            0.020126926867995953,
+            0.02178414466161714,
+            -0.07572525602088746,
+            0.025396912064869537,
+            0.02011902604515257
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_10": {
+          "base": 10.0,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 9,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            -0.056322686781252525,
+            0.0006672977557510726,
+            -0.01238259585694345,
+            0.009329124855584252,
+            0.00874101327644094,
+            0.009460733819522504,
+            -0.03288706083058242,
+            0.01102973876715496,
+            0.008737581992677565
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_sqrt2": {
+          "base": 1.4142135623730951,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 9,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            -0.3741998311963677,
+            0.0044334303249695456,
+            -0.08226818612963259,
+            0.06198136391695466,
+            0.058074035161585186,
+            0.06285575494664566,
+            -0.2184969026627629,
+            0.07327999817976072,
+            0.058051238205715006
+          ],
+          "null_mean_hit_count": 0.201,
+          "null_sd_hit_count": 0.4007480505255141,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 0.6981755387041069,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        }
+      }
+    },
+    {
+      "name": "group_20240325",
+      "path": "/workspace/chats/7be591bd41b39817e6814ddf/data/phi_cross_domain/group_20240325.csv",
+      "n_observations": 4,
+      "n_adjacent_pairs": 3,
+      "order": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "values": [
+        45.984284,
+        46.982763,
+        47.937962,
+        48.993707
+      ],
+      "tests": {
+        "phi": {
+          "base": 1.618033988749895,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 3,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.04463960090857671,
+            0.04182550348903626,
+            0.04526934611159843
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_2": {
+          "base": 2.0,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 3,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.030990681958477338,
+            0.0290370175807926,
+            0.03142787747332284
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_e": {
+          "base": 2.718281828459045,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 3,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.02148110382314853,
+            0.020126926867995953,
+            0.02178414466161714
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_10": {
+          "base": 10.0,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 3,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.009329124855584252,
+            0.00874101327644094,
+            0.009460733819522504
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_sqrt2": {
+          "base": 1.4142135623730951,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 3,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.06198136391695466,
+            0.058074035161585186,
+            0.06285575494664566
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        }
+      }
+    },
+    {
+      "name": "trio_20240920",
+      "path": "/workspace/chats/7be591bd41b39817e6814ddf/data/phi_cross_domain/trio_20240920.csv",
+      "n_observations": 3,
+      "n_adjacent_pairs": 2,
+      "order": [
+        "1",
+        "2",
+        "3"
+      ],
+      "values": [
+        45.420639,
+        46.588956,
+        47.535773
+      ],
+      "tests": {
+        "phi": {
+          "base": 1.618033988749895,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 2,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.05277699080176146,
+            0.041809084892418434
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_2": {
+          "base": 2.0,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 2,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.036639999089880367,
+            0.02902561910285751
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_e": {
+          "base": 2.718281828459045,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 2,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.025396912064869537,
+            0.02011902604515257
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_10": {
+          "base": 10.0,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 2,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.01102973876715496,
+            0.008737581992677565
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        },
+        "base_sqrt2": {
+          "base": 1.4142135623730951,
+          "target_rung_interval": 0.38196601125010515,
+          "tolerance": 0.01,
+          "hit_count": 0,
+          "pair_count": 2,
+          "hit_fraction": 0.0,
+          "observed_deltas": [
+            0.07327999817976072,
+            0.058051238205715006
+          ],
+          "null_mean_hit_count": 0,
+          "null_sd_hit_count": 0.0,
+          "null_at_least_as_extreme": 100000,
+          "permutation_count": 100000,
+          "p_value": 1.0,
+          "odds_ratio_vs_null_mean": 1.0,
+          "bh_adjusted_p_value_across_all_domain_base_tests": 1.0
+        }
+      }
+    }
+  ],
+  "combined": {
+    "phi": {
+      "per_dataset_p_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fisher_statistic": -0.0,
+      "fisher_p_value": 1.0
+    },
+    "base_2": {
+      "per_dataset_p_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fisher_statistic": -0.0,
+      "fisher_p_value": 1.0
+    },
+    "base_e": {
+      "per_dataset_p_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fisher_statistic": -0.0,
+      "fisher_p_value": 1.0
+    },
+    "base_10": {
+      "per_dataset_p_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fisher_statistic": -0.0,
+      "fisher_p_value": 1.0
+    },
+    "base_sqrt2": {
+      "per_dataset_p_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fisher_statistic": -0.0,
+      "fisher_p_value": 1.0
+    }
+  }
+}

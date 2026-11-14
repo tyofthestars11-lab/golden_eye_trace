@@ -80,6 +80,11 @@ python3 scripts/rfi_pair_test.py && python3 scripts/build_signal_records.py
 python3 scripts/ingest_icecube.py         # published alerts -> data/neutrino_events.json
 python3 scripts/neutrino_crossmatch.py   # SYNTHETIC catalog unless data/neutrino_events.json exists
 python3 scripts/neutrino_power.py && python3 scripts/nv_lane.py
+python3 scripts/phi_cross_domain_test.py \
+  --dataset survey_cells=data/phi_cross_domain/survey_cells.csv \
+  --dataset group_20240325=data/phi_cross_domain/group_20240325.csv \
+  --dataset trio_20240920=data/phi_cross_domain/trio_20240920.csv \
+  --out results/phi_cross_domain --permutations 100000
 python3 -m unittest discover -s tests -q
 ```
 
