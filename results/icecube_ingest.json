@@ -1,0 +1,79 @@
+{
+  "source": "/workspace/chats/7be591bd41b39817e6814ddf/data/icecube_alerts_sample.json",
+  "ingested_utc": "2026-11-14T04:14:24Z",
+  "n_rows": 2,
+  "n_accepted": 2,
+  "n_rejected": 0,
+  "rejected": [],
+  "alerts": [
+    {
+      "event": {
+        "event_id": "IceCube-230416A",
+        "detector": "IC86",
+        "event_time_utc": "2023-04-16T05:22:26.150574+00:00",
+        "time_uncertainty_s": 0.0,
+        "ra_deg": 345.82,
+        "dec_deg": 9.01,
+        "angular_error_deg": 0.23299530089232803,
+        "energy_estimate_gev": 127290.0,
+        "energy_class": "track",
+        "event_type": "through-going",
+        "alert_status": "BRONZE",
+        "public_source_url": "https://gcn.nasa.gov/missions/icecube and the IceCube alert-format update circulated January 2025",
+        "data_release": "published IceCube alert ingested from https://gcn.nasa.gov/missions/icecube and the IceCube alert-format update circulated January 2025"
+      },
+      "far_per_year": 2.53371153,
+      "p_astro": 0.34064,
+      "run_id": "137840_57034692_0",
+      "alert_type": "initial",
+      "alert_tense": "current",
+      "record_number": 0,
+      "conversions": [
+        "ra_dec_error 0.5 deg at 90% containment -> 0.233 deg (1 sigma)",
+        "energy 127.29 TeV (published units) -> 127290 GeV",
+        "false alarm rate 2.53371 per year (8.029e-08 Hz)"
+      ],
+      "kind": "gcn-kafka"
+    },
+    {
+      "event": {
+        "event_id": "IC-143317_9424183",
+        "detector": "IceCube",
+        "event_time_utc": "2026-10-20T03:58:53.390000+00:00",
+        "time_uncertainty_s": 0.0,
+        "ra_deg": 224.12,
+        "dec_deg": 20.62,
+        "angular_error_deg": 0.2634400202089256,
+        "energy_estimate_gev": 115560.0,
+        "energy_class": "track",
+        "event_type": "through-going",
+        "alert_status": "BRONZE",
+        "public_source_url": "https://gcn.gsfc.nasa.gov/gcn/amon_icecube_gold_bronze_events.html",
+        "data_release": "published IceCube alert ingested from https://gcn.gsfc.nasa.gov/gcn/amon_icecube_gold_bronze_events.html"
+      },
+      "far_per_year": 2.1081,
+      "p_astro": 0.37984,
+      "run_id": "143317_9424183",
+      "alert_type": "initial",
+      "alert_tense": "current",
+      "record_number": 1,
+      "conversions": [
+        "error90_arcmin 0.565333 deg at 90% containment -> 0.263 deg (1 sigma)",
+        "energy 115.56 TeV (published units) -> 115560 GeV",
+        "false alarm rate 2.1081 per year (6.680e-08 Hz)",
+        "record_number 1: revised reconstruction, superseding the initial notice"
+      ],
+      "kind": "amon-table"
+    }
+  ],
+  "conversions": [
+    "energy 115.56 TeV (published units) -> 115560 GeV",
+    "energy 127.29 TeV (published units) -> 127290 GeV",
+    "error90_arcmin 0.565333 deg at 90% containment -> 0.263 deg (1 sigma)",
+    "false alarm rate 2.1081 per year (6.680e-08 Hz)",
+    "false alarm rate 2.53371 per year (8.029e-08 Hz)",
+    "ra_dec_error 0.5 deg at 90% containment -> 0.233 deg (1 sigma)",
+    "record_number 1: revised reconstruction, superseding the initial notice"
+  ],
+  "note": "every accepted row is a published alert; the only quantities changed are units and the containment-to-sigma conversion, both recorded above"
+}

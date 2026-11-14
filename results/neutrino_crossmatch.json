@@ -1,15 +1,17 @@
 {
   "catalog": {
-    "kind": "synthetic",
-    "path": "data/neutrino_events_synthetic.json",
-    "n_events": 3,
+    "kind": "real",
+    "path": "data/neutrino_events.json",
+    "n_events": 2,
     "detectors": [
-      "SYNTHETIC-FIXTURE"
+      "IC86",
+      "IceCube"
     ],
     "data_release": [
-      "synthetic-fixture: not a real event, built to exercise the crossmatch"
+      "published IceCube alert ingested from https://gcn.gsfc.nasa.gov/gcn/amon_icecube_gold_bronze_events.html",
+      "published IceCube alert ingested from https://gcn.nasa.gov/missions/icecube and the IceCube alert-format update circulated January 2025"
     ],
-    "synthetic": true
+    "synthetic": false
   },
   "records": [
     {
@@ -141,6 +143,10 @@
       "absence_is_informative": false,
       "limits": [],
       "note": ""
+    },
+    "catalog": {
+      "kind": "synthetic",
+      "path": "data/neutrino_events_synthetic.json"
     }
   },
   "refusals": [

@@ -1,0 +1,264 @@
+{
+  "assumptions": {
+    "alert_rate_per_year": 100,
+    "alert_rate_range_per_year": [
+      30,
+      100,
+      1000
+    ],
+    "effective_area_m2": 10000.0,
+    "effective_area_range_m2": [
+      100.0,
+      1000.0,
+      10000.0
+    ],
+    "pivot_energy_gev": 1000000.0,
+    "flare_energy_erg": 1e+47,
+    "flare_duration_s": 10.0,
+    "note": "order-of-magnitude values: the alert rate is a published-alert rate, the effective area is a PeV track value for a cubic-kilometre detector, and the flare energy is a bright transient. Each scales the answer linearly and is stated so it can be disputed."
+  },
+  "background": [
+    {
+      "window": "1 s",
+      "window_s": 1.0,
+      "1.0 deg (alert-grade)": {
+        "mu": 2.4131705106431286e-10,
+        "p": 2.4131707743180186e-10
+      },
+      "3.0 deg (3 sigma of 1 deg)": {
+        "mu": 2.171412436901744e-09,
+        "p": 2.1714123832339283e-09
+      },
+      "4.68 deg (3 sigma of the demo geometry)": {
+        "mu": 5.282618699448825e-09,
+        "p": 5.282618675828132e-09
+      }
+    },
+    {
+      "window": "256 s (survey window)",
+      "window_s": 256.0,
+      "1.0 deg (alert-grade)": {
+        "mu": 6.177716507246409e-08,
+        "p": 6.177716316280168e-08
+      },
+      "3.0 deg (3 sigma of 1 deg)": {
+        "mu": 5.558815838468464e-07,
+        "p": 5.558814293316061e-07
+      },
+      "4.68 deg (3 sigma of the demo geometry)": {
+        "mu": 1.3523503870588992e-06,
+        "p": 1.3523494726275231e-06
+      }
+    },
+    {
+      "window": "1 h",
+      "window_s": 3600.0,
+      "1.0 deg (alert-grade)": {
+        "mu": 8.687413838315263e-07,
+        "p": 8.68741006465612e-07
+      },
+      "3.0 deg (3 sigma of 1 deg)": {
+        "mu": 7.81708477284628e-06,
+        "p": 7.81705421948331e-06
+      },
+      "4.68 deg (3 sigma of the demo geometry)": {
+        "mu": 1.9017427318015768e-05,
+        "p": 1.901724648789571e-05
+      }
+    },
+    {
+      "window": "1 day",
+      "window_s": 86400.0,
+      "1.0 deg (alert-grade)": {
+        "mu": 2.084979321195663e-05,
+        "p": 2.08495758565741e-05
+      },
+      "3.0 deg (3 sigma of 1 deg)": {
+        "mu": 0.00018761003454831067,
+        "p": 0.0001875924368862636
+      },
+      "4.68 deg (3 sigma of the demo geometry)": {
+        "mu": 0.00045641825563237843,
+        "p": 0.0004563141126652237
+      }
+    },
+    {
+      "window": "30 days",
+      "window_s": 2592000.0,
+      "1.0 deg (alert-grade)": {
+        "mu": 0.0006254937963586989,
+        "p": 0.0006252982158942988
+      },
+      "3.0 deg (3 sigma of 1 deg)": {
+        "mu": 0.005628301036449321,
+        "p": 0.005612491823746235
+      },
+      "4.68 deg (3 sigma of the demo geometry)": {
+        "mu": 0.013692547668971353,
+        "p": 0.013599231137366385
+      }
+    }
+  ],
+  "timing": [
+    {
+      "alert_rate_per_year": 30,
+      "cone_deg": 1.0,
+      "max_window_s": 138826159.87522238
+    },
+    {
+      "alert_rate_per_year": 30,
+      "cone_deg": 3.0,
+      "max_window_s": 15428261.78129117
+    },
+    {
+      "alert_rate_per_year": 30,
+      "cone_deg": 4.68,
+      "max_window_s": 6341763.700485693
+    },
+    {
+      "alert_rate_per_year": 100,
+      "cone_deg": 1.0,
+      "max_window_s": 41647847.96256671
+    },
+    {
+      "alert_rate_per_year": 100,
+      "cone_deg": 3.0,
+      "max_window_s": 4628478.53438735
+    },
+    {
+      "alert_rate_per_year": 100,
+      "cone_deg": 4.68,
+      "max_window_s": 1902529.1101457083
+    },
+    {
+      "alert_rate_per_year": 1000,
+      "cone_deg": 1.0,
+      "max_window_s": 4164784.796256671
+    },
+    {
+      "alert_rate_per_year": 1000,
+      "cone_deg": 3.0,
+      "max_window_s": 462847.8534387351
+    },
+    {
+      "alert_rate_per_year": 1000,
+      "cone_deg": 4.68,
+      "max_window_s": 190252.9110145708
+    }
+  ],
+  "fluence": [
+    {
+      "effective_area_m2": 100.0,
+      "duration": "1 s",
+      "duration_s": 1.0,
+      "fluence_cm2": 2.302585092994046e-06,
+      "energy_fluence_erg_cm2": 0.0036891480337917773,
+      "horizon_mpc_1e47erg": 0.4759720836383586
+    },
+    {
+      "effective_area_m2": 100.0,
+      "duration": "10 s",
+      "duration_s": 10.0,
+      "fluence_cm2": 2.302585092994046e-07,
+      "energy_fluence_erg_cm2": 0.0003689148033791777,
+      "horizon_mpc_1e47erg": 1.5051558869533768
+    },
+    {
+      "effective_area_m2": 100.0,
+      "duration": "256 s",
+      "duration_s": 256.0,
+      "fluence_cm2": 8.994473019507992e-09,
+      "energy_fluence_erg_cm2": 1.441073450699913e-05,
+      "horizon_mpc_1e47erg": 7.615553338213737
+    },
+    {
+      "effective_area_m2": 100.0,
+      "duration": "1 day",
+      "duration_s": 86400.0,
+      "fluence_cm2": 2.665029042817183e-11,
+      "energy_fluence_erg_cm2": 4.2698472613330755e-08,
+      "horizon_mpc_1e47erg": 139.90664840679554
+    },
+    {
+      "effective_area_m2": 1000.0,
+      "duration": "1 s",
+      "duration_s": 1.0,
+      "fluence_cm2": 2.302585092994046e-07,
+      "energy_fluence_erg_cm2": 0.0003689148033791777,
+      "horizon_mpc_1e47erg": 1.5051558869533768
+    },
+    {
+      "effective_area_m2": 1000.0,
+      "duration": "10 s",
+      "duration_s": 10.0,
+      "fluence_cm2": 2.302585092994046e-08,
+      "energy_fluence_erg_cm2": 3.689148033791777e-05,
+      "horizon_mpc_1e47erg": 4.759720836383586
+    },
+    {
+      "effective_area_m2": 1000.0,
+      "duration": "256 s",
+      "duration_s": 256.0,
+      "fluence_cm2": 8.994473019507992e-10,
+      "energy_fluence_erg_cm2": 1.441073450699913e-06,
+      "horizon_mpc_1e47erg": 24.08249419125403
+    },
+    {
+      "effective_area_m2": 1000.0,
+      "duration": "1 day",
+      "duration_s": 86400.0,
+      "fluence_cm2": 2.6650290428171827e-12,
+      "energy_fluence_erg_cm2": 4.2698472613330755e-09,
+      "horizon_mpc_1e47erg": 442.42366876584157
+    },
+    {
+      "effective_area_m2": 10000.0,
+      "duration": "1 s",
+      "duration_s": 1.0,
+      "fluence_cm2": 2.302585092994046e-08,
+      "energy_fluence_erg_cm2": 3.689148033791777e-05,
+      "horizon_mpc_1e47erg": 4.759720836383586
+    },
+    {
+      "effective_area_m2": 10000.0,
+      "duration": "10 s",
+      "duration_s": 10.0,
+      "fluence_cm2": 2.302585092994046e-09,
+      "energy_fluence_erg_cm2": 3.689148033791777e-06,
+      "horizon_mpc_1e47erg": 15.051558869533766
+    },
+    {
+      "effective_area_m2": 10000.0,
+      "duration": "256 s",
+      "duration_s": 256.0,
+      "fluence_cm2": 8.994473019507992e-11,
+      "energy_fluence_erg_cm2": 1.441073450699913e-07,
+      "horizon_mpc_1e47erg": 76.15553338213738
+    },
+    {
+      "effective_area_m2": 10000.0,
+      "duration": "1 day",
+      "duration_s": 86400.0,
+      "fluence_cm2": 2.6650290428171827e-13,
+      "energy_fluence_erg_cm2": 4.269847261333075e-10,
+      "horizon_mpc_1e47erg": 1399.0664840679558
+    }
+  ],
+  "alert_far": [
+    {
+      "event": "IceCube-230416A",
+      "far_per_year": 2.53371153,
+      "p_in_1s": 8.028999676223947e-08,
+      "p_in_256s": 2.0554028763108967e-05,
+      "p_in_1day": 0.006913050169032431
+    },
+    {
+      "event": "IC-143317_9424183",
+      "far_per_year": 2.1081,
+      "p_in_1s": 6.680292585770076e-08,
+      "p_in_256s": 1.7101403346320154e-05,
+      "p_in_1day": 0.005755148300551016
+    }
+  ],
+  "power_at_90pct_events": 0.899999990700595
+}

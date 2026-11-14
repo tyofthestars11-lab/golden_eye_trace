@@ -2,12 +2,6 @@
 
 Framework: φ² = φ + 1. Attribution: Tyree Jones (tyofthestarz), prior art from December 2025.
 
-> **SYNTHETIC CATALOG.** Every event below comes from
-> `data/neutrino_events_synthetic.json`, whose events carry
-> `alert_status: test` and a `data_release` saying they are invented.
-> Nothing in this document is a statement about the sky. Place a real
-> release at `data/neutrino_events.json` to run the same lane on it.
-
 A neutrino is a second messenger: it leaves the source without being
 absorbed the way radio is, and it arrives with no dispersion to speak of,
 so a coincidence in time and angle is a coincidence between two
@@ -74,6 +68,7 @@ probability against the stated exposure.
 
 ## Worked example, hypothetical geometry
 
+- catalog: synthetic (data/neutrino_events_synthetic.json), used only for this example
 - radio position: RA 100.00 deg, Dec -20.00 deg (**invented to sit inside the synthetic cone**)
 - radio time: 2024-03-22T08:15:00+00:00, +-256 s
 - exposure: 100 events over 3.156e+07 s and the whole sky, i.e. 2.521e-07 per sr per s (order-of-magnitude alert rate, stated for the worked example only)

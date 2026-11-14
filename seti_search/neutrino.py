@@ -357,26 +357,34 @@ def match(event: NeutrinoEvent, *,
                        limits=tuple(limits))
 
 
-def match_catalog(events, **kwargs) -> Coincidence:
-    """Best (highest chance-probability-of-being-real) result over a catalog.
+def _better(candidate: Coincidence, incumbent: Coincidence) -> bool:
+    """Rank two results: a coincidence beats a query, a closer event beats a far one."""
+    order = {"COINCIDENT": 0, "UNINFORMATIVE": 1, "NO EVENT IN WINDOW": 2}
+    if order[candidate.status] != order[incumbent.status]:
+        return order[candidate.status] < order[incumbent.status]
+    if candidate.status == "COINCIDENT":
+        return ((candidate.chance_probability or 1.0)
+                < (incumbent.chance_probability or 1.0))
+    if candidate.separation_deg is None:
+        return False
+    if incumbent.separation_deg is None:
+        return True
+    return candidate.separation_deg < incumbent.separation_deg
 
-    The best event is the one with the smallest chance probability, not the
-    closest one: the closest event in a crowded catalog is often a coincidence,
-    and picking it would be a selection on the null.
+
+def match_catalog(events, **kwargs) -> Coincidence:
+    """Best result over a catalog, where best is not closest.
+
+    Among coincidences the best is the smallest chance probability, not the
+    nearest event: in a crowded catalog the nearest is often accidental, and
+    choosing it would be a selection on the null. Among misses the nearest is
+    reported so the note names the event that came closest, which is the
+    quantity an observer would actually check.
     """
     best: Coincidence | None = None
     for event in events:
         result = match(event, **kwargs)
-        if best is None:
-            best = result
-            continue
-        if result.status == "COINCIDENT" and (
-                best.status != "COINCIDENT"
-                or (result.chance_probability or 1.0)
-                < (best.chance_probability or 1.0)):
-            best = result
-        elif (best.status != "COINCIDENT"
-              and result.status == "UNINFORMATIVE" and best.status == "NO EVENT IN WINDOW"):
+        if best is None or _better(result, best):
             best = result
     if best is None:
         return Coincidence(status="NO EVENT IN WINDOW",

@@ -79,6 +79,13 @@ def load_catalog() -> tuple[list[NeutrinoEvent], str, str]:
     return events, kind, os.path.relpath(path, ROOT)
 
 
+def load_from(path: str, kind: str):
+    with open(path, encoding="utf-8") as fh:
+        rows = json.load(fh)
+    return ([NeutrinoEvent.from_dict(row) for row in rows], kind,
+            os.path.relpath(path, ROOT))
+
+
 def record_time(record: SignalRecord) -> dt.datetime | None:
     """The record's start time, if the product carries one.
 
@@ -276,6 +283,9 @@ def write_report(ledger: dict) -> None:
         "",
         "## Worked example, hypothetical geometry",
         "",
+        f"- catalog: {ledger['demo'].get('catalog', {}).get('kind', 'unknown')} "
+        f"({ledger['demo'].get('catalog', {}).get('path', '?')}), used only for "
+        "this example",
         f"- radio position: RA {DEMO['ra_deg']:.2f} deg, Dec {DEMO['dec_deg']:.2f} deg "
         "(**invented to sit inside the synthetic cone**)",
         f"- radio time: {DEMO['time_utc'].isoformat()}, "
@@ -319,10 +329,15 @@ def main() -> int:
                             encoding="utf-8"))
     records = [SignalRecord.from_dict(row) for row in payload["records"]]
     events, kind, path = load_catalog()
+    demo_events, demo_kind, demo_path = events, kind, path
+    if kind == "real" and os.path.exists(SYNTHETIC_CATALOG):
+        demo_events, demo_kind, demo_path = load_from(SYNTHETIC_CATALOG,
+                                                     "synthetic")
 
     rows = crossmatch_records(records, events)
-    demo = demo_crossmatch(records, events)
-    refusals = restoration_refusals(records, events)
+    demo = demo_crossmatch(records, demo_events)
+    demo["catalog"] = {"kind": demo_kind, "path": demo_path}
+    refusals = restoration_refusals(records, demo_events)
 
     ledger = {
         "catalog": {
