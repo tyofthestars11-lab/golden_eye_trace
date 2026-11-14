@@ -183,6 +183,26 @@ records the refusals (7 of 7) in `results/neutrino_crossmatch.json`; and the
 OMNI gate `neutrino_counterpart` is not required by any disposition, so a
 coincidence can never be the reason for one.
 
+## 14. A date treated as a clock
+
+The survey product is named by day and carries no UTC start, so any "coincidence
+with a neutrino" computed from it has a window of 24 hours or an unbounded one,
+depending on how generous the reader is. Both are wrong in the same direction:
+they manufacture a coincidence rate out of the filing convention. In a 4.68 deg
+cone at 100 alerts/yr, a 24 h window carries a chance probability of 4.6e-4 -
+about 300 times the survey's own 256 s integration - so substituting the date for
+a timestamp buys a coincidence with a box nobody measured.
+
+**Tell:** a crossmatch table whose window is "the observation" or "the day the
+file is named after", or a `COINCIDENT` row next to a record that has no start
+time. **Fix:** `seti_search/multimessenger.py` grades every record as `MISSING`,
+`UTC_START` or `FULL`, never `PARTIAL` for a date; `assess` prices the 24 h
+substitution in the reason string; `require_testable` refuses to proceed; and
+`enforce` raises `MultimessengerNotTestable` if a coincidence is ever reported
+for a record the gate called `NOT TESTABLE`. The OMNI gate
+`neutrino_counterpart` reads the same verdict, so the table and the document
+cannot disagree.
+
 ## Checklist before believing a result
 
 1. Does any single number move by more than 2× when the noise reference changes?

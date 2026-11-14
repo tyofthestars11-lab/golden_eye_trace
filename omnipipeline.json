@@ -93,10 +93,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "UNINFORMATIVE: the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle",
+            "evidence": "radio_time_status=MISSING: no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
-            "status": "UNTESTABLE"
+            "status": "NOT RUN"
           }
         ],
         "permitted": "UNRESOLVED"
@@ -227,10 +227,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "UNINFORMATIVE: the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle",
+            "evidence": "radio_time_status=MISSING: no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
-            "status": "UNTESTABLE"
+            "status": "NOT RUN"
           }
         ],
         "permitted": "NULL RESULT"
@@ -359,10 +359,10 @@
             "status": "FAIL"
           },
           {
-            "evidence": "UNINFORMATIVE: the radio record has no pointing: a single-beam product with no WCS cannot be crossmatched in angle",
+            "evidence": "radio_time_status=MISSING: no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
             "id": "neutrino_counterpart",
             "layer": "confirmation",
-            "status": "UNTESTABLE"
+            "status": "NOT RUN"
           }
         ],
         "permitted": "UNRESOLVED"

@@ -206,6 +206,13 @@ def gate_neutrino(record: SignalRecord) -> Gate:
                     evidence=("the record is excluded from discovery claims, so "
                               "the lane does not run on it: a coincidence cannot "
                               "restore an artifact"))
+    if row.get("multimessenger_status") == "NOT TESTABLE":
+        reasons = row.get("gate_reasons") or []
+        return Gate(id="neutrino_counterpart", layer="confirmation",
+                    status="NOT RUN",
+                    evidence=(f"radio_time_status={row.get('radio_time_status')}: "
+                              + (reasons[0] if reasons
+                                 else "the query cannot be run")))
     if status == "COINCIDENT":
         p = row.get("chance_probability")
         ok = p is not None and p < 0.01

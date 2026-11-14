@@ -31,9 +31,9 @@ The measured cost of that loss, as drift rises past the window's limit, is in DR
 
 | date | MHz | window | detected | alias_signature | mask_dependence | noise_reference | nonlinear_beats_control | phi_lock | astrophysical_explanation | off_source | independent_telescope | barycentric | neutrino_counterpart | repeat | claimed | permitted |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 20240207 | 53.7833 | . | . | F | - | . | F | F | F | U | U | U | U | F | UNRESOLVED | UNRESOLVED |
-| 20240322 | 47.2416 | . | F | F | - | . | F | F | F | U | U | U | U | F | UNRESOLVED | NULL RESULT |
-| 20240324 | 47.3143 | . | . | F | - | . | F | F | F | U | U | U | U | F | UNRESOLVED | UNRESOLVED |
+| 20240207 | 53.7833 | . | . | F | - | . | F | F | F | U | U | U | - | F | UNRESOLVED | UNRESOLVED |
+| 20240322 | 47.2416 | . | F | F | - | . | F | F | F | U | U | U | - | F | UNRESOLVED | NULL RESULT |
+| 20240324 | 47.3143 | . | . | F | - | . | F | F | F | U | U | U | - | F | UNRESOLVED | UNRESOLVED |
 | 20240325 | 45.9843 | . | . | F | . | . | F | F | F | U | U | U | - | F | MASK-MANUFACTURED SIGNAL | MASK-MANUFACTURED SIGNAL |
 | 20240325 | 46.9828 | . | . | F | . | . | F | F | F | U | U | U | - | F | MASK-MANUFACTURED SIGNAL | MASK-MANUFACTURED SIGNAL |
 | 20240325 | 47.9380 | . | . | F | . | . | F | F | F | U | U | U | - | F | MASK-MANUFACTURED SIGNAL | MASK-MANUFACTURED SIGNAL |

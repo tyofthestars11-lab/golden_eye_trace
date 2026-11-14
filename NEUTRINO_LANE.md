@@ -51,6 +51,30 @@ the rule is exercised rather than promised.
 | 20240920 | 46.5890 | MASK-MANUFACTURED SIGNAL | EXCLUDED_FROM_CROSSMATCH | no null available | the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it |
 | 20240920 | 47.5358 | MASK-MANUFACTURED SIGNAL | EXCLUDED_FROM_CROSSMATCH | no null available | the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it |
 
+## The radio-time gate
+
+A coincidence needs a clock and a cone. Each record is graded against
+both, and a coincidence may not be reported for one that is not
+testable - `enforce` raises instead of writing the row.
+
+| date | MHz | radio_time_status | multimessenger_status | window |
+| --- | --- | --- | --- | --- |
+| 20240207 | 53.7833 | MISSING | NOT TESTABLE | - |
+| 20240322 | 47.2416 | MISSING | NOT TESTABLE | - |
+| 20240324 | 47.3143 | MISSING | NOT TESTABLE | - |
+| 20240325 | 45.9843 | MISSING | NOT TESTABLE | - |
+| 20240325 | 46.9828 | MISSING | NOT TESTABLE | - |
+| 20240325 | 47.9380 | MISSING | NOT TESTABLE | - |
+| 20240325 | 48.9937 | MISSING | NOT TESTABLE | - |
+| 20240920 | 45.4206 | MISSING | NOT TESTABLE | - |
+| 20240920 | 46.5890 | MISSING | NOT TESTABLE | - |
+| 20240920 | 47.5358 | MISSING | NOT TESTABLE | - |
+
+**0 of 10 records are testable.** The verdict is `MISSING` rather than `PARTIAL` because a
+date is not a clock, and a 24 h window is not free: it carries ~4.6e-4
+chance probability in a 4.68 deg cone, about 300x the 256 s integration
+the survey actually used.
+
 ## What the answer currently is
 
 **UNINFORMATIVE, and the reason is the product, not the sky.** These

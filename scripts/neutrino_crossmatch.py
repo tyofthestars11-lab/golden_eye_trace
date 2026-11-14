@@ -38,6 +38,7 @@ from seti_search.neutrino import (  # noqa: E402
     guard_support,
     match_catalog,
 )
+from seti_search.multimessenger import assess, enforce  # noqa: E402
 from seti_search.signal_record import INVALID_CANDIDATE, SignalRecord  # noqa: E402
 
 REAL_CATALOG = os.path.join(ROOT, "data", "neutrino_events.json")
@@ -109,33 +110,42 @@ def record_position(record: SignalRecord) -> tuple[float | None, float | None]:
 def crossmatch_records(records, events) -> list[dict]:
     rows = []
     for record in records:
+        gate = assess(record)
+        base = {
+            "observation_date": record.observation_date,
+            "freq_mhz": round(record.frequency_hz / 1e6, 4),
+            "radio_time_status": gate.radio_time_status,
+            "multimessenger_status": gate.multimessenger_status,
+            "window_s": gate.window_s,
+            "pointing_status": gate.pointing_status,
+            "gate_reasons": list(gate.reasons),
+        }
+        if record.disposition in INVALID_CANDIDATE:
+            rows.append({**base,
+                         "disposition": record.disposition,
+                         "status": "EXCLUDED_FROM_CROSSMATCH",
+                         "note": ("the radio event was manufactured by the "
+                                  "excision mask; a neutrino coincidence is not "
+                                  "evidence about an artifact, so the lane does "
+                                  "not run on it")})
+            continue
         ra, dec = record_position(record)
         stamp = record_time(record)
-        if record.disposition in INVALID_CANDIDATE:
-            rows.append({
-                "observation_date": record.observation_date,
-                "freq_mhz": round(record.frequency_hz / 1e6, 4),
-                "disposition": record.disposition,
-                "status": "EXCLUDED_FROM_CROSSMATCH",
-                "note": ("the radio event was manufactured by the excision mask; "
-                         "a neutrino coincidence is not evidence about an "
-                         "artifact, so the lane does not run on it"),
-            })
-            continue
         result = match_catalog(events,
                                ra_deg=ra, dec_deg=dec, time_utc=stamp,
                                radio_time_uncertainty_s=record.duration_s)
-        rows.append({
-            "observation_date": record.observation_date,
-            "freq_mhz": round(record.frequency_hz / 1e6, 4),
-            "disposition": record.disposition,
-            "status": result.status,
+        # strict: a coincidence reported for a record with no clock stops the run
+        enforce(gate, result,
+                what=f"{record.observation_date} "
+                     f"{record.frequency_hz / 1e6:.4f} MHz")
+        rows.append({**base,
+                     "disposition": record.disposition,
+                     "status": result.status,
             "separation_deg": result.separation_deg,
             "dt_s": result.dt_s,
             "chance_probability": result.chance_probability,
-            "limits": list(result.limits),
-            "note": result.note,
-        })
+                     "limits": list(result.limits),
+                     "note": result.note})
     return rows
 
 
@@ -266,6 +276,29 @@ def write_report(ledger: dict) -> None:
             f"{fmt_p(row.get('chance_probability'))} | {limits} |")
     lines += [
         "",
+        "## The radio-time gate",
+        "",
+        "A coincidence needs a clock and a cone. Each record is graded against",
+        "both, and a coincidence may not be reported for one that is not",
+        "testable - `enforce` raises instead of writing the row.",
+        "",
+        "| date | MHz | radio_time_status | multimessenger_status | window |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for row in rows:
+        window = "-" if row["window_s"] is None else f"{row['window_s']:.0f} s"
+        lines.append(f"| {row['observation_date']} | {row['freq_mhz']:.4f} | "
+                     f"{row['radio_time_status']} | "
+                     f"{row['multimessenger_status']} | {window} |")
+    summary = ledger.get("summary", {})
+    lines += [
+        "",
+        f"**{summary.get('n_testable', 0)} of {summary.get('n_records', 0)} records "
+        "are testable.** The verdict is `MISSING` rather than `PARTIAL` because a",
+        "date is not a clock, and a 24 h window is not free: it carries ~4.6e-4",
+        "chance probability in a 4.68 deg cone, about 300x the 256 s integration",
+        "the survey actually used.",
+        "",
         "## What the answer currently is",
         "",
         "**UNINFORMATIVE, and the reason is the product, not the sky.** These",
@@ -335,6 +368,18 @@ def main() -> int:
                                                      "synthetic")
 
     rows = crossmatch_records(records, events)
+    summary = {
+        "n_records": len(rows),
+        "n_testable": sum(1 for r in rows
+                          if r["multimessenger_status"] != "NOT TESTABLE"),
+        "radio_time_status": {status: sum(1 for r in rows
+                                         if r["radio_time_status"] == status)
+                              for status in ("MISSING", "UTC_START", "FULL")},
+        "multimessenger_status": {
+            status: sum(1 for r in rows
+                        if r["multimessenger_status"] == status)
+            for status in ("NOT TESTABLE", "TESTABLE", "TESTED")},
+    }
     demo = demo_crossmatch(records, demo_events)
     demo["catalog"] = {"kind": demo_kind, "path": demo_path}
     refusals = restoration_refusals(records, demo_events)
@@ -349,6 +394,7 @@ def main() -> int:
             "synthetic": any(e.synthetic for e in events),
         },
         "records": rows,
+        "summary": summary,
         "demo": demo,
         "refusals": refusals,
         "absence_is_informative": False,

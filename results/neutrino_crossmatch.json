@@ -17,6 +17,14 @@
     {
       "observation_date": "20240207",
       "freq_mhz": 53.7833,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "UNRESOLVED",
       "status": "UNINFORMATIVE",
       "separation_deg": null,
@@ -30,6 +38,14 @@
     {
       "observation_date": "20240322",
       "freq_mhz": 47.2416,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "UNRESOLVED",
       "status": "UNINFORMATIVE",
       "separation_deg": null,
@@ -43,6 +59,14 @@
     {
       "observation_date": "20240324",
       "freq_mhz": 47.3143,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "UNRESOLVED",
       "status": "UNINFORMATIVE",
       "separation_deg": null,
@@ -56,6 +80,14 @@
     {
       "observation_date": "20240325",
       "freq_mhz": 45.9843,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
@@ -63,6 +95,14 @@
     {
       "observation_date": "20240325",
       "freq_mhz": 46.9828,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
@@ -70,6 +110,14 @@
     {
       "observation_date": "20240325",
       "freq_mhz": 47.938,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
@@ -77,6 +125,14 @@
     {
       "observation_date": "20240325",
       "freq_mhz": 48.9937,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
@@ -84,6 +140,14 @@
     {
       "observation_date": "20240920",
       "freq_mhz": 45.4206,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
@@ -91,6 +155,14 @@
     {
       "observation_date": "20240920",
       "freq_mhz": 46.589,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
@@ -98,11 +170,33 @@
     {
       "observation_date": "20240920",
       "freq_mhz": 47.5358,
+      "radio_time_status": "MISSING",
+      "multimessenger_status": "NOT TESTABLE",
+      "window_s": null,
+      "pointing_status": "MISSING",
+      "gate_reasons": [
+        "no timezone-aware start_time_utc in the record metadata: the files are named by date, and a date is not a clock",
+        "substituting a 24 h window would carry a chance probability of 4.56e-04 in a 4.68 deg cone at 100 alerts/yr, about 338x the survey's own 256 s integration"
+      ],
       "disposition": "MASK-MANUFACTURED SIGNAL",
       "status": "EXCLUDED_FROM_CROSSMATCH",
       "note": "the radio event was manufactured by the excision mask; a neutrino coincidence is not evidence about an artifact, so the lane does not run on it"
     }
   ],
+  "summary": {
+    "n_records": 10,
+    "n_testable": 0,
+    "radio_time_status": {
+      "MISSING": 10,
+      "UTC_START": 0,
+      "FULL": 0
+    },
+    "multimessenger_status": {
+      "NOT TESTABLE": 10,
+      "TESTABLE": 0,
+      "TESTED": 0
+    }
+  },
   "demo": {
     "synthetic_geometry": true,
     "note": "HYPOTHETICAL geometry, chosen to be inside the synthetic cone",
