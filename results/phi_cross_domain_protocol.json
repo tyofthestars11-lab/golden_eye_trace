@@ -1,0 +1,467 @@
+{
+  "prediction": {
+    "target_rung_interval": 0.38196601125010515,
+    "tolerance": 0.01,
+    "phi": 1.618033988749895,
+    "bases": {
+      "phi": 1.618033988749895,
+      "base_2": 2.0,
+      "base_e": 2.718281828459045,
+      "base_10": 10.0,
+      "base_sqrt2": 1.4142135623730951
+    }
+  },
+  "permutations": 10000,
+  "seed": 20261114,
+  "series": [
+    {
+      "name": "survey_cells",
+      "domain": "radio astronomy",
+      "unit": "MHz (rest frequency)",
+      "n": 10,
+      "values": [
+        53.7832964055797,
+        47.241613525073866,
+        47.3142574836376,
+        45.98428447741178,
+        46.982763337893296,
+        47.93796169630643,
+        48.99370725034199,
+        45.42063886601793,
+        46.58895598498063,
+        47.535772913816686
+      ],
+      "provenance": "signal_records.json, ten cells from the 96-channel survey, ordered by observation date then frequency",
+      "normalisation": "none needed: only within-series ratios are taken",
+      "nested_with": null,
+      "synthetic": false,
+      "labels": [
+        "UNRESOLVED",
+        "UNRESOLVED",
+        "UNRESOLVED",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL"
+      ]
+    },
+    {
+      "name": "group_20240325",
+      "domain": "radio astronomy",
+      "unit": "MHz (rest frequency)",
+      "n": 4,
+      "values": [
+        45.98428447741178,
+        46.982763337893296,
+        47.93796169630643,
+        48.99370725034199
+      ],
+      "provenance": "the four cells of 20240325, all MASK-MANUFACTURED SIGNAL: kept visible as a diagnostic, never as a candidate",
+      "normalisation": "none needed: only within-series ratios are taken",
+      "nested_with": "survey_cells",
+      "synthetic": false,
+      "labels": [
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL"
+      ]
+    },
+    {
+      "name": "trio_20240920",
+      "domain": "radio astronomy",
+      "unit": "MHz (rest frequency)",
+      "n": 3,
+      "values": [
+        45.42063886601793,
+        46.58895598498063,
+        47.535772913816686
+      ],
+      "provenance": "the three cells of 20240920, all MASK-MANUFACTURED SIGNAL",
+      "normalisation": "none needed: only within-series ratios are taken",
+      "nested_with": "survey_cells",
+      "synthetic": false,
+      "labels": [
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL",
+        "MASK-MANUFACTURED SIGNAL"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "series": "survey_cells",
+      "base": "phi",
+      "hits": 0,
+      "pairs": 9,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "base": "base_2",
+      "hits": 0,
+      "pairs": 9,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "base": "base_e",
+      "hits": 0,
+      "pairs": 9,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "base": "base_10",
+      "hits": 0,
+      "pairs": 9,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "base": "base_sqrt2",
+      "hits": 0,
+      "pairs": 9,
+      "p_value": 1.0,
+      "null_mean_hits": 0.1999,
+      "null_max_hits": 1,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "group_20240325",
+      "base": "phi",
+      "hits": 0,
+      "pairs": 3,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "group_20240325",
+      "base": "base_2",
+      "hits": 0,
+      "pairs": 3,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "group_20240325",
+      "base": "base_e",
+      "hits": 0,
+      "pairs": 3,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "group_20240325",
+      "base": "base_10",
+      "hits": 0,
+      "pairs": 3,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "group_20240325",
+      "base": "base_sqrt2",
+      "hits": 0,
+      "pairs": 3,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "trio_20240920",
+      "base": "phi",
+      "hits": 0,
+      "pairs": 2,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "trio_20240920",
+      "base": "base_2",
+      "hits": 0,
+      "pairs": 2,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "trio_20240920",
+      "base": "base_e",
+      "hits": 0,
+      "pairs": 2,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "trio_20240920",
+      "base": "base_10",
+      "hits": 0,
+      "pairs": 2,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    },
+    {
+      "series": "trio_20240920",
+      "base": "base_sqrt2",
+      "hits": 0,
+      "pairs": 2,
+      "p_value": 1.0,
+      "null_mean_hits": 0.0,
+      "null_max_hits": 0,
+      "bh_adjusted_p_value": 1.0
+    }
+  ],
+  "holdout": [
+    {
+      "series": "survey_cells",
+      "predictor": "phi",
+      "predicted_ratio": 1.201783329306916,
+      "median_rung_error": 0.34014053587133797,
+      "hit_rate": 0.0,
+      "n_test": 5
+    },
+    {
+      "series": "survey_cells",
+      "predictor": "base_2",
+      "predicted_ratio": 1.303116448612589,
+      "median_rung_error": 0.3529290131846396,
+      "hit_rate": 0.0,
+      "n_test": 5
+    },
+    {
+      "series": "survey_cells",
+      "predictor": "base_e",
+      "predicted_ratio": 1.465162285252178,
+      "median_rung_error": 0.361839097909103,
+      "hit_rate": 0.0,
+      "n_test": 5
+    },
+    {
+      "series": "survey_cells",
+      "predictor": "base_10",
+      "predicted_ratio": 2.409716832074905,
+      "median_rung_error": 0.373225003848363,
+      "hit_rate": 0.0,
+      "n_test": 5
+    },
+    {
+      "series": "survey_cells",
+      "predictor": "base_sqrt2",
+      "predicted_ratio": 1.1415412601446298,
+      "median_rung_error": 0.32389201511917404,
+      "hit_rate": 0.0,
+      "n_test": 5
+    },
+    {
+      "series": "survey_cells",
+      "predictor": "fitted_constant",
+      "predicted_ratio": 0.9867141807871798,
+      "median_rung_error": 0.07306350252400101,
+      "hit_rate": 0.0,
+      "n_test": 5
+    },
+    {
+      "series": "group_20240325",
+      "predictor": "phi",
+      "predicted_ratio": 1.201783329306916,
+      "median_rung_error": 0.3366966413551892,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "group_20240325",
+      "predictor": "base_2",
+      "predicted_ratio": 1.303116448612589,
+      "median_rung_error": 0.35053811726540657,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "group_20240325",
+      "predictor": "base_e",
+      "predicted_ratio": 1.465162285252178,
+      "median_rung_error": 0.36018185514367423,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "group_20240325",
+      "predictor": "base_10",
+      "predicted_ratio": 2.409716832074905,
+      "median_rung_error": 0.3725052724601632,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "group_20240325",
+      "predictor": "base_sqrt2",
+      "predicted_ratio": 1.1415412601446298,
+      "median_rung_error": 0.3191102232807081,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "group_20240325",
+      "predictor": "fitted_constant",
+      "predicted_ratio": 1.0210221529103327,
+      "median_rung_error": 0.002036358710537583,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "trio_20240920",
+      "predictor": "phi",
+      "predicted_ratio": 1.201783329306916,
+      "median_rung_error": 0.3401569294553656,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "trio_20240920",
+      "predictor": "base_2",
+      "predicted_ratio": 1.303116448612589,
+      "median_rung_error": 0.3529403942977861,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "trio_20240920",
+      "predictor": "base_e",
+      "predicted_ratio": 1.465162285252178,
+      "median_rung_error": 0.3618469866955922,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "trio_20240920",
+      "predictor": "base_10",
+      "predicted_ratio": 2.409716832074905,
+      "median_rung_error": 0.37322842990480415,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "trio_20240920",
+      "predictor": "base_sqrt2",
+      "predicted_ratio": 1.1415412601446298,
+      "median_rung_error": 0.32391477734546714,
+      "hit_rate": 0.0,
+      "n_test": 1
+    },
+    {
+      "series": "trio_20240920",
+      "predictor": "fitted_constant",
+      "predicted_ratio": 1.0257221639354084,
+      "median_rung_error": 0.010967914467040022,
+      "hit_rate": 0.0,
+      "n_test": 1
+    }
+  ],
+  "power": [
+    {
+      "series": "survey_cells",
+      "fraction": 0.0,
+      "detection_rate": 0.0
+    },
+    {
+      "series": "survey_cells",
+      "fraction": 0.25,
+      "detection_rate": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "fraction": 0.5,
+      "detection_rate": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "fraction": 0.75,
+      "detection_rate": 1.0
+    },
+    {
+      "series": "survey_cells",
+      "fraction": 1.0,
+      "detection_rate": 1.0
+    },
+    {
+      "series": "group_20240325",
+      "fraction": 0.0,
+      "detection_rate": 0.0
+    },
+    {
+      "series": "group_20240325",
+      "fraction": 0.25,
+      "detection_rate": 0.0
+    },
+    {
+      "series": "group_20240325",
+      "fraction": 0.5,
+      "detection_rate": 0.005
+    },
+    {
+      "series": "group_20240325",
+      "fraction": 0.75,
+      "detection_rate": 0.005
+    },
+    {
+      "series": "group_20240325",
+      "fraction": 1.0,
+      "detection_rate": 0.82
+    }
+  ],
+  "calibration": [
+    {
+      "series": "exponential drift 1.004 (survey_cells length)",
+      "drift_rungs": 0.00829576718951784,
+      "hits": 0,
+      "pairs": 9,
+      "p_value": 1.0,
+      "note": "a series with exact geometric structure but a different interval: 0 hits is the correct answer and the test gives it"
+    },
+    {
+      "series": "exponential drift 1.004 (group_20240325 length)",
+      "drift_rungs": 0.00829576718951784,
+      "hits": 0,
+      "pairs": 3,
+      "p_value": 1.0,
+      "note": "a series with exact geometric structure but a different interval: 0 hits is the correct answer and the test gives it"
+    }
+  ],
+  "cross_domain": {
+    "status": "NOT RUNNABLE",
+    "reason": "one domain available; the other two series are subsets of the first, so a Fisher combination would not be a cross-domain statistic"
+  },
+  "rule": "phi may only detract from a candidate, never support one"
+}
