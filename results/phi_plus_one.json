@@ -1,0 +1,439 @@
+{
+  "phi": 1.618033988749895,
+  "contraction": 0.38196601125010515,
+  "derivative_at_phi": -0.38196601125010515,
+  "steps_per_decade": 2.392485983390833,
+  "orbit_trials": [
+    {
+      "start": 0.5,
+      "first_residual": 1.118033988749895,
+      "residual_after_5": 0.01832964761374134,
+      "residual_after_10": 0.00014780988810625395,
+      "contraction": 0.3819659630774521,
+      "settled": true
+    },
+    {
+      "start": 1.0,
+      "first_residual": 0.6180339887498949,
+      "residual_after_5": 0.0069660112501050975,
+      "residual_after_10": 5.6460660007306984e-05,
+      "contraction": 0.38196588313157837,
+      "settled": true
+    },
+    {
+      "start": 2.0,
+      "first_residual": 0.3819660112501051,
+      "residual_after_5": 0.0026493733652794837,
+      "residual_after_10": 2.15668056606777e-05,
+      "contraction": 0.3819656810697877,
+      "settled": true
+    },
+    {
+      "start": 6.485074627,
+      "first_residual": 4.8670406381157765,
+      "residual_after_5": 0.012388317799821191,
+      "residual_after_10": 0.00010129042337769789,
+      "contraction": 0.3819654786231914,
+      "settled": true
+    },
+    {
+      "start": 1.889952153,
+      "first_residual": 0.2719181643601529,
+      "residual_after_5": 0.0019694230312170546,
+      "residual_after_10": 1.602685830448536e-05,
+      "contraction": 0.3819661910972954,
+      "settled": true
+    }
+  ],
+  "rung_tolerance": 0.01,
+  "window": [
+    {
+      "freq_mhz": 13.4,
+      "width_mhz": 0.12896526684494386
+    },
+    {
+      "freq_mhz": 45.98,
+      "width_mhz": 0.4425241022037701
+    },
+    {
+      "freq_mhz": 47.24,
+      "width_mhz": 0.45465068699665284
+    },
+    {
+      "freq_mhz": 53.78,
+      "width_mhz": 0.5175934366359015
+    },
+    {
+      "freq_mhz": 86.9,
+      "width_mhz": 0.8363493797631061
+    }
+  ],
+  "window_spread": 6.485074626865671,
+  "ladder": [
+    {
+      "label": "phi",
+      "value": 1.618033988749895,
+      "partials": [
+        1,
+        1
+      ],
+      "elided": false,
+      "depth": 1,
+      "unbounded": true,
+      "excess": 0,
+      "effective_depth": Infinity,
+      "note": "the fixed point: add one, never carried",
+      "synthetic": false
+    },
+    {
+      "label": "1/phi = phi - 1",
+      "value": 0.6180339887498948,
+      "partials": [
+        0,
+        1
+      ],
+      "elided": false,
+      "depth": 1,
+      "unbounded": true,
+      "excess": 0,
+      "effective_depth": 0.4999999999999999,
+      "note": "subtracting 1 is exact",
+      "synthetic": false
+    },
+    {
+      "label": "phi^2 = phi + 1",
+      "value": 2.618033988749895,
+      "partials": [
+        2,
+        1
+      ],
+      "elided": false,
+      "depth": 1,
+      "unbounded": true,
+      "excess": 0,
+      "effective_depth": 0.4999999999999999,
+      "note": "adding 1 is exact",
+      "synthetic": false
+    },
+    {
+      "label": "F9/F8",
+      "value": 1.619047619047619,
+      "partials": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "elided": false,
+      "depth": 5,
+      "unbounded": false,
+      "excess": 1,
+      "effective_depth": 7.663391129619809,
+      "note": "exact convergent of phi",
+      "synthetic": false
+    },
+    {
+      "label": "F13/F12",
+      "value": 1.6180555555555556,
+      "partials": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "elided": true,
+      "depth": 9,
+      "unbounded": false,
+      "excess": 1,
+      "effective_depth": 11.663852009418118,
+      "note": "exact convergent of phi",
+      "synthetic": false
+    },
+    {
+      "label": "F17/F16",
+      "value": 1.618034447821682,
+      "partials": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "elided": true,
+      "depth": 13,
+      "unbounded": false,
+      "excess": 1,
+      "effective_depth": 15.663861817421862,
+      "note": "exact convergent of phi",
+      "synthetic": false
+    }
+  ],
+  "measured": [
+    {
+      "label": "channel 317->318",
+      "value": 1.003154574132492,
+      "partials": [
+        1,
+        317
+      ],
+      "elided": false,
+      "depth": 0,
+      "unbounded": false,
+      "excess": 316,
+      "effective_depth": 1.0053170754201666,
+      "note": "instrument grid: exactly 1 + 1/k",
+      "synthetic": false
+    },
+    {
+      "label": "channel 365->366",
+      "value": 1.0027397260273974,
+      "partials": [
+        1,
+        365
+      ],
+      "elided": false,
+      "depth": 0,
+      "unbounded": false,
+      "excess": 364,
+      "effective_depth": 1.004616287824028,
+      "note": "instrument grid: exactly 1 + 1/k",
+      "synthetic": false
+    },
+    {
+      "label": "channel 412->413",
+      "value": 1.0024271844660195,
+      "partials": [
+        1,
+        412
+      ],
+      "elided": false,
+      "depth": 0,
+      "unbounded": false,
+      "excess": 411,
+      "effective_depth": 1.0040886349017837,
+      "note": "instrument grid: exactly 1 + 1/k",
+      "synthetic": false
+    },
+    {
+      "label": "1 MHz comb at 45.98 MHz",
+      "value": 1.0217485863418878,
+      "partials": [
+        1,
+        45,
+        1,
+        49
+      ],
+      "elided": false,
+      "depth": 0,
+      "unbounded": false,
+      "excess": 92,
+      "effective_depth": 1.0372227328062944,
+      "note": "arithmetic comb line spacing",
+      "synthetic": false
+    },
+    {
+      "label": "1 MHz comb at 53.78 MHz",
+      "value": 1.018594272963927,
+      "partials": [
+        1,
+        53,
+        1,
+        3,
+        1,
+        1,
+        5
+      ],
+      "elided": false,
+      "depth": 0,
+      "unbounded": false,
+      "excess": 58,
+      "effective_depth": 1.0317407432739045,
+      "note": "arithmetic comb line spacing",
+      "synthetic": false
+    },
+    {
+      "label": "band 13.4 -> 86.9 MHz",
+      "value": 6.485074626865671,
+      "partials": [
+        6,
+        2,
+        16,
+        4
+      ],
+      "elided": false,
+      "depth": 0,
+      "unbounded": false,
+      "excess": 19,
+      "effective_depth": -1.1442718135057395,
+      "note": "the full survey span",
+      "synthetic": false
+    }
+  ],
+  "depth_sweep": [
+    {
+      "jitter": 0.1,
+      "value": 1.7798373876248845,
+      "depth": 1,
+      "effective_depth": 2.392485983390832
+    },
+    {
+      "jitter": 0.01,
+      "value": 1.6342143286373938,
+      "depth": 3,
+      "effective_depth": 4.784971966781665
+    },
+    {
+      "jitter": 0.001,
+      "value": 1.6196520227386446,
+      "depth": 5,
+      "effective_depth": 7.177457950172613
+    },
+    {
+      "jitter": 0.0001,
+      "value": 1.61819579214877,
+      "depth": 7,
+      "effective_depth": 9.569943933563447
+    },
+    {
+      "jitter": 1e-05,
+      "value": 1.6180501690897826,
+      "depth": 11,
+      "effective_depth": 11.962429916947357
+    },
+    {
+      "jitter": 1e-06,
+      "value": 1.6180356067838835,
+      "depth": 13,
+      "effective_depth": 14.354915900430475
+    },
+    {
+      "jitter": 1e-08,
+      "value": 1.6180340049302346,
+      "depth": 17,
+      "effective_depth": 19.13988787344142
+    },
+    {
+      "jitter": 1e-10,
+      "value": 1.6180339889116984,
+      "depth": 23,
+      "effective_depth": 23.924859747937493
+    }
+  ],
+  "convergent_decay": [
+    {
+      "p": 2,
+      "q": 1,
+      "error": 0.3819660112501051,
+      "ratio": 0.6180339887498947
+    },
+    {
+      "p": 3,
+      "q": 2,
+      "error": 0.1180339887498949,
+      "ratio": 0.3090169943749476
+    },
+    {
+      "p": 5,
+      "q": 3,
+      "error": 0.04863267791677184,
+      "ratio": 0.4120226591665965
+    },
+    {
+      "p": 8,
+      "q": 5,
+      "error": 0.018033988749894814,
+      "ratio": 0.37082039324993604
+    },
+    {
+      "p": 13,
+      "q": 8,
+      "error": 0.0069660112501050975,
+      "ratio": 0.386271242968682
+    },
+    {
+      "p": 21,
+      "q": 13,
+      "error": 0.0026493733652794837,
+      "ratio": 0.3803286084614796
+    },
+    {
+      "p": 34,
+      "q": 21,
+      "error": 0.0010136302977241662,
+      "ratio": 0.38259246922610995
+    },
+    {
+      "p": 55,
+      "q": 34,
+      "error": 0.00038692992636546464,
+      "ratio": 0.38172687540438716
+    },
+    {
+      "p": 89,
+      "q": 55,
+      "error": 0.00014782943192326314,
+      "ratio": 0.3820573748633614
+    },
+    {
+      "p": 144,
+      "q": 89,
+      "error": 5.6460660007306984e-05,
+      "ratio": 0.3819311166440468
+    },
+    {
+      "p": 233,
+      "q": 144,
+      "error": 2.15668056606777e-05,
+      "ratio": 0.38197934026783575
+    },
+    {
+      "p": 377,
+      "q": 233,
+      "error": 8.237676933475768e-06,
+      "ratio": 0.3819609200863413
+    },
+    {
+      "p": 610,
+      "q": 377,
+      "error": 3.1465286196574738e-06,
+      "ratio": 0.3819679559015968
+    }
+  ],
+  "summary": {
+    "grid_depths": [
+      0,
+      0,
+      0
+    ],
+    "grid_effective_depth": [
+      1.0053170754201666,
+      1.004616287824028,
+      1.0040886349017837
+    ],
+    "grid_excess": [
+      316,
+      364,
+      411
+    ],
+    "measured_effective_max": 1.0372227328062944,
+    "phi_unbounded": [
+      true,
+      true,
+      true
+    ]
+  }
+}

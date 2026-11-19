@@ -87,6 +87,7 @@ python3 scripts/phi_cross_domain_test.py \
   --out results/phi_cross_domain --permutations 100000
 python3 scripts/phi_cross_domain_report.py && python3 scripts/super_tetrahedron.py
 python3 scripts/proportion_not_binary.py
+python3 scripts/phi_plus_one.py
 python3 -m unittest discover -s tests -q
 ```
 
