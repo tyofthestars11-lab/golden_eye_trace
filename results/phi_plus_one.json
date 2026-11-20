@@ -73,6 +73,7 @@
     {
       "label": "phi",
       "value": 1.618033988749895,
+      "printed": null,
       "partials": [
         1,
         1
@@ -80,6 +81,8 @@
       "elided": false,
       "depth": 1,
       "unbounded": true,
+      "levels": 2,
+      "empty_recursion": false,
       "excess": 0,
       "effective_depth": Infinity,
       "note": "the fixed point: add one, never carried",
@@ -88,6 +91,7 @@
     {
       "label": "1/phi = phi - 1",
       "value": 0.6180339887498948,
+      "printed": null,
       "partials": [
         0,
         1
@@ -95,6 +99,8 @@
       "elided": false,
       "depth": 1,
       "unbounded": true,
+      "levels": 2,
+      "empty_recursion": false,
       "excess": 0,
       "effective_depth": 0.4999999999999999,
       "note": "subtracting 1 is exact",
@@ -103,6 +109,7 @@
     {
       "label": "phi^2 = phi + 1",
       "value": 2.618033988749895,
+      "printed": null,
       "partials": [
         2,
         1
@@ -110,6 +117,8 @@
       "elided": false,
       "depth": 1,
       "unbounded": true,
+      "levels": 2,
+      "empty_recursion": false,
       "excess": 0,
       "effective_depth": 0.4999999999999999,
       "note": "adding 1 is exact",
@@ -118,6 +127,7 @@
     {
       "label": "F9/F8",
       "value": 1.619047619047619,
+      "printed": null,
       "partials": [
         1,
         1,
@@ -130,6 +140,8 @@
       "elided": false,
       "depth": 5,
       "unbounded": false,
+      "levels": 7,
+      "empty_recursion": false,
       "excess": 1,
       "effective_depth": 7.663391129619809,
       "note": "exact convergent of phi",
@@ -138,6 +150,7 @@
     {
       "label": "F13/F12",
       "value": 1.6180555555555556,
+      "printed": null,
       "partials": [
         1,
         1,
@@ -153,6 +166,8 @@
       "elided": true,
       "depth": 9,
       "unbounded": false,
+      "levels": 11,
+      "empty_recursion": false,
       "excess": 1,
       "effective_depth": 11.663852009418118,
       "note": "exact convergent of phi",
@@ -161,6 +176,7 @@
     {
       "label": "F17/F16",
       "value": 1.618034447821682,
+      "printed": null,
       "partials": [
         1,
         1,
@@ -176,16 +192,19 @@
       "elided": true,
       "depth": 13,
       "unbounded": false,
+      "levels": 15,
+      "empty_recursion": false,
       "excess": 1,
       "effective_depth": 15.663861817421862,
       "note": "exact convergent of phi",
       "synthetic": false
     }
   ],
-  "measured": [
+  "control": [
     {
       "label": "channel 317->318",
       "value": 1.003154574132492,
+      "printed": null,
       "partials": [
         1,
         317
@@ -193,6 +212,8 @@
       "elided": false,
       "depth": 0,
       "unbounded": false,
+      "levels": 2,
+      "empty_recursion": false,
       "excess": 316,
       "effective_depth": 1.0053170754201666,
       "note": "instrument grid: exactly 1 + 1/k",
@@ -201,6 +222,7 @@
     {
       "label": "channel 365->366",
       "value": 1.0027397260273974,
+      "printed": null,
       "partials": [
         1,
         365
@@ -208,6 +230,8 @@
       "elided": false,
       "depth": 0,
       "unbounded": false,
+      "levels": 2,
+      "empty_recursion": false,
       "excess": 364,
       "effective_depth": 1.004616287824028,
       "note": "instrument grid: exactly 1 + 1/k",
@@ -216,6 +240,7 @@
     {
       "label": "channel 412->413",
       "value": 1.0024271844660195,
+      "printed": null,
       "partials": [
         1,
         412
@@ -223,6 +248,8 @@
       "elided": false,
       "depth": 0,
       "unbounded": false,
+      "levels": 2,
+      "empty_recursion": false,
       "excess": 411,
       "effective_depth": 1.0040886349017837,
       "note": "instrument grid: exactly 1 + 1/k",
@@ -231,6 +258,7 @@
     {
       "label": "1 MHz comb at 45.98 MHz",
       "value": 1.0217485863418878,
+      "printed": null,
       "partials": [
         1,
         45,
@@ -240,6 +268,8 @@
       "elided": false,
       "depth": 0,
       "unbounded": false,
+      "levels": 4,
+      "empty_recursion": false,
       "excess": 92,
       "effective_depth": 1.0372227328062944,
       "note": "arithmetic comb line spacing",
@@ -248,6 +278,7 @@
     {
       "label": "1 MHz comb at 53.78 MHz",
       "value": 1.018594272963927,
+      "printed": null,
       "partials": [
         1,
         53,
@@ -260,6 +291,8 @@
       "elided": false,
       "depth": 0,
       "unbounded": false,
+      "levels": 7,
+      "empty_recursion": false,
       "excess": 58,
       "effective_depth": 1.0317407432739045,
       "note": "arithmetic comb line spacing",
@@ -268,6 +301,7 @@
     {
       "label": "band 13.4 -> 86.9 MHz",
       "value": 6.485074626865671,
+      "printed": null,
       "partials": [
         6,
         2,
@@ -277,12 +311,286 @@
       "elided": false,
       "depth": 0,
       "unbounded": false,
+      "levels": 4,
+      "empty_recursion": false,
       "excess": 19,
       "effective_depth": -1.1442718135057395,
       "note": "the full survey span",
       "synthetic": false
     }
   ],
+  "campaign": [
+    {
+      "source": "survey-96ch-1000int",
+      "date": "20240325",
+      "verdict": "MASK-MANUFACTURED SIGNAL",
+      "diagnostic_only": true,
+      "n_lines": 4,
+      "scale_q": "1.02125582",
+      "ratios": [
+        {
+          "label": "fitted line ratio q",
+          "value": 1.02125582,
+          "printed": "1.02125582",
+          "partials": [
+            1,
+            47,
+            21,
+            1,
+            3,
+            3,
+            5,
+            1,
+            2,
+            4
+          ],
+          "elided": true,
+          "depth": 0,
+          "unbounded": false,
+          "levels": 13,
+          "empty_recursion": false,
+          "excess": 88,
+          "effective_depth": 1.036364428711453,
+          "note": "fitted multiplicative interval of the scale model",
+          "synthetic": false
+        },
+        {
+          "label": "span / comb step",
+          "value": 3.0144058128085724,
+          "printed": "3.009423 / 0.998347",
+          "partials": [
+            3,
+            69,
+            2,
+            2,
+            2,
+            28,
+            8,
+            2,
+            2
+          ],
+          "elided": false,
+          "depth": 0,
+          "unbounded": false,
+          "levels": 9,
+          "empty_recursion": false,
+          "excess": 107,
+          "effective_depth": 0.15308695557689297,
+          "note": "ratio of two intervals measured from the same lines",
+          "synthetic": false
+        }
+      ]
+    },
+    {
+      "source": "survey-96ch-1000int",
+      "date": "20240920",
+      "verdict": "MASK-MANUFACTURED SIGNAL",
+      "diagnostic_only": true,
+      "n_lines": 3,
+      "scale_q": "1.02297797",
+      "ratios": [
+        {
+          "label": "fitted line ratio q",
+          "value": 1.02297797,
+          "printed": "1.02297797",
+          "partials": [
+            1,
+            43,
+            1,
+            1,
+            12,
+            29,
+            4,
+            2,
+            1,
+            2
+          ],
+          "elided": true,
+          "depth": 0,
+          "unbounded": false,
+          "levels": 13,
+          "empty_recursion": false,
+          "excess": 100,
+          "effective_depth": 1.0393671785231768,
+          "note": "fitted multiplicative interval of the scale model",
+          "synthetic": false
+        },
+        {
+          "label": "span / comb step",
+          "value": 2.0,
+          "printed": "2.115134 / 1.057567",
+          "partials": [
+            2
+          ],
+          "elided": false,
+          "depth": 0,
+          "unbounded": false,
+          "levels": 1,
+          "empty_recursion": true,
+          "excess": 0,
+          "effective_depth": 1.5000000000000004,
+          "note": "ratio of two intervals measured from the same lines",
+          "synthetic": false
+        }
+      ]
+    },
+    {
+      "source": "expanded-A-731ch-allint",
+      "date": "20240326",
+      "verdict": "ASTROPHYSICAL STRUCTURE",
+      "diagnostic_only": false,
+      "n_lines": 14,
+      "scale_q": "1.02703408",
+      "ratios": [
+        {
+          "label": "fitted line ratio q",
+          "value": 1.02703408,
+          "printed": "1.02703408",
+          "partials": [
+            1,
+            36,
+            1,
+            102,
+            1,
+            1,
+            2,
+            7,
+            5,
+            2
+          ],
+          "elided": true,
+          "depth": 0,
+          "unbounded": false,
+          "levels": 12,
+          "empty_recursion": false,
+          "excess": 149,
+          "effective_depth": 1.0464739108503913,
+          "note": "fitted multiplicative interval of the scale model",
+          "synthetic": false
+        },
+        {
+          "label": "span / comb step",
+          "value": 12.79206790874661,
+          "printed": "22.126862 / 1.729733",
+          "partials": [
+            12,
+            1,
+            3,
+            1,
+            4,
+            4,
+            8,
+            2,
+            3,
+            1
+          ],
+          "elided": true,
+          "depth": 1,
+          "unbounded": false,
+          "levels": 13,
+          "empty_recursion": false,
+          "excess": 43,
+          "effective_depth": -2.0078276976584117,
+          "note": "ratio of two intervals measured from the same lines",
+          "synthetic": false
+        }
+      ]
+    },
+    {
+      "source": "expanded-A-731ch-allint",
+      "date": "20240326",
+      "verdict": "NEITHER MODEL FIT",
+      "diagnostic_only": false,
+      "n_lines": 4,
+      "scale_q": "1.0158174",
+      "ratios": [
+        {
+          "label": "fitted line ratio q",
+          "value": 1.0158174,
+          "printed": "1.0158174",
+          "partials": [
+            1,
+            63,
+            4,
+            1,
+            1,
+            16,
+            1,
+            10,
+            1,
+            2
+          ],
+          "elided": true,
+          "depth": 0,
+          "unbounded": false,
+          "levels": 12,
+          "empty_recursion": false,
+          "excess": 95,
+          "effective_depth": 1.0269385434781735,
+          "note": "fitted multiplicative interval of the scale model",
+          "synthetic": false
+        },
+        {
+          "label": "span / comb step",
+          "value": 2.9084737204707944,
+          "printed": "3.8248 / 1.315054",
+          "partials": [
+            2,
+            1,
+            9,
+            1,
+            12,
+            2,
+            12,
+            1,
+            17,
+            2
+          ],
+          "elided": true,
+          "depth": 1,
+          "unbounded": false,
+          "levels": 11,
+          "empty_recursion": false,
+          "excess": 51,
+          "effective_depth": 0.23506154222254103,
+          "note": "ratio of two intervals measured from the same lines",
+          "synthetic": false
+        }
+      ]
+    }
+  ],
+  "campaign_summary": {
+    "rows": 4,
+    "ratios": 8,
+    "depth_counts": {
+      "0": 6,
+      "1": 2
+    },
+    "depth_one": [
+      {
+        "label": "20240326 n=14 span / comb step",
+        "value": 12.79206790874661,
+        "effective_depth": -2.0078276976584117
+      },
+      {
+        "label": "20240326 n=4 span / comb step",
+        "value": 2.9084737204707944,
+        "effective_depth": 0.23506154222254103
+      }
+    ],
+    "excess_min": 0,
+    "excess_max": 149,
+    "effective_depth_min": -2.0078276976584117,
+    "effective_depth_max": 1.5000000000000004,
+    "any_phi_shaped": false,
+    "vacuous": [
+      "20240920 span / comb step"
+    ],
+    "diagnostic_only": [
+      "20240325 MASK-MANUFACTURED SIGNAL",
+      "20240920 MASK-MANUFACTURED SIGNAL"
+    ]
+  },
   "depth_sweep": [
     {
       "jitter": 0.1,
@@ -414,22 +722,21 @@
     }
   ],
   "summary": {
-    "grid_depths": [
+    "control_depths": [
       0,
       0,
       0
     ],
-    "grid_effective_depth": [
+    "control_effective_depth": [
       1.0053170754201666,
       1.004616287824028,
       1.0040886349017837
     ],
-    "grid_excess": [
+    "control_excess": [
       316,
       364,
       411
     ],
-    "measured_effective_max": 1.0372227328062944,
     "phi_unbounded": [
       true,
       true,

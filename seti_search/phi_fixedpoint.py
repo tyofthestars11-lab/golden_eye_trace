@@ -185,6 +185,11 @@ def excess(partials) -> int:
     it is excluded: ``excess`` is zero exactly when the recursion is "add one"
     at every level, which is phi. Values in (0, 1) are handled naturally -
     their a0 is 0 and carries no information either way.
+
+    Ambiguity, declared: a ratio that terminates immediately (an integer, e.g.
+    ``2 = [2]``) has an empty fractional recursion, so it also reports depth 0
+    and excess 0. Neither statistic can tell that apart from phi; callers must
+    carry :func:`is_phi_shaped` beside them and read neither alone.
     """
     return int(sum(int(a) - 1 for a in list(partials)[1:]))
 

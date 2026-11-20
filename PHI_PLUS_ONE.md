@@ -10,7 +10,7 @@ From any positive x, add one and invert: `T(x) = 1 + 1/x`. The fixed point solve
 
     T'(phi) = -1/phi^2 = -0.3819660
 
-The recurrence shrinks its own error by 0.381966 per turn - 2.39 turns per decimal place. **The 0.382 this project kept testing against is that rate.** It was never a tolerance; it is the step size of the map that defines the constant.
+The recurrence shrinks its own error by 0.381966 per turn - 2.39 turns per decimal place. **The 0.382 this project kept testing against is that rate**, not a tolerance: it is the step size of the map that defines the constant. Carrying it as a fixed +/-0.01 rung window was the error the identity warns about: a window in rungs is not scale free. That measurement is kept as a regression fixture (`RejectedToleranceTest` in `tests/test_phi_fixedpoint.py`, values in `results/phi_plus_one.json`) rather than restated here.
 
 | start | residual | after 5 turns | after 10 turns | measured contraction |
 | ---: | ---: | ---: | ---: | ---: |
@@ -22,57 +22,57 @@ The recurrence shrinks its own error by 0.381966 per turn - 2.39 turns per decim
 
 Every start converges, all at the same rate. The trajectory is the result; no step in it is a decision.
 
-## 2. What I was doing wrong
+## 2. A ratio that never terminates
 
-Testing `|rung - 1/phi^2| < 0.01` carries the rate as a quantity, which is the error the identity warns about. A rung window is not scale free:
-
-| at | width of the window |
-| ---: | ---: |
-| 13.40 MHz | 0.1290 MHz |
-| 45.98 MHz | 0.4425 MHz |
-| 47.24 MHz | 0.4547 MHz |
-| 53.78 MHz | 0.5176 MHz |
-| 86.90 MHz | 0.8363 MHz |
-
-The same tolerance is **6.49x wider at the top of the band than at the bottom**. One threshold, five different physical tests.
-
-Kept as a regression fixture, not deleted: `tests/test_phi_fixedpoint.py` asserts the 6.49x scale dependence, so no later version can quietly reintroduce a fixed rung window.
-
-## 3. The ladder that never resolves
-
-Write a ratio as `a0 + 1/(a1 + 1/(a2 + ...))` and keep every partial quotient. Phi is `[1; 1, 1, 1, ...]`: at every level the instruction is *add one* and it is never carried, so the fraction never terminates. The integer part is excluded from both statistics below, because it is exactly the whole the identity refuses to carry.
+Write a ratio as `a0 + 1/(a1 + 1/(a2 + ...))` and keep every partial quotient. Phi is `[1; 1, 1, 1, ...]`: at every level the instruction is *add one* and it is never carried, so the fraction never terminates. The integer part is excluded from both statistics, because it is exactly the whole the identity refuses to carry.
 
 - **depth** - how many levels of the fractional recursion equal 1.
 
 - **excess** - `sum(a_i - 1)` over those levels; zero exactly for phi's shape.
 
-| value | partial quotients | depth | excess |
-| --- | --- | ---: | ---: |
-| phi | 1, 1 | unbounded | 0 |
-| 1/phi = phi - 1 | 0, 1 | unbounded | 0 |
-| phi^2 = phi + 1 | 2, 1 | unbounded | 0 |
-| F9/F8 | 1, 1, 1, 1, 1, 1, 2 | 5 | 1 |
-| F13/F12 | 1, 1, 1, 1, 1, 1, 1, 1, 1, 1... | 9 | 1 |
-| F17/F16 | 1, 1, 1, 1, 1, 1, 1, 1, 1, 1... | 13 | 1 |
-
-Phi, `1/phi` and `phi^2` are all unbounded with excess 0: one identity, read as a statement about partial quotients instead of magnitudes. Each exact convergent `F(n+1)/F(n)` matches for a finite number of levels - the count is in the table - and then pays 1 at its terminating 2. It is phi seen at finite depth, with the +1 still pending.
-
-## 4. The same numbers on the instrument
-
-| value | partial quotients | depth | excess | effective depth |
+| value | partial quotients | depth | excess | levels |
 | --- | --- | ---: | ---: | ---: |
-| channel 317->318 | 1, 317 | 0 | 316 | 1.01 |
-| channel 365->366 | 1, 365 | 0 | 364 | 1.00 |
-| channel 412->413 | 1, 412 | 0 | 411 | 1.00 |
-| 1 MHz comb at 45.98 MHz | 1, 45, 1, 49 | 0 | 92 | 1.04 |
-| 1 MHz comb at 53.78 MHz | 1, 53, 1, 3, 1, 1 | 0 | 58 | 1.03 |
-| band 13.4 -> 86.9 MHz | 6, 2, 16, 4 | 0 | 19 | -1.14 |
+| phi | 1, 1 | unbounded | 0 | - |
+| 1/phi = phi - 1 | 0, 1 | unbounded | 0 | - |
+| phi^2 = phi + 1 | 2, 1 | unbounded | 0 | - |
+| F9/F8 | 1, 1, 1, 1, 1, 1, 2 | 5 | 1 | 7 |
+| F13/F12 | 1, 1, 1, 1, 1, 1, 1, 1, 1, 1... | 9 | 1 | 11 |
+| F17/F16 | 1, 1, 1, 1, 1, 1, 1, 1, 1, 1... | 13 | 1 | 15 |
 
-`effective depth` is the continuous version, `-ln|x/phi - 1| / ln(phi^2)`: the number of times the separation from phi would have to shrink by 1/phi^2. It is a measurement, not a check - it can be negative, and for the band span it is.
+Phi, `1/phi` and `phi^2` are unbounded with excess 0: one identity, read as a statement about partial quotients instead of magnitudes. Each exact convergent `F(n+1)/F(n)` matches for a finite number of levels - the count is in the table - and then pays 1 at its terminating 2. It is phi seen at finite depth, with the +1 still pending.
 
-The channel grid is `1 + 1/k` exactly, so its continued fraction is `[1; k]`: depth 0, excess k - 1, effective depth about 1.01. It says *add one* once, at the start, and then hands over the instrument's own quantum. That is the whole difference: phi says it forever.
+## 3. The campaign's own ratios, read the same way
 
-## 5. Depth is continuous, not a verdict
+Section 2 is a set of constructions whose answer is known in advance. The ratios that were actually measured are in `results/comb_vs_scale.csv`, and two of its columns are interval ratios rather than model scores:
+
+- `scale_q` - the fitted multiplicative interval q in `f_n = f0 * q**n`: the ratio between adjacent lines.
+
+- `span / comb step` - the group's measured span in units of its own fitted comb step: a ratio of two intervals read off the same lines.
+
+Both are held as exact rationals of the printed decimals, so the partial quotients below are the printed value's, not a binary tail's.
+
+| group | verdict | ratio | as printed | depth | excess | effective depth |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| 20240325 | MASK-MANUFACTURED SIGNAL | fitted line ratio q | 1.02125582 | 0 | 88 | 1.04 |
+| 20240325 | MASK-MANUFACTURED SIGNAL | span / comb step | 3.009423 / 0.998347 | 0 | 107 | 0.15 |
+| 20240920 | MASK-MANUFACTURED SIGNAL | fitted line ratio q | 1.02297797 | 0 | 100 | 1.04 |
+| 20240920 | MASK-MANUFACTURED SIGNAL | span / comb step | 2.115134 / 1.057567 | 0 | 0 | 1.50 |
+| 20240326 | ASTROPHYSICAL STRUCTURE | fitted line ratio q | 1.02703408 | 0 | 149 | 1.05 |
+| 20240326 | ASTROPHYSICAL STRUCTURE | span / comb step | 22.126862 / 1.729733 | 1 | 43 | -2.01 |
+| 20240326 | NEITHER MODEL FIT | fitted line ratio q | 1.0158174 | 0 | 95 | 1.03 |
+| 20240326 | NEITHER MODEL FIT | span / comb step | 3.8248 / 1.315054 | 1 | 51 | 0.24 |
+
+Across the 8 measured ratios the counts are 6 at depth 0 and 2 at depth 1; excess runs 0 to 149, and effective depth -2.01 to 1.50. These are measurements of ratios that no one chose.
+
+A single level of depth is cheap and proves nothing: any ratio whose fractional part exceeds 1/2 gets `a1 = 1`. The rows that reach it are 20240326 n=14 span / comb step at 12.79 (effective depth -2.01), 20240326 n=4 span / comb step at 2.91 (effective depth 0.24), and the continuous reading is what the depth count rounds away.
+
+Vacuous recursion: 20240920 span / comb step reduces to a single partial quotient, so it has no fractional level at all. Depth 0 and excess 0 there are the same numbers phi's infinite recursion would give (0 at every level), which is why `unbounded` travels beside them: without that flag, `(0, 0)` cannot tell an empty recursion from a faithful one.
+
+Read the numbers as scale, not as support. A ratio within a few percent of 1 cannot be near phi, so a depth of 0 or 1 there is arithmetic, exactly as it is for the channel grid - and the instrument rows are still in the JSON, labelled as controls, where depth 0 is guaranteed by construction. None of it is evidence that the data is or is not artificial.
+
+2 of the 4 rows carry MASK-MANUFACTURED SIGNAL and are diagnostic only: their ratios measure the excision mask, so no depth computed on them is a statement about a source.
+
+## 4. Depth is continuous, not a verdict
 
 A ladder at ratio `phi * (1 + jitter)`, so each row is phi plus a declared relative displacement:
 
@@ -87,9 +87,9 @@ A ladder at ratio `phi * (1 + jitter)`, so each row is phi plus a declared relat
 | 1e-08 | 17 | 19.14 |
 | 1e-10 | 23 | 23.92 |
 
-Depth falls smoothly with displacement, because it is a logarithm in disguise: a relative miss of `j` costs about `log(1/j)/log(phi^2)` levels. The integer depth rounds that down by one or two levels and the effective depth keeps the fraction. So there is nothing binary to decide - a value is not 'phi' or 'not phi', it sits at a measured depth, and the measurement is continuous in the distance from phi.
+Depth falls smoothly with displacement, because it is a logarithm in disguise: a relative miss of `j` costs about `log(1/j)/log(phi^2)` levels. The integer depth rounds that down; the effective depth keeps the fraction and may be negative. So there is nothing binary to decide - a value is not 'phi' or 'not phi', it sits at a measured depth, continuous in the distance from phi.
 
-## 6. The convergent decay is the identity, exactly
+## 5. The convergent decay is the identity, exactly
 
 | convergent | value | error | ratio to previous |
 | --- | ---: | ---: | ---: |
@@ -104,11 +104,11 @@ Depth falls smoothly with displacement, because it is a logarithm in disguise: a
 
 The ratio alternates about 0.381966 and is within 1e-3 of it from level 5 on; its limit is exactly `1/phi^2`, from `F(n+1)/F(n) - phi = (-1)^n / (F(n) phi^(n+1))`. Not a fit, no null needed. The constant in section 1, the constant the earlier campaign tested against, and this decay are one number in three roles.
 
-## 7. What this changes
+## 6. What this does not say
 
-- The campaign's zero is not 'no signal' and not 'not supported'. The measured ratios sit at effective depth 1.00 to 1.04; phi has no finite depth. Two shapes, compared as numbers.
+- **It does not explain the campaign's zero.** Zero hits in fourteen pairs is a property of additive spacing: a fixed step meets a fixed multiplicative interval at exactly one frequency, 4.96 MHz in this band, and the survey searched no cell there. That argument needs no continued fraction and is measured in `PROPORTION_AND_SCALE.md` section 2. Depth was withdrawn from that job.
 
-- The old ±0.01 window is still in the repository as a rejected method, with its 6.49x scale dependence asserted in a test. It failed because it added the +1 back as a quantity.
+- **Depth 0 is not evidence either way.** It appears on a masked, manufactured signal and on the channel grid; one is artificial and one is arithmetic. Depth describes a ratio's continued fraction and nothing more.
 
-- Nothing here supports a candidate. This machinery can only detract: a value at depth 10 is still an unexplained measurement, not an artificial one.
+- **Nothing here supports a candidate.** This machinery can only detract: a value at depth 0 is still an unexplained measurement, not an artificial one.
 

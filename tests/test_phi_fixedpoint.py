@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import csv
 import math
+import os
+import sys
 import unittest
 from fractions import Fraction
 
@@ -147,6 +150,76 @@ class RejectedToleranceTest(unittest.TestCase):
             self.assertAlmostEqual(math.exp(math.log(PHI ** 2) * 1.0),
                                    PHI ** 2, places=12)
             self.assertAlmostEqual(derivative(PHI), -1.0 / PHI ** 2, places=16)
+
+
+class CampaignRatioTests(unittest.TestCase):
+    """The depth reading applied to the ratios the campaign actually measured."""
+
+    @classmethod
+    def setUpClass(cls):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        table = os.path.join(root, "results", "comb_vs_scale.csv")
+        if not os.path.exists(table):
+            raise unittest.SkipTest("run scripts/phi_model_discrimination.py first")
+        sys.path.insert(0, os.path.join(root, "scripts"))
+        import phi_plus_one
+        cls.table = table
+        cls.payload = phi_plus_one.build()
+        with open(table, newline="", encoding="utf-8") as fh:
+            cls.rows = list(csv.DictReader(fh))
+
+    def test_every_row_is_read_from_the_table(self):
+        camp = self.payload["campaign"]
+        self.assertEqual(len(camp), len(self.rows))
+        for row, entry in zip(self.rows, camp):
+            self.assertEqual(entry["date"], row["date"])
+            self.assertEqual(entry["source"], row["source"])
+            self.assertEqual(entry["verdict"], row["verdict"])
+            # the fitted interval is carried as printed, not re-derived
+            self.assertEqual(entry["ratios"][0]["printed"], row["scale_q"])
+            self.assertEqual(entry["ratios"][0]["value"], float(row["scale_q"]))
+
+    def test_the_span_ratio_is_two_printed_intervals(self):
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            span = Fraction(row["span_mhz"])
+            step = Fraction(row["comb_df_mhz"])
+            self.assertEqual(entry["ratios"][1]["value"], float(span / step))
+
+    def test_no_measured_ratio_reaches_phi(self):
+        flat = [r for e in self.payload["campaign"] for r in e["ratios"]]
+        self.assertTrue(flat)
+        for r in flat:
+            self.assertFalse(r["unbounded"], msg=r["label"])
+            self.assertLessEqual(r["depth"], 1, msg=r["label"])
+        self.assertTrue(any(r["effective_depth"] < 0 for r in flat))
+
+    def test_a_single_level_of_depth_is_cheap(self):
+        # depth 1 is granted by any ratio whose fractional part exceeds 1/2, so
+        # one level says nothing about phi without the continuous reading
+        flat = [r for e in self.payload["campaign"] for r in e["ratios"]]
+        one = [r for r in flat if r["depth"] == 1]
+        self.assertEqual(len(one), 2)
+        for r in one:
+            self.assertGreater(r["value"] - math.floor(r["value"]), 0.5)
+            self.assertGreater(r["value"], 2.5)
+
+    def test_an_empty_recursion_looks_like_depth_zero(self):
+        # 20240920's span is exactly two fitted comb steps, [2]: depth 0 and
+        # excess 0 with no fractional level at all, the ambiguity that keeps
+        # `unbounded` beside every row
+        entry = [e for e in self.payload["campaign"] if e["date"] == "20240920"]
+        self.assertEqual(len(entry), 1)
+        ratio = entry[0]["ratios"][1]
+        self.assertTrue(ratio["empty_recursion"])
+        self.assertEqual((ratio["depth"], ratio["excess"]), (0, 0))
+        self.assertFalse(ratio["unbounded"])
+
+    def test_masked_rows_stay_unclaimed(self):
+        camp = self.payload["campaign"]
+        masked = [e for e in camp if e["verdict"] == "MASK-MANUFACTURED SIGNAL"]
+        self.assertEqual(len(masked), 2)
+        self.assertTrue(all(e["diagnostic_only"] for e in masked))
+        self.assertEqual(self.payload["campaign_summary"]["rows"], len(camp))
 
 
 if __name__ == "__main__":
