@@ -327,6 +327,36 @@
       "diagnostic_only": true,
       "n_lines": 4,
       "scale_q": "1.02125582",
+      "lowest_line_mhz": 45.984284,
+      "additive": {
+        "label": "1 + comb step / f_low",
+        "value": 1.0217106131303468,
+        "printed": "0.998347 / 45.984284",
+        "partials": [
+          1,
+          46,
+          16,
+          1,
+          1,
+          4,
+          2,
+          7,
+          1,
+          38
+        ],
+        "elided": true,
+        "depth": 0,
+        "unbounded": false,
+        "levels": 13,
+        "empty_recursion": false,
+        "excess": 110,
+        "effective_depth": 1.037156565563741,
+        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "synthetic": false,
+        "diagnostic_only": true,
+        "lowest_line_mhz": 45.984284,
+        "gap_to_scale_q": 0.0004547931303468811
+      },
       "ratios": [
         {
           "label": "fitted line ratio q",
@@ -388,6 +418,36 @@
       "diagnostic_only": true,
       "n_lines": 3,
       "scale_q": "1.02297797",
+      "lowest_line_mhz": 45.420639,
+      "additive": {
+        "label": "1 + comb step / f_low",
+        "value": 1.0232838423959645,
+        "printed": "1.057567 / 45.420639",
+        "partials": [
+          1,
+          42,
+          1,
+          18,
+          3,
+          7,
+          2,
+          12,
+          1,
+          11
+        ],
+        "elided": true,
+        "depth": 0,
+        "unbounded": false,
+        "levels": 12,
+        "empty_recursion": false,
+        "excess": 91,
+        "effective_depth": 1.0399014079281557,
+        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "synthetic": false,
+        "diagnostic_only": true,
+        "lowest_line_mhz": 45.420639,
+        "gap_to_scale_q": 0.0003058723959645306
+      },
       "ratios": [
         {
           "label": "fitted line ratio q",
@@ -441,6 +501,36 @@
       "diagnostic_only": false,
       "n_lines": 14,
       "scale_q": "1.02703408",
+      "lowest_line_mhz": 54.566758,
+      "additive": {
+        "label": "1 + comb step / f_low",
+        "value": 1.0316993910468348,
+        "printed": "1.729733 / 54.566758",
+        "partials": [
+          1,
+          31,
+          1,
+          1,
+          4,
+          1,
+          8,
+          2,
+          3,
+          1
+        ],
+        "elided": true,
+        "depth": 0,
+        "unbounded": false,
+        "levels": 16,
+        "empty_recursion": false,
+        "excess": 95,
+        "effective_depth": 1.0547085905962412,
+        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "synthetic": false,
+        "diagnostic_only": true,
+        "lowest_line_mhz": 54.566758,
+        "gap_to_scale_q": 0.004665311046834778
+      },
       "ratios": [
         {
           "label": "fitted line ratio q",
@@ -503,6 +593,36 @@
       "diagnostic_only": false,
       "n_lines": 4,
       "scale_q": "1.0158174",
+      "lowest_line_mhz": 82.118927,
+      "additive": {
+        "label": "1 + comb step / f_low",
+        "value": 1.0160140183029913,
+        "printed": "1.315054 / 82.118927",
+        "partials": [
+          1,
+          62,
+          2,
+          4,
+          14,
+          2,
+          1,
+          1,
+          11,
+          1
+        ],
+        "elided": true,
+        "depth": 0,
+        "unbounded": false,
+        "levels": 14,
+        "empty_recursion": false,
+        "excess": 100,
+        "effective_depth": 1.0272778372194507,
+        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "synthetic": false,
+        "diagnostic_only": true,
+        "lowest_line_mhz": 82.118927,
+        "gap_to_scale_q": 0.0001966183029912215
+      },
       "ratios": [
         {
           "label": "fitted line ratio q",
@@ -589,7 +709,27 @@
     "diagnostic_only": [
       "20240325 MASK-MANUFACTURED SIGNAL",
       "20240920 MASK-MANUFACTURED SIGNAL"
-    ]
+    ],
+    "additive": {
+      "ratios": 4,
+      "depth_counts": {
+        "0": 4
+      },
+      "excess_min": 91,
+      "excess_max": 110,
+      "effective_depth_min": 1.0272778372194507,
+      "effective_depth_max": 1.0547085905962412,
+      "any_phi_shaped": false,
+      "lowest_lines_mhz": [
+        45.984284,
+        45.420639,
+        54.566758,
+        82.118927
+      ],
+      "max_gap_to_scale_q": 0.004665311046834778,
+      "diagnostic_only": true,
+      "note": "1 + comb_df / f_low at each group's lowest line, predicted by the additive fit rather than measured from the lines"
+    }
   },
   "depth_sweep": [
     {

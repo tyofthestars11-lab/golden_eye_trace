@@ -15,6 +15,12 @@ known in advance, such as the channel grid, which is 1 + 1/k by definition.
 What this does *not* do is explain the campaign's zero hit count. That zero is a
 property of additive spacing against a fixed multiplicative interval, measured
 in ``PROPORTION_AND_SCALE.md``; depth was withdrawn from that job.
+
+Beside each group's measured ratios the table also carries the additive model's
+own adjacent-line ratio, ``1 + comb_df / f_low`` at the group's lowest line
+from ``results/expanded_phi_groups.json``. That value is predicted by the fit
+rather than measured from the lines, so it is diagnostic only and is never
+counted with the measurements.
 """
 
 from __future__ import annotations
@@ -51,6 +57,7 @@ SEARCH_CHANNELS = (317, 412)
 COMB_STEP_HZ = 1.0e6
 RUNG_TOLERANCE = 0.01
 CAMPAIGN_CSV = os.path.join(ROOT, "results", "comb_vs_scale.csv")
+GROUPS_JSON = os.path.join(ROOT, "results", "expanded_phi_groups.json")
 DEPTH_LIMIT = 64
 
 
@@ -90,6 +97,25 @@ def describe(label, value, exact_value=None, note="", synthetic=False,
     }
 
 
+def group_lines() -> dict:
+    """The group fixtures' own line frequencies, keyed by what the CSV carries.
+
+    ``(source, date, n_lines)`` is unique across the four groups, so it is the
+    join key: the CSV alone does not say where each group starts.
+    """
+    if not os.path.exists(GROUPS_JSON):
+        raise FileNotFoundError(
+            "results/expanded_phi_groups.json is missing; run "
+            "scripts/phi_model_discrimination.py first")
+    with open(GROUPS_JSON, encoding="utf-8") as fh:
+        payload = json.load(fh)
+    out = {}
+    for g in payload["groups"]:
+        key = (g["source"], g["date"], int(g["n_lines"]))
+        out[key] = [str(f) for f in g["freqs_mhz"]]
+    return out
+
+
 def campaign_rows() -> list:
     """The measured ratios in ``results/comb_vs_scale.csv``, read as ratios.
 
@@ -108,12 +134,30 @@ def campaign_rows() -> list:
             "scripts/phi_model_discrimination.py first")
     with open(CAMPAIGN_CSV, newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
+    lines = group_lines()
     out = []
     for row in rows:
         q = _exact(row["scale_q"])
         span = _exact(row["span_mhz"])
         step = _exact(row["comb_df_mhz"])
         steps_across = span / step
+        key = (row["source"], row["date"], int(row["n_lines"]))
+        if key not in lines:
+            raise KeyError(f"no group fixture for {key}")
+        f_low = _exact(lines[key][0])
+        # the additive model's adjacent-line ratio, predicted at the first line:
+        # not a measurement of the data, so it stays beside the table only
+        additive_value = 1 + step / f_low
+        additive = describe(
+            "1 + comb step / f_low", float(additive_value),
+            exact_value=additive_value,
+            printed=f"{row['comb_df_mhz']} / {lines[key][0]}",
+            note="additive model's own adjacent-line ratio at the group's "
+                 "lowest line; predicted from the fit, not measured, so "
+                 "diagnostic only")
+        additive["diagnostic_only"] = True
+        additive["lowest_line_mhz"] = float(f_low)
+        additive["gap_to_scale_q"] = float(abs(additive_value - q))
         out.append({
             "source": row["source"],
             "date": row["date"],
@@ -121,6 +165,8 @@ def campaign_rows() -> list:
             "diagnostic_only": row["verdict"] == "MASK-MANUFACTURED SIGNAL",
             "n_lines": int(row["n_lines"]),
             "scale_q": row["scale_q"],
+            "lowest_line_mhz": float(f_low),
+            "additive": additive,
             "ratios": [
                 describe("fitted line ratio q", float(q), exact_value=q,
                          printed=row["scale_q"],
@@ -219,6 +265,25 @@ def build() -> dict:
                     if r["empty_recursion"]],
         "diagnostic_only": [f"{row['date']} {row['verdict']}"
                             for row in campaign if row["diagnostic_only"]],
+    }
+
+    add = [row["additive"] for row in campaign]
+    add_depths = {}
+    for r in add:
+        add_depths[r["depth"]] = add_depths.get(r["depth"], 0) + 1
+    campaign_summary["additive"] = {
+        "ratios": len(add),
+        "depth_counts": {str(k): v for k, v in sorted(add_depths.items())},
+        "excess_min": min(r["excess"] for r in add),
+        "excess_max": max(r["excess"] for r in add),
+        "effective_depth_min": min(r["effective_depth"] for r in add),
+        "effective_depth_max": max(r["effective_depth"] for r in add),
+        "any_phi_shaped": any(r["unbounded"] for r in add),
+        "lowest_lines_mhz": [row["lowest_line_mhz"] for row in campaign],
+        "max_gap_to_scale_q": max(r["gap_to_scale_q"] for r in add),
+        "diagnostic_only": True,
+        "note": "1 + comb_df / f_low at each group's lowest line, predicted "
+                "by the additive fit rather than measured from the lines",
     }
 
     return {
@@ -322,9 +387,10 @@ def render(s: dict) -> str:
     L.append("| group | verdict | ratio | as printed | depth | excess | effective depth |")
     L.append("| --- | --- | --- | ---: | ---: | ---: | ---: |")
     for row in camp:
-        for r in row["ratios"]:
+        for r in row["ratios"] + [row["additive"]]:
             depth = "unbounded" if r["unbounded"] else r["depth"]
-            L.append(f"| {row['date']} | {row['verdict']} | {r['label']} | "
+            label = r["label"] + (" (diagnostic)" if r.get("diagnostic_only") else "")
+            L.append(f"| {row['date']} | {row['verdict']} | {label} | "
                      f"{r['printed']} | {depth} | {r['excess']} | "
                      f"{r['effective_depth']:.2f} |")
     L.append("")
@@ -336,6 +402,26 @@ def render(s: dict) -> str:
              f"{cs['effective_depth_min']:.2f} to "
              f"{cs['effective_depth_max']:.2f}. These are measurements of "
              "ratios that no one chose.\n")
+    ad = cs["additive"]
+    L.append(f"The third line of each group is the additive model's own "
+             f"adjacent-line ratio, `1 + comb_df / f_low`, with `f_low` the "
+             f"group's lowest line from `results/expanded_phi_groups.json` "
+             f"({', '.join(f'{m:.6f}' for m in ad['lowest_lines_mhz'])} MHz) "
+             f"and `comb_df` the fit's own step. It is what the comb predicts, "
+             f"not what the lines show, so it is diagnostic only and is left "
+             f"out of the counts above. On those {ad['ratios']} predicted "
+             f"ratios the depths are "
+             f"{' and '.join(f'{n} at depth {d}' for d, n in ad['depth_counts'].items())}, "
+             f"excess runs {ad['excess_min']} to {ad['excess_max']}, and "
+             f"effective depth {ad['effective_depth_min']:.2f} to "
+             f"{ad['effective_depth_max']:.2f}. At the first line the additive "
+             f"and multiplicative models differ by at most "
+             f"{ad['max_gap_to_scale_q']:.2e} in ratio, because there the step "
+             f"and the interval coincide to first order; the models separate "
+             f"only in how the ratio compounds across the group, which is what "
+             f"the fit comparison already measures. A depth taken at one line "
+             f"therefore cannot discriminate between them, and is not offered "
+             f"as if it could.\n")
     if cs["depth_one"]:
         shown = ", ".join(f"{r['label']} at {r['value']:.2f} "
                           f"(effective depth {r['effective_depth']:.2f})"
@@ -433,6 +519,13 @@ def main() -> int:
     print(f"campaign excess          {cs['excess_min']} .. {cs['excess_max']}")
     print(f"campaign eff depth       {cs['effective_depth_min']:.2f} .. "
           f"{cs['effective_depth_max']:.2f}")
+    print(f"additive 1+step/f_low    {cs['additive']['ratios']} on "
+          f"{len(cs['additive']['lowest_lines_mhz'])} groups, depth counts "
+          f"{cs['additive']['depth_counts']}, excess "
+          f"{cs['additive']['excess_min']} .. {cs['additive']['excess_max']}, "
+          f"eff {cs['additive']['effective_depth_min']:.2f} .. "
+          f"{cs['additive']['effective_depth_max']:.2f}")
+    print(f"max |1+step/f - q|       {cs['additive']['max_gap_to_scale_q']:.3e}")
     print(f"vacuous recursion        {cs['vacuous']}")
     print(f"diagnostic-only rows     {len(cs['diagnostic_only'])}")
     print(f"depth sweep              {[(r['jitter'], r['depth']) for r in payload['depth_sweep']]}")

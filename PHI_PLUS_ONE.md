@@ -55,14 +55,20 @@ Both are held as exact rationals of the printed decimals, so the partial quotien
 | --- | --- | --- | ---: | ---: | ---: | ---: |
 | 20240325 | MASK-MANUFACTURED SIGNAL | fitted line ratio q | 1.02125582 | 0 | 88 | 1.04 |
 | 20240325 | MASK-MANUFACTURED SIGNAL | span / comb step | 3.009423 / 0.998347 | 0 | 107 | 0.15 |
+| 20240325 | MASK-MANUFACTURED SIGNAL | 1 + comb step / f_low (diagnostic) | 0.998347 / 45.984284 | 0 | 110 | 1.04 |
 | 20240920 | MASK-MANUFACTURED SIGNAL | fitted line ratio q | 1.02297797 | 0 | 100 | 1.04 |
 | 20240920 | MASK-MANUFACTURED SIGNAL | span / comb step | 2.115134 / 1.057567 | 0 | 0 | 1.50 |
+| 20240920 | MASK-MANUFACTURED SIGNAL | 1 + comb step / f_low (diagnostic) | 1.057567 / 45.420639 | 0 | 91 | 1.04 |
 | 20240326 | ASTROPHYSICAL STRUCTURE | fitted line ratio q | 1.02703408 | 0 | 149 | 1.05 |
 | 20240326 | ASTROPHYSICAL STRUCTURE | span / comb step | 22.126862 / 1.729733 | 1 | 43 | -2.01 |
+| 20240326 | ASTROPHYSICAL STRUCTURE | 1 + comb step / f_low (diagnostic) | 1.729733 / 54.566758 | 0 | 95 | 1.05 |
 | 20240326 | NEITHER MODEL FIT | fitted line ratio q | 1.0158174 | 0 | 95 | 1.03 |
 | 20240326 | NEITHER MODEL FIT | span / comb step | 3.8248 / 1.315054 | 1 | 51 | 0.24 |
+| 20240326 | NEITHER MODEL FIT | 1 + comb step / f_low (diagnostic) | 1.315054 / 82.118927 | 0 | 100 | 1.03 |
 
 Across the 8 measured ratios the counts are 6 at depth 0 and 2 at depth 1; excess runs 0 to 149, and effective depth -2.01 to 1.50. These are measurements of ratios that no one chose.
+
+The third line of each group is the additive model's own adjacent-line ratio, `1 + comb_df / f_low`, with `f_low` the group's lowest line from `results/expanded_phi_groups.json` (45.984284, 45.420639, 54.566758, 82.118927 MHz) and `comb_df` the fit's own step. It is what the comb predicts, not what the lines show, so it is diagnostic only and is left out of the counts above. On those 4 predicted ratios the depths are 4 at depth 0, excess runs 91 to 110, and effective depth 1.03 to 1.05. At the first line the additive and multiplicative models differ by at most 4.67e-03 in ratio, because there the step and the interval coincide to first order; the models separate only in how the ratio compounds across the group, which is what the fit comparison already measures. A depth taken at one line therefore cannot discriminate between them, and is not offered as if it could.
 
 A single level of depth is cheap and proves nothing: any ratio whose fractional part exceeds 1/2 gets `a1 = 1`. The rows that reach it are 20240326 n=14 span / comb step at 12.79 (effective depth -2.01), 20240326 n=4 span / comb step at 2.91 (effective depth 0.24), and the continuous reading is what the depth count rounds away.
 

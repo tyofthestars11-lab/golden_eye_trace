@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import math
 import os
 import sys
@@ -220,6 +221,39 @@ class CampaignRatioTests(unittest.TestCase):
         self.assertEqual(len(masked), 2)
         self.assertTrue(all(e["diagnostic_only"] for e in masked))
         self.assertEqual(self.payload["campaign_summary"]["rows"], len(camp))
+
+    def test_the_additive_ratio_is_1_plus_step_over_f_low(self):
+        # the comb's own adjacent-line ratio at each group's lowest line, built
+        # from the fit's step and the fixture's frequency, exactly
+        with open(os.path.join(os.path.dirname(self.table),
+                               "expanded_phi_groups.json"), encoding="utf-8") as fh:
+            groups = json.load(fh)["groups"]
+        index = {(g["source"], g["date"], int(g["n_lines"])): g
+                 for g in groups}
+        self.assertEqual(len(index), len(self.rows))
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            f_low = Fraction(str(group["freqs_mhz"][0]))
+            self.assertEqual(float(f_low), min(group["freqs_mhz"]))
+            expected = 1 + Fraction(row["comb_df_mhz"]) / f_low
+            self.assertEqual(entry["additive"]["value"], float(expected))
+            self.assertEqual(entry["lowest_line_mhz"], float(f_low))
+
+    def test_the_additive_ratio_is_diagnostic_only(self):
+        # predicted by the fit, not measured from the lines: it must not enter
+        # the count of measurements, and it must not reach phi
+        add = [e["additive"] for e in self.payload["campaign"]]
+        self.assertEqual(len(add), len(self.payload["campaign"]))
+        measured = sum(len(e["ratios"]) for e in self.payload["campaign"])
+        self.assertEqual(self.payload["campaign_summary"]["ratios"], measured)
+        for r in add:
+            self.assertTrue(r["diagnostic_only"])
+            self.assertFalse(r["unbounded"], msg=r["label"])
+            self.assertEqual(r["depth"], 0, msg=r["label"])
+        summary = self.payload["campaign_summary"]["additive"]
+        self.assertTrue(summary["diagnostic_only"])
+        self.assertEqual(summary["ratios"], len(add))
+        self.assertEqual(sum(summary["depth_counts"].values()), len(add))
 
 
 if __name__ == "__main__":
