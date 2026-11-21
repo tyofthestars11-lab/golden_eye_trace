@@ -21,6 +21,14 @@ own adjacent-line ratio, ``1 + comb_df / f_low`` at the group's lowest line
 from ``results/expanded_phi_groups.json``. That value is predicted by the fit
 rather than measured from the lines, so it is diagnostic only and is never
 counted with the measurements.
+
+At the lowest line the two models coincide to first order, so that one value
+cannot separate them. The reading is therefore carried to *every* adjacent pair
+in the group, ``1 + step / f_i`` for i = 1 .. n-1, and compounded across the
+span as their product - and the signed distance from the fitted multiplicative
+interval is reported pair by pair, so the divergence is measured where it
+actually opens up. All of it is still diagnostic only: both sides of that
+difference are predictions of a fit, not measurements of the lines.
 """
 
 from __future__ import annotations
@@ -116,6 +124,86 @@ def group_lines() -> dict:
     return out
 
 
+def additive_pairs(freqs, step, q) -> list:
+    """``1 + comb_df / f_i`` at every adjacent pair, i = 1 .. n-1.
+
+    The additive model holds the *step* fixed, so the ratio it predicts falls
+    as ``1/f``. Each entry is that prediction at the pair's lower line, beside
+    its signed distance from the fitted multiplicative interval ``q`` - the
+    number that says where the two models part. Predicted from the fit, never
+    measured from the lines, so every entry is diagnostic only.
+    """
+    out = []
+    for i in range(len(freqs) - 1):
+        ratio = 1 + step / freqs[i]
+        item = describe(
+            "1 + comb step / f_i", float(ratio), exact_value=ratio,
+            printed=f"{float(step):g} / {float(freqs[i]):.6f}",
+            note="additive model's adjacent-line ratio starting at this line; "
+                 "predicted from the fit, not measured")
+        item["diagnostic_only"] = True
+        item["pair"] = i + 1
+        item["line_low_mhz"] = float(freqs[i])
+        item["line_high_mhz"] = float(freqs[i + 1])
+        item["signed_delta_vs_scale_q"] = float(ratio - q)
+        item["gap_to_scale_q"] = abs(item["signed_delta_vs_scale_q"])
+        out.append(item)
+    return out
+
+
+def additive_span(freqs, step, q, pairs) -> dict:
+    """The pair ratios compounded over the group, and where they meet ``q``.
+
+    ``prod(1 + step / f_i)`` is the additive model's own ratio from the lowest
+    line to the highest; ``q ** (n - 1)`` is the scale model's for the same
+    span. Both are predictions, so the comparison is descriptive. The crossing
+    frequency ``step / (q - 1)`` is where a pair ratio equals q - the single
+    line at which the two models coincide, and hence the pivot the gap is
+    measured around.
+    """
+    product = Fraction(1)
+    for f in freqs[:-1]:
+        product *= 1 + step / f
+    n = len(freqs) - 1
+    item = describe(
+        "compounded 1 + comb step / f_i", float(product), exact_value=product,
+        printed=f"product of {n} pairs",
+        note="additive model's ratios compounded from the lowest line to the "
+             "highest; predicted from the fit, not measured")
+    item["diagnostic_only"] = True
+    item["pairs"] = n
+    item["step_mhz"] = float(step)
+    item["closed_form_ratio"] = float(1 + n * step / freqs[0])
+    item["product_vs_closed_form"] = float(
+        product / (1 + n * step / freqs[0]) - 1)
+    scale_cumulative = q ** n
+    reference = describe(
+        "q ** pairs", float(scale_cumulative), exact_value=scale_cumulative,
+        printed=f"{float(q):.8f} ** {n}",
+        note="scale model's ratio over the same span; reference only")
+    reference["diagnostic_only"] = True
+    reference["reference_model"] = "scale"
+    item["reference_scale"] = reference
+    item["relative_gap_to_scale"] = float(product / scale_cumulative - 1)
+    first, last = pairs[0], pairs[-1]
+    item["first_pair_gap_to_scale_q"] = first["gap_to_scale_q"]
+    item["last_pair_gap_to_scale_q"] = last["gap_to_scale_q"]
+    item["max_pair_gap_to_scale_q"] = max(p["gap_to_scale_q"] for p in pairs)
+    item["signed_drift_across_span"] = (
+        last["signed_delta_vs_scale_q"] - first["signed_delta_vs_scale_q"])
+    item["drift_over_first_gap"] = abs(
+        item["signed_drift_across_span"]) / first["gap_to_scale_q"]
+    signs = [p["signed_delta_vs_scale_q"] for p in pairs]
+    item["gap_sign_changes"] = sum(
+        1 for a, b in zip(signs, signs[1:]) if a * b < 0)
+    if q > 1:
+        crossing = step / (q - 1)
+        item["scale_crossing_mhz"] = float(crossing)
+        item["crossing_inside_span"] = bool(freqs[0] < crossing < freqs[-1])
+        item["crossing_after_pair"] = sum(1 for f in freqs[:-1] if f < crossing)
+    return item
+
+
 def campaign_rows() -> list:
     """The measured ratios in ``results/comb_vs_scale.csv``, read as ratios.
 
@@ -144,7 +232,13 @@ def campaign_rows() -> list:
         key = (row["source"], row["date"], int(row["n_lines"]))
         if key not in lines:
             raise KeyError(f"no group fixture for {key}")
-        f_low = _exact(lines[key][0])
+        freqs = [_exact(f) for f in lines[key]]
+        if len(freqs) != int(row["n_lines"]):
+            raise ValueError(f"{key}: fixture has {len(freqs)} lines, CSV says "
+                             f"{row['n_lines']}")
+        if freqs != sorted(freqs):
+            raise ValueError(f"{key}: fixture lines are not in frequency order")
+        f_low = freqs[0]
         # the additive model's adjacent-line ratio, predicted at the first line:
         # not a measurement of the data, so it stays beside the table only
         additive_value = 1 + step / f_low
@@ -158,6 +252,8 @@ def campaign_rows() -> list:
         additive["diagnostic_only"] = True
         additive["lowest_line_mhz"] = float(f_low)
         additive["gap_to_scale_q"] = float(abs(additive_value - q))
+        pairs = additive_pairs(freqs, step, q)
+        span = additive_span(freqs, step, q, pairs)
         out.append({
             "source": row["source"],
             "date": row["date"],
@@ -167,6 +263,8 @@ def campaign_rows() -> list:
             "scale_q": row["scale_q"],
             "lowest_line_mhz": float(f_low),
             "additive": additive,
+            "additive_pairs": pairs,
+            "additive_span": span,
             "ratios": [
                 describe("fitted line ratio q", float(q), exact_value=q,
                          printed=row["scale_q"],
@@ -271,6 +369,14 @@ def build() -> dict:
     add_depths = {}
     for r in add:
         add_depths[r["depth"]] = add_depths.get(r["depth"], 0) + 1
+    pair_flat = [p for row in campaign for p in row["additive_pairs"]]
+    pair_depths = {}
+    for r in pair_flat:
+        pair_depths[r["depth"]] = pair_depths.get(r["depth"], 0) + 1
+    spans = [row["additive_span"] for row in campaign]
+    span_depths = {}
+    for r in spans:
+        span_depths[r["depth"]] = span_depths.get(r["depth"], 0) + 1
     campaign_summary["additive"] = {
         "ratios": len(add),
         "depth_counts": {str(k): v for k, v in sorted(add_depths.items())},
@@ -281,9 +387,35 @@ def build() -> dict:
         "any_phi_shaped": any(r["unbounded"] for r in add),
         "lowest_lines_mhz": [row["lowest_line_mhz"] for row in campaign],
         "max_gap_to_scale_q": max(r["gap_to_scale_q"] for r in add),
+        "pairs": len(pair_flat),
+        "pair_depth_counts": {str(k): v for k, v in sorted(pair_depths.items())},
+        "pair_excess_min": min(r["excess"] for r in pair_flat),
+        "pair_excess_max": max(r["excess"] for r in pair_flat),
+        "pair_effective_depth_min": min(r["effective_depth"] for r in pair_flat),
+        "pair_effective_depth_max": max(r["effective_depth"] for r in pair_flat),
+        "max_pair_gap_to_scale_q": max(r["gap_to_scale_q"] for r in pair_flat),
+        "pair_ratios_decline": all(
+            [p["value"] for p in row["additive_pairs"]] ==
+            sorted((p["value"] for p in row["additive_pairs"]), reverse=True)
+            for row in campaign),
+        "crossings": [{"date": row["date"],
+                       "n_lines": row["n_lines"],
+                       "crossing_mhz": row["additive_span"].get(
+                           "scale_crossing_mhz"),
+                       "inside_span": row["additive_span"][
+                           "crossing_inside_span"]}
+                      for row in campaign],
+        "span_depth_counts": {str(k): v for k, v in sorted(span_depths.items())},
+        "span_relative_gap_to_scale": [r["relative_gap_to_scale"] for r in spans],
+        "max_abs_span_relative_gap": max(
+            abs(r["relative_gap_to_scale"]) for r in spans),
+        "min_drift_over_first_gap": min(r["drift_over_first_gap"] for r in spans),
+        "max_drift_over_first_gap": max(r["drift_over_first_gap"] for r in spans),
         "diagnostic_only": True,
-        "note": "1 + comb_df / f_low at each group's lowest line, predicted "
-                "by the additive fit rather than measured from the lines",
+        "note": "1 + comb_df / f_low at the lowest line, the same ratio at "
+                "every adjacent pair, and their product over each group's "
+                "span, all predicted by the additive fit rather than "
+                "measured from the lines",
     }
 
     return {
@@ -417,11 +549,91 @@ def render(s: dict) -> str:
              f"{ad['effective_depth_max']:.2f}. At the first line the additive "
              f"and multiplicative models differ by at most "
              f"{ad['max_gap_to_scale_q']:.2e} in ratio, because there the step "
-             f"and the interval coincide to first order; the models separate "
-             f"only in how the ratio compounds across the group, which is what "
-             f"the fit comparison already measures. A depth taken at one line "
-             f"therefore cannot discriminate between them, and is not offered "
-             f"as if it could.\n")
+             f"and the interval coincide to first order. They separate at every "
+             f"later pair, where the additive ratio falls away from `q` on one "
+             f"side of the crossing and climbs away from it on the other (3a), "
+             f"and in how that compounds over the span (3b). A depth taken at "
+             f"one line therefore cannot discriminate between them, and is not "
+             f"offered as if it could.\n")
+    L.append("### 3a. Every pair, not only the first\n")
+    L.append("At the lowest line the two models agree to first order, so a "
+             "single reading there cannot separate them. Every later pair is "
+             "a different question: the additive model holds the step fixed, "
+             "so its own ratio falls as `1/f`, while the scale model predicts "
+             "the same `q` at every line. The signed difference "
+             "`1 + d/f_i - q` is that separation, read at every pair:\n")
+    L.append("| group | pair | starts at (MHz) | 1 + d/f_i | 1 + d/f_i - q | "
+             "depth | excess | effective depth |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+    for row in camp:
+        for p in row["additive_pairs"]:
+            L.append(f"| {row['date']} n={row['n_lines']} | {p['pair']} | "
+                     f"{p['line_low_mhz']:.3f} | {p['value']:.6f} | "
+                     f"{p['signed_delta_vs_scale_q']:+.2e} | {p['depth']} | "
+                     f"{p['excess']} | {p['effective_depth']:.2f} |")
+    L.append("")
+    cross_txt = ", ".join(
+        f"{row['date']} n={row['n_lines']} at "
+        f"{row['additive_span']['scale_crossing_mhz']:.3f} MHz"
+        for row in camp)
+    L.append("Within every group the ratios fall monotonically and cross `q` "
+             "exactly once, at `f = d/(q - 1)`: " + cross_txt + " - every "
+             "one inside its own span. So the models are not disagreeing at "
+             "the first line and everywhere after: they touch at one "
+             "frequency per group and separate on both sides of it. That is "
+             "the one-point meeting recorded in `PROPORTION_AND_SCALE.md` "
+             "section 2 for a fixed comb against a fixed interval, now "
+             "located per group with the fitted `q`. A reading taken only at "
+             "the first line sees one side of that crossing: the drift "
+             "across a span is "
+             f"{ad['min_drift_over_first_gap']:.1f} to "
+             f"{ad['max_drift_over_first_gap']:.1f}x the first-line "
+             "displacement in every group, and the sign of the difference "
+             "flips exactly where the crossing lies.\n")
+
+    L.append("### 3b. Compounded across the span\n")
+    L.append("Multiplying those pair ratios gives the additive model's own "
+             "ratio from the group's lowest line to its highest; `q ** pairs` "
+             "is what the scale model predicts over the same span. The depth "
+             "reading is applied to both, so the disagreement is a number "
+             "rather than an impression:\n")
+    L.append("| group | pairs | additive compounded | depth | excess | "
+             "effective depth | q^pairs | relative gap |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+    for row in camp:
+        sp = row["additive_span"]
+        L.append(f"| {row['date']} n={row['n_lines']} | {sp['pairs']} | "
+                 f"{sp['value']:.6f} | {sp['depth']} | {sp['excess']} | "
+                 f"{sp['effective_depth']:.2f} | "
+                 f"{sp['reference_scale']['value']:.6f} | "
+                 f"{sp['relative_gap_to_scale']:+.2e} |")
+    L.append("")
+    widest = max(camp, key=lambda row: abs(
+        row["additive_span"]["relative_gap_to_scale"]))
+    ws = widest["additive_span"]
+    others = max(abs(row["additive_span"]["relative_gap_to_scale"])
+                 for row in camp if row is not widest)
+    L.append("Compounding is where the divergence stops being cosmetic: the "
+             f"widest span gap is {abs(ws['relative_gap_to_scale']):.2e} on "
+             f"the {widest['n_lines']}-line group ({ws['value']:.6f} additive "
+             f"against {ws['reference_scale']['value']:.6f} multiplicative), "
+             f"while the other three stay below {others:.0e}. The compounded "
+             "gap is not the sum of the pair gaps but their product, which is "
+             "why it grows with the number of lines rather than staying at "
+             "the size of one step. It is also not a new test: the campaign "
+             "already scores these two models on these lines with AIC and "
+             "leave-one-out in `results/comb_vs_scale.csv`, and this column "
+             "must not be counted beside those scores.\n")
+    L.append("Two cautions on reading that table as evidence. First, the "
+             "compounded ratios reach effective depth "
+             f"{max(row['additive_span']['effective_depth'] for row in camp):.2f}, "
+             "higher than any per-pair value, but only because a ratio near "
+             "1.4 is closer to phi in relative terms than a ratio near 1.02: "
+             "at these magnitudes effective depth is measuring size, not "
+             "phi's shape, and the integer depth is 0 on every span. Second, "
+             "both columns are predictions of the fit. Nothing here supports "
+             "or rejects either model; the depth reading only says how far "
+             "apart the two predictions are, and where.\n")
     if cs["depth_one"]:
         shown = ", ".join(f"{r['label']} at {r['value']:.2f} "
                           f"(effective depth {r['effective_depth']:.2f})"
@@ -496,6 +708,11 @@ def render(s: dict) -> str:
     L.append("- **Nothing here supports a candidate.** This machinery can only "
              "detract: a value at depth 0 is still an unexplained measurement, "
              "not an artificial one.\n")
+    L.append("- **The crossing is arithmetic, not a property of the sources.** "
+             "`1 + d/f = q` has one solution for any two intervals, so every "
+             "group brackets `q` exactly once because `q` and `d` are fitted "
+             "per group. The pair table measures how far the two fits part; "
+             "it does not discover a special frequency in the sky.\n")
     return "\n".join(L) + "\n"
 
 
@@ -526,6 +743,16 @@ def main() -> int:
           f"eff {cs['additive']['effective_depth_min']:.2f} .. "
           f"{cs['additive']['effective_depth_max']:.2f}")
     print(f"max |1+step/f - q|       {cs['additive']['max_gap_to_scale_q']:.3e}")
+    print(f"additive pairs           {cs['additive']['pairs']} pairs, depth "
+          f"counts {cs['additive']['pair_depth_counts']}, |1+step/f-q| up to "
+          f"{cs['additive']['max_pair_gap_to_scale_q']:.2e}, drift/first gap "
+          f"{cs['additive']['min_drift_over_first_gap']:.2f} .. "
+          f"{cs['additive']['max_drift_over_first_gap']:.2f}x")
+    print(f"additive compounding     span depth counts "
+          f"{cs['additive']['span_depth_counts']}, max |product/q^pairs-1| "
+          f"{cs['additive']['max_abs_span_relative_gap']:.2e}")
+    print(f"model crossings (MHz)    "
+          f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")
     print(f"diagnostic-only rows     {len(cs['diagnostic_only'])}")
     print(f"depth sweep              {[(r['jitter'], r['depth']) for r in payload['depth_sweep']]}")

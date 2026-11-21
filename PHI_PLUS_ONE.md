@@ -68,7 +68,52 @@ Both are held as exact rationals of the printed decimals, so the partial quotien
 
 Across the 8 measured ratios the counts are 6 at depth 0 and 2 at depth 1; excess runs 0 to 149, and effective depth -2.01 to 1.50. These are measurements of ratios that no one chose.
 
-The third line of each group is the additive model's own adjacent-line ratio, `1 + comb_df / f_low`, with `f_low` the group's lowest line from `results/expanded_phi_groups.json` (45.984284, 45.420639, 54.566758, 82.118927 MHz) and `comb_df` the fit's own step. It is what the comb predicts, not what the lines show, so it is diagnostic only and is left out of the counts above. On those 4 predicted ratios the depths are 4 at depth 0, excess runs 91 to 110, and effective depth 1.03 to 1.05. At the first line the additive and multiplicative models differ by at most 4.67e-03 in ratio, because there the step and the interval coincide to first order; the models separate only in how the ratio compounds across the group, which is what the fit comparison already measures. A depth taken at one line therefore cannot discriminate between them, and is not offered as if it could.
+The third line of each group is the additive model's own adjacent-line ratio, `1 + comb_df / f_low`, with `f_low` the group's lowest line from `results/expanded_phi_groups.json` (45.984284, 45.420639, 54.566758, 82.118927 MHz) and `comb_df` the fit's own step. It is what the comb predicts, not what the lines show, so it is diagnostic only and is left out of the counts above. On those 4 predicted ratios the depths are 4 at depth 0, excess runs 91 to 110, and effective depth 1.03 to 1.05. At the first line the additive and multiplicative models differ by at most 4.67e-03 in ratio, because there the step and the interval coincide to first order. They separate at every later pair, where the additive ratio falls away from `q` on one side of the crossing and climbs away from it on the other (3a), and in how that compounds over the span (3b). A depth taken at one line therefore cannot discriminate between them, and is not offered as if it could.
+
+### 3a. Every pair, not only the first
+
+At the lowest line the two models agree to first order, so a single reading there cannot separate them. Every later pair is a different question: the additive model holds the step fixed, so its own ratio falls as `1/f`, while the scale model predicts the same `q` at every line. The signed difference `1 + d/f_i - q` is that separation, read at every pair:
+
+| group | pair | starts at (MHz) | 1 + d/f_i | 1 + d/f_i - q | depth | excess | effective depth |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 20240325 n=4 | 1 | 45.984 | 1.021711 | +4.55e-04 | 0 | 110 | 1.04 |
+| 20240325 n=4 | 2 | 46.983 | 1.021249 | -6.60e-06 | 0 | 99 | 1.04 |
+| 20240325 n=4 | 3 | 47.938 | 1.020826 | -4.30e-04 | 0 | 128 | 1.04 |
+| 20240920 n=3 | 1 | 45.421 | 1.023284 | +3.06e-04 | 0 | 91 | 1.04 |
+| 20240920 n=3 | 2 | 46.589 | 1.022700 | -2.78e-04 | 0 | 122 | 1.04 |
+| 20240326 n=14 | 1 | 54.567 | 1.031699 | +4.67e-03 | 0 | 95 | 1.05 |
+| 20240326 n=14 | 2 | 55.320 | 1.031268 | +4.23e-03 | 0 | 116 | 1.05 |
+| 20240326 n=14 | 3 | 56.897 | 1.030401 | +3.37e-03 | 0 | 151 | 1.05 |
+| 20240326 n=14 | 4 | 59.469 | 1.029086 | +2.05e-03 | 0 | 44 | 1.05 |
+| 20240326 n=14 | 5 | 60.351 | 1.028661 | +1.63e-03 | 0 | 65 | 1.05 |
+| 20240326 n=14 | 6 | 61.844 | 1.027969 | +9.35e-04 | 0 | 72 | 1.05 |
+| 20240326 n=14 | 7 | 63.618 | 1.027190 | +1.55e-04 | 0 | 67 | 1.05 |
+| 20240326 n=14 | 8 | 65.437 | 1.026433 | -6.01e-04 | 0 | 75 | 1.05 |
+| 20240326 n=14 | 9 | 66.821 | 1.025886 | -1.15e-03 | 0 | 77 | 1.04 |
+| 20240326 n=14 | 10 | 69.954 | 1.024727 | -2.31e-03 | 0 | 81 | 1.04 |
+| 20240326 n=14 | 11 | 71.083 | 1.024334 | -2.70e-03 | 0 | 109 | 1.04 |
+| 20240326 n=14 | 12 | 72.731 | 1.023783 | -3.25e-03 | 0 | 86 | 1.04 |
+| 20240326 n=14 | 13 | 74.485 | 1.023223 | -3.81e-03 | 0 | 79 | 1.04 |
+| 20240326 n=4 | 1 | 82.119 | 1.016014 | +1.97e-04 | 0 | 100 | 1.03 |
+| 20240326 n=4 | 2 | 82.928 | 1.015858 | +4.04e-05 | 0 | 130 | 1.03 |
+| 20240326 n=4 | 3 | 84.604 | 1.015544 | -2.74e-04 | 0 | 175 | 1.03 |
+
+Within every group the ratios fall monotonically and cross `q` exactly once, at `f = d/(q - 1)`: 20240325 n=4 at 46.968 MHz, 20240920 n=3 at 46.025 MHz, 20240326 n=14 at 63.983 MHz, 20240326 n=4 at 83.140 MHz - every one inside its own span. So the models are not disagreeing at the first line and everywhere after: they touch at one frequency per group and separate on both sides of it. That is the one-point meeting recorded in `PROPORTION_AND_SCALE.md` section 2 for a fixed comb against a fixed interval, now located per group with the fitted `q`. A reading taken only at the first line sees one side of that crossing: the drift across a span is 1.8 to 2.4x the first-line displacement in every group, and the sign of the difference flips exactly where the crossing lies.
+
+### 3b. Compounded across the span
+
+Multiplying those pair ratios gives the additive model's own ratio from the group's lowest line to its highest; `q ** pairs` is what the scale model predicts over the same span. The depth reading is applied to both, so the disagreement is a number rather than an impression:
+
+| group | pairs | additive compounded | depth | excess | effective depth | q^pairs | relative gap |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 20240325 n=4 | 3 | 1.065151 | 0 | 68 | 1.12 | 1.065132 | +1.76e-05 |
+| 20240920 n=3 | 2 | 1.046512 | 0 | 909 | 1.08 | 1.046484 | +2.71e-05 |
+| 20240326 n=14 | 13 | 1.418873 | 0 | 98 | 2.18 | 1.414501 | +3.09e-03 |
+| 20240326 n=4 | 3 | 1.048169 | 0 | 94 | 1.08 | 1.048207 | -3.63e-05 |
+
+Compounding is where the divergence stops being cosmetic: the widest span gap is 3.09e-03 on the 14-line group (1.418873 additive against 1.414501 multiplicative), while the other three stay below 4e-05. The compounded gap is not the sum of the pair gaps but their product, which is why it grows with the number of lines rather than staying at the size of one step. It is also not a new test: the campaign already scores these two models on these lines with AIC and leave-one-out in `results/comb_vs_scale.csv`, and this column must not be counted beside those scores.
+
+Two cautions on reading that table as evidence. First, the compounded ratios reach effective depth 2.18, higher than any per-pair value, but only because a ratio near 1.4 is closer to phi in relative terms than a ratio near 1.02: at these magnitudes effective depth is measuring size, not phi's shape, and the integer depth is 0 on every span. Second, both columns are predictions of the fit. Nothing here supports or rejects either model; the depth reading only says how far apart the two predictions are, and where.
 
 A single level of depth is cheap and proves nothing: any ratio whose fractional part exceeds 1/2 gets `a1 = 1`. The rows that reach it are 20240326 n=14 span / comb step at 12.79 (effective depth -2.01), 20240326 n=4 span / comb step at 2.91 (effective depth 0.24), and the continuous reading is what the depth count rounds away.
 
@@ -117,4 +162,6 @@ The ratio alternates about 0.381966 and is within 1e-3 of it from level 5 on; it
 - **Depth 0 is not evidence either way.** It appears on a masked, manufactured signal and on the channel grid; one is artificial and one is arithmetic. Depth describes a ratio's continued fraction and nothing more.
 
 - **Nothing here supports a candidate.** This machinery can only detract: a value at depth 0 is still an unexplained measurement, not an artificial one.
+
+- **The crossing is arithmetic, not a property of the sources.** `1 + d/f = q` has one solution for any two intervals, so every group brackets `q` exactly once because `q` and `d` are fitted per group. The pair table measures how far the two fits part; it does not discover a special frequency in the sky.
 

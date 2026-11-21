@@ -255,6 +255,82 @@ class CampaignRatioTests(unittest.TestCase):
         self.assertEqual(summary["ratios"], len(add))
         self.assertEqual(sum(summary["depth_counts"].values()), len(add))
 
+    def _groups(self):
+        with open(os.path.join(os.path.dirname(self.table),
+                               "expanded_phi_groups.json"),
+                  encoding="utf-8") as fh:
+            groups = json.load(fh)["groups"]
+        return {(g["source"], g["date"], int(g["n_lines"])): g
+                for g in groups}
+
+    def test_every_adjacent_pair_is_read(self):
+        # the additive model's ratio is carried to every pair in the group, not
+        # only to the first line where the two models coincide
+        index = self._groups()
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            freqs = [Fraction(str(f)) for f in group["freqs_mhz"]]
+            step = Fraction(row["comb_df_mhz"])
+            pairs = entry["additive_pairs"]
+            self.assertEqual(len(pairs), len(freqs) - 1)
+            for i, pair in enumerate(pairs):
+                self.assertEqual(pair["value"], float(1 + step / freqs[i]))
+                self.assertEqual(pair["line_low_mhz"], float(freqs[i]))
+                self.assertEqual(pair["line_high_mhz"], float(freqs[i + 1]))
+                self.assertTrue(pair["diagnostic_only"])
+
+    def test_the_pairs_fall_and_cross_the_fitted_interval_once(self):
+        # 1 + d/f falls as f rises, so each group brackets q at exactly one
+        # frequency: the models touch there and separate away from it
+        for entry in self.payload["campaign"]:
+            pairs = entry["additive_pairs"]
+            values = [p["value"] for p in pairs]
+            self.assertEqual(values, sorted(values, reverse=True))
+            deltas = [p["signed_delta_vs_scale_q"] for p in pairs]
+            self.assertGreater(deltas[0], 0.0)
+            self.assertLess(deltas[-1], 0.0)
+            self.assertEqual(
+                sum(1 for a, b in zip(deltas, deltas[1:]) if a * b < 0), 1)
+            span = entry["additive_span"]
+            self.assertTrue(span["crossing_inside_span"])
+            self.assertEqual(span["gap_sign_changes"], 1)
+            # the first line sees only the near side of the crossing
+            self.assertGreater(span["drift_over_first_gap"], 1.5)
+
+    def test_the_compounded_value_is_the_product_of_the_pairs(self):
+        index = self._groups()
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            freqs = [Fraction(str(f)) for f in group["freqs_mhz"]]
+            step = Fraction(row["comb_df_mhz"])
+            product = Fraction(1)
+            for f in freqs[:-1]:
+                product *= 1 + step / f
+            span = entry["additive_span"]
+            self.assertEqual(span["value"], float(product))
+            self.assertTrue(span["diagnostic_only"])
+            self.assertEqual(span["pairs"], len(freqs) - 1)
+            scale_cumulative = Fraction(row["scale_q"]) ** (len(freqs) - 1)
+            self.assertEqual(span["reference_scale"]["value"],
+                             float(scale_cumulative))
+            self.assertEqual(span["relative_gap_to_scale"],
+                             float(product / scale_cumulative - 1))
+            self.assertTrue(span["reference_scale"]["diagnostic_only"])
+
+    def test_the_pair_and_span_readings_stay_out_of_the_counts(self):
+        camp = self.payload["campaign"]
+        summary = self.payload["campaign_summary"]["additive"]
+        pairs = sum(len(e["additive_pairs"]) for e in camp)
+        self.assertEqual(summary["pairs"], pairs)
+        self.assertEqual(sum(summary["pair_depth_counts"].values()), pairs)
+        self.assertEqual(sum(summary["span_depth_counts"].values()), len(camp))
+        self.assertEqual(len(summary["span_relative_gap_to_scale"]), len(camp))
+        self.assertTrue(all(c["inside_span"] for c in summary["crossings"]))
+        # predicted, never measured: the measured count is unchanged
+        measured = sum(len(e["ratios"]) for e in camp)
+        self.assertEqual(self.payload["campaign_summary"]["ratios"], measured)
+        self.assertLess(summary["max_pair_gap_to_scale_q"], 1e-2)
+
 
 if __name__ == "__main__":
     unittest.main()
