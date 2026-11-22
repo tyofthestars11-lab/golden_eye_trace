@@ -338,6 +338,28 @@
         "channel_khz": 100.54719562243501,
         "note": "rms of each fit's own residuals on these same lines, in channels: the unit the pair and span misses are divided by, never a weight"
       },
+      "held_out": {
+        "as_printed": [
+          "0.039271",
+          "0.027438"
+        ],
+        "loo_majority": "scale",
+        "applicable": true,
+        "loo_comb_mhz": 0.039271,
+        "loo_scale_mhz": 0.027438,
+        "loo_comb_channels": 0.39057280272108846,
+        "loo_scale_channels": 0.27288677551020407,
+        "held_out_over_rms": {
+          "comb": 1.8242540995847194,
+          "scale": 1.6649589719963642
+        },
+        "sigma_over_rms": {
+          "comb": 2.286363453065287,
+          "scale": 2.0867166176533254
+        },
+        "gaussian_mae": 0.7978845608028654,
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+      },
       "additive": {
         "label": "1 + comb step / f_low",
         "value": 1.0217106131303468,
@@ -719,6 +741,28 @@
         "channel_khz": 100.54719562243501,
         "note": "rms of each fit's own residuals on these same lines, in channels: the unit the pair and span misses are divided by, never a weight"
       },
+      "held_out": {
+        "as_printed": [
+          "",
+          ""
+        ],
+        "loo_majority": "undefined",
+        "applicable": false,
+        "loo_comb_mhz": null,
+        "loo_scale_mhz": null,
+        "loo_comb_channels": null,
+        "loo_scale_channels": null,
+        "held_out_over_rms": {
+          "comb": null,
+          "scale": null
+        },
+        "sigma_over_rms": {
+          "comb": null,
+          "scale": null
+        },
+        "gaussian_mae": 0.7978845608028654,
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+      },
       "additive": {
         "label": "1 + comb step / f_low",
         "value": 1.0232838423959645,
@@ -1030,6 +1074,28 @@
         ],
         "channel_khz": 100.54719562243501,
         "note": "rms of each fit's own residuals on these same lines, in channels: the unit the pair and span misses are divided by, never a weight"
+      },
+      "held_out": {
+        "as_printed": [
+          "0.455965",
+          "0.339469"
+        ],
+        "loo_majority": "tie",
+        "applicable": true,
+        "loo_comb_mhz": 0.455965,
+        "loo_scale_mhz": 0.339469,
+        "loo_comb_channels": 4.534835578231293,
+        "loo_scale_channels": 3.3762154965986397,
+        "held_out_over_rms": {
+          "comb": 0.97001830550402,
+          "scale": 0.8907515227287127
+        },
+        "sigma_over_rms": {
+          "comb": 1.2157376557430142,
+          "scale": 1.1163914762712048
+        },
+        "gaussian_mae": 0.7978845608028654,
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
       },
       "additive": {
         "label": "1 + comb step / f_low",
@@ -2023,6 +2089,28 @@
         "channel_khz": 100.54719562243501,
         "note": "rms of each fit's own residuals on these same lines, in channels: the unit the pair and span misses are divided by, never a weight"
       },
+      "held_out": {
+        "as_printed": [
+          "0.350042",
+          "0.329436"
+        ],
+        "loo_majority": "scale",
+        "applicable": true,
+        "loo_comb_mhz": 0.350042,
+        "loo_scale_mhz": 0.329436,
+        "loo_comb_channels": 3.4813700952380953,
+        "loo_scale_channels": 3.2764315102040817,
+        "held_out_over_rms": {
+          "comb": 1.852482357919489,
+          "scale": 1.8111838088469219
+        },
+        "sigma_over_rms": {
+          "comb": 2.321742328308048,
+          "scale": 2.2699822729047816
+        },
+        "gaussian_mae": 0.7978845608028654,
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+      },
       "additive": {
         "label": "1 + comb step / f_low",
         "value": 1.0160140183029913,
@@ -2619,6 +2707,157 @@
         "max_abs_span_over_scale_rms": 1.2885935348954136,
         "max_abs_span_fit_gap_over_comb_rms": 0.507596856513536,
         "max_abs_span_fit_gap_over_scale_rms": 0.626075852624009,
+        "held_out": {
+          "groups": [
+            {
+              "date": "20240325",
+              "n_lines": 4,
+              "rms_comb_channels": 0.2141,
+              "rms_scale_channels": 0.1639,
+              "loo_comb_channels": 0.39057280272108846,
+              "loo_scale_channels": 0.27288677551020407,
+              "held_out_over_rms": {
+                "comb": 1.8242540995847194,
+                "scale": 1.6649589719963642
+              },
+              "sigma_over_rms": {
+                "comb": 2.286363453065287,
+                "scale": 2.0867166176533254
+              },
+              "pairs_closer_counts": {
+                "scale": 1,
+                "additive": 2
+              },
+              "pairs_nearer": "additive",
+              "loo_majority": "scale",
+              "agrees": false
+            },
+            {
+              "date": "20240920",
+              "n_lines": 3,
+              "rms_comb_channels": 0.5192,
+              "rms_scale_channels": 0.5756,
+              "loo_comb_channels": null,
+              "loo_scale_channels": null,
+              "held_out_over_rms": {
+                "comb": null,
+                "scale": null
+              },
+              "sigma_over_rms": {
+                "comb": null,
+                "scale": null
+              },
+              "pairs_closer_counts": {
+                "scale": 0,
+                "additive": 2
+              },
+              "pairs_nearer": "additive",
+              "loo_majority": "undefined",
+              "agrees": null
+            },
+            {
+              "date": "20240326",
+              "n_lines": 14,
+              "rms_comb_channels": 4.675,
+              "rms_scale_channels": 3.7903,
+              "loo_comb_channels": 4.534835578231293,
+              "loo_scale_channels": 3.3762154965986397,
+              "held_out_over_rms": {
+                "comb": 0.97001830550402,
+                "scale": 0.8907515227287127
+              },
+              "sigma_over_rms": {
+                "comb": 1.2157376557430142,
+                "scale": 1.1163914762712048
+              },
+              "pairs_closer_counts": {
+                "scale": 6,
+                "additive": 7
+              },
+              "pairs_nearer": "additive",
+              "loo_majority": "tie",
+              "agrees": null
+            },
+            {
+              "date": "20240326",
+              "n_lines": 4,
+              "rms_comb_channels": 1.8793,
+              "rms_scale_channels": 1.809,
+              "loo_comb_channels": 3.4813700952380953,
+              "loo_scale_channels": 3.2764315102040817,
+              "held_out_over_rms": {
+                "comb": 1.852482357919489,
+                "scale": 1.8111838088469219
+              },
+              "sigma_over_rms": {
+                "comb": 2.321742328308048,
+                "scale": 2.2699822729047816
+              },
+              "pairs_closer_counts": {
+                "scale": 2,
+                "additive": 1
+              },
+              "pairs_nearer": "scale",
+              "loo_majority": "scale",
+              "agrees": true
+            }
+          ],
+          "groups_defined": 3,
+          "groups_without_a_fold": [
+            "20240920 n=3"
+          ],
+          "min_sigma_over_rms_comb": 1.2157376557430142,
+          "max_sigma_over_rms_comb": 2.321742328308048,
+          "min_sigma_over_rms_scale": 1.1163914762712048,
+          "max_sigma_over_rms_scale": 2.2699822729047816,
+          "max_abs_pair_over_comb_loo": {
+            "date": "20240326",
+            "n_lines": 14,
+            "pair": 9,
+            "value": 3.0758961762415975
+          },
+          "max_abs_pair_over_scale_loo": {
+            "date": "20240326",
+            "n_lines": 14,
+            "pair": 9,
+            "value": 3.9054576185173904
+          },
+          "max_abs_span_over_comb_loo": {
+            "date": "20240326",
+            "n_lines": 14,
+            "pair": null,
+            "value": 1.600316318931536
+          },
+          "max_abs_span_over_scale_loo": {
+            "date": "20240326",
+            "n_lines": 14,
+            "pair": null,
+            "value": 1.4466363537027234
+          },
+          "max_abs_fit_gap_over_comb_loo": {
+            "date": "20240326",
+            "n_lines": 14,
+            "pair": 13,
+            "value": 0.6226213153981555
+          },
+          "max_abs_fit_gap_over_scale_loo": {
+            "date": "20240326",
+            "n_lines": 14,
+            "pair": 13,
+            "value": 0.8362870485243719
+          },
+          "agreement": {
+            "comparable": 2,
+            "agree": 1,
+            "not_scored": [
+              "20240920 n=3 (undefined)",
+              "20240326 n=14 (tie)"
+            ]
+          },
+          "gaussian_mae": 0.7978845608028654,
+          "diagnostic_only": true,
+          "note": "each group's held-out mean error set beside the rms that group was judged by; the held-out columns are read as printed and never recomputed, and nothing here replaces them or enters the AIC, BIC, null or verdict counts"
+        },
         "diagnostic_only": true,
         "note": "the pair and span misses divided by each fit's own rms residual in channels, one rms per group estimated from the same lines, so no chi-square or null is formed and none of it enters the model-selection counts"
       }

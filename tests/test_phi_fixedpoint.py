@@ -534,6 +534,105 @@ class CampaignRatioTests(unittest.TestCase):
         self.assertIn("miss / comb rms", span_header[0])
         self.assertIn("miss / scale rms", span_header[0])
 
+    def test_the_held_out_errors_are_read_as_printed(self):
+        # loo_comb_mhz and loo_scale_mhz are ingest facts: read, never
+        # recomputed, and a blank is the table saying the fold is undefined
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            held = entry["held_out"]
+            self.assertEqual(held["as_printed"],
+                             [row["loo_comb_mhz"], row["loo_scale_mhz"]])
+            self.assertEqual(held["loo_majority"], row["loo_majority"])
+            if row["loo_comb_mhz"].strip():
+                self.assertTrue(held["applicable"])
+                self.assertEqual(
+                    held["loo_comb_channels"],
+                    float(Fraction(row["loo_comb_mhz"])) * 1e6
+                    / self.script.CHANNEL_HZ)
+                self.assertEqual(
+                    held["loo_scale_channels"],
+                    float(Fraction(row["loo_scale_mhz"])) * 1e6
+                    / self.script.CHANNEL_HZ)
+            else:
+                # three lines leave two, which fit either model exactly
+                self.assertFalse(held["applicable"])
+                self.assertIsNone(held["loo_comb_channels"])
+                self.assertIsNone(held["held_out_over_rms"]["comb"])
+
+    def test_the_held_out_error_is_set_beside_its_own_group_rms(self):
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            held = entry["held_out"]
+            if not held["applicable"]:
+                continue
+            for model in ("comb", "scale"):
+                self.assertAlmostEqual(
+                    held["held_out_over_rms"][model],
+                    held[f"loo_{model}_channels"]
+                    / entry["noise"][f"rms_{model}_channels"], places=12)
+
+    def test_the_gaussian_reading_divides_out_the_absolute_error_offset(self):
+        # a mean absolute error and an rms differ by sqrt(2/pi) on Gaussian
+        # scatter; dividing it out leaves the out-of-sample widening alone
+        mae = math.sqrt(2.0 / math.pi)
+        for entry in self.payload["campaign"]:
+            held = entry["held_out"]
+            self.assertAlmostEqual(held["gaussian_mae"], mae, places=12)
+            for model in ("comb", "scale"):
+                if not held["applicable"]:
+                    self.assertIsNone(held["sigma_over_rms"][model])
+                    continue
+                self.assertAlmostEqual(
+                    held["sigma_over_rms"][model],
+                    held["held_out_over_rms"][model] / mae, places=12)
+
+    def test_the_pair_split_is_checked_against_the_fold_vote(self):
+        noise = self.payload["campaign_summary"]["line_fit"]["noise_scale"]
+        held = noise["held_out"]
+        groups = held["groups"]
+        self.assertEqual(len(groups), len(self.rows))
+        for row, g in zip(self.rows, groups):
+            self.assertEqual(g["loo_majority"], row["loo_majority"])
+            vote = {"comb": "additive", "scale": "scale"}.get(
+                row["loo_majority"])
+            if g["pairs_nearer"] == "tie" or vote is None:
+                self.assertIsNone(g["agrees"])
+            else:
+                self.assertEqual(g["agrees"], g["pairs_nearer"] == vote)
+        scored = [g for g in groups if g["agrees"] is not None]
+        self.assertEqual(held["agreement"]["comparable"], len(scored))
+        self.assertEqual(held["agreement"]["agree"],
+                         sum(1 for g in scored if g["agrees"]))
+
+    def test_the_held_out_check_stays_out_of_the_selection_counts(self):
+        summary = self.payload["campaign_summary"]
+        held = summary["line_fit"]["noise_scale"]["held_out"]
+        self.assertTrue(held["diagnostic_only"])
+        self.assertEqual(summary["ratios"],
+                         sum(len(e["ratios"])
+                             for e in self.payload["campaign"]))
+        self.assertEqual(summary["additive"]["pairs"],
+                         sum(len(e["additive_pairs"])
+                             for e in self.payload["campaign"]))
+        for key in ("aic", "bic", "delta_aic", "null_p", "p_value",
+                    "verdict"):
+            self.assertNotIn(key, held)
+        # the group with no fold is reported, not silently dropped
+        self.assertEqual(
+            len(held["groups_without_a_fold"]),
+            sum(1 for r in self.rows if not r["loo_comb_mhz"].strip()))
+        self.assertIsNotNone(held["max_abs_pair_over_comb_loo"])
+
+    def test_the_table_carries_the_held_out_comparison(self):
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"),
+                  encoding="utf-8") as fh:
+            text = fh.read()
+        headers = [line for line in text.splitlines()
+                   if line.startswith("| group |")]
+        held = [h for h in headers if "held-out / rms comb" in h]
+        self.assertEqual(len(held), 1)
+        self.assertIn("held-out comb (ch)", held[0])
+        self.assertIn("held-out majority", held[0])
+
     def test_the_tables_carry_no_excess_column(self):
         # the pair and span tables were trimmed to depth and the continuous
         # reading; excess still travels in the JSON but is not tabulated

@@ -48,6 +48,16 @@ all read as fractions of the scatter each fit leaves. Still diagnostic only:
 the rms is one number per group, estimated from the same lines, so no
 chi-square and no null is formed, and none of it enters the model-selection
 counts.
+
+That divisor is still one in-sample number, so the campaign's own leave-one-out
+columns are read beside it: ``loo_comb_mhz`` and ``loo_scale_mhz`` are each
+fit's mean error on the line it never saw, and dividing that by the same
+group's rms says whether one rms was a fair summary of the scatter. It is,
+where the lines outnumber the two fitted parameters; on the groups of three or
+four it is optimistic by roughly a factor two. The nearer-fit split is checked
+against the fold majority the same way. Both the held-out error and the rms
+stay diagnostic: the columns are read as printed, never recomputed, and the
+AIC and leave-one-out decisions are untouched.
 """
 
 from __future__ import annotations
@@ -86,6 +96,9 @@ RUNG_TOLERANCE = 0.01
 CAMPAIGN_CSV = os.path.join(ROOT, "results", "comb_vs_scale.csv")
 GROUPS_JSON = os.path.join(ROOT, "results", "expanded_phi_groups.json")
 DEPTH_LIMIT = 64
+# sqrt(2/pi): the ratio a mean absolute error has to the rms of the same
+# Gaussian scatter, used to put the held-out column on the rms's footing
+GAUSSIAN_MAE = math.sqrt(2.0 / math.pi)
 
 
 def window_in_hz(tolerance_rungs: float, freq_hz: float) -> float:
@@ -147,6 +160,67 @@ def line_offset(relative, predicted_high_mhz, rms) -> dict:
         "over_comb_rms": float(channels / rms["comb"]),
         "over_scale_rms": float(channels / rms["scale"]),
     }
+
+
+def held_out_noise(row, rms) -> dict:
+    """What a line the fit never saw costs, beside the rms it was judged by.
+
+    ``loo_comb_mhz`` and ``loo_scale_mhz`` in the campaign table are each
+    fit's mean error on the line omitted from the fit, averaged over the
+    folds, in MHz. They are read as printed and never re-derived. A blank
+    value is the table's way of saying leave-one-out was not defined on that
+    group - three lines leave two, and two points fit either model exactly -
+    so it is reported as ``applicable: False`` rather than as a zero.
+
+    The quotient with the group's own rms is the cross-check: the rms is an
+    in-sample summary of the same lines, and the held-out error is those
+    lines' scatter with the fit removed. One rms of held-out error means the
+    single number was a fair summary; more means it was optimistic. Because
+    the held-out column is a mean absolute error and the rms a root mean
+    square, ``sigma_over_rms`` divides out ``sqrt(2/pi)``, the ratio those
+    two summaries have for Gaussian scatter, so 1.0 there means the held-out
+    line sat as far out as the in-sample rms predicts.
+    """
+    texts = {model: str(row.get(f"loo_{model}_mhz", "")).strip()
+             for model in ("comb", "scale")}
+    defined = [model for model in ("comb", "scale") if texts[model]]
+    if len(defined) == 1:
+        raise ValueError(
+            f"{row.get('date')}: only one leave-one-out column is filled "
+            f"({texts}); both fits are held out together or neither is")
+    majority = str(row.get("loo_majority", "")).strip()
+    if not majority:
+        raise ValueError(f"{row.get('date')}: loo_majority is empty")
+    out = {
+        "as_printed": [texts["comb"], texts["scale"]],
+        "loo_majority": majority,
+        "applicable": bool(defined),
+        "loo_comb_mhz": None,
+        "loo_scale_mhz": None,
+        "loo_comb_channels": None,
+        "loo_scale_channels": None,
+        "held_out_over_rms": {"comb": None, "scale": None},
+        "sigma_over_rms": {"comb": None, "scale": None},
+        "gaussian_mae": GAUSSIAN_MAE,
+        "note": "each fit's mean error on the held-out line, read as "
+                "printed and divided by the same group's in-sample rms; "
+                "diagnostic only, and never recomputed from the lines",
+    }
+    if not defined:
+        return out
+    for model in ("comb", "scale"):
+        value = _exact(texts[model])
+        if value <= 0:
+            raise ValueError(
+                f"{row.get('date')}: loo_{model}_mhz must be positive, "
+                f"got {texts[model]}")
+        channels = float(value) * 1e6 / CHANNEL_HZ
+        over = channels / float(rms[model])
+        out[f"loo_{model}_mhz"] = float(value)
+        out[f"loo_{model}_channels"] = channels
+        out["held_out_over_rms"][model] = over
+        out["sigma_over_rms"][model] = over / GAUSSIAN_MAE
+    return out
 
 
 def describe(label, value, exact_value=None, note="", synthetic=False,
@@ -432,6 +506,7 @@ def campaign_rows() -> list:
             raise ValueError(f"{key}: fixture lines are not in frequency order")
         f_low = freqs[0]
         rms = fit_noise(row)
+        held = held_out_noise(row, rms)
         pairs = additive_pairs(freqs, step, q)
         # the first-line entry is the first pair, not a second computation, so
         # the lowest line cannot drift between the two places it is reported
@@ -462,6 +537,7 @@ def campaign_rows() -> list:
                         "lines, in channels: the unit the pair and span "
                         "misses are divided by, never a weight",
             },
+            "held_out": held,
             "additive": additive,
             "additive_pairs": pairs,
             "pair_residuals": scored,
@@ -686,6 +762,53 @@ def build() -> dict:
     pair_scale = [abs(r["over_scale_rms"]) for _, r in pairs_grouped]
     span_comb = [abs(r["over_comb_rms"]) for r in spans]
     span_scale = [abs(r["over_scale_rms"]) for r in spans]
+    # --- the same misses against the line each fit never saw -----------------
+    def _largest_loo(items, model, key=None):
+        """The widest miss in held-out widths, skipping groups with no fold."""
+        best = None
+        channel_key = key or ("offset_channels_vs_"
+                              + ("additive" if model == "comb" else "scale"))
+        for row, item in items:
+            loo = row["held_out"][f"loo_{model}_channels"]
+            if loo is None or channel_key not in item:
+                continue
+            value = abs(item[channel_key]) / loo
+            if best is None or value > best["value"]:
+                best = {"date": row["date"], "n_lines": row["n_lines"],
+                        "pair": item.get("pair"), "value": value}
+        return best
+
+    held_groups = []
+    for row in campaign:
+        held = row["held_out"]
+        closer = _closer_counts(row["pair_residuals"])
+        nearer = ("additive" if closer["additive"] > closer["scale"]
+                  else "scale" if closer["scale"] > closer["additive"]
+                  else "tie")
+        vote = {"comb": "additive", "scale": "scale"}.get(
+            held["loo_majority"])
+        comparable = held["applicable"] and vote is not None
+        held_groups.append({
+            "date": row["date"],
+            "n_lines": row["n_lines"],
+            "rms_comb_channels": row["noise"]["rms_comb_channels"],
+            "rms_scale_channels": row["noise"]["rms_scale_channels"],
+            "loo_comb_channels": held["loo_comb_channels"],
+            "loo_scale_channels": held["loo_scale_channels"],
+            "held_out_over_rms": dict(held["held_out_over_rms"]),
+            "sigma_over_rms": dict(held["sigma_over_rms"]),
+            "pairs_closer_counts": closer,
+            "pairs_nearer": nearer,
+            "loo_majority": held["loo_majority"],
+            "agrees": (nearer == vote) if comparable else None,
+        })
+    defined_groups = [g for g in held_groups
+                      if g["sigma_over_rms"]["comb"] is not None]
+    scored_groups = [g for g in held_groups if g["agrees"] is not None]
+    combo = [g["sigma_over_rms"]["comb"] for g in defined_groups]
+    scalo = [g["sigma_over_rms"]["scale"] for g in defined_groups]
+    spans_grouped = [(row, row["additive_span"]) for row in campaign]
+
     line_fit["noise_scale"] = {
         "rms_comb_channels": [row["noise"]["rms_comb_channels"]
                               for row in campaign],
@@ -710,6 +833,41 @@ def build() -> dict:
             abs(r["fit_gap_over_comb_rms"]) for r in spans),
         "max_abs_span_fit_gap_over_scale_rms": max(
             abs(r["fit_gap_over_scale_rms"]) for r in spans),
+        "held_out": {
+            "groups": held_groups,
+            "groups_defined": len(defined_groups),
+            "groups_without_a_fold": [
+                f"{g['date']} n={g['n_lines']}" for g in held_groups
+                if g["sigma_over_rms"]["comb"] is None],
+            "min_sigma_over_rms_comb": min(combo) if combo else None,
+            "max_sigma_over_rms_comb": max(combo) if combo else None,
+            "min_sigma_over_rms_scale": min(scalo) if scalo else None,
+            "max_sigma_over_rms_scale": max(scalo) if scalo else None,
+            "max_abs_pair_over_comb_loo": _largest_loo(pairs_grouped, "comb"),
+            "max_abs_pair_over_scale_loo": _largest_loo(pairs_grouped,
+                                                         "scale"),
+            "max_abs_span_over_comb_loo": _largest_loo(spans_grouped, "comb"),
+            "max_abs_span_over_scale_loo": _largest_loo(spans_grouped,
+                                                        "scale"),
+            "max_abs_fit_gap_over_comb_loo": _largest_loo(
+                pairs_grouped, "comb", "fit_gap_channels"),
+            "max_abs_fit_gap_over_scale_loo": _largest_loo(
+                pairs_grouped, "scale", "fit_gap_channels"),
+            "agreement": {
+                "comparable": len(scored_groups),
+                "agree": sum(1 for g in scored_groups if g["agrees"]),
+                "not_scored": [
+                    f"{g['date']} n={g['n_lines']} ({g['loo_majority']})"
+                    for g in held_groups if g["agrees"] is None],
+            },
+            "gaussian_mae": GAUSSIAN_MAE,
+            "diagnostic_only": True,
+            "note": "each group's held-out mean error set beside the rms "
+                    "that group was judged by; the held-out columns are read "
+                    "as printed and never recomputed, and nothing here "
+                    "replaces them or enters the AIC, BIC, null or verdict "
+                    "counts",
+        },
         "diagnostic_only": True,
         "note": "the pair and span misses divided by each fit's own rms "
                 "residual in channels, one rms per group estimated from the "
@@ -1063,6 +1221,141 @@ def render(s: dict) -> str:
              "side is an independent test. Nothing here supports or rejects "
              "either model; the reading only says how far apart the two "
              "predictions are, and how far each sits from the lines.\n")
+
+    L.append("### 3c. One rms per group, checked against the held-out line\n")
+    ho = ns["held_out"]
+    L.append("Sections 3a and 3b divide every miss by one rms per group, and "
+             "that rms is an in-sample number: it is computed from the same "
+             "lines the fit was estimated on, so by construction it understates "
+             "how far a line sits that the fit never saw. The campaign table "
+             "already records that second measurement - `loo_comb_mhz` and "
+             "`loo_scale_mhz`, each fit's mean error on the line held out of "
+             "the fit, averaged over the folds. Set beside the rms, it says "
+             "whether one rms is a fair summary of the line scatter:\n")
+    L.append("| group | lines | rms comb (ch) | rms scale (ch) | "
+             "held-out comb (ch) | held-out scale (ch) | "
+             "held-out / rms comb | held-out / rms scale | "
+             "held-out sigma / rms comb | held-out sigma / rms scale | "
+             "nearer fit (pairs) | held-out majority | same way |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
+             "---: | ---: | --- | --- | --- |")
+    for g in ho["groups"]:
+        cells = []
+        for key in ("loo_comb_channels", "loo_scale_channels"):
+            v = g[key]
+            cells.append("-" if v is None else f"{v:.2f}")
+        for block in ("held_out_over_rms", "sigma_over_rms"):
+            for model in ("comb", "scale"):
+                v = g[block][model]
+                cells.append("-" if v is None else f"{v:.2f}")
+        same = ("-" if g["agrees"] is None
+                else ("yes" if g["agrees"] else "no"))
+        L.append(f"| {g['date']} n={g['n_lines']} | {g['n_lines']} | "
+                 f"{g['rms_comb_channels']:.3f} | "
+                 f"{g['rms_scale_channels']:.3f} | "
+                 + " | ".join(cells)
+                 + f" | {g['pairs_nearer']} "
+                 f"({g['pairs_closer_counts']['additive']}-"
+                 f"{g['pairs_closer_counts']['scale']}) | "
+                 f"{g['loo_majority']} | {same} |")
+    L.append("")
+    defined = [g for g in ho["groups"]
+               if g["sigma_over_rms"]["comb"] is not None]
+    big = max(defined, key=lambda g: g["n_lines"])
+    small = [g for g in defined if g["n_lines"] < big["n_lines"]]
+    small_sigma = [g["sigma_over_rms"][m] for g in small
+                   for m in ("comb", "scale")]
+    L.append("The columns are not the same kind of average, so the sigma "
+             "columns carry the comparison. The held-out number is a mean "
+             "absolute error and the rms a root mean square; for Gaussian "
+             "scatter the two stand in the ratio sqrt(2/pi) = "
+             f"{ho['gaussian_mae']:.3f}, so the raw quotient reads low by that "
+             "factor whatever the data did. Dividing it out leaves the "
+             "held-out line in in-sample rms widths: 1.0 means the fit's own "
+             "scatter already covered it, and anything above 1.0 is the part "
+             "an in-sample rms cannot see.\n")
+    L.append(f"The answer differs by group size. On the {big['n_lines']}-line "
+             "group the held-out line sits "
+             f"{big['sigma_over_rms']['comb']:.2f} comb rms and "
+             f"{big['sigma_over_rms']['scale']:.2f} scale rms from its fit, "
+             f"{big['sigma_over_rms']['comb'] - 1:.0%} and "
+             f"{big['sigma_over_rms']['scale'] - 1:.0%} above the in-sample "
+             "reading, so one rms is within a quarter of the held-out scatter "
+             f"there. On the "
+             f"{min(g['n_lines'] for g in small)}-line groups it sits "
+             f"{min(small_sigma):.2f}-{max(small_sigma):.2f} rms out, close to "
+             "double: three or four lines supporting two fitted parameters "
+             "leave a residual that is small partly because the fit was bent "
+             "to them, and the held-out error is what that bending costs. A "
+             "single rms is therefore a fair summary only where the lines "
+             "outnumber the parameters; where they do not, it is a lower "
+             "bound on the scatter, and the 3a and 3b multiples are "
+             "understatements by about that factor.\n")
+    wpair = ho["max_abs_pair_over_comb_loo"]
+    L.append("Carried through, the largest pair miss is "
+             f"{wpair['value']:.2f} held-out comb widths "
+             f"({wpair['date']} n={wpair['n_lines']} pair {wpair['pair']}) "
+             f"where the rms reading was {ns['max_abs_over_comb_rms']:.2f}, "
+             "and the largest span miss is "
+             f"{ho['max_abs_span_over_comb_loo']['value']:.2f} where it was "
+             f"{ns['max_abs_span_over_comb_rms']:.2f}. On the scale side the "
+             "same two move from "
+             f"{ns['max_abs_over_scale_rms']:.2f} and "
+             f"{ns['max_abs_span_over_scale_rms']:.2f} rms to "
+             f"{ho['max_abs_pair_over_scale_loo']['value']:.2f} and "
+             f"{ho['max_abs_span_over_scale_loo']['value']:.2f} held-out "
+             "widths. The gap between the two fits, read the same way, reaches "
+             f"{ho['max_abs_fit_gap_over_comb_loo']['value']:.2f} comb and "
+             f"{ho['max_abs_fit_gap_over_scale_loo']['value']:.2f} scale "
+             "held-out widths. The rescaling changes the size of the multiple "
+             "and not the ordering: the misses on the lines still run wider "
+             "than the gap between the two fits.\n")
+    ag = ho["agreement"]
+    scored_groups = [g for g in ho["groups"] if g["agrees"] is not None]
+    agree_text = ", ".join(f"{g['date']} n={g['n_lines']}"
+                           for g in scored_groups if g["agrees"]) or "none"
+    differ_text = ", ".join(
+        f"{g['date']} n={g['n_lines']} ({g['pairs_nearer']} pairs against "
+        f"{g['loo_majority']} folds)"
+        for g in scored_groups if not g["agrees"]) or "none"
+    if scored_groups and ag["agree"] == len(scored_groups):
+        compare = f"it matches on {agree_text} and differs nowhere"
+    elif scored_groups and ag["agree"] == 0:
+        compare = f"it differs on {differ_text} and matches nowhere"
+    else:
+        compare = f"it matches on {agree_text} and differs on {differ_text}"
+    L.append(f"The nearer-fit split from 3a is the other thing the held-out "
+             "columns can check. The pairs put one model nearer in "
+             f"{sum(g['pairs_closer_counts']['additive'] for g in ho['groups'])} "
+             "additive and "
+             f"{sum(g['pairs_closer_counts']['scale'] for g in ho['groups'])} "
+             "scale readings; the fold vote names a model in "
+             f"{ag['comparable']} of {len(ho['groups'])} groups, and "
+             f"{compare}. The {big['n_lines']}-line group votes "
+             "a tie and the "
+             f"{min(g['n_lines'] for g in ho['groups'])}-line group cannot be "
+             "held out, so neither is scored either way and both are shown "
+             "above. Where the two disagree, the pair split is still a set of "
+             "correlated in-sample nearnesses and the fold vote is an "
+             "out-of-sample count on the same lines; reporting both is the "
+             "check, and neither can be used to shore up the other.\n")
+    L.append("Nothing here is a selection statistic, and nothing here makes "
+             "the rms wrong - it dates it. The held-out columns are read from "
+             "`results/comb_vs_scale.csv` as printed and never recomputed; the "
+             "rms on the other side is the same in-sample number 3a and 3b "
+             "used; no AIC, BIC, null or verdict is touched, and the campaign's "
+             "counts are unchanged. What the comparison adds is the size of "
+             "the correction: a miss quoted as three rms is about "
+             f"{3.0 / max(small_sigma):.1f}-{3.0 / min(small_sigma):.1f} "
+             "held-out widths on the four-line "
+             f"groups and about {3.0 / big['sigma_over_rms']['comb']:.1f} on "
+             "the fourteen-line one, so the multiple should be quoted with "
+             "the group size beside it. The held-out error is "
+             "itself a mean over n folds of the same small group, with the "
+             "pairs correlated and no null attached, so neither denominator "
+             "is a likelihood. And none of it moves a ratio towards phi: a "
+             "smaller scatter makes a measurement sharper, not more golden, "
+             "and phi stays a coordinate.\n")
     if cs["depth_one"]:
         shown = ", ".join(f"{r['label']} at {r['value']:.2f} "
                           f"(effective depth {r['effective_depth']:.2f})"
@@ -1195,6 +1488,15 @@ def main() -> int:
           f"{ns['max_abs_fit_gap_over_scale_rms']:.2f} rms; spans "
           f"{ns['max_abs_span_over_comb_rms']:.2f} / "
           f"{ns['max_abs_span_over_scale_rms']:.2f} rms")
+    ho = ns["held_out"]
+    if ho["groups_defined"]:
+        print(f"held-out vs rms          sigma "
+              f"{ho['min_sigma_over_rms_comb']:.2f}-"
+              f"{ho['max_sigma_over_rms_comb']:.2f} comb, "
+              f"{ho['min_sigma_over_rms_scale']:.2f}-"
+              f"{ho['max_sigma_over_rms_scale']:.2f} scale; pair split vs "
+              f"fold vote {ho['agreement']['agree']}/"
+              f"{ho['agreement']['comparable']}")
     print(f"model crossings (MHz)    "
           f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")
