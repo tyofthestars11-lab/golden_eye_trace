@@ -29,6 +29,14 @@ span as their product - and the signed distance from the fitted multiplicative
 interval is reported pair by pair, so the divergence is measured where it
 actually opens up. All of it is still diagnostic only: both sides of that
 difference are predictions of a fit, not measurements of the lines.
+
+That last step still compares two fits with each other. So the same pairs are
+scored against the ratio the lines themselves carry, ``f_{i+1} / f_i``: each
+measured pair sits beside both predictions and says which one is nearer, and
+the compounded span is scored the same way. Those residuals are descriptive -
+both q and the step were fitted on these lines, the pairs are not independent,
+and no null is attached - so the campaign's AIC and leave-one-out remain the
+decision.
 """
 
 from __future__ import annotations
@@ -105,6 +113,30 @@ def describe(label, value, exact_value=None, note="", synthetic=False,
     }
 
 
+def _closer_counts(items) -> dict:
+    """How many readings each fit is nearer to; the splits are diagnostics."""
+    out = {"scale": 0, "additive": 0}
+    for it in items:
+        out[it["closer"]] += 1
+    return out
+
+
+def _span_sides(campaign) -> dict:
+    """Where the measured span sits relative to the two predictions."""
+    out = {"above_both": 0, "below_both": 0, "between": 0}
+    for row in campaign:
+        span = row["additive_span"]
+        predictions = (span["value"], span["reference_scale"]["value"])
+        measured = span["measured_span_ratio"]
+        if measured > max(predictions):
+            out["above_both"] += 1
+        elif measured < min(predictions):
+            out["below_both"] += 1
+        else:
+            out["between"] += 1
+    return out
+
+
 def group_lines() -> dict:
     """The group fixtures' own line frequencies, keyed by what the CSV carries.
 
@@ -148,6 +180,46 @@ def additive_pairs(freqs, step, q) -> list:
         item["signed_delta_vs_scale_q"] = float(ratio - q)
         item["gap_to_scale_q"] = abs(item["signed_delta_vs_scale_q"])
         out.append(item)
+    return out
+
+
+def pair_residuals(freqs, step, q, pairs) -> list:
+    """The measured adjacent-pair ratio beside both fits, pair by pair.
+
+    ``f_{i+1} / f_i`` is the ratio the lines themselves carry, so scoring both
+    predictions against it puts the divergence on the lines instead of between
+    two sets of fitted values. Both q and the step were fitted on these same
+    lines and the pairs are not independent, so neither residual is a selection
+    statistic: the campaign's AIC and leave-one-out remain the decision. Kept
+    diagnostic only, and recorded as relative misses so pairs at different
+    frequencies can be read together.
+    """
+    out = []
+    for i in range(len(freqs) - 1):
+        measured = freqs[i + 1] / freqs[i]
+        additive = 1 + step / freqs[i]
+        rel_scale = measured / q - 1
+        rel_additive = measured / additive - 1
+        out.append({
+            "pair": i + 1,
+            "line_low_mhz": float(freqs[i]),
+            "line_high_mhz": float(freqs[i + 1]),
+            "measured": float(measured),
+            "measured_printed": (f"{float(freqs[i + 1]):.6f} / "
+                                 f"{float(freqs[i]):.6f}"),
+            "scale_prediction": float(q),
+            "additive_prediction": float(additive),
+            "residual_vs_scale": float(measured - q),
+            "residual_vs_additive": float(measured - additive),
+            "relative_vs_scale": float(rel_scale),
+            "relative_vs_additive": float(rel_additive),
+            "closer": ("additive" if abs(rel_additive) < abs(rel_scale)
+                       else "scale"),
+            "diagnostic_only": True,
+            "note": "measured f_high/f_low beside both fits; q and the step "
+                    "were fitted on these same lines, so neither residual "
+                    "is independent and neither selects a model",
+        })
     return out
 
 
@@ -196,11 +268,25 @@ def additive_span(freqs, step, q, pairs) -> dict:
     signs = [p["signed_delta_vs_scale_q"] for p in pairs]
     item["gap_sign_changes"] = sum(
         1 for a, b in zip(signs, signs[1:]) if a * b < 0)
+    measured = freqs[-1] / freqs[0]
+    rel_additive = measured / product - 1
+    rel_scale = measured / scale_cumulative - 1
+    item["measured_span_ratio"] = float(measured)
+    item["measured_span_printed"] = (f"{float(freqs[-1]):.6f} / "
+                                      f"{float(freqs[0]):.6f}")
+    item["residual_measured_vs_additive"] = float(measured - product)
+    item["residual_measured_vs_scale"] = float(measured - scale_cumulative)
+    item["relative_vs_additive"] = float(rel_additive)
+    item["relative_vs_scale"] = float(rel_scale)
+    item["closer"] = ("additive" if abs(rel_additive) < abs(rel_scale)
+                       else "scale")
+    item["measured_between_predictions"] = bool(
+        min(product, scale_cumulative) <= measured
+        <= max(product, scale_cumulative))
     if q > 1:
         crossing = step / (q - 1)
         item["scale_crossing_mhz"] = float(crossing)
         item["crossing_inside_span"] = bool(freqs[0] < crossing < freqs[-1])
-        item["crossing_after_pair"] = sum(1 for f in freqs[:-1] if f < crossing)
     return item
 
 
@@ -239,21 +325,18 @@ def campaign_rows() -> list:
         if freqs != sorted(freqs):
             raise ValueError(f"{key}: fixture lines are not in frequency order")
         f_low = freqs[0]
-        # the additive model's adjacent-line ratio, predicted at the first line:
-        # not a measurement of the data, so it stays beside the table only
-        additive_value = 1 + step / f_low
-        additive = describe(
-            "1 + comb step / f_low", float(additive_value),
-            exact_value=additive_value,
-            printed=f"{row['comb_df_mhz']} / {lines[key][0]}",
-            note="additive model's own adjacent-line ratio at the group's "
-                 "lowest line; predicted from the fit, not measured, so "
-                 "diagnostic only")
-        additive["diagnostic_only"] = True
-        additive["lowest_line_mhz"] = float(f_low)
-        additive["gap_to_scale_q"] = float(abs(additive_value - q))
         pairs = additive_pairs(freqs, step, q)
+        # the first-line entry is the first pair, not a second computation, so
+        # the lowest line cannot drift between the two places it is reported
+        additive = dict(pairs[0])
+        additive["label"] = "1 + comb step / f_low"
+        additive["lowest_line_mhz"] = float(f_low)
+        additive["note"] = ("additive model's own adjacent-line ratio at the "
+                            "group's lowest line: the first entry of "
+                            "additive_pairs, predicted from the fit, not "
+                            "measured, so diagnostic only")
         span = additive_span(freqs, step, q, pairs)
+        scored = pair_residuals(freqs, step, q, pairs)
         out.append({
             "source": row["source"],
             "date": row["date"],
@@ -264,6 +347,7 @@ def campaign_rows() -> list:
             "lowest_line_mhz": float(f_low),
             "additive": additive,
             "additive_pairs": pairs,
+            "pair_residuals": scored,
             "additive_span": span,
             "ratios": [
                 describe("fitted line ratio q", float(q), exact_value=q,
@@ -418,6 +502,50 @@ def build() -> dict:
                 "measured from the lines",
     }
 
+    scored = [r for row in campaign for r in row["pair_residuals"]]
+    line_fit = {
+        "pairs": len(scored),
+        "closer_counts": _closer_counts(scored),
+        "span_closer_counts": _closer_counts(spans),
+        "max_abs_relative_vs_scale": max(abs(r["relative_vs_scale"])
+                                         for r in scored),
+        "max_abs_relative_vs_additive": max(abs(r["relative_vs_additive"])
+                                            for r in scored),
+        "mean_abs_relative_vs_scale": (sum(abs(r["relative_vs_scale"])
+                                           for r in scored) / len(scored)),
+        "mean_abs_relative_vs_additive": (
+            sum(abs(r["relative_vs_additive"]) for r in scored) / len(scored)),
+        "max_abs_span_relative_vs_scale": max(
+            abs(r["relative_vs_scale"]) for r in spans),
+        "max_abs_span_relative_vs_additive": max(
+            abs(r["relative_vs_additive"]) for r in spans),
+        "measured_between_predictions": [
+            f"{row['date']} n={row['n_lines']}" for row in campaign
+            if row["additive_span"]["measured_between_predictions"]],
+        "span_side_counts": _span_sides(campaign),
+        "groups": [{"date": row["date"],
+                    "n_lines": row["n_lines"],
+                    "closer_counts": _closer_counts(row["pair_residuals"]),
+                    "max_abs_relative_vs_scale": max(
+                        abs(r["relative_vs_scale"])
+                        for r in row["pair_residuals"]),
+                    "max_abs_relative_vs_additive": max(
+                        abs(r["relative_vs_additive"])
+                        for r in row["pair_residuals"]),
+                    "span_closer": row["additive_span"]["closer"],
+                    "span_relative_vs_scale": row["additive_span"][
+                        "relative_vs_scale"],
+                    "span_relative_vs_additive": row["additive_span"][
+                        "relative_vs_additive"]}
+                   for row in campaign],
+        "diagnostic_only": True,
+        "note": "measured f_high/f_low at every adjacent pair and across each "
+                "span, scored against both fits; descriptive only, since q "
+                "and the step were fitted on these same lines and no null "
+                "is attached",
+    }
+    campaign_summary["line_fit"] = line_fit
+
     return {
         "phi": PHI,
         "contraction": CONTRACTION,
@@ -556,21 +684,27 @@ def render(s: dict) -> str:
              f"one line therefore cannot discriminate between them, and is not "
              f"offered as if it could.\n")
     L.append("### 3a. Every pair, not only the first\n")
+    lf = cs["line_fit"]
     L.append("At the lowest line the two models agree to first order, so a "
              "single reading there cannot separate them. Every later pair is "
              "a different question: the additive model holds the step fixed, "
              "so its own ratio falls as `1/f`, while the scale model predicts "
-             "the same `q` at every line. The signed difference "
-             "`1 + d/f_i - q` is that separation, read at every pair:\n")
-    L.append("| group | pair | starts at (MHz) | 1 + d/f_i | 1 + d/f_i - q | "
-             "depth | excess | effective depth |")
-    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+             "the same `q` at every line. Each pair is therefore read three "
+             "ways: the ratio the lines carry, the additive prediction, and "
+             "the signed difference between the two predictions - carried in "
+             "the JSON as `1 + d/f_i - q` and located by the crossing "
+             "below:\n")
+    L.append("| group | pair | starts at (MHz) | measured f_high/f_low | "
+             "1 + d/f_i | measured/(1+d/f_i) - 1 | measured/q - 1 | closer | "
+             "additive depth | additive eff. depth |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |")
     for row in camp:
-        for p in row["additive_pairs"]:
+        for p, m in zip(row["additive_pairs"], row["pair_residuals"]):
             L.append(f"| {row['date']} n={row['n_lines']} | {p['pair']} | "
-                     f"{p['line_low_mhz']:.3f} | {p['value']:.6f} | "
-                     f"{p['signed_delta_vs_scale_q']:+.2e} | {p['depth']} | "
-                     f"{p['excess']} | {p['effective_depth']:.2f} |")
+                     f"{p['line_low_mhz']:.4f} | {m['measured']:.6f} | "
+                     f"{p['value']:.6f} | {m['relative_vs_additive']:+.2e} | "
+                     f"{m['relative_vs_scale']:+.2e} | {m['closer']} | "
+                     f"{p['depth']} | {p['effective_depth']:.2f} |")
     L.append("")
     cross_txt = ", ".join(
         f"{row['date']} n={row['n_lines']} at "
@@ -590,40 +724,75 @@ def render(s: dict) -> str:
              f"{ad['max_drift_over_first_gap']:.1f}x the first-line "
              "displacement in every group, and the sign of the difference "
              "flips exactly where the crossing lies.\n")
+    per_group = ", ".join(
+        f"{g['date']} n={g['n_lines']} {g['closer_counts']['additive']}-"
+        f"{g['closer_counts']['scale']}" for g in lf["groups"])
+    L.append("Scored against the ratio the lines themselves carry, "
+             "`f_high / f_low`, the two fits are nearly indistinguishable "
+             f"pair by pair: across {lf['pairs']} measured pairs the additive "
+             f"prediction is nearer on {lf['closer_counts']['additive']} and "
+             f"the scale prediction on {lf['closer_counts']['scale']} "
+             f"(additive-scale: {per_group}). The largest relative miss is "
+             f"{lf['max_abs_relative_vs_additive']:.1e} for the additive "
+             f"prediction against {lf['max_abs_relative_vs_scale']:.1e} for "
+             "the scale prediction, while the two predictions sit only "
+             f"{ad['max_pair_gap_to_scale_q']:.1e} apart in ratio: the "
+             "disagreement between the fits is smaller than either fit's own "
+             "miss on the lines, so neither is consistently nearer, and the "
+             "split above over correlated pairs is not a decision. "
+             "Neither residual carries a null, because neither is a detection "
+             "statistic; and because `q` and the step were both fitted on "
+             "these lines, with the pairs correlated, counting which fit is "
+             "nearer is not a likelihood test. The AIC and leave-one-out "
+             "columns in `results/comb_vs_scale.csv` remain the decision; "
+             "this column says where on the lines the two fits part.\n")
 
     L.append("### 3b. Compounded across the span\n")
     L.append("Multiplying those pair ratios gives the additive model's own "
              "ratio from the group's lowest line to its highest; `q ** pairs` "
              "is what the scale model predicts over the same span. The depth "
-             "reading is applied to both, so the disagreement is a number "
-             "rather than an impression:\n")
-    L.append("| group | pairs | additive compounded | depth | excess | "
-             "effective depth | q^pairs | relative gap |")
-    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+             "reading is applied to both, and the span the lines actually "
+             "carry, `f_high / f_low`, sits beside them, so both predictions "
+             "are scored on the data rather than only against each other:\n")
+    L.append("| group | pairs | measured f_high/f_low | additive compounded | "
+             "q^pairs | measured/additive - 1 | measured/q^pairs - 1 | "
+             "closer | additive depth | additive eff. depth |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |")
     for row in camp:
         sp = row["additive_span"]
         L.append(f"| {row['date']} n={row['n_lines']} | {sp['pairs']} | "
-                 f"{sp['value']:.6f} | {sp['depth']} | {sp['excess']} | "
-                 f"{sp['effective_depth']:.2f} | "
+                 f"{sp['measured_span_ratio']:.6f} | {sp['value']:.6f} | "
                  f"{sp['reference_scale']['value']:.6f} | "
-                 f"{sp['relative_gap_to_scale']:+.2e} |")
+                 f"{sp['relative_vs_additive']:+.2e} | "
+                 f"{sp['relative_vs_scale']:+.2e} | {sp['closer']} | "
+                 f"{sp['depth']} | {sp['effective_depth']:.2f} |")
     L.append("")
     widest = max(camp, key=lambda row: abs(
         row["additive_span"]["relative_gap_to_scale"]))
     ws = widest["additive_span"]
     others = max(abs(row["additive_span"]["relative_gap_to_scale"])
                  for row in camp if row is not widest)
-    L.append("Compounding is where the divergence stops being cosmetic: the "
-             f"widest span gap is {abs(ws['relative_gap_to_scale']):.2e} on "
+    L.append("Compounding is where the divergence between the fits stops "
+             f"being cosmetic: the widest gap is "
+             f"{abs(ws['relative_gap_to_scale']):.2e} on "
              f"the {widest['n_lines']}-line group ({ws['value']:.6f} additive "
              f"against {ws['reference_scale']['value']:.6f} multiplicative), "
              f"while the other three stay below {others:.0e}. The compounded "
              "gap is not the sum of the pair gaps but their product, which is "
              "why it grows with the number of lines rather than staying at "
-             "the size of one step. It is also not a new test: the campaign "
-             "already scores these two models on these lines with AIC and "
-             "leave-one-out in `results/comb_vs_scale.csv`, and this column "
-             "must not be counted beside those scores.\n")
+             "the size of one step. On that same group the lines sit at "
+             f"{ws['measured_span_ratio']:.6f}, which is "
+             f"{ws['relative_vs_additive']:+.2e} from the additive prediction "
+             f"and {ws['relative_vs_scale']:+.2e} from the scale one: the two "
+             "fits differ from each other by less than either differs from "
+             "the lines, so a wider gap between the fits is not a better "
+             "reading of the data. The measured span is nearer the "
+             f"{ws['closer']} prediction, which is the nearer one in "
+             f"{lf['span_closer_counts'][ws['closer']]} of the four groups, "
+             "and it never falls between the two predictions: it lies above "
+             f"both in {lf['span_side_counts']['above_both']} groups and "
+             f"below both in {lf['span_side_counts']['below_both']}, with "
+             f"{lf['span_side_counts']['between']} between.\n")
     L.append("Two cautions on reading that table as evidence. First, the "
              "compounded ratios reach effective depth "
              f"{max(row['additive_span']['effective_depth'] for row in camp):.2f}, "
@@ -631,9 +800,12 @@ def render(s: dict) -> str:
              "1.4 is closer to phi in relative terms than a ratio near 1.02: "
              "at these magnitudes effective depth is measuring size, not "
              "phi's shape, and the integer depth is 0 on every span. Second, "
-             "both columns are predictions of the fit. Nothing here supports "
-             "or rejects either model; the depth reading only says how far "
-             "apart the two predictions are, and where.\n")
+             "the two prediction columns come from fits estimated on these "
+             "same lines; the measured column is what scores them, and with "
+             "the fits taken from the lines and the pairs correlated, neither "
+             "side is an independent test. Nothing here supports or rejects "
+             "either model; the reading only says how far apart the two "
+             "predictions are, and how far each sits from the lines.\n")
     if cs["depth_one"]:
         shown = ", ".join(f"{r['label']} at {r['value']:.2f} "
                           f"(effective depth {r['effective_depth']:.2f})"
@@ -751,6 +923,13 @@ def main() -> int:
     print(f"additive compounding     span depth counts "
           f"{cs['additive']['span_depth_counts']}, max |product/q^pairs-1| "
           f"{cs['additive']['max_abs_span_relative_gap']:.2e}")
+    lf = cs["line_fit"]
+    print(f"scored on the lines       {lf['pairs']} pairs: additive nearer "
+          f"{lf['closer_counts']['additive']}, scale nearer "
+          f"{lf['closer_counts']['scale']}; spans add {lf['span_closer_counts']['additive']} "
+          f"scale {lf['span_closer_counts']['scale']}; max "
+          f"|measured/pred-1| {lf['max_abs_relative_vs_additive']:.2e} add / "
+          f"{lf['max_abs_relative_vs_scale']:.2e} scale")
     print(f"model crossings (MHz)    "
           f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")

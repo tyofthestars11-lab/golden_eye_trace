@@ -331,6 +331,99 @@ class CampaignRatioTests(unittest.TestCase):
         self.assertEqual(self.payload["campaign_summary"]["ratios"], measured)
         self.assertLess(summary["max_pair_gap_to_scale_q"], 1e-2)
 
+    def test_the_first_line_entry_is_the_first_pair(self):
+        # one code path: the additive entry is additive_pairs[0], so the lowest
+        # line cannot be computed twice and disagree with itself
+        for entry in self.payload["campaign"]:
+            first = entry["additive_pairs"][0]
+            add = entry["additive"]
+            self.assertEqual(add["pair"], 1)
+            for key in ("value", "depth", "excess", "effective_depth",
+                        "levels", "unbounded", "printed"):
+                self.assertEqual(add[key], first[key], msg=key)
+            self.assertEqual(add["lowest_line_mhz"], first["line_low_mhz"])
+            self.assertEqual(add["gap_to_scale_q"], first["gap_to_scale_q"])
+            self.assertTrue(add["diagnostic_only"])
+
+    def test_the_dead_crossing_field_is_gone(self):
+        # crossing_after_pair was written and nothing read it
+        for entry in self.payload["campaign"]:
+            span = entry["additive_span"]
+            self.assertNotIn("crossing_after_pair", span)
+            self.assertIn("scale_crossing_mhz", span)
+
+    def test_the_measured_pair_ratio_is_scored_against_both_fits(self):
+        # f_high/f_low measured on the lines, beside both predictions: the
+        # divergence is scored on the data, not only between the two fits
+        index = self._groups()
+        scored = 0
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            freqs = [Fraction(str(f)) for f in group["freqs_mhz"]]
+            step = Fraction(row["comb_df_mhz"])
+            q = Fraction(row["scale_q"])
+            for i, m in enumerate(entry["pair_residuals"]):
+                measured = freqs[i + 1] / freqs[i]
+                additive = 1 + step / freqs[i]
+                self.assertEqual(m["measured"], float(measured))
+                self.assertEqual(m["relative_vs_scale"],
+                                 float(measured / q - 1))
+                self.assertEqual(m["relative_vs_additive"],
+                                 float(measured / additive - 1))
+                self.assertEqual(
+                    m["closer"],
+                    "additive" if abs(measured / additive - 1)
+                    < abs(measured / q - 1) else "scale")
+                self.assertTrue(m["diagnostic_only"])
+                scored += 1
+        summary = self.payload["campaign_summary"]["line_fit"]
+        self.assertEqual(summary["pairs"], scored)
+        self.assertEqual(sum(summary["closer_counts"].values()), scored)
+        self.assertGreaterEqual(summary["max_abs_relative_vs_scale"],
+                                summary["mean_abs_relative_vs_scale"])
+
+    def test_the_span_residual_is_measured_from_the_lines(self):
+        index = self._groups()
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            freqs = [Fraction(str(f)) for f in group["freqs_mhz"]]
+            span = entry["additive_span"]
+            measured = freqs[-1] / freqs[0]
+            scale_cumulative = Fraction(row["scale_q"]) ** (len(freqs) - 1)
+            product = Fraction(1)
+            for f in freqs[:-1]:
+                product *= 1 + Fraction(row["comb_df_mhz"]) / f
+            self.assertEqual(span["measured_span_ratio"], float(measured))
+            self.assertEqual(span["relative_vs_scale"],
+                             float(measured / scale_cumulative - 1))
+            self.assertEqual(span["relative_vs_additive"],
+                             float(measured / product - 1))
+            self.assertEqual(
+                span["closer"],
+                "additive" if abs(measured / product - 1)
+                < abs(measured / scale_cumulative - 1) else "scale")
+            self.assertEqual(
+                span["measured_between_predictions"],
+                min(product, scale_cumulative) <= measured
+                <= max(product, scale_cumulative))
+
+    def test_the_tables_carry_no_excess_column(self):
+        # the pair and span tables were trimmed to depth and the continuous
+        # reading; excess still travels in the JSON but is not tabulated
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"), encoding="utf-8") as fh:
+            text = fh.read()
+        headers = [line for line in text.splitlines()
+                   if line.startswith("| group |")]
+        pair_header = [h for h in headers if "| pair |" in h]
+        self.assertEqual(len(pair_header), 1)
+        self.assertNotIn("excess", pair_header[0])
+        self.assertIn("measured", pair_header[0])
+        span_header = [h for h in headers if "| pairs |" in h]
+        self.assertEqual(len(span_header), 1)
+        self.assertNotIn("excess", span_header[0])
+        self.assertIn("measured", span_header[0])
+
 
 if __name__ == "__main__":
     unittest.main()

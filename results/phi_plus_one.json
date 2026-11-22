@@ -351,11 +351,15 @@
         "empty_recursion": false,
         "excess": 110,
         "effective_depth": 1.037156565563741,
-        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "note": "additive model's own adjacent-line ratio at the group's lowest line: the first entry of additive_pairs, predicted from the fit, not measured, so diagnostic only",
         "synthetic": false,
         "diagnostic_only": true,
-        "lowest_line_mhz": 45.984284,
-        "gap_to_scale_q": 0.0004547931303468811
+        "pair": 1,
+        "line_low_mhz": 45.984284,
+        "line_high_mhz": 46.982763,
+        "signed_delta_vs_scale_q": 0.0004547931303468811,
+        "gap_to_scale_q": 0.0004547931303468811,
+        "lowest_line_mhz": 45.984284
       },
       "additive_pairs": [
         {
@@ -455,6 +459,56 @@
           "gap_to_scale_q": 0.00043000767197487455
         }
       ],
+      "pair_residuals": [
+        {
+          "pair": 1,
+          "line_low_mhz": 45.984284,
+          "line_high_mhz": 46.982763,
+          "measured": 1.0217134836762924,
+          "measured_printed": "46.982763 / 45.984284",
+          "scale_prediction": 1.02125582,
+          "additive_prediction": 1.0217106131303468,
+          "residual_vs_scale": 0.0004576636762925351,
+          "residual_vs_additive": 2.8705459456539543e-06,
+          "relative_vs_scale": 0.00044813813280646477,
+          "relative_vs_additive": 2.80954891606645e-06,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 2,
+          "line_low_mhz": 46.982763,
+          "line_high_mhz": 47.937962,
+          "measured": 1.0203308392058594,
+          "measured_printed": "47.937962 / 46.982763",
+          "scale_prediction": 1.02125582,
+          "additive_prediction": 1.0212492185697977,
+          "residual_vs_scale": -0.0009249807941406086,
+          "residual_vs_additive": -0.0009183793639382171,
+          "relative_vs_scale": -0.000905728786094564,
+          "relative_vs_additive": -0.0008992705671044293,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 3,
+          "line_low_mhz": 47.937962,
+          "line_high_mhz": 48.993707,
+          "measured": 1.02202315150569,
+          "measured_printed": "48.993707 / 47.937962",
+          "scale_prediction": 1.02125582,
+          "additive_prediction": 1.0208258123280252,
+          "residual_vs_scale": 0.0007673315056897914,
+          "residual_vs_additive": 0.001197339177664666,
+          "relative_vs_scale": 0.0007513607175230505,
+          "relative_vs_additive": 0.001172912325692565,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        }
+      ],
       "additive_span": {
         "label": "compounded 1 + comb step / f_i",
         "value": 1.0651512586307095,
@@ -520,9 +574,16 @@
         "signed_drift_across_span": -0.0008848008023217557,
         "drift_over_first_gap": 1.9455016869909576,
         "gap_sign_changes": 1,
+        "measured_span_ratio": 1.0654445984197558,
+        "measured_span_printed": "48.993707 / 45.984284",
+        "residual_measured_vs_additive": 0.0002933397890462817,
+        "residual_measured_vs_scale": 0.00031210517857274564,
+        "relative_vs_additive": 0.0002753973078184038,
+        "relative_vs_scale": 0.0002930200520153263,
+        "closer": "additive",
+        "measured_between_predictions": false,
         "scale_crossing_mhz": 46.96817154078271,
-        "crossing_inside_span": true,
-        "crossing_after_pair": 1
+        "crossing_inside_span": true
       },
       "ratios": [
         {
@@ -589,7 +650,7 @@
       "additive": {
         "label": "1 + comb step / f_low",
         "value": 1.0232838423959645,
-        "printed": "1.057567 / 45.420639",
+        "printed": "1.05757 / 45.420639",
         "partials": [
           1,
           42,
@@ -609,11 +670,15 @@
         "empty_recursion": false,
         "excess": 91,
         "effective_depth": 1.0399014079281557,
-        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "note": "additive model's own adjacent-line ratio at the group's lowest line: the first entry of additive_pairs, predicted from the fit, not measured, so diagnostic only",
         "synthetic": false,
         "diagnostic_only": true,
-        "lowest_line_mhz": 45.420639,
-        "gap_to_scale_q": 0.0003058723959645306
+        "pair": 1,
+        "line_low_mhz": 45.420639,
+        "line_high_mhz": 46.588956,
+        "signed_delta_vs_scale_q": 0.0003058723959645306,
+        "gap_to_scale_q": 0.0003058723959645306,
+        "lowest_line_mhz": 45.420639
       },
       "additive_pairs": [
         {
@@ -681,6 +746,40 @@
           "gap_to_scale_q": 0.00027801939368033915
         }
       ],
+      "pair_residuals": [
+        {
+          "pair": 1,
+          "line_low_mhz": 45.420639,
+          "line_high_mhz": 46.588956,
+          "measured": 1.0257221612404,
+          "measured_printed": "46.588956 / 45.420639",
+          "scale_prediction": 1.02297797,
+          "additive_prediction": 1.0232838423959645,
+          "residual_vs_scale": 0.0027441912403999864,
+          "residual_vs_additive": 0.0024383188444354557,
+          "relative_vs_scale": 0.0026825516490838865,
+          "relative_vs_additive": 0.002382837237736758,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 2,
+          "line_low_mhz": 46.588956,
+          "line_high_mhz": 47.535773,
+          "measured": 1.0203227777845032,
+          "measured_printed": "47.535773 / 46.588956",
+          "scale_prediction": 1.02297797,
+          "additive_prediction": 1.0226999506063197,
+          "residual_vs_scale": -0.002655192215496737,
+          "residual_vs_additive": -0.002377172821816398,
+          "relative_vs_scale": -0.002595551706256917,
+          "relative_vs_additive": -0.0023244088556052664,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        }
+      ],
       "additive_span": {
         "label": "compounded 1 + comb step / f_i",
         "value": 1.046512335074598,
@@ -746,9 +845,16 @@
         "signed_drift_across_span": -0.0005838917896448697,
         "drift_over_first_gap": 1.908939143735542,
         "gap_sign_changes": 1,
+        "measured_span_ratio": 1.046567684791929,
+        "measured_span_printed": "47.535773 / 45.420639",
+        "residual_measured_vs_additive": 5.534971733114328e-05,
+        "residual_measured_vs_scale": 8.375768660816115e-05,
+        "relative_vs_additive": 5.288969415463012e-05,
+        "relative_vs_scale": 8.00372413170676e-05,
+        "closer": "additive",
+        "measured_between_predictions": false,
         "scale_crossing_mhz": 46.02525810591623,
-        "crossing_inside_span": true,
-        "crossing_after_pair": 1
+        "crossing_inside_span": true
       },
       "ratios": [
         {
@@ -807,7 +913,7 @@
       "additive": {
         "label": "1 + comb step / f_low",
         "value": 1.0316993910468348,
-        "printed": "1.729733 / 54.566758",
+        "printed": "1.72973 / 54.566758",
         "partials": [
           1,
           31,
@@ -827,11 +933,15 @@
         "empty_recursion": false,
         "excess": 95,
         "effective_depth": 1.0547085905962412,
-        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "note": "additive model's own adjacent-line ratio at the group's lowest line: the first entry of additive_pairs, predicted from the fit, not measured, so diagnostic only",
         "synthetic": false,
         "diagnostic_only": true,
-        "lowest_line_mhz": 54.566758,
-        "gap_to_scale_q": 0.004665311046834778
+        "pair": 1,
+        "line_low_mhz": 54.566758,
+        "line_high_mhz": 55.319838,
+        "signed_delta_vs_scale_q": 0.004665311046834778,
+        "gap_to_scale_q": 0.004665311046834778,
+        "lowest_line_mhz": 54.566758
       },
       "additive_pairs": [
         {
@@ -1251,6 +1361,216 @@
           "gap_to_scale_q": 0.0038114318829574013
         }
       ],
+      "pair_residuals": [
+        {
+          "pair": 1,
+          "line_low_mhz": 54.566758,
+          "line_high_mhz": 55.319838,
+          "measured": 1.013801076472236,
+          "measured_printed": "55.319838 / 54.566758",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0316993910468348,
+          "residual_vs_scale": -0.013233003527763918,
+          "residual_vs_additive": -0.017898314574598697,
+          "relative_vs_scale": -0.012884678108991202,
+          "relative_vs_additive": -0.017348381447078114,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 2,
+          "line_low_mhz": 55.319838,
+          "line_high_mhz": 56.897111,
+          "measured": 1.02851188754385,
+          "measured_printed": "56.897111 / 55.319838",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0312678609073296,
+          "residual_vs_scale": 0.001477807543850002,
+          "residual_vs_additive": -0.002755973363479481,
+          "relative_vs_scale": 0.0014389079901321307,
+          "relative_vs_additive": -0.0026724127338310748,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 3,
+          "line_low_mhz": 56.897111,
+          "line_high_mhz": 59.468605,
+          "measured": 1.0451955108933386,
+          "measured_printed": "59.468605 / 56.897111",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0304010690454917,
+          "residual_vs_scale": 0.01816143089333868,
+          "residual_vs_additive": 0.014794441847847072,
+          "relative_vs_scale": 0.017683377063143494,
+          "relative_vs_additive": 0.014357944971419578,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 4,
+          "line_low_mhz": 59.468605,
+          "line_high_mhz": 60.350929,
+          "measured": 1.0148368033855848,
+          "measured_printed": "60.350929 / 59.468605",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.029086490258179,
+          "residual_vs_scale": -0.012197276614415288,
+          "residual_vs_additive": -0.014249686872594371,
+          "relative_vs_scale": -0.011876214092540421,
+          "relative_vs_additive": -0.01384692832671371,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 5,
+          "line_low_mhz": 60.350929,
+          "line_high_mhz": 61.843674,
+          "measured": 1.0247344162672294,
+          "measured_printed": "61.843674 / 60.350929",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.028661248942829,
+          "residual_vs_scale": -0.0022996637327707087,
+          "residual_vs_additive": -0.003926832675599741,
+          "relative_vs_scale": -0.002239130889182089,
+          "relative_vs_additive": -0.00381742063253127,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 6,
+          "line_low_mhz": 61.843674,
+          "line_high_mhz": 63.617623,
+          "measured": 1.0286844051341453,
+          "measured_printed": "63.617623 / 61.843674",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0279694411428402,
+          "residual_vs_scale": 0.0016503251341451674,
+          "residual_vs_additive": 0.000714963991304915,
+          "relative_vs_scale": 0.0016068844902840686,
+          "relative_vs_additive": 0.0006955109390314727,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 7,
+          "line_low_mhz": 63.617623,
+          "line_high_mhz": 65.437428,
+          "measured": 1.028605359870173,
+          "measured_printed": "65.437428 / 63.617623",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0271895257702415,
+          "residual_vs_scale": 0.0015712798701730808,
+          "residual_vs_additive": 0.0014158340999317124,
+          "relative_vs_scale": 0.0015299198933818056,
+          "relative_vs_additive": 0.0013783572207573325,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 8,
+          "line_low_mhz": 65.437428,
+          "line_high_mhz": 66.821294,
+          "measured": 1.0211479277577964,
+          "measured_printed": "66.821294 / 65.437428",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.026433389160711,
+          "residual_vs_scale": -0.005886152242203652,
+          "residual_vs_additive": -0.005285461402914552,
+          "relative_vs_scale": -0.005731214140628762,
+          "relative_vs_additive": -0.005149346717214979,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 9,
+          "line_low_mhz": 66.821294,
+          "line_high_mhz": 69.953528,
+          "measured": 1.0468747881476226,
+          "measured_printed": "69.953528 / 66.821294",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0258859548574442,
+          "residual_vs_scale": 0.019840708147622524,
+          "residual_vs_additive": 0.02098883329017843,
+          "relative_vs_scale": 0.01931845158207654,
+          "relative_vs_additive": 0.020459226672125568,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 10,
+          "line_low_mhz": 69.953528,
+          "line_high_mhz": 71.082655,
+          "measured": 1.0161411015610249,
+          "measured_printed": "71.082655 / 69.953528",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0247268872557793,
+          "residual_vs_scale": -0.010892978438975087,
+          "residual_vs_additive": -0.008585785694754381,
+          "relative_vs_scale": -0.01060624827461917,
+          "relative_vs_additive": -0.008378608780088842,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 11,
+          "line_low_mhz": 71.082655,
+          "line_high_mhz": 72.730579,
+          "measured": 1.0231832083368297,
+          "measured_printed": "72.730579 / 71.082655",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0243341079479937,
+          "residual_vs_scale": -0.0038508716631701504,
+          "residual_vs_additive": -0.001150899611163933,
+          "relative_vs_scale": -0.0037495071859447453,
+          "relative_vs_additive": -0.0011235588098003322,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 12,
+          "line_low_mhz": 72.730579,
+          "line_high_mhz": 74.484744,
+          "measured": 1.0241186722850095,
+          "measured_printed": "74.484744 / 72.730579",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0237827475565677,
+          "residual_vs_scale": -0.0029154077149904168,
+          "residual_vs_additive": 0.0003359247284419391,
+          "relative_vs_scale": -0.0028386669651609,
+          "relative_vs_additive": 0.00032812110698649774,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 13,
+          "line_low_mhz": 74.484744,
+          "line_high_mhz": 76.69362,
+          "measured": 1.0296554150739916,
+          "measured_printed": "76.693620 / 74.484744",
+          "scale_prediction": 1.02703408,
+          "additive_prediction": 1.0232226481170426,
+          "residual_vs_scale": 0.0026213350739915276,
+          "residual_vs_additive": 0.006432766956948929,
+          "relative_vs_scale": 0.0025523350442192994,
+          "relative_vs_additive": 0.006286771475188369,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        }
+      ],
       "additive_span": {
         "label": "compounded 1 + comb step / f_i",
         "value": 1.4188731577265707,
@@ -1316,9 +1636,16 @@
         "signed_drift_across_span": -0.00847674292979218,
         "drift_over_first_gap": 1.8169727258685786,
         "gap_sign_changes": 1,
+        "measured_span_ratio": 1.4055007629370249,
+        "measured_span_printed": "76.693620 / 54.566758",
+        "residual_measured_vs_additive": -0.013372394789546006,
+        "residual_measured_vs_scale": -0.00899976862021214,
+        "relative_vs_additive": -0.009424658375363376,
+        "relative_vs_scale": -0.006362506354313074,
+        "closer": "scale",
+        "measured_between_predictions": false,
         "scale_crossing_mhz": 63.983423885702784,
-        "crossing_inside_span": true,
-        "crossing_after_pair": 7
+        "crossing_inside_span": true
       },
       "ratios": [
         {
@@ -1386,7 +1713,7 @@
       "additive": {
         "label": "1 + comb step / f_low",
         "value": 1.0160140183029913,
-        "printed": "1.315054 / 82.118927",
+        "printed": "1.31505 / 82.118927",
         "partials": [
           1,
           62,
@@ -1406,11 +1733,15 @@
         "empty_recursion": false,
         "excess": 100,
         "effective_depth": 1.0272778372194507,
-        "note": "additive model's own adjacent-line ratio at the group's lowest line; predicted from the fit, not measured, so diagnostic only",
+        "note": "additive model's own adjacent-line ratio at the group's lowest line: the first entry of additive_pairs, predicted from the fit, not measured, so diagnostic only",
         "synthetic": false,
         "diagnostic_only": true,
-        "lowest_line_mhz": 82.118927,
-        "gap_to_scale_q": 0.0001966183029912215
+        "pair": 1,
+        "line_low_mhz": 82.118927,
+        "line_high_mhz": 82.927957,
+        "signed_delta_vs_scale_q": 0.0001966183029912215,
+        "gap_to_scale_q": 0.0001966183029912215,
+        "lowest_line_mhz": 82.118927
       },
       "additive_pairs": [
         {
@@ -1510,6 +1841,56 @@
           "gap_to_scale_q": 0.00027377995727890305
         }
       ],
+      "pair_residuals": [
+        {
+          "pair": 1,
+          "line_low_mhz": 82.118927,
+          "line_high_mhz": 82.927957,
+          "measured": 1.0098519309683625,
+          "measured_printed": "82.927957 / 82.118927",
+          "scale_prediction": 1.0158174,
+          "additive_prediction": 1.0160140183029913,
+          "residual_vs_scale": -0.005965469031637493,
+          "residual_vs_additive": -0.006162087334628715,
+          "relative_vs_scale": -0.0058725800834259125,
+          "relative_vs_additive": -0.006064962907619139,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 2,
+          "line_low_mhz": 82.927957,
+          "line_high_mhz": 84.604101,
+          "measured": 1.0202120498398386,
+          "measured_printed": "84.604101 / 82.927957",
+          "scale_prediction": 1.0158174,
+          "additive_prediction": 1.015857788465716,
+          "residual_vs_scale": 0.004394649839838693,
+          "residual_vs_additive": 0.004354261374122602,
+          "relative_vs_scale": 0.004326220283132277,
+          "relative_vs_additive": 0.004286290289410477,
+          "closer": "additive",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        },
+        {
+          "pair": 3,
+          "line_low_mhz": 84.604101,
+          "line_high_mhz": 85.943727,
+          "measured": 1.0158340551364053,
+          "measured_printed": "85.943727 / 84.604101",
+          "scale_prediction": 1.0158174,
+          "additive_prediction": 1.015543620042721,
+          "residual_vs_scale": 1.6655136405267163e-05,
+          "residual_vs_additive": 0.00029043509368417025,
+          "relative_vs_scale": 1.6395797517612085e-05,
+          "relative_vs_additive": 0.00028598977725048625,
+          "closer": "scale",
+          "diagnostic_only": true,
+          "note": "measured f_high/f_low beside both fits; q and the step were fitted on these same lines, so neither residual is independent and neither selects a model"
+        }
+      ],
       "additive_span": {
         "label": "compounded 1 + comb step / f_i",
         "value": 1.0481687242350048,
@@ -1575,9 +1956,16 @@
         "signed_drift_across_span": -0.00047039826027012454,
         "drift_over_first_gap": 2.392443903308059,
         "gap_sign_changes": 1,
+        "measured_span_ratio": 1.0465763513933883,
+        "measured_span_printed": "85.943727 / 82.118927",
+        "residual_measured_vs_additive": -0.00159237284161655,
+        "residual_measured_vs_scale": -0.0016303763924558174,
+        "relative_vs_additive": -0.0015191951494056713,
+        "relative_vs_scale": -0.0015553958482022972,
+        "closer": "additive",
+        "measured_between_predictions": false,
         "scale_crossing_mhz": 83.13970690505393,
-        "crossing_inside_span": true,
-        "crossing_after_pair": 2
+        "crossing_inside_span": true
       },
       "ratios": [
         {
@@ -1733,6 +2121,85 @@
       "max_drift_over_first_gap": 2.392443903308059,
       "diagnostic_only": true,
       "note": "1 + comb_df / f_low at the lowest line, the same ratio at every adjacent pair, and their product over each group's span, all predicted by the additive fit rather than measured from the lines"
+    },
+    "line_fit": {
+      "pairs": 21,
+      "closer_counts": {
+        "scale": 9,
+        "additive": 12
+      },
+      "span_closer_counts": {
+        "scale": 1,
+        "additive": 3
+      },
+      "max_abs_relative_vs_scale": 0.01931845158207654,
+      "max_abs_relative_vs_additive": 0.020459226672125568,
+      "mean_abs_relative_vs_scale": 0.0053168601369593,
+      "mean_abs_relative_vs_additive": 0.005393431968671539,
+      "max_abs_span_relative_vs_scale": 0.006362506354313074,
+      "max_abs_span_relative_vs_additive": 0.009424658375363376,
+      "measured_between_predictions": [],
+      "span_side_counts": {
+        "above_both": 2,
+        "below_both": 2,
+        "between": 0
+      },
+      "groups": [
+        {
+          "date": "20240325",
+          "n_lines": 4,
+          "closer_counts": {
+            "scale": 1,
+            "additive": 2
+          },
+          "max_abs_relative_vs_scale": 0.000905728786094564,
+          "max_abs_relative_vs_additive": 0.001172912325692565,
+          "span_closer": "additive",
+          "span_relative_vs_scale": 0.0002930200520153263,
+          "span_relative_vs_additive": 0.0002753973078184038
+        },
+        {
+          "date": "20240920",
+          "n_lines": 3,
+          "closer_counts": {
+            "scale": 0,
+            "additive": 2
+          },
+          "max_abs_relative_vs_scale": 0.0026825516490838865,
+          "max_abs_relative_vs_additive": 0.002382837237736758,
+          "span_closer": "additive",
+          "span_relative_vs_scale": 8.00372413170676e-05,
+          "span_relative_vs_additive": 5.288969415463012e-05
+        },
+        {
+          "date": "20240326",
+          "n_lines": 14,
+          "closer_counts": {
+            "scale": 6,
+            "additive": 7
+          },
+          "max_abs_relative_vs_scale": 0.01931845158207654,
+          "max_abs_relative_vs_additive": 0.020459226672125568,
+          "span_closer": "scale",
+          "span_relative_vs_scale": -0.006362506354313074,
+          "span_relative_vs_additive": -0.009424658375363376
+        },
+        {
+          "date": "20240326",
+          "n_lines": 4,
+          "closer_counts": {
+            "scale": 2,
+            "additive": 1
+          },
+          "max_abs_relative_vs_scale": 0.0058725800834259125,
+          "max_abs_relative_vs_additive": 0.006064962907619139,
+          "span_closer": "additive",
+          "span_relative_vs_scale": -0.0015553958482022972,
+          "span_relative_vs_additive": -0.0015191951494056713
+        }
+      ],
+      "diagnostic_only": true,
+      "note": "measured f_high/f_low at every adjacent pair and across each span, scored against both fits; descriptive only, since q and the step were fitted on these same lines and no null is attached"
     }
   },
   "depth_sweep": [
