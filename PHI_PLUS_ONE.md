@@ -74,46 +74,56 @@ The third line of each group is the additive model's own adjacent-line ratio, `1
 
 At the lowest line the two models agree to first order, so a single reading there cannot separate them. Every later pair is a different question: the additive model holds the step fixed, so its own ratio falls as `1/f`, while the scale model predicts the same `q` at every line. Each pair is therefore read three ways: the ratio the lines carry, the additive prediction, and the signed difference between the two predictions - carried in the JSON as `1 + d/f_i - q` and located by the crossing below:
 
-| group | pair | starts at (MHz) | measured f_high/f_low | 1 + d/f_i | measured/(1+d/f_i) - 1 | measured/q - 1 | closer | additive depth | additive eff. depth |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |
-| 20240325 n=4 | 1 | 45.9843 | 1.021713 | 1.021711 | +2.81e-06 | +4.48e-04 | additive | 0 | 1.04 |
-| 20240325 n=4 | 2 | 46.9828 | 1.020331 | 1.021249 | -8.99e-04 | -9.06e-04 | additive | 0 | 1.04 |
-| 20240325 n=4 | 3 | 47.9380 | 1.022023 | 1.020826 | +1.17e-03 | +7.51e-04 | scale | 0 | 1.04 |
-| 20240920 n=3 | 1 | 45.4206 | 1.025722 | 1.023284 | +2.38e-03 | +2.68e-03 | additive | 0 | 1.04 |
-| 20240920 n=3 | 2 | 46.5890 | 1.020323 | 1.022700 | -2.32e-03 | -2.60e-03 | additive | 0 | 1.04 |
-| 20240326 n=14 | 1 | 54.5668 | 1.013801 | 1.031699 | -1.73e-02 | -1.29e-02 | scale | 0 | 1.05 |
-| 20240326 n=14 | 2 | 55.3198 | 1.028512 | 1.031268 | -2.67e-03 | +1.44e-03 | scale | 0 | 1.05 |
-| 20240326 n=14 | 3 | 56.8971 | 1.045196 | 1.030401 | +1.44e-02 | +1.77e-02 | additive | 0 | 1.05 |
-| 20240326 n=14 | 4 | 59.4686 | 1.014837 | 1.029086 | -1.38e-02 | -1.19e-02 | scale | 0 | 1.05 |
-| 20240326 n=14 | 5 | 60.3509 | 1.024734 | 1.028661 | -3.82e-03 | -2.24e-03 | scale | 0 | 1.05 |
-| 20240326 n=14 | 6 | 61.8437 | 1.028684 | 1.027969 | +6.96e-04 | +1.61e-03 | additive | 0 | 1.05 |
-| 20240326 n=14 | 7 | 63.6176 | 1.028605 | 1.027190 | +1.38e-03 | +1.53e-03 | additive | 0 | 1.05 |
-| 20240326 n=14 | 8 | 65.4374 | 1.021148 | 1.026433 | -5.15e-03 | -5.73e-03 | additive | 0 | 1.05 |
-| 20240326 n=14 | 9 | 66.8213 | 1.046875 | 1.025886 | +2.05e-02 | +1.93e-02 | scale | 0 | 1.04 |
-| 20240326 n=14 | 10 | 69.9535 | 1.016141 | 1.024727 | -8.38e-03 | -1.06e-02 | additive | 0 | 1.04 |
-| 20240326 n=14 | 11 | 71.0827 | 1.023183 | 1.024334 | -1.12e-03 | -3.75e-03 | additive | 0 | 1.04 |
-| 20240326 n=14 | 12 | 72.7306 | 1.024119 | 1.023783 | +3.28e-04 | -2.84e-03 | additive | 0 | 1.04 |
-| 20240326 n=14 | 13 | 74.4847 | 1.029655 | 1.023223 | +6.29e-03 | +2.55e-03 | scale | 0 | 1.04 |
-| 20240326 n=4 | 1 | 82.1189 | 1.009852 | 1.016014 | -6.06e-03 | -5.87e-03 | scale | 0 | 1.03 |
-| 20240326 n=4 | 2 | 82.9280 | 1.020212 | 1.015858 | +4.29e-03 | +4.33e-03 | additive | 0 | 1.03 |
-| 20240326 n=4 | 3 | 84.6041 | 1.015834 | 1.015544 | +2.86e-04 | +1.64e-05 | scale | 0 | 1.03 |
+| group | pair | starts at (MHz) | measured f_high/f_low | 1 + d/f_i | measured/(1+d/f_i) - 1 | measured/q - 1 | miss / comb rms | miss / scale rms | closer | additive depth | additive eff. depth |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |
+| 20240325 n=4 | 1 | 45.9843 | 1.021713 | 1.021711 | +2.81e-06 | +4.48e-04 | 0.01 | 1.28 | additive | 0 | 1.04 |
+| 20240325 n=4 | 2 | 46.9828 | 1.020331 | 1.021249 | -8.99e-04 | -9.06e-04 | 2.00 | 2.64 | additive | 0 | 1.04 |
+| 20240325 n=4 | 3 | 47.9380 | 1.022023 | 1.020826 | +1.17e-03 | +7.51e-04 | 2.67 | 2.23 | scale | 0 | 1.04 |
+| 20240920 n=3 | 1 | 45.4206 | 1.025722 | 1.023284 | +2.38e-03 | +2.68e-03 | 2.12 | 2.15 | additive | 0 | 1.04 |
+| 20240920 n=3 | 2 | 46.5890 | 1.020323 | 1.022700 | -2.32e-03 | -2.60e-03 | 2.12 | 2.14 | additive | 0 | 1.04 |
+| 20240326 n=14 | 1 | 54.5668 | 1.013801 | 1.031699 | -1.73e-02 | -1.29e-02 | 2.08 | 1.89 | scale | 0 | 1.05 |
+| 20240326 n=14 | 2 | 55.3198 | 1.028512 | 1.031268 | -2.67e-03 | +1.44e-03 | 0.32 | 0.21 | scale | 0 | 1.05 |
+| 20240326 n=14 | 3 | 56.8971 | 1.045196 | 1.030401 | +1.44e-02 | +1.77e-02 | 1.79 | 2.71 | additive | 0 | 1.05 |
+| 20240326 n=14 | 4 | 59.4686 | 1.014837 | 1.029086 | -1.38e-02 | -1.19e-02 | 1.80 | 1.90 | scale | 0 | 1.05 |
+| 20240326 n=14 | 5 | 60.3509 | 1.024734 | 1.028661 | -3.82e-03 | -2.24e-03 | 0.50 | 0.36 | scale | 0 | 1.05 |
+| 20240326 n=14 | 6 | 61.8437 | 1.028684 | 1.027969 | +6.96e-04 | +1.61e-03 | 0.09 | 0.27 | additive | 0 | 1.05 |
+| 20240326 n=14 | 7 | 63.6176 | 1.028605 | 1.027190 | +1.38e-03 | +1.53e-03 | 0.19 | 0.26 | additive | 0 | 1.05 |
+| 20240326 n=14 | 8 | 65.4374 | 1.021148 | 1.026433 | -5.15e-03 | -5.73e-03 | 0.74 | 1.01 | additive | 0 | 1.05 |
+| 20240326 n=14 | 9 | 66.8213 | 1.046875 | 1.025886 | +2.05e-02 | +1.93e-02 | 2.98 | 3.48 | scale | 0 | 1.04 |
+| 20240326 n=14 | 10 | 69.9535 | 1.016141 | 1.024727 | -8.38e-03 | -1.06e-02 | 1.28 | 2.00 | additive | 0 | 1.04 |
+| 20240326 n=14 | 11 | 71.0827 | 1.023183 | 1.024334 | -1.12e-03 | -3.75e-03 | 0.17 | 0.72 | additive | 0 | 1.04 |
+| 20240326 n=14 | 12 | 72.7306 | 1.024119 | 1.023783 | +3.28e-04 | -2.84e-03 | 0.05 | 0.56 | additive | 0 | 1.04 |
+| 20240326 n=14 | 13 | 74.4847 | 1.029655 | 1.023223 | +6.29e-03 | +2.55e-03 | 1.02 | 0.51 | scale | 0 | 1.04 |
+| 20240326 n=4 | 1 | 82.1189 | 1.009852 | 1.016014 | -6.06e-03 | -5.87e-03 | 2.68 | 2.69 | scale | 0 | 1.03 |
+| 20240326 n=4 | 2 | 82.9280 | 1.020212 | 1.015858 | +4.29e-03 | +4.33e-03 | 1.91 | 2.00 | additive | 0 | 1.03 |
+| 20240326 n=4 | 3 | 84.6041 | 1.015834 | 1.015544 | +2.86e-04 | +1.64e-05 | 0.13 | 0.01 | scale | 0 | 1.03 |
 
 Within every group the ratios fall monotonically and cross `q` exactly once, at `f = d/(q - 1)`: 20240325 n=4 at 46.968 MHz, 20240920 n=3 at 46.025 MHz, 20240326 n=14 at 63.983 MHz, 20240326 n=4 at 83.140 MHz - every one inside its own span. So the models are not disagreeing at the first line and everywhere after: they touch at one frequency per group and separate on both sides of it. That is the one-point meeting recorded in `PROPORTION_AND_SCALE.md` section 2 for a fixed comb against a fixed interval, now located per group with the fitted `q`. A reading taken only at the first line sees one side of that crossing: the drift across a span is 1.8 to 2.4x the first-line displacement in every group, and the sign of the difference flips exactly where the crossing lies.
 
 Scored against the ratio the lines themselves carry, `f_high / f_low`, the two fits are nearly indistinguishable pair by pair: across 21 measured pairs the additive prediction is nearer on 12 and the scale prediction on 9 (additive-scale: 20240325 n=4 2-1, 20240920 n=3 2-0, 20240326 n=14 7-6, 20240326 n=4 1-2). The largest relative miss is 2.0e-02 for the additive prediction against 1.9e-02 for the scale prediction, while the two predictions sit only 4.7e-03 apart in ratio: the disagreement between the fits is smaller than either fit's own miss on the lines, so neither is consistently nearer, and the split above over correlated pairs is not a decision. Neither residual carries a null, because neither is a detection statistic; and because `q` and the step were both fitted on these lines, with the pairs correlated, counting which fit is nearer is not a likelihood test. The AIC and leave-one-out columns in `results/comb_vs_scale.csv` remain the decision; this column says where on the lines the two fits part.
 
+A residual in ratio units still does not say whether it is large, and the campaign table already records the scale each fit was judged by: `rms_comb_channels` and `rms_scale_channels` are the rms of each fit's own residuals on these same lines, in channels (0.214-4.67 for the comb, 0.164-3.79 for the scale). A miss in ratio at a pair displaces that pair's upper line, so multiplying by it gives an offset in frequency, and one rms turns that offset into a fraction of the scatter each fit left on those lines.
+
+The largest pair miss in its own fit's scatter is 2.98 rms, at 20240326 n=14 pair 9: 13.9 channels, from a 2.0e-02 ratio miss on a line at 69.95 MHz. For the scale fit the largest is 3.48 rms (13.2 channels, 1.9e-02) at 20240326 n=14 pair 9. The medians are 1.28 and 1.89 rms, and 9 of 21 additive misses and 8 of 21 scale misses sit inside one rms.
+
+The 4.7e-03 by which the two predictions differ at their widest, read the same way, is never more than 0.97 rms of the comb fit or 1.27 rms of the scale fit, while the worst individual misses on the lines reach 3.0 and 3.5 rms. The two numbers are not the same size once each is divided by the scatter of the fit that produced it: the disagreement between the fits stays near one scatter width and the misses on the lines run to several, so it is the miss that sets the scale here and the fit-to-fit gap that is the smaller quantity.
+
+That ordering is as far as the rescaling goes. Each rms is a single number per group, estimated from the same four lines (or fourteen) the residuals are measured on, so numerator and denominator share one small sample; a pair miss is one line's displacement rather than an independent draw; and no chi-square, p-value or null is formed here. Dividing by the scatter says how big these misses are next to the noise each fit left behind, not which fit the lines prefer - that remains with the AIC and leave-one-out columns, and none of these ratios is counted with them.
+
 ### 3b. Compounded across the span
 
 Multiplying those pair ratios gives the additive model's own ratio from the group's lowest line to its highest; `q ** pairs` is what the scale model predicts over the same span. The depth reading is applied to both, and the span the lines actually carry, `f_high / f_low`, sits beside them, so both predictions are scored on the data rather than only against each other:
 
-| group | pairs | measured f_high/f_low | additive compounded | q^pairs | measured/additive - 1 | measured/q^pairs - 1 | closer | additive depth | additive eff. depth |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |
-| 20240325 n=4 | 3 | 1.065445 | 1.065151 | 1.065132 | +2.75e-04 | +2.93e-04 | additive | 0 | 1.12 |
-| 20240920 n=3 | 2 | 1.046568 | 1.046512 | 1.046484 | +5.29e-05 | +8.00e-05 | additive | 0 | 1.08 |
-| 20240326 n=14 | 13 | 1.405501 | 1.418873 | 1.414501 | -9.42e-03 | -6.36e-03 | scale | 0 | 2.18 |
-| 20240326 n=4 | 3 | 1.046576 | 1.048169 | 1.048207 | -1.52e-03 | -1.56e-03 | additive | 0 | 1.08 |
+| group | pairs | measured f_high/f_low | additive compounded | q^pairs | measured/additive - 1 | measured/q^pairs - 1 | miss / comb rms | miss / scale rms | closer | additive depth | additive eff. depth |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |
+| 20240325 n=4 | 3 | 1.065445 | 1.065151 | 1.065132 | +2.75e-04 | +2.93e-04 | 0.63 | 0.87 | additive | 0 | 1.12 |
+| 20240920 n=3 | 2 | 1.046568 | 1.046512 | 1.046484 | +5.29e-05 | +8.00e-05 | 0.05 | 0.07 | additive | 0 | 1.08 |
+| 20240326 n=14 | 13 | 1.405501 | 1.418873 | 1.414501 | -9.42e-03 | -6.36e-03 | 1.55 | 1.29 | scale | 0 | 2.18 |
+| 20240326 n=4 | 3 | 1.046576 | 1.048169 | 1.048207 | -1.52e-03 | -1.56e-03 | 0.69 | 0.74 | additive | 0 | 1.08 |
 
 Compounding is where the divergence between the fits stops being cosmetic: the widest gap is 3.09e-03 on the 14-line group (1.418873 additive against 1.414501 multiplicative), while the other three stay below 4e-05. The compounded gap is not the sum of the pair gaps but their product, which is why it grows with the number of lines rather than staying at the size of one step. On that same group the lines sit at 1.405501, which is -9.42e-03 from the additive prediction and -6.36e-03 from the scale one: the two fits differ from each other by less than either differs from the lines, so a wider gap between the fits is not a better reading of the data. The measured span is nearer the scale prediction, which is the nearer one in 1 of the four groups, and it never falls between the two predictions: it lies above both in 2 groups and below both in 2, with 0 between.
+
+The span misses read in the same units. On the 14-line group the 9.4e-03 additive miss over a span ending at 77.42 MHz is 7.3 channels, or 1.55 rms of the comb fit, and its scale miss is 1.29 rms of the scale fit. Across the four spans the largest misses are 1.55 comb rms and 1.29 scale rms, while the gap between the two compounded predictions is at most 0.51 and 0.63 rms. Compounding does not lift either fit's disagreement with the lines past 1.6 scatter widths, and the fits still disagree with each other by less than they disagree with the data. The same caution applies as in 3a: one rms per group, estimated from these lines, and no null attached.
 
 Two cautions on reading that table as evidence. First, the compounded ratios reach effective depth 2.18, higher than any per-pair value, but only because a ratio near 1.4 is closer to phi in relative terms than a ratio near 1.02: at these magnitudes effective depth is measuring size, not phi's shape, and the integer depth is 0 on every span. Second, the two prediction columns come from fits estimated on these same lines; the measured column is what scores them, and with the fits taken from the lines and the pairs correlated, neither side is an independent test. Nothing here supports or rejects either model; the reading only says how far apart the two predictions are, and how far each sits from the lines.
 

@@ -37,6 +37,17 @@ the compounded span is scored the same way. Those residuals are descriptive -
 both q and the step were fitted on these lines, the pairs are not independent,
 and no null is attached - so the campaign's AIC and leave-one-out remain the
 decision.
+
+A residual in ratio units still does not say whether it is large. The campaign
+table records the scale each fit was judged by: ``rms_comb_channels`` and
+``rms_scale_channels`` are the rms of each fit's own residuals on these same
+lines, in channels. A ratio miss at a pair displaces that pair's upper line,
+so multiplying gives an offset in frequency and one rms divides it - the
+largest pair miss, the compounded span miss and the gap between the two fits
+all read as fractions of the scatter each fit leaves. Still diagnostic only:
+the rms is one number per group, estimated from the same lines, so no
+chi-square and no null is formed, and none of it enters the model-selection
+counts.
 """
 
 from __future__ import annotations
@@ -85,6 +96,57 @@ def window_in_hz(tolerance_rungs: float, freq_hz: float) -> float:
 def _exact(text) -> Fraction:
     """The printed decimal as an exact rational, so no binary tail is read."""
     return Fraction(str(text).strip())
+
+
+def _median(values) -> float:
+    ordered = sorted(values)
+    if not ordered:
+        raise ValueError("no values to take a median of")
+    return float(ordered[len(ordered) // 2])
+
+
+def fit_noise(row) -> dict:
+    """The scatter each fit leaves on these lines, read from the table.
+
+    ``rms_comb_channels`` and ``rms_scale_channels`` are the rms of each
+    fit's own residuals, in channels, so one channel of miss is one of these
+    units by definition. Read as printed and never re-derived from the
+    frequencies. A blank value raises: a residual cannot be read against a
+    scatter that was not recorded.
+    """
+    out = {}
+    for model in ("comb", "scale"):
+        key = f"rms_{model}_channels"
+        text = str(row.get(key, "")).strip()
+        if not text:
+            raise ValueError(
+                f"{row.get('date')}: {key} is empty; a miss cannot be "
+                "read against a scatter that was not recorded")
+        value = _exact(text)
+        if value <= 0:
+            raise ValueError(
+                f"{row.get('date')}: {key} must be positive, got {text}")
+        out[model] = value
+    return out
+
+
+def line_offset(relative, predicted_high_mhz, rms) -> dict:
+    """A ratio residual as a displacement of the pair's upper line.
+
+    ``relative = measured / predicted - 1`` is a miss in ratio, and the line
+    it moves is the predicted upper line of the pair: their product is the
+    miss in frequency, which ``rms`` - in channels - divides. ``over_comb_rms``
+    and ``over_scale_rms`` carry both denominators; callers take the one
+    belonging to the fit that made the prediction.
+    """
+    offset_mhz = predicted_high_mhz * relative
+    channels = offset_mhz * 1e6 / CHANNEL_HZ
+    return {
+        "offset_mhz": float(offset_mhz),
+        "offset_channels": float(channels),
+        "over_comb_rms": float(channels / rms["comb"]),
+        "over_scale_rms": float(channels / rms["scale"]),
+    }
 
 
 def describe(label, value, exact_value=None, note="", synthetic=False,
@@ -183,7 +245,7 @@ def additive_pairs(freqs, step, q) -> list:
     return out
 
 
-def pair_residuals(freqs, step, q, pairs) -> list:
+def pair_residuals(freqs, step, q, pairs, rms) -> list:
     """The measured adjacent-pair ratio beside both fits, pair by pair.
 
     ``f_{i+1} / f_i`` is the ratio the lines themselves carry, so scoring both
@@ -193,6 +255,12 @@ def pair_residuals(freqs, step, q, pairs) -> list:
     statistic: the campaign's AIC and leave-one-out remain the decision. Kept
     diagnostic only, and recorded as relative misses so pairs at different
     frequencies can be read together.
+
+    Each relative miss is also carried as the displacement of the pair's upper
+    line, in channels, and divided by that fit's own scatter - the comb's rms
+    for the additive prediction, the scale's rms for the scale one - so the
+    size of the miss is stated in the units the campaign judged the fits by.
+    The separation between the two predictions is carried the same way.
     """
     out = []
     for i in range(len(freqs) - 1):
@@ -200,6 +268,11 @@ def pair_residuals(freqs, step, q, pairs) -> list:
         additive = 1 + step / freqs[i]
         rel_scale = measured / q - 1
         rel_additive = measured / additive - 1
+        high_add = additive * freqs[i]      # = freqs[i] + step, exactly
+        high_scale = q * freqs[i]
+        miss_add = line_offset(rel_additive, high_add, rms)
+        miss_scale = line_offset(rel_scale, high_scale, rms)
+        gap_channels = (high_add - high_scale) * 1e6 / CHANNEL_HZ
         out.append({
             "pair": i + 1,
             "line_low_mhz": float(freqs[i]),
@@ -209,21 +282,33 @@ def pair_residuals(freqs, step, q, pairs) -> list:
                                  f"{float(freqs[i]):.6f}"),
             "scale_prediction": float(q),
             "additive_prediction": float(additive),
+            "predicted_high_mhz": {"additive": float(high_add),
+                                   "scale": float(high_scale)},
             "residual_vs_scale": float(measured - q),
             "residual_vs_additive": float(measured - additive),
             "relative_vs_scale": float(rel_scale),
             "relative_vs_additive": float(rel_additive),
+            "offset_mhz_vs_additive": miss_add["offset_mhz"],
+            "offset_channels_vs_additive": miss_add["offset_channels"],
+            "offset_mhz_vs_scale": miss_scale["offset_mhz"],
+            "offset_channels_vs_scale": miss_scale["offset_channels"],
+            "over_comb_rms": miss_add["over_comb_rms"],
+            "over_scale_rms": miss_scale["over_scale_rms"],
+            "fit_gap_channels": float(gap_channels),
+            "fit_gap_over_comb_rms": float(gap_channels / rms["comb"]),
+            "fit_gap_over_scale_rms": float(gap_channels / rms["scale"]),
             "closer": ("additive" if abs(rel_additive) < abs(rel_scale)
                        else "scale"),
             "diagnostic_only": True,
             "note": "measured f_high/f_low beside both fits; q and the step "
                     "were fitted on these same lines, so neither residual "
-                    "is independent and neither selects a model",
+                    "is independent and neither selects a model; the "
+                    "channel offsets use each fit's own rms as the unit",
         })
     return out
 
 
-def additive_span(freqs, step, q, pairs) -> dict:
+def additive_span(freqs, step, q, pairs, rms) -> dict:
     """The pair ratios compounded over the group, and where they meet ``q``.
 
     ``prod(1 + step / f_i)`` is the additive model's own ratio from the lowest
@@ -232,6 +317,11 @@ def additive_span(freqs, step, q, pairs) -> dict:
     frequency ``step / (q - 1)`` is where a pair ratio equals q - the single
     line at which the two models coincide, and hence the pivot the gap is
     measured around.
+
+    The measured span is scored against both predictions, and each residual is
+    also carried as a displacement of the group's highest line, in channels,
+    over that fit's own rms - the same conversion the pair table uses, applied
+    to the compounded ratio.
     """
     product = Fraction(1)
     for f in freqs[:-1]:
@@ -283,6 +373,22 @@ def additive_span(freqs, step, q, pairs) -> dict:
     item["measured_between_predictions"] = bool(
         min(product, scale_cumulative) <= measured
         <= max(product, scale_cumulative))
+    high_add = product * freqs[0]
+    high_scale = scale_cumulative * freqs[0]
+    miss_add = line_offset(rel_additive, high_add, rms)
+    miss_scale = line_offset(rel_scale, high_scale, rms)
+    gap_channels = (high_add - high_scale) * 1e6 / CHANNEL_HZ
+    item["predicted_high_mhz"] = {"additive": float(high_add),
+                                  "scale": float(high_scale)}
+    item["offset_mhz_vs_additive"] = miss_add["offset_mhz"]
+    item["offset_channels_vs_additive"] = miss_add["offset_channels"]
+    item["offset_mhz_vs_scale"] = miss_scale["offset_mhz"]
+    item["offset_channels_vs_scale"] = miss_scale["offset_channels"]
+    item["over_comb_rms"] = miss_add["over_comb_rms"]
+    item["over_scale_rms"] = miss_scale["over_scale_rms"]
+    item["fit_gap_channels"] = float(gap_channels)
+    item["fit_gap_over_comb_rms"] = float(gap_channels / rms["comb"])
+    item["fit_gap_over_scale_rms"] = float(gap_channels / rms["scale"])
     if q > 1:
         crossing = step / (q - 1)
         item["scale_crossing_mhz"] = float(crossing)
@@ -325,6 +431,7 @@ def campaign_rows() -> list:
         if freqs != sorted(freqs):
             raise ValueError(f"{key}: fixture lines are not in frequency order")
         f_low = freqs[0]
+        rms = fit_noise(row)
         pairs = additive_pairs(freqs, step, q)
         # the first-line entry is the first pair, not a second computation, so
         # the lowest line cannot drift between the two places it is reported
@@ -335,8 +442,8 @@ def campaign_rows() -> list:
                             "group's lowest line: the first entry of "
                             "additive_pairs, predicted from the fit, not "
                             "measured, so diagnostic only")
-        span = additive_span(freqs, step, q, pairs)
-        scored = pair_residuals(freqs, step, q, pairs)
+        span = additive_span(freqs, step, q, pairs, rms)
+        scored = pair_residuals(freqs, step, q, pairs, rms)
         out.append({
             "source": row["source"],
             "date": row["date"],
@@ -345,6 +452,16 @@ def campaign_rows() -> list:
             "n_lines": int(row["n_lines"]),
             "scale_q": row["scale_q"],
             "lowest_line_mhz": float(f_low),
+            "noise": {
+                "rms_comb_channels": float(rms["comb"]),
+                "rms_scale_channels": float(rms["scale"]),
+                "as_printed": [row["rms_comb_channels"],
+                               row["rms_scale_channels"]],
+                "channel_khz": CHANNEL_HZ / 1e3,
+                "note": "rms of each fit's own residuals on these same "
+                        "lines, in channels: the unit the pair and span "
+                        "misses are divided by, never a weight",
+            },
             "additive": additive,
             "additive_pairs": pairs,
             "pair_residuals": scored,
@@ -532,6 +649,12 @@ def build() -> dict:
                     "max_abs_relative_vs_additive": max(
                         abs(r["relative_vs_additive"])
                         for r in row["pair_residuals"]),
+                    "max_abs_over_comb_rms": max(
+                        abs(r["over_comb_rms"])
+                        for r in row["pair_residuals"]),
+                    "max_abs_over_scale_rms": max(
+                        abs(r["over_scale_rms"])
+                        for r in row["pair_residuals"]),
                     "span_closer": row["additive_span"]["closer"],
                     "span_relative_vs_scale": row["additive_span"][
                         "relative_vs_scale"],
@@ -543,6 +666,55 @@ def build() -> dict:
                 "span, scored against both fits; descriptive only, since q "
                 "and the step were fitted on these same lines and no null "
                 "is attached",
+    }
+
+    # --- the misses in the units each fit was judged by ---------------------
+    pairs_grouped = [(row, r) for row in campaign for r in row["pair_residuals"]]
+
+    def _largest(items, key) -> dict:
+        row, r = max(items, key=lambda it: abs(it[1][key]))
+        return {"date": row["date"], "n_lines": row["n_lines"],
+                "pair": r["pair"], "line_high_mhz": r["line_high_mhz"],
+                "value": abs(r[key]),
+                "relative_vs_additive": r["relative_vs_additive"],
+                "relative_vs_scale": r["relative_vs_scale"],
+                "offset_channels": abs(
+                    r["offset_channels_vs_additive" if key == "over_comb_rms"
+                      else "offset_channels_vs_scale"])}
+
+    pair_comb = [abs(r["over_comb_rms"]) for _, r in pairs_grouped]
+    pair_scale = [abs(r["over_scale_rms"]) for _, r in pairs_grouped]
+    span_comb = [abs(r["over_comb_rms"]) for r in spans]
+    span_scale = [abs(r["over_scale_rms"]) for r in spans]
+    line_fit["noise_scale"] = {
+        "rms_comb_channels": [row["noise"]["rms_comb_channels"]
+                              for row in campaign],
+        "rms_scale_channels": [row["noise"]["rms_scale_channels"]
+                               for row in campaign],
+        "pairs": len(pairs_grouped),
+        "median_abs_over_comb_rms": _median(pair_comb),
+        "median_abs_over_scale_rms": _median(pair_scale),
+        "max_abs_over_comb_rms": max(pair_comb),
+        "max_abs_over_scale_rms": max(pair_scale),
+        "pairs_within_comb_rms": sum(1 for v in pair_comb if v <= 1.0),
+        "pairs_within_scale_rms": sum(1 for v in pair_scale if v <= 1.0),
+        "largest_over_comb_rms": _largest(pairs_grouped, "over_comb_rms"),
+        "largest_over_scale_rms": _largest(pairs_grouped, "over_scale_rms"),
+        "max_abs_fit_gap_over_comb_rms": max(
+            abs(r["fit_gap_over_comb_rms"]) for _, r in pairs_grouped),
+        "max_abs_fit_gap_over_scale_rms": max(
+            abs(r["fit_gap_over_scale_rms"]) for _, r in pairs_grouped),
+        "max_abs_span_over_comb_rms": max(span_comb),
+        "max_abs_span_over_scale_rms": max(span_scale),
+        "max_abs_span_fit_gap_over_comb_rms": max(
+            abs(r["fit_gap_over_comb_rms"]) for r in spans),
+        "max_abs_span_fit_gap_over_scale_rms": max(
+            abs(r["fit_gap_over_scale_rms"]) for r in spans),
+        "diagnostic_only": True,
+        "note": "the pair and span misses divided by each fit's own rms "
+                "residual in channels, one rms per group estimated from the "
+                "same lines, so no chi-square or null is formed and none of "
+                "it enters the model-selection counts",
     }
     campaign_summary["line_fit"] = line_fit
 
@@ -695,15 +867,19 @@ def render(s: dict) -> str:
              "the JSON as `1 + d/f_i - q` and located by the crossing "
              "below:\n")
     L.append("| group | pair | starts at (MHz) | measured f_high/f_low | "
-             "1 + d/f_i | measured/(1+d/f_i) - 1 | measured/q - 1 | closer | "
+             "1 + d/f_i | measured/(1+d/f_i) - 1 | measured/q - 1 | "
+             "miss / comb rms | miss / scale rms | closer | "
              "additive depth | additive eff. depth |")
-    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
+             "--- | ---: | ---: |")
     for row in camp:
         for p, m in zip(row["additive_pairs"], row["pair_residuals"]):
             L.append(f"| {row['date']} n={row['n_lines']} | {p['pair']} | "
                      f"{p['line_low_mhz']:.4f} | {m['measured']:.6f} | "
                      f"{p['value']:.6f} | {m['relative_vs_additive']:+.2e} | "
-                     f"{m['relative_vs_scale']:+.2e} | {m['closer']} | "
+                     f"{m['relative_vs_scale']:+.2e} | "
+                     f"{abs(m['over_comb_rms']):.2f} | "
+                     f"{abs(m['over_scale_rms']):.2f} | {m['closer']} | "
                      f"{p['depth']} | {p['effective_depth']:.2f} |")
     L.append("")
     cross_txt = ", ".join(
@@ -746,6 +922,57 @@ def render(s: dict) -> str:
              "nearer is not a likelihood test. The AIC and leave-one-out "
              "columns in `results/comb_vs_scale.csv` remain the decision; "
              "this column says where on the lines the two fits part.\n")
+    ns = lf["noise_scale"]
+    wa = ns["largest_over_comb_rms"]
+    wsc = ns["largest_over_scale_rms"]
+    L.append("A residual in ratio units still does not say whether it is "
+             "large, and the campaign table already records the scale each "
+             "fit was judged by: `rms_comb_channels` and `rms_scale_channels` "
+             "are the rms of each fit's own residuals on these same lines, in "
+             f"channels ({min(ns['rms_comb_channels']):.3f}-"
+             f"{max(ns['rms_comb_channels']):.2f} for the comb, "
+             f"{min(ns['rms_scale_channels']):.3f}-"
+             f"{max(ns['rms_scale_channels']):.2f} for the scale). A miss in "
+             "ratio at a pair displaces that pair's upper line, so "
+             "multiplying by it gives an offset in frequency, and one rms "
+             "turns that offset into a fraction of the scatter each fit left "
+             "on those lines.\n")
+    L.append(f"The largest pair miss in its own fit's scatter is "
+             f"{wa['value']:.2f} rms, at {wa['date']} n={wa['n_lines']} "
+             f"pair {wa['pair']}: {wa['offset_channels']:.1f} channels, from "
+             f"a {abs(wa['relative_vs_additive']):.1e} ratio miss on a line "
+             f"at {wa['line_high_mhz']:.2f} MHz. For the scale fit the "
+             f"largest is {wsc['value']:.2f} rms "
+             f"({wsc['offset_channels']:.1f} channels, "
+             f"{abs(wsc['relative_vs_scale']):.1e}) at {wsc['date']} "
+             f"n={wsc['n_lines']} pair {wsc['pair']}. The medians are "
+             f"{ns['median_abs_over_comb_rms']:.2f} and "
+             f"{ns['median_abs_over_scale_rms']:.2f} rms, and "
+             f"{ns['pairs_within_comb_rms']} of {ns['pairs']} additive misses "
+             f"and {ns['pairs_within_scale_rms']} of {ns['pairs']} scale "
+             "misses sit inside one rms.\n")
+    L.append(f"The {ad['max_pair_gap_to_scale_q']:.1e} by which the two "
+             "predictions differ at their widest, read the same way, is never "
+             f"more than {ns['max_abs_fit_gap_over_comb_rms']:.2f} rms of "
+             f"the comb fit or {ns['max_abs_fit_gap_over_scale_rms']:.2f} rms "
+             "of the scale fit, while the worst individual misses on the "
+             f"lines reach {ns['max_abs_over_comb_rms']:.1f} and "
+             f"{ns['max_abs_over_scale_rms']:.1f} rms. The two numbers are "
+             "not the same size once each is divided by the scatter of the "
+             "fit that produced it: the disagreement between the fits stays "
+             "near one scatter width and the misses on the lines run to "
+             "several, so it is the miss that sets the scale here and the "
+             "fit-to-fit gap that is the smaller quantity.\n")
+    L.append("That ordering is as far as the rescaling goes. Each rms is a "
+             "single number per group, estimated from the same four lines (or "
+             "fourteen) the residuals are measured on, so numerator and "
+             "denominator share one small sample; a pair miss is one line's "
+             "displacement rather than an independent draw; and no "
+             "chi-square, p-value or null is formed here. Dividing by the "
+             "scatter says how big these misses are next to the noise each "
+             "fit left behind, not which fit the lines prefer - that remains "
+             "with the AIC and leave-one-out columns, and none of these "
+             "ratios is counted with them.\n")
 
     L.append("### 3b. Compounded across the span\n")
     L.append("Multiplying those pair ratios gives the additive model's own "
@@ -756,15 +983,19 @@ def render(s: dict) -> str:
              "are scored on the data rather than only against each other:\n")
     L.append("| group | pairs | measured f_high/f_low | additive compounded | "
              "q^pairs | measured/additive - 1 | measured/q^pairs - 1 | "
-             "closer | additive depth | additive eff. depth |")
-    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: |")
+             "miss / comb rms | miss / scale rms | closer | "
+             "additive depth | additive eff. depth |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
+             "--- | ---: | ---: |")
     for row in camp:
         sp = row["additive_span"]
         L.append(f"| {row['date']} n={row['n_lines']} | {sp['pairs']} | "
                  f"{sp['measured_span_ratio']:.6f} | {sp['value']:.6f} | "
                  f"{sp['reference_scale']['value']:.6f} | "
                  f"{sp['relative_vs_additive']:+.2e} | "
-                 f"{sp['relative_vs_scale']:+.2e} | {sp['closer']} | "
+                 f"{sp['relative_vs_scale']:+.2e} | "
+                 f"{abs(sp['over_comb_rms']):.2f} | "
+                 f"{abs(sp['over_scale_rms']):.2f} | {sp['closer']} | "
                  f"{sp['depth']} | {sp['effective_depth']:.2f} |")
     L.append("")
     widest = max(camp, key=lambda row: abs(
@@ -793,6 +1024,32 @@ def render(s: dict) -> str:
              f"both in {lf['span_side_counts']['above_both']} groups and "
              f"below both in {lf['span_side_counts']['below_both']}, with "
              f"{lf['span_side_counts']['between']} between.\n")
+    span_ns = widest["additive_span"]
+    worst_span = max(camp, key=lambda row: abs(
+        row["additive_span"]["over_comb_rms"]))["additive_span"]
+    L.append("The span misses read in the same units. On the "
+             f"{widest['n_lines']}-line group the "
+             f"{abs(span_ns['relative_vs_additive']):.1e} additive miss over "
+             f"a span ending at {span_ns['predicted_high_mhz']['additive']:.2f} "
+             f"MHz is {abs(span_ns['offset_channels_vs_additive']):.1f} "
+             f"channels, or {abs(span_ns['over_comb_rms']):.2f} rms of the "
+             "comb fit, and its scale miss is "
+             f"{abs(span_ns['over_scale_rms']):.2f} rms of the scale fit. "
+             "Across the four spans the largest misses are "
+             f"{lf['noise_scale']['max_abs_span_over_comb_rms']:.2f} comb "
+             f"rms and {lf['noise_scale']['max_abs_span_over_scale_rms']:.2f} "
+             "scale rms, while the gap between the two compounded predictions "
+             "is at most "
+             f"{lf['noise_scale']['max_abs_span_fit_gap_over_comb_rms']:.2f} "
+             "and "
+             f"{lf['noise_scale']['max_abs_span_fit_gap_over_scale_rms']:.2f} "
+             "rms. Compounding does not lift either fit's disagreement with "
+             "the lines past "
+             f"{max(lf['noise_scale']['max_abs_span_over_comb_rms'], lf['noise_scale']['max_abs_span_over_scale_rms']):.1f} "
+             "scatter widths, and the fits still disagree with each other by "
+             "less than they disagree with the data. The same caution "
+             "applies as in 3a: one rms per group, estimated from these "
+             "lines, and no null attached.\n")
     L.append("Two cautions on reading that table as evidence. First, the "
              "compounded ratios reach effective depth "
              f"{max(row['additive_span']['effective_depth'] for row in camp):.2f}, "
@@ -930,6 +1187,14 @@ def main() -> int:
           f"scale {lf['span_closer_counts']['scale']}; max "
           f"|measured/pred-1| {lf['max_abs_relative_vs_additive']:.2e} add / "
           f"{lf['max_abs_relative_vs_scale']:.2e} scale")
+    ns = lf["noise_scale"]
+    print(f"noise-scaled misses      max pair "
+          f"{ns['max_abs_over_comb_rms']:.2f} comb / "
+          f"{ns['max_abs_over_scale_rms']:.2f} scale rms; fit gap "
+          f"{ns['max_abs_fit_gap_over_comb_rms']:.2f} / "
+          f"{ns['max_abs_fit_gap_over_scale_rms']:.2f} rms; spans "
+          f"{ns['max_abs_span_over_comb_rms']:.2f} / "
+          f"{ns['max_abs_span_over_scale_rms']:.2f} rms")
     print(f"model crossings (MHz)    "
           f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")

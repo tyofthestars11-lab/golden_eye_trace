@@ -165,6 +165,7 @@ class CampaignRatioTests(unittest.TestCase):
         sys.path.insert(0, os.path.join(root, "scripts"))
         import phi_plus_one
         cls.table = table
+        cls.script = phi_plus_one
         cls.payload = phi_plus_one.build()
         with open(table, newline="", encoding="utf-8") as fh:
             cls.rows = list(csv.DictReader(fh))
@@ -406,6 +407,132 @@ class CampaignRatioTests(unittest.TestCase):
                 span["measured_between_predictions"],
                 min(product, scale_cumulative) <= measured
                 <= max(product, scale_cumulative))
+
+    def test_the_scatter_is_read_from_the_campaign_table(self):
+        # the rms columns are ingest facts, held as printed, never re-derived
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            noise = entry["noise"]
+            self.assertEqual(noise["as_printed"],
+                             [row["rms_comb_channels"],
+                              row["rms_scale_channels"]])
+            self.assertEqual(noise["rms_comb_channels"],
+                             float(Fraction(row["rms_comb_channels"])))
+            self.assertEqual(noise["rms_scale_channels"],
+                             float(Fraction(row["rms_scale_channels"])))
+            self.assertGreater(noise["rms_comb_channels"], 0.0)
+            self.assertGreater(noise["rms_scale_channels"], 0.0)
+
+    def test_each_pair_miss_is_a_line_offset_over_its_own_scatter(self):
+        # a ratio miss displaces the pair's upper line, so the miss in
+        # channels is relative * predicted high line, and one rms divides it
+        index = self._groups()
+        channel_hz = self.script.CHANNEL_HZ
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            freqs = [Fraction(str(f)) for f in group["freqs_mhz"]]
+            step = Fraction(row["comb_df_mhz"])
+            q = Fraction(row["scale_q"])
+            rms_comb = float(Fraction(row["rms_comb_channels"]))
+            rms_scale = float(Fraction(row["rms_scale_channels"]))
+            for i, m in enumerate(entry["pair_residuals"]):
+                measured = freqs[i + 1] / freqs[i]
+                additive = 1 + step / freqs[i]
+                offset_add = (float((freqs[i] + step)
+                                    * (measured / additive - 1))
+                              * 1e6 / channel_hz)
+                offset_scale = (float(q * freqs[i] * (measured / q - 1))
+                                * 1e6 / channel_hz)
+                self.assertAlmostEqual(m["offset_channels_vs_additive"],
+                                       offset_add, places=9)
+                self.assertAlmostEqual(m["offset_channels_vs_scale"],
+                                       offset_scale, places=9)
+                self.assertAlmostEqual(m["over_comb_rms"],
+                                       offset_add / rms_comb, places=9)
+                self.assertAlmostEqual(m["over_scale_rms"],
+                                       offset_scale / rms_scale, places=9)
+
+    def test_the_span_miss_is_a_high_line_offset_over_the_scatter(self):
+        index = self._groups()
+        channel_hz = self.script.CHANNEL_HZ
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            group = index[(row["source"], row["date"], int(row["n_lines"]))]
+            freqs = [Fraction(str(f)) for f in group["freqs_mhz"]]
+            step = Fraction(row["comb_df_mhz"])
+            product = Fraction(1)
+            for f in freqs[:-1]:
+                product *= 1 + step / f
+            measured = freqs[-1] / freqs[0]
+            span = entry["additive_span"]
+            rms_comb = float(Fraction(row["rms_comb_channels"]))
+            rms_scale = float(Fraction(row["rms_scale_channels"]))
+            offset_add = (float(product * freqs[0] * (measured / product - 1))
+                          * 1e6 / channel_hz)
+            self.assertAlmostEqual(span["offset_channels_vs_additive"],
+                                   offset_add, places=9)
+            self.assertAlmostEqual(span["over_comb_rms"],
+                                   offset_add / rms_comb, places=9)
+            self.assertAlmostEqual(
+                span["over_scale_rms"],
+                float(span["offset_channels_vs_scale"]) / rms_scale,
+                places=9)
+
+    def test_the_two_fits_gap_is_read_in_scatter_units(self):
+        channel_hz = self.script.CHANNEL_HZ
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            rms_comb = float(Fraction(row["rms_comb_channels"]))
+            rms_scale = float(Fraction(row["rms_scale_channels"]))
+            for m in entry["pair_residuals"]:
+                gap = (m["predicted_high_mhz"]["additive"]
+                       - m["predicted_high_mhz"]["scale"]) * 1e6 / channel_hz
+                self.assertAlmostEqual(m["fit_gap_channels"], gap, places=9)
+                self.assertAlmostEqual(m["fit_gap_over_comb_rms"],
+                                       gap / rms_comb, places=9)
+                self.assertAlmostEqual(m["fit_gap_over_scale_rms"],
+                                       gap / rms_scale, places=9)
+            span = entry["additive_span"]
+            gap = (span["predicted_high_mhz"]["additive"]
+                   - span["predicted_high_mhz"]["scale"]) * 1e6 / channel_hz
+            self.assertAlmostEqual(span["fit_gap_channels"], gap, places=9)
+            self.assertAlmostEqual(span["fit_gap_over_comb_rms"],
+                                   gap / rms_comb, places=9)
+            self.assertAlmostEqual(span["fit_gap_over_scale_rms"],
+                                   gap / rms_scale, places=9)
+
+    def test_the_noise_scaling_stays_out_of_the_model_selection_counts(self):
+        summary = self.payload["campaign_summary"]
+        line_fit = summary["line_fit"]
+        noise = line_fit["noise_scale"]
+        self.assertTrue(noise["diagnostic_only"])
+        self.assertEqual(summary["ratios"],
+                         sum(len(e["ratios"])
+                             for e in self.payload["campaign"]))
+        self.assertEqual(summary["additive"]["pairs"],
+                         sum(len(e["additive_pairs"])
+                             for e in self.payload["campaign"]))
+        self.assertEqual(noise["pairs"], line_fit["pairs"])
+        for key in ("aic", "bic", "delta_aic", "null_p", "p_value",
+                    "verdict"):
+            self.assertNotIn(key, noise)
+        self.assertLessEqual(noise["pairs_within_comb_rms"], noise["pairs"])
+        self.assertLessEqual(noise["pairs_within_scale_rms"], noise["pairs"])
+        self.assertEqual(len(noise["rms_comb_channels"]),
+                         len(self.payload["campaign"]))
+
+    def test_the_tables_carry_the_miss_in_scatter_units(self):
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"),
+                  encoding="utf-8") as fh:
+            text = fh.read()
+        headers = [line for line in text.splitlines()
+                   if line.startswith("| group |")]
+        pair_header = [h for h in headers if "| pair |" in h]
+        self.assertEqual(len(pair_header), 1)
+        self.assertIn("miss / comb rms", pair_header[0])
+        self.assertIn("miss / scale rms", pair_header[0])
+        span_header = [h for h in headers if "| pairs |" in h]
+        self.assertEqual(len(span_header), 1)
+        self.assertIn("miss / comb rms", span_header[0])
+        self.assertIn("miss / scale rms", span_header[0])
 
     def test_the_tables_carry_no_excess_column(self):
         # the pair and span tables were trimmed to depth and the continuous
