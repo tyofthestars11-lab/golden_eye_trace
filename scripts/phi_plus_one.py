@@ -1385,20 +1385,18 @@ def render(s: dict) -> str:
              "whether one rms is a fair summary of the line scatter:\n")
     L.append("| group | lines | rms comb (ch) | rms scale (ch) | "
              "held-out comb (ch) | held-out scale (ch) | "
-             "held-out / rms comb | held-out / rms scale | "
              "held-out sigma / rms comb | held-out sigma / rms scale | "
              "nearer fit (pairs) | held-out majority | same way |")
     L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
-             "---: | ---: | --- | --- | --- |")
+             "--- | --- | --- |")
     for g in ho["groups"]:
         cells = []
         for key in ("loo_comb_channels", "loo_scale_channels"):
             v = g[key]
             cells.append("-" if v is None else f"{v:.2f}")
-        for block in ("held_out_over_rms", "sigma_over_rms"):
-            for model in ("comb", "scale"):
-                v = g[block][model]
-                cells.append("-" if v is None else f"{v:.2f}")
+        for model in ("comb", "scale"):
+            v = g["sigma_over_rms"][model]
+            cells.append("-" if v is None else f"{v:.2f}")
         same = ("-" if g["agrees"] is None
                 else ("yes" if g["agrees"] else "no"))
         L.append(f"| {g['date']} n={g['n_lines']} | {g['n_lines']} | "
@@ -1424,9 +1422,10 @@ def render(s: dict) -> str:
              "columns carry the comparison. The held-out number is a mean "
              "absolute error and the rms a root mean square; for Gaussian "
              "scatter the two stand in the ratio sqrt(2/pi) = "
-             f"{ho['gaussian_mae']:.3f}, so the raw quotient reads low by that "
-             "factor whatever the data did. Dividing it out leaves the "
-             "held-out line in in-sample rms widths: 1.0 means the fit's own "
+             f"{ho['gaussian_mae']:.3f}, so their raw quotient would read low "
+             "by that factor whatever the data did; the table carries only "
+             "the divided form, the held-out line in in-sample rms widths. "
+             "1.0 means the fit's own "
              "scatter already covered it, and anything above 1.0 is the part "
              "an in-sample rms cannot see.\n")
     L.append(f"The answer differs by group size. On the {big['n_lines']}-line "
@@ -1466,31 +1465,29 @@ def render(s: dict) -> str:
              "new fit. Every fold's error is read as recorded, and the mean of "
              "the folds is checked against the mean printed in "
              "`results/comb_vs_scale.csv` to the last printed decimal; a "
-             "disagreement raises rather than being averaged away. The worst "
-             "fold is then quoted as its multiple of that mean, which is the "
-             "same number as its multiple of an even split - a mean of n folds "
-             "gives each line 1/n of the total - so 1.0 is an even spread and "
-             "a value approaching the fold count is one line carrying the "
-             "whole mean:\n")
+             "disagreement raises rather than being averaged away. The table "
+             "gives the fold count and the share of the total held-out error "
+             "that the worst fold carries, because the product of the two is "
+             "the worst fold's multiple of the mean: a mean of n folds gives "
+             "each line 1/n of the total, so a share of 1/n is an even spread "
+             "and a share approaching 1 is one line carrying the whole mean:\n")
     L.append("| group | folds | worst fold comb | worst fold scale | "
              "worst line comb (MHz) | worst line scale (MHz) | "
-             "worst / mean comb | worst / mean scale | "
              "share of total comb | share of total scale | "
              "mean without worst / mean comb | "
              "mean without worst / mean scale | same line worst |")
     L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
-             "---: | ---: | ---: | ---: | --- |")
+             "---: | ---: | --- |")
     for f in fs["groups"]:
         c, sc = f["comb"], f["scale"]
         head = f"| {f['date']} n={f['n_lines']} | {f['n_folds']} |"
         if c is None or sc is None:
-            L.append(head + " - | - | - | - | - | - | - | - | - | - | - |")
+            L.append(head + " - | - | - | - | - | - | - | - | - |")
             continue
         same = "yes" if f["same_worst_line"] else "no"
         L.append(head
                  + f" {c['worst_fold']} | {sc['worst_fold']} |"
                  + f" {c['worst_line_mhz']:.4f} | {sc['worst_line_mhz']:.4f} |"
-                 + f" {c['worst_over_mean']:.2f} | {sc['worst_over_mean']:.2f} |"
                  + f" {c['worst_share_of_total']:.2f} | "
                  + f"{sc['worst_share_of_total']:.2f} |"
                  + f" {c['mean_without_worst_over_mean']:.2f} | "

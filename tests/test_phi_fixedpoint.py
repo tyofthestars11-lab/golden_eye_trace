@@ -628,10 +628,14 @@ class CampaignRatioTests(unittest.TestCase):
             text = fh.read()
         headers = [line for line in text.splitlines()
                    if line.startswith("| group |")]
-        held = [h for h in headers if "held-out / rms comb" in h]
+        held = [h for h in headers if "held-out sigma / rms comb" in h]
         self.assertEqual(len(held), 1)
         self.assertIn("held-out comb (ch)", held[0])
         self.assertIn("held-out majority", held[0])
+        # the raw quotient reads low by sqrt(2/pi), so only the divided form
+        # is tabulated; quoting the low one beside the corrected one invites
+        # reading it as a result
+        self.assertNotIn("held-out / rms", held[0])
 
     def test_the_tables_carry_no_excess_column(self):
         # the pair and span tables were trimmed to depth and the continuous
@@ -774,8 +778,22 @@ class CampaignRatioTests(unittest.TestCase):
                    if line.startswith("| group |")
                    and "share of total comb" in line]
         self.assertEqual(len(headers), 1)
-        self.assertIn("worst / mean comb", headers[0])
+        self.assertIn("share of total comb", headers[0])
         self.assertIn("same line worst", headers[0])
+        # the worst/mean multiple is fold count times share, so it is not
+        # tabulated twice; the arithmetic that replaces it is checked here
+        self.assertNotIn("| worst / mean comb |", headers[0])
+        self.assertNotIn("| worst / mean scale |", headers[0])
+        spread = self.payload["campaign_summary"]["line_fit"][
+            "noise_scale"]["held_out"]["fold_spread"]
+        for group in spread["groups"]:
+            for model in ("comb", "scale"):
+                m = group[model]
+                if m is None:
+                    continue
+                self.assertAlmostEqual(
+                    group["n_folds"] * m["worst_share_of_total"],
+                    m["worst_over_mean"], places=12)
         for entry in self.payload["campaign"]:
             self.assertIn(f"{entry['date']} n={entry['n_lines']}", text)
 

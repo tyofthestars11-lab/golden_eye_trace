@@ -131,25 +131,25 @@ Two cautions on reading that table as evidence. First, the compounded ratios rea
 
 Sections 3a and 3b divide every miss by one rms per group, and that rms is an in-sample number: it is computed from the same lines the fit was estimated on, so by construction it understates how far a line sits that the fit never saw. The campaign table already records that second measurement - `loo_comb_mhz` and `loo_scale_mhz`, each fit's mean error on the line held out of the fit, averaged over the folds. Set beside the rms, it says whether one rms is a fair summary of the line scatter:
 
-| group | lines | rms comb (ch) | rms scale (ch) | held-out comb (ch) | held-out scale (ch) | held-out / rms comb | held-out / rms scale | held-out sigma / rms comb | held-out sigma / rms scale | nearer fit (pairs) | held-out majority | same way |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
-| 20240325 n=4 | 4 | 0.214 | 0.164 | 0.39 | 0.27 | 1.82 | 1.66 | 2.29 | 2.09 | additive (2-1) | scale | no |
-| 20240920 n=3 | 3 | 0.519 | 0.576 | - | - | - | - | - | - | additive (2-0) | undefined | - |
-| 20240326 n=14 | 14 | 4.675 | 3.790 | 4.53 | 3.38 | 0.97 | 0.89 | 1.22 | 1.12 | additive (7-6) | tie | - |
-| 20240326 n=4 | 4 | 1.879 | 1.809 | 3.48 | 3.28 | 1.85 | 1.81 | 2.32 | 2.27 | scale (1-2) | scale | yes |
+| group | lines | rms comb (ch) | rms scale (ch) | held-out comb (ch) | held-out scale (ch) | held-out sigma / rms comb | held-out sigma / rms scale | nearer fit (pairs) | held-out majority | same way |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
+| 20240325 n=4 | 4 | 0.214 | 0.164 | 0.39 | 0.27 | 2.29 | 2.09 | additive (2-1) | scale | no |
+| 20240920 n=3 | 3 | 0.519 | 0.576 | - | - | - | - | additive (2-0) | undefined | - |
+| 20240326 n=14 | 14 | 4.675 | 3.790 | 4.53 | 3.38 | 1.22 | 1.12 | additive (7-6) | tie | - |
+| 20240326 n=4 | 4 | 1.879 | 1.809 | 3.48 | 3.28 | 2.32 | 2.27 | scale (1-2) | scale | yes |
 
-The columns are not the same kind of average, so the sigma columns carry the comparison. The held-out number is a mean absolute error and the rms a root mean square; for Gaussian scatter the two stand in the ratio sqrt(2/pi) = 0.798, so the raw quotient reads low by that factor whatever the data did. Dividing it out leaves the held-out line in in-sample rms widths: 1.0 means the fit's own scatter already covered it, and anything above 1.0 is the part an in-sample rms cannot see.
+The columns are not the same kind of average, so the sigma columns carry the comparison. The held-out number is a mean absolute error and the rms a root mean square; for Gaussian scatter the two stand in the ratio sqrt(2/pi) = 0.798, so their raw quotient would read low by that factor whatever the data did; the table carries only the divided form, the held-out line in in-sample rms widths. 1.0 means the fit's own scatter already covered it, and anything above 1.0 is the part an in-sample rms cannot see.
 
 The answer differs by group size. On the 14-line group the held-out line sits 1.22 comb rms and 1.12 scale rms from its fit, 22% and 12% above the in-sample reading, so one rms is within a quarter of the held-out scatter there. On the 4-line groups it sits 2.09-2.32 rms out, close to double: 4 lines supporting two fitted parameters leave a residual that is small partly because the fit was bent to them, and the held-out error is what that bending costs. The 3-line group has no fold to read - 3 lines leave two, and two points fit either model exactly - so nothing is claimed about it. A single rms is therefore a fair summary only where the lines outnumber the parameters; where they do not, it is a lower bound on the scatter, and the 3a and 3b multiples are understatements by about that factor.
 
-The mean over folds can still hide a single line, and `results/expanded_phi_groups.json` already carries each fold's own error, so the question is put to that file rather than to a new fit. Every fold's error is read as recorded, and the mean of the folds is checked against the mean printed in `results/comb_vs_scale.csv` to the last printed decimal; a disagreement raises rather than being averaged away. The worst fold is then quoted as its multiple of that mean, which is the same number as its multiple of an even split - a mean of n folds gives each line 1/n of the total - so 1.0 is an even spread and a value approaching the fold count is one line carrying the whole mean:
+The mean over folds can still hide a single line, and `results/expanded_phi_groups.json` already carries each fold's own error, so the question is put to that file rather than to a new fit. Every fold's error is read as recorded, and the mean of the folds is checked against the mean printed in `results/comb_vs_scale.csv` to the last printed decimal; a disagreement raises rather than being averaged away. The table gives the fold count and the share of the total held-out error that the worst fold carries, because the product of the two is the worst fold's multiple of the mean: a mean of n folds gives each line 1/n of the total, so a share of 1/n is an even spread and a share approaching 1 is one line carrying the whole mean:
 
-| group | folds | worst fold comb | worst fold scale | worst line comb (MHz) | worst line scale (MHz) | worst / mean comb | worst / mean scale | share of total comb | share of total scale | mean without worst / mean comb | mean without worst / mean scale | same line worst |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| 20240325 n=4 | 4 | 3 | 3 | 48.9937 | 48.9937 | 1.83 | 1.38 | 0.46 | 0.34 | 0.72 | 0.87 | yes |
-| 20240920 n=3 | 0 | - | - | - | - | - | - | - | - | - | - | - |
-| 20240326 n=14 | 14 | 0 | 9 | 54.5668 | 69.9535 | 2.55 | 3.01 | 0.18 | 0.21 | 0.88 | 0.85 | no |
-| 20240326 n=4 | 4 | 0 | 0 | 82.1189 | 82.1189 | 1.84 | 1.81 | 0.46 | 0.45 | 0.72 | 0.73 | yes |
+| group | folds | worst fold comb | worst fold scale | worst line comb (MHz) | worst line scale (MHz) | share of total comb | share of total scale | mean without worst / mean comb | mean without worst / mean scale | same line worst |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 20240325 n=4 | 4 | 3 | 3 | 48.9937 | 48.9937 | 0.46 | 0.34 | 0.72 | 0.87 | yes |
+| 20240920 n=3 | 0 | - | - | - | - | - | - | - | - | - |
+| 20240326 n=14 | 14 | 0 | 9 | 54.5668 | 69.9535 | 0.18 | 0.21 | 0.88 | 0.85 | no |
+| 20240326 n=4 | 4 | 0 | 0 | 82.1189 | 82.1189 | 0.46 | 0.45 | 0.72 | 0.73 | yes |
 
 Across the 3 groups with folds the worst line carries 18%-46% of the comb fit's total held-out error and 21%-45% of the scale fit's, against the even share at each group's own fold count - 4 folds 25%, 14 folds 7%. No share reaches half, so no group's mean is one line's error in disguise; dropping that worst line still moves the mean by 12%-28% for the comb fit and 13%-27% for the scale fit, and the largest single fold is 2.55 comb means (20240326 n=14) and 3.01 scale means (20240326 n=14).
 
