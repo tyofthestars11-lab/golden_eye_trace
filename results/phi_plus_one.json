@@ -377,6 +377,16 @@
               "worst_share_of_total": 0.4563997772653297,
               "worst_share_printed": 0.46,
               "share_max_p": 0.626784,
+              "share_resample_rho": {
+                "independent": 0.0,
+                "leverage": 0.5,
+                "overlap": 0.6666666666666666
+              },
+              "share_resample_p": {
+                "independent": 0.28358582070896454,
+                "leverage": 0.033798310084495777,
+                "overlap": 0.02129893505324734
+              },
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.7248002969795604
             },
@@ -395,6 +405,16 @@
               "worst_share_of_total": 0.3449528500080325,
               "worst_share_printed": 0.34,
               "share_max_p": 0.953376,
+              "share_resample_rho": {
+                "independent": 0.0,
+                "leverage": 0.5,
+                "overlap": 0.6666666666666666
+              },
+              "share_resample_p": {
+                "independent": 0.44192790360481976,
+                "leverage": 0.10254487275636218,
+                "overlap": 0.052997350132493376
+              },
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.87339619998929
             }
@@ -405,7 +425,21 @@
             "distribution": "Dirichlet(1, ..., 1)",
             "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
             "diagnostic_only": true,
-            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count",
+            "approximation": "leave-one-out folds share all but one line, so their errors move together and exchangeability overstates how freely the shares vary; the simplex tail is therefore optimistic, and the resampled null beside it keeps that sharing"
+          },
+          "share_resample": {
+            "name": "largest share with folds sharing a fit",
+            "method": "resample the fold errors with a shared part, sqrt(rho) common : sqrt(1 - rho) own, and compare the largest share of each draw with the printed share; tail = (1 + hits) / (1 + draws)",
+            "draws": 20000,
+            "rho": {
+              "independent": "0",
+              "leverage": "2 / n",
+              "overlap": "(n - 2) / (n - 1)"
+            },
+            "seed": "zlib.crc32 of '<date>|<n>|<model>|<rho>', so a rerun repeats the numbers",
+            "diagnostic_only": true,
+            "note": "rho is stated at three values rather than estimated, so the comparison with the simplex tail says which way the dependence pushes, not how much of it there is; it assumes nothing about either fit, enters no selection count and removes no fold"
           },
           "diagnostic_only": true,
           "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
@@ -822,7 +856,21 @@
             "distribution": "Dirichlet(1, ..., 1)",
             "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
             "diagnostic_only": true,
-            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count",
+            "approximation": "leave-one-out folds share all but one line, so their errors move together and exchangeability overstates how freely the shares vary; the simplex tail is therefore optimistic, and the resampled null beside it keeps that sharing"
+          },
+          "share_resample": {
+            "name": "largest share with folds sharing a fit",
+            "method": "resample the fold errors with a shared part, sqrt(rho) common : sqrt(1 - rho) own, and compare the largest share of each draw with the printed share; tail = (1 + hits) / (1 + draws)",
+            "draws": 20000,
+            "rho": {
+              "independent": "0",
+              "leverage": "2 / n",
+              "overlap": "(n - 2) / (n - 1)"
+            },
+            "seed": "zlib.crc32 of '<date>|<n>|<model>|<rho>', so a rerun repeats the numbers",
+            "diagnostic_only": true,
+            "note": "rho is stated at three values rather than estimated, so the comparison with the simplex tail says which way the dependence pushes, not how much of it there is; it assumes nothing about either fit, enters no selection count and removes no fold"
           },
           "diagnostic_only": true,
           "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
@@ -1189,6 +1237,16 @@
               "worst_share_of_total": 0.18183733833680008,
               "worst_share_printed": 0.18,
               "share_max_p": 0.8009163358777955,
+              "share_resample_rho": {
+                "independent": 0.0,
+                "leverage": 0.14285714285714285,
+                "overlap": 0.9230769230769231
+              },
+              "share_resample_p": {
+                "independent": 0.27563621818909056,
+                "leverage": 0.07624618769061547,
+                "overlap": 0.02454877256137193
+              },
               "even_share": 0.07142857142857142,
               "mean_without_worst_over_mean": 0.8810982510219076
             },
@@ -1217,6 +1275,16 @@
               "worst_share_of_total": 0.21498517101985903,
               "worst_share_printed": 0.21,
               "share_max_p": 0.5779485448263636,
+              "share_resample_rho": {
+                "independent": 0.0,
+                "leverage": 0.14285714285714285,
+                "overlap": 0.9230769230769231
+              },
+              "share_resample_p": {
+                "independent": 0.2945852707364632,
+                "leverage": 0.08109594520273987,
+                "overlap": 0.018849057547122645
+              },
               "even_share": 0.07142857142857142,
               "mean_without_worst_over_mean": 0.8454005850555365
             }
@@ -1227,7 +1295,21 @@
             "distribution": "Dirichlet(1, ..., 1)",
             "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
             "diagnostic_only": true,
-            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count",
+            "approximation": "leave-one-out folds share all but one line, so their errors move together and exchangeability overstates how freely the shares vary; the simplex tail is therefore optimistic, and the resampled null beside it keeps that sharing"
+          },
+          "share_resample": {
+            "name": "largest share with folds sharing a fit",
+            "method": "resample the fold errors with a shared part, sqrt(rho) common : sqrt(1 - rho) own, and compare the largest share of each draw with the printed share; tail = (1 + hits) / (1 + draws)",
+            "draws": 20000,
+            "rho": {
+              "independent": "0",
+              "leverage": "2 / n",
+              "overlap": "(n - 2) / (n - 1)"
+            },
+            "seed": "zlib.crc32 of '<date>|<n>|<model>|<rho>', so a rerun repeats the numbers",
+            "diagnostic_only": true,
+            "note": "rho is stated at three values rather than estimated, so the comparison with the simplex tail says which way the dependence pushes, not how much of it there is; it assumes nothing about either fit, enters no selection count and removes no fold"
           },
           "diagnostic_only": true,
           "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
@@ -2264,6 +2346,16 @@
               "worst_share_of_total": 0.45906509452277816,
               "worst_share_printed": 0.46,
               "share_max_p": 0.626784,
+              "share_resample_rho": {
+                "independent": 0.0,
+                "leverage": 0.5,
+                "overlap": 0.6666666666666666
+              },
+              "share_resample_p": {
+                "independent": 0.25313734313284336,
+                "leverage": 0.05854707264636768,
+                "overlap": 0.03219839008049598
+              },
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.7212465406362958
             },
@@ -2282,6 +2374,16 @@
               "worst_share_of_total": 0.4525070683673582,
               "worst_share_printed": 0.45,
               "share_max_p": 0.6595,
+              "share_resample_rho": {
+                "independent": 0.0,
+                "leverage": 0.5,
+                "overlap": 0.6666666666666666
+              },
+              "share_resample_p": {
+                "independent": 0.39158042097895107,
+                "leverage": 0.04599770011499425,
+                "overlap": 0.028598570071496424
+              },
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.729990575510189
             }
@@ -2292,7 +2394,21 @@
             "distribution": "Dirichlet(1, ..., 1)",
             "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
             "diagnostic_only": true,
-            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count",
+            "approximation": "leave-one-out folds share all but one line, so their errors move together and exchangeability overstates how freely the shares vary; the simplex tail is therefore optimistic, and the resampled null beside it keeps that sharing"
+          },
+          "share_resample": {
+            "name": "largest share with folds sharing a fit",
+            "method": "resample the fold errors with a shared part, sqrt(rho) common : sqrt(1 - rho) own, and compare the largest share of each draw with the printed share; tail = (1 + hits) / (1 + draws)",
+            "draws": 20000,
+            "rho": {
+              "independent": "0",
+              "leverage": "2 / n",
+              "overlap": "(n - 2) / (n - 1)"
+            },
+            "seed": "zlib.crc32 of '<date>|<n>|<model>|<rho>', so a rerun repeats the numbers",
+            "diagnostic_only": true,
+            "note": "rho is stated at three values rather than estimated, so the comparison with the simplex tail says which way the dependence pushes, not how much of it there is; it assumes nothing about either fit, enters no selection count and removes no fold"
           },
           "diagnostic_only": true,
           "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
@@ -3063,6 +3179,16 @@
                   "worst_share_of_total": 0.4563997772653297,
                   "worst_share_printed": 0.46,
                   "share_max_p": 0.626784,
+                  "share_resample_rho": {
+                    "independent": 0.0,
+                    "leverage": 0.5,
+                    "overlap": 0.6666666666666666
+                  },
+                  "share_resample_p": {
+                    "independent": 0.28358582070896454,
+                    "leverage": 0.033798310084495777,
+                    "overlap": 0.02129893505324734
+                  },
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.7248002969795604
                 },
@@ -3081,6 +3207,16 @@
                   "worst_share_of_total": 0.3449528500080325,
                   "worst_share_printed": 0.34,
                   "share_max_p": 0.953376,
+                  "share_resample_rho": {
+                    "independent": 0.0,
+                    "leverage": 0.5,
+                    "overlap": 0.6666666666666666
+                  },
+                  "share_resample_p": {
+                    "independent": 0.44192790360481976,
+                    "leverage": 0.10254487275636218,
+                    "overlap": 0.052997350132493376
+                  },
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.87339619998929
                 }
@@ -3123,6 +3259,16 @@
                   "worst_share_of_total": 0.18183733833680008,
                   "worst_share_printed": 0.18,
                   "share_max_p": 0.8009163358777955,
+                  "share_resample_rho": {
+                    "independent": 0.0,
+                    "leverage": 0.14285714285714285,
+                    "overlap": 0.9230769230769231
+                  },
+                  "share_resample_p": {
+                    "independent": 0.27563621818909056,
+                    "leverage": 0.07624618769061547,
+                    "overlap": 0.02454877256137193
+                  },
                   "even_share": 0.07142857142857142,
                   "mean_without_worst_over_mean": 0.8810982510219076
                 },
@@ -3151,6 +3297,16 @@
                   "worst_share_of_total": 0.21498517101985903,
                   "worst_share_printed": 0.21,
                   "share_max_p": 0.5779485448263636,
+                  "share_resample_rho": {
+                    "independent": 0.0,
+                    "leverage": 0.14285714285714285,
+                    "overlap": 0.9230769230769231
+                  },
+                  "share_resample_p": {
+                    "independent": 0.2945852707364632,
+                    "leverage": 0.08109594520273987,
+                    "overlap": 0.018849057547122645
+                  },
                   "even_share": 0.07142857142857142,
                   "mean_without_worst_over_mean": 0.8454005850555365
                 }
@@ -3175,6 +3331,16 @@
                   "worst_share_of_total": 0.45906509452277816,
                   "worst_share_printed": 0.46,
                   "share_max_p": 0.626784,
+                  "share_resample_rho": {
+                    "independent": 0.0,
+                    "leverage": 0.5,
+                    "overlap": 0.6666666666666666
+                  },
+                  "share_resample_p": {
+                    "independent": 0.25313734313284336,
+                    "leverage": 0.05854707264636768,
+                    "overlap": 0.03219839008049598
+                  },
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.7212465406362958
                 },
@@ -3193,6 +3359,16 @@
                   "worst_share_of_total": 0.4525070683673582,
                   "worst_share_printed": 0.45,
                   "share_max_p": 0.6595,
+                  "share_resample_rho": {
+                    "independent": 0.0,
+                    "leverage": 0.5,
+                    "overlap": 0.6666666666666666
+                  },
+                  "share_resample_p": {
+                    "independent": 0.39158042097895107,
+                    "leverage": 0.04599770011499425,
+                    "overlap": 0.028598570071496424
+                  },
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.729990575510189
                 }
@@ -3222,7 +3398,8 @@
               "distribution": "Dirichlet(1, ..., 1)",
               "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
               "diagnostic_only": true,
-              "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+              "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count",
+              "approximation": "leave-one-out folds share all but one line, so their errors move together and exchangeability overstates how freely the shares vary; the simplex tail is therefore optimistic, and the resampled null beside it keeps that sharing"
             },
             "smallest_share_p": {
               "comb": {
@@ -3238,6 +3415,69 @@
                 "share": 0.21498517101985903
               }
             },
+            "share_resample": {
+              "name": "largest share with folds sharing a fit",
+              "method": "resample the fold errors with a shared part, sqrt(rho) common : sqrt(1 - rho) own, and compare the largest share of each draw with the printed share; tail = (1 + hits) / (1 + draws)",
+              "draws": 20000,
+              "rho": {
+                "independent": "0",
+                "leverage": "2 / n",
+                "overlap": "(n - 2) / (n - 1)"
+              },
+              "seed": "zlib.crc32 of '<date>|<n>|<model>|<rho>', so a rerun repeats the numbers",
+              "diagnostic_only": true,
+              "note": "rho is stated at three values rather than estimated, so the comparison with the simplex tail says which way the dependence pushes, not how much of it there is; it assumes nothing about either fit, enters no selection count and removes no fold"
+            },
+            "smallest_resample_p": {
+              "independent": {
+                "comb": {
+                  "date": "20240326",
+                  "n_lines": 4,
+                  "value": 0.25313734313284336,
+                  "share": 0.45906509452277816
+                },
+                "scale": {
+                  "date": "20240326",
+                  "n_lines": 14,
+                  "value": 0.2945852707364632,
+                  "share": 0.21498517101985903
+                }
+              },
+              "leverage": {
+                "comb": {
+                  "date": "20240325",
+                  "n_lines": 4,
+                  "value": 0.033798310084495777,
+                  "share": 0.4563997772653297
+                },
+                "scale": {
+                  "date": "20240326",
+                  "n_lines": 4,
+                  "value": 0.04599770011499425,
+                  "share": 0.4525070683673582
+                }
+              },
+              "overlap": {
+                "comb": {
+                  "date": "20240325",
+                  "n_lines": 4,
+                  "value": 0.02129893505324734,
+                  "share": 0.4563997772653297
+                },
+                "scale": {
+                  "date": "20240326",
+                  "n_lines": 14,
+                  "value": 0.018849057547122645,
+                  "share": 0.21498517101985903
+                }
+              }
+            },
+            "resample_vs_simplex": {
+              "pairs": 6,
+              "max_abs_gap_independent": 0.525280117688705,
+              "independent_below_simplex": 6,
+              "dependence_lowers": 6
+            },
             "same_worst_line_groups": [
               "20240325 n=4",
               "20240326 n=4"
@@ -3246,7 +3486,7 @@
               "20240326 n=14"
             ],
             "diagnostic_only": true,
-            "note": "each fold's error read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv, which is only checked against it and never replaced; the worst fold is quoted as its share of the group total and carries the exchangeable-share null, and nothing here enters the AIC, BIC or verdict counts or the campaign's own nulls"
+            "note": "each fold's error read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv, which is only checked against it and never replaced; the worst fold is quoted as its share of the group total and carries two diagnostic nulls, the exchangeable-share one and the resampled one that keeps the folds' shared lines, and nothing here enters the AIC, BIC or verdict counts or the campaign's own nulls"
           },
           "gaussian_mae": 0.7978845608028654,
           "diagnostic_only": true,

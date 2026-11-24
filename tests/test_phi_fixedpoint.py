@@ -860,6 +860,97 @@ class CampaignRatioTests(unittest.TestCase):
                          sum(len(e["additive_pairs"])
                              for e in self.payload["campaign"]))
 
+    def test_the_resampled_null_keeps_the_fold_dependence(self):
+        # the simplex assumes the folds are exchangeable, but leave-one-out
+        # folds share all but one line, so a null that keeps the sharing is
+        # run beside it and the two are compared rather than merged
+        script = self.script
+        self.assertEqual(script.fold_resample_rhos(4),
+                         {"independent": 0.0, "leverage": 0.5,
+                          "overlap": 2.0 / 3.0})
+        self.assertAlmostEqual(script.fold_resample_rhos(14)["leverage"],
+                               2.0 / 14.0, places=12)
+        self.assertAlmostEqual(script.fold_resample_rhos(2)["overlap"], 0.0)
+        with self.assertRaises(ValueError):
+            script.fold_resample_rhos(1)
+        with self.assertRaises(ValueError):
+            script.fold_share_resample(0.4, [1.0, 2.0], 1.5, 7)
+        with self.assertRaises(ValueError):
+            script.fold_share_resample(0.4, [0.0, 0.0], 0.5, 7)
+        # every fold identical pins the largest share at 1/n, so a share at
+        # exactly 1/n is reached by every draw and no larger one can be
+        self.assertEqual(script.fold_share_resample(0.25, [3.0] * 4, 1.0, 7,
+                                                    draws=50), 1.0)
+        # a share above 1/n is never reached when the folds are identical, and
+        # the tail is then bounded by the draws rather than reported as zero
+        self.assertAlmostEqual(
+            script.fold_share_resample(0.625, [1.0, 1.0, 1.0, 5.0], 1.0, 7,
+                                       draws=50),
+            1.0 / 51.0, places=12)
+        spread = self.payload["campaign_summary"]["line_fit"]["noise_scale"][
+            "held_out"]["fold_spread"]
+        null = spread["share_resample"]
+        self.assertTrue(null["diagnostic_only"])
+        self.assertEqual(null["draws"], script.FOLD_RESAMPLE_DRAWS)
+        self.assertEqual(null["rho"], {"independent": "0",
+                                       "leverage": "2 / n",
+                                       "overlap": "(n - 2) / (n - 1)"})
+        self.assertIn("share all but one",
+                      spread["share_null"]["approximation"])
+        folded = [f for f in spread["groups"] if f["comb"] is not None]
+        self.assertEqual(len(folded), 3)
+        for group in folded:
+            for model in ("comb", "scale"):
+                m = group[model]
+                self.assertEqual(m["share_resample_rho"],
+                                 script.fold_resample_rhos(group["n_folds"]))
+                self.assertEqual(sorted(m["share_resample_p"]),
+                                 ["independent", "leverage", "overlap"])
+                for p in m["share_resample_p"].values():
+                    self.assertGreater(p, 0.0)
+                    self.assertLessEqual(p, 1.0)
+                # the same seed and the same printed share reproduce the p
+                self.assertAlmostEqual(
+                    m["share_resample_p"]["leverage"],
+                    script.fold_share_resample(
+                        m["worst_share_printed"], m["errors_mhz"],
+                        m["share_resample_rho"]["leverage"],
+                        script.fold_resample_seed(
+                            group["date"], group["n_folds"], model,
+                            "leverage")),
+                    places=12)
+                # more shared variance is a tighter null, not a looser one
+                self.assertGreater(m["share_resample_p"]["independent"],
+                                   m["share_resample_p"]["overlap"])
+                # the simplex reading is the loosest of them, which is the
+                # caveat the null paragraph states
+                self.assertGreater(m["share_max_p"],
+                                   m["share_resample_p"]["independent"])
+        compare = spread["resample_vs_simplex"]
+        self.assertEqual(compare["pairs"], 2 * len(folded))
+        self.assertEqual(compare["independent_below_simplex"],
+                         compare["pairs"])
+        self.assertEqual(compare["dependence_lowers"], compare["pairs"])
+        self.assertGreater(compare["max_abs_gap_independent"], 0.1)
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"), encoding="utf-8") as fh:
+            text = fh.read()
+        self.assertIn("Exchangeability is an approximation", text)
+        headers = [line for line in text.splitlines()
+                   if line.startswith("| group |")
+                   and "overlap rho" in line]
+        self.assertEqual(len(headers), 1)
+        # every row of the resampled table carries the same cell count, so a
+        # group without folds cannot shift the columns
+        cells = len(headers[0].split("|"))
+        start = text.splitlines().index(headers[0])
+        for line in text.splitlines()[start + 1:start + 1 + 1 + len(
+                spread["groups"])]:
+            self.assertEqual(len(line.split("|")), cells)
+        summary = self.payload["campaign_summary"]
+        self.assertEqual(summary["ratios"], 8)
+        self.assertEqual(summary["additive"]["pairs"], 21)
+
 
 if __name__ == "__main__":
     unittest.main()

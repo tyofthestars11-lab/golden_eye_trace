@@ -66,10 +66,15 @@ group's total, and the multiple of an even split and the mean-without-worst
 ratio are left as arithmetic on that share and the fold count rather than run
 as further columns. The share carries a null of its own - the largest of n
 exchangeable shares, uniform on the simplex with the total fixed - so a share
-can be read as unusual or not, instead of only as large. Both the held-out
-error, its per-fold spread, the share's null and the rms stay diagnostic: the
-columns are read as printed, never recomputed, the fold file is only read, and
-the AIC and leave-one-out decisions are untouched.
+can be read as unusual or not, instead of only as large. That null is an
+approximation, because leave-one-out folds share all but one line and their
+errors therefore move together: exchangeability overstates how freely a share
+vector can vary, so the simplex tail is optimistic, and a resampling null with
+the sharing put back is run beside it at three stated amounts of dependence.
+Both are diagnostic and neither is a verdict. The held-out error, its per-fold
+spread, both nulls and the rms stay diagnostic: the columns are read as
+printed, never recomputed, the fold file is only read, and the AIC and
+leave-one-out decisions are untouched.
 """
 
 from __future__ import annotations
@@ -78,7 +83,9 @@ import csv
 import json
 import math
 import os
+import random
 import sys
+import zlib
 from fractions import Fraction
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -108,6 +115,11 @@ RUNG_TOLERANCE = 0.01
 CAMPAIGN_CSV = os.path.join(ROOT, "results", "comb_vs_scale.csv")
 GROUPS_JSON = os.path.join(ROOT, "results", "expanded_phi_groups.json")
 DEPTH_LIMIT = 64
+# both fits carry two parameters, so a fold's fit sees n - 1 lines and n - 2
+# of them are shared with the fit of any other fold
+FOLD_PARAMS = 2
+# draws behind each resampled share null; fixed so a rerun repeats the number
+FOLD_RESAMPLE_DRAWS = 20000
 # sqrt(2/pi): the ratio a mean absolute error has to the rms of the same
 # Gaussian scatter, used to put the held-out column on the rms's footing
 GAUSSIAN_MAE = math.sqrt(2.0 / math.pi)
@@ -359,7 +371,76 @@ def share_max_tail(share, n) -> float:
     return min(1.0, max(0.0, float(tail)))
 
 
-def fold_spread(held, loo, n_lines) -> dict:
+def fold_resample_rhos(n) -> dict:
+    """The three amounts of shared error the resampled null is run at.
+
+    ``independent`` is rho = 0, the folds resampled with nothing in common,
+    which is the reading the simplex null already makes. ``leverage`` is
+    2 / n, the part of the variance a two-parameter fit leaves in its
+    parameters, so the common part grows as the lines stop outnumbering the
+    fit. ``overlap`` is (n - 2) / (n - 1), the fraction of its training lines
+    one fold shares with another, which is as dependent as the folds can be
+    without becoming the same fold. Stated, not estimated: three readings of
+    one unknown, so the comparison below says which way the dependence pushes
+    rather than how large it is.
+    """
+    if n < 2:
+        raise ValueError("a shared-error null needs at least two folds")
+    return {"independent": 0.0,
+            "leverage": min(1.0, FOLD_PARAMS / n),
+            "overlap": max(0.0, (n - 2) / (n - 1))}
+
+
+def fold_resample_seed(date, n, model, kind) -> int:
+    """A seed fixed by the group and fit, so the same file gives the same p."""
+    tag = f"{date}|{n}|{model}|{kind}".encode("utf-8")
+    return zlib.crc32(tag)
+
+
+def fold_share_resample(share, errors, rho, seed,
+                        draws=FOLD_RESAMPLE_DRAWS) -> float:
+    """Probability the largest share reaches ``share`` when folds share a fit.
+
+    Leave-one-out folds are not exchangeable in the way the simplex null
+    assumes: any two are fitted on all but one of the group's lines and share
+    n - 2 of the n - 1 lines they each see, so their errors carry a common
+    part and move together. ``rho`` is that common part's share of the
+    variance. A draw takes one observed fold error as the part every fold
+    shares and one as the fold's own, in the ratio sqrt(rho) : sqrt(1 - rho),
+    so rho = 0 resamples the folds independently and rho = 1 makes every fold
+    identical, which pins the share at 1/n.
+
+    The draw reaches the observation when the largest of its shares is at
+    least ``share``, the number the table prints, and the tail is
+    ``(1 + hits) / (1 + draws)``: a tail past the last draw is reported as
+    bounded by the draws rather than as an exact zero, since the draws are
+    Monte Carlo and the simplex tail is exact.
+    """
+    if not 0.0 <= rho <= 1.0:
+        raise ValueError(f"a shared fraction must lie in [0, 1], got {rho}")
+    if draws < 1:
+        raise ValueError("a resampled null needs at least one draw")
+    if not errors or any(e < 0 or not math.isfinite(e) for e in errors):
+        raise ValueError("fold errors must be finite and non-negative")
+    if sum(errors) <= 0:
+        raise ValueError("fold errors must not all be zero")
+    rng = random.Random(seed)
+    common_scale = math.sqrt(rho)
+    own_scale = math.sqrt(1.0 - rho)
+    hits = 0
+    for _ in range(draws):
+        common = rng.choice(errors)
+        drawn = [common_scale * common + own_scale * rng.choice(errors)
+                 for _ in errors]
+        total = sum(drawn)
+        if total <= 0:
+            continue
+        if max(drawn) / total >= share - 1e-12:
+            hits += 1
+    return (1 + hits) / (1 + draws)
+
+
+def fold_spread(held, loo, n_lines, date=None) -> dict:
     """Whether one held-out line carries a group's mean error.
 
     ``held`` is the group's block from ``held_out_noise``, whose mean error
@@ -381,6 +462,12 @@ def fold_spread(held, loo, n_lines) -> dict:
     largest of n exchangeable shares, so a value can be read as unusual or
     not; no threshold, no outlier test and no verdict is attached, and no fold
     is removed from anything.
+
+    That null rests on exchangeability, which leave-one-out folds only
+    approximate: they share all but one line, so their errors move together
+    and the simplex tail is optimistic. A resampling null with a stated shared
+    part is therefore run beside it, at three amounts of dependence, and the
+    two are compared rather than merged.
     """
     out = {"n_folds": 0, "models": {}, "same_worst_line": None,
            "share_null": {
@@ -392,7 +479,31 @@ def fold_spread(held, loo, n_lines) -> dict:
                "note": "the fold shares are uniform on the simplex, so the "
                        "total is held fixed and no fold is favoured; the "
                        "null is on the share alone, says nothing about "
-                       "which fit is right, and enters no selection count"},
+                       "which fit is right, and enters no selection count",
+               "approximation": "leave-one-out folds share all but one "
+                                "line, so their errors move together and "
+                                "exchangeability overstates how freely the "
+                                "shares vary; the simplex tail is therefore "
+                                "optimistic, and the resampled null beside "
+                                "it keeps that sharing"},
+           "share_resample": {
+               "name": "largest share with folds sharing a fit",
+               "method": "resample the fold errors with a shared part, "
+                         "sqrt(rho) common : sqrt(1 - rho) own, and compare "
+                         "the largest share of each draw with the printed "
+                         "share; tail = (1 + hits) / (1 + draws)",
+               "draws": FOLD_RESAMPLE_DRAWS,
+               "rho": {"independent": "0",
+                       "leverage": "2 / n",
+                       "overlap": "(n - 2) / (n - 1)"},
+               "seed": "zlib.crc32 of '<date>|<n>|<model>|<rho>', so a rerun "
+                       "repeats the numbers",
+               "diagnostic_only": True,
+               "note": "rho is stated at three values rather than "
+                       "estimated, so the comparison with the simplex tail "
+                       "says which way the dependence pushes, not how much "
+                       "of it there is; it assumes nothing about either "
+                       "fit, enters no selection count and removes no fold"},
            "diagnostic_only": True,
            "note": "per-fold errors read from "
                    "results/expanded_phi_groups.json and set beside the mean "
@@ -428,6 +539,7 @@ def fold_spread(held, loo, n_lines) -> dict:
         n = len(errors)
         worst = max(range(n), key=lambda i: errors[i])
         total = sum(errors)
+        share_printed = float(f"{errors[worst] / total:.2f}")
         worst_index[model] = folds[worst]["index"]
         out["models"][model] = {
             "errors_mhz": [e / 1e6 for e in errors],
@@ -437,9 +549,15 @@ def fold_spread(held, loo, n_lines) -> dict:
             "worst_mhz": errors[worst] / 1e6,
             "worst_over_mean": errors[worst] / mean_hz,
             "worst_share_of_total": errors[worst] / total,
-            "worst_share_printed": float(f"{errors[worst] / total:.2f}"),
-            "share_max_p": share_max_tail(
-                float(f"{errors[worst] / total:.2f}"), n),
+            "worst_share_printed": share_printed,
+            "share_max_p": share_max_tail(share_printed, n),
+            "share_resample_rho": fold_resample_rhos(n),
+            "share_resample_p": {
+                kind: fold_share_resample(
+                    share_printed, errors, rho,
+                    fold_resample_seed(date or held.get("date"), n, model,
+                                       kind))
+                for kind, rho in fold_resample_rhos(n).items()},
             "even_share": 1.0 / n,
             "mean_without_worst_over_mean":
                 (total - errors[worst]) / ((n - 1) * mean_hz),
@@ -665,7 +783,8 @@ def campaign_rows() -> list:
         f_low = freqs[0]
         rms = fit_noise(row)
         held = held_out_noise(row, rms)
-        held["folds"] = fold_spread(held, fold_runs.get(key), key[2])
+        held["folds"] = fold_spread(held, fold_runs.get(key), key[2],
+                                     date=key[1])
         pairs = additive_pairs(freqs, step, q)
         # the first-line entry is the first pair, not a second computation, so
         # the lowest line cannot drift between the two places it is reported
@@ -950,6 +1069,14 @@ def build() -> dict:
                 "value": best[model]["share_max_p"],
                 "share": best[model]["worst_share_of_total"]}
 
+    def _smallest_resample_p(rows, model, rho):
+        """The least likely worst-fold share once the folds share a fit."""
+        best = min(rows,
+                   key=lambda r: r[model]["share_resample_p"][rho])
+        return {"date": best["date"], "n_lines": best["n_lines"],
+                "value": best[model]["share_resample_p"][rho],
+                "share": best[model]["worst_share_of_total"]}
+
     held_groups = []
     for row in campaign:
         held = row["held_out"]
@@ -987,6 +1114,9 @@ def build() -> dict:
         })
     with_folds = [f for f in fold_rows if f["comb"] is not None]
     fold_null = campaign[0]["held_out"]["folds"]["share_null"]
+    resample_null = next(row["held_out"]["folds"]["share_resample"]
+                         for row in campaign
+                         if row["held_out"]["folds"].get("share_resample"))
     defined_groups = [g for g in held_groups
                       if g["sigma_over_rms"]["comb"] is not None]
     scored_groups = [g for g in held_groups if g["agrees"] is not None]
@@ -1059,6 +1189,26 @@ def build() -> dict:
                 "smallest_share_p": {
                     model: _smallest_share_p(with_folds, model)
                     for model in ("comb", "scale")},
+                "share_resample": dict(resample_null),
+                "smallest_resample_p": {
+                    rho: {model: _smallest_resample_p(with_folds, model, rho)
+                          for model in ("comb", "scale")}
+                    for rho in ("independent", "leverage", "overlap")},
+                "resample_vs_simplex": {
+                    "pairs": len(with_folds) * 2,
+                    "max_abs_gap_independent": max(
+                        abs(f[m]["share_resample_p"]["independent"]
+                            - f[m]["share_max_p"])
+                        for f in with_folds for m in ("comb", "scale")),
+                    "independent_below_simplex": sum(
+                        1 for f in with_folds for m in ("comb", "scale")
+                        if f[m]["share_resample_p"]["independent"]
+                        < f[m]["share_max_p"]),
+                    "dependence_lowers": sum(
+                        1 for f in with_folds for m in ("comb", "scale")
+                        if f[m]["share_resample_p"]["leverage"]
+                        < f[m]["share_resample_p"]["independent"]),
+                },
                 "same_worst_line_groups": [
                     f"{f['date']} n={f['n_lines']}" for f in with_folds
                     if f["same_worst_line"]],
@@ -1071,9 +1221,11 @@ def build() -> dict:
                         "the mean printed in results/comb_vs_scale.csv, "
                         "which is only checked against it and never "
                         "replaced; the worst fold is quoted as its share of "
-                        "the group total and carries the exchangeable-share "
-                        "null, and nothing here enters the AIC, BIC or "
-                        "verdict counts or the campaign's own nulls",
+                        "the group total and carries two diagnostic nulls, "
+                        "the exchangeable-share one and the resampled one "
+                        "that keeps the folds' shared lines, and nothing here "
+                        "enters the AIC, BIC or verdict counts or the "
+                        "campaign's own nulls",
             },
             "gaussian_mae": GAUSSIAN_MAE,
             "diagnostic_only": True,
@@ -1599,6 +1751,101 @@ def render(s: dict) -> str:
              "says nothing about which model is right; it is attached to the "
              "share alone, no threshold is drawn from it, and it stays out "
              "of the model-selection counts.\n")
+    L.append("Exchangeability is an approximation, and it is worth saying "
+             "which way it errs. Leave-one-out folds share all but one line: "
+             "any two are fitted on the same n - 2 of the group's n, so their "
+             "errors carry a common part and move together instead of freely. "
+             "Positive dependence concentrates the shares - correlated folds "
+             "disagree less than independent ones - so the largest share "
+             "varies less than a uniform simplex allows, the tail at a fixed "
+             "share is smaller than the one tabulated above, and those p "
+             "values are optimistic: they make a share look more ordinary "
+             "than it probably is. The simplex reading is the most generous "
+             "one, not the fair one.\n")
+    rs = fs["share_resample"]
+    L.append("A resampling null puts the sharing back. A draw takes one "
+             "observed fold error as the part every fold shares and one as "
+             "that fold's own, in the ratio sqrt(rho) : sqrt(1 - rho), rho "
+             "being the common part's share of the variance, and the largest "
+             "share of the draw is set against the same printed share the "
+             f"table above uses; the tail is the fraction of {rs['draws']} "
+             "draws that reach it, from a seed fixed by the group and the "
+             "fit so that a rerun repeats the number. rho is stated at three "
+             "values rather than estimated: 0, the folds resampled with "
+             "nothing in common, which is the reading the simplex already "
+             "makes; 2/n, the part a two-parameter fit leaves in its "
+             "parameters, so the common part grows as the lines stop "
+             "outnumbering the fit; and (n - 2)/(n - 1), the training overlap "
+             "leave-one-out itself imposes, which is as dependent as the "
+             "folds get without becoming one fold. The three are readings of "
+             "one unknown, so what the table shows is which way the "
+             "dependence pushes, not how much of it there is:\n")
+
+    def _p_text(p):
+        return f"{p:.2f}" if p >= 0.005 else "<0.01"
+
+    def _one_in(p):
+        return f"one draw in {max(1, round(1.0 / p))}" if p > 0 else "no draw"
+
+    L.append("| group | folds | p comb, rho = 0 | p scale, rho = 0 | "
+             "p comb, rho = 2/n | p scale, rho = 2/n | p comb, overlap rho | "
+             "p scale, overlap rho |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+    for f in fs["groups"]:
+        c_r, s_r = f["comb"], f["scale"]
+        head = f"| {f['date']} n={f['n_lines']} | {f['n_folds']} |"
+        if c_r is None or s_r is None:
+            L.append(head + " - |" * 6)
+            continue
+        cells = "".join(
+            f" {_p_text(c_r['share_resample_p'][rho])} | "
+            f"{_p_text(s_r['share_resample_p'][rho])} |"
+            for rho in ("independent", "leverage", "overlap"))
+        L.append(head + cells)
+    L.append("")
+    cmp_rs = fs["resample_vs_simplex"]
+    L.append("The two independent-fold readings do not agree, and the "
+             "disagreement is the first half of the caveat. Resampling with "
+             "nothing shared already gives a smaller tail than the simplex on "
+             f"{cmp_rs['independent_below_simplex']} of the "
+             f"{cmp_rs['pairs']} group-fits, by as much as "
+             f"{cmp_rs['max_abs_gap_independent']:.2f}, because a bootstrap "
+             "re-draws the group's own fold errors with the worst fold's "
+             "identity intact, while the simplex lets a share sit anywhere on "
+             "the simplex - a mass near one large share that these four or "
+             "fourteen recorded errors do not have. The step from one reading "
+             "to the other is therefore part method and part distribution, "
+             "which is why the simplex tail is the loosest of the readings "
+             "here rather than a stand-in for the resampled one. Turning "
+             f"rho up lowers the tail again on {cmp_rs['dependence_lowers']} "
+             f"of those {cmp_rs['pairs']}, so the dependence pushes the same "
+             "way everywhere even though its size is not measured. The "
+             f"smallest tail moves from "
+             f"p = {min(fs['smallest_resample_p']['independent'][m]['value'] for m in ('comb', 'scale')):.2f} "
+             f"at rho = 0 to "
+             f"{min(fs['smallest_resample_p']['leverage'][m]['value'] for m in ('comb', 'scale')):.2f} "
+             f"at rho = 2/n and to "
+             f"{min(fs['smallest_resample_p']['overlap'][m]['value'] for m in ('comb', 'scale')):.3f} "
+             "at the overlap reading.\n")
+    wide = max(folded, key=lambda f: f["comb"]["worst_share_of_total"])
+    wm = wide["comb"]
+    L.append(             f"The widest share in the table, {wm['worst_share_printed']:.2f} "
+             f"on {wide['date']} n={wide['n_lines']} for the comb fit, is an "
+             "ordinary largest of four under the simplex, reached by "
+             f"{_one_in(wm['share_resample_p']['independent'])} when nothing "
+             f"is shared, {_one_in(wm['share_resample_p']['leverage'])} once "
+             f"2/n of the variance is, and "
+             f"{_one_in(wm['share_resample_p']['overlap'])} at the overlap "
+             "extreme: the same share reads as ordinary, as unlikely or as "
+             "more unlikely according to how much dependence is put back, "
+             "and nothing here decides which reading is right. Neither is a "
+             "verdict, and the gap between them is the dependence and the "
+             "bootstrap's own shape, not the fit. The comparison is "
+             "diagnostic on the null and nothing else: the shared part is one "
+             "fold error drawn whole rather than a fit, rho is stated rather "
+             "than estimated, no threshold is drawn from either column, no "
+             "fold is removed, and nothing here enters the model-selection "
+             "counts.\n")
     small_fold_mult = _fold_range(small_f, "comb", "worst_over_mean")
     small_fold_mult_hi = max(small_fold_mult[1],
                              _fold_range(small_f, "scale",
@@ -1684,8 +1931,10 @@ def render(s: dict) -> str:
              "the per-fold errors that sit beside them are read from "
              "`results/expanded_phi_groups.json`; the "
              "rms on the other side is the same in-sample number 3a and 3b "
-             "used; no AIC, BIC, null or verdict is touched, and the campaign's "
-             "counts are unchanged. What the comparison adds is the size of "
+             "used; no AIC, BIC or verdict is touched, the campaign's own nulls "
+             "are untouched, and its counts are unchanged - the two share "
+             "nulls above are diagnostic columns on the fold shares, not "
+             "selection statistics. What the comparison adds is the size of "
              "the correction: a miss quoted as three rms is about "
              f"{3.0 / max(small_sigma):.1f}-{3.0 / min(small_sigma):.1f} "
              f"held-out widths on the {small_text}-line "
@@ -1848,7 +2097,9 @@ def main() -> int:
               f"{fs['max_worst_share_of_total']['comb']:.2f} comb / "
               f"{fs['max_worst_share_of_total']['scale']:.2f} scale, "
               "smallest share tail p "
-              f"{min(fs['smallest_share_p']['comb']['value'], fs['smallest_share_p']['scale']['value']):.2f}")
+              f"{min(fs['smallest_share_p']['comb']['value'], fs['smallest_share_p']['scale']['value']):.2f}, "
+              "resampled at rho = 2/n "
+              f"{min(fs['smallest_resample_p']['leverage'][m]['value'] for m in ('comb', 'scale')):.3f}")
     print(f"model crossings (MHz)    "
           f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")
