@@ -358,7 +358,47 @@
           "scale": 2.0867166176533254
         },
         "gaussian_mae": 0.7978845608028654,
-        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines",
+        "folds": {
+          "n_folds": 4,
+          "models": {
+            "comb": {
+              "errors_mhz": [
+                0.0237509616798684,
+                0.010367830378733576,
+                0.05127261148876697,
+                0.07169352757681906
+              ],
+              "mean_mhz": 0.039271,
+              "worst_fold": 3,
+              "worst_line_mhz": 48.99370725034199,
+              "worst_mhz": 0.07169352757681906,
+              "worst_over_mean": 1.8255991090613188,
+              "worst_share_of_total": 0.4563997772653297,
+              "even_share": 0.25,
+              "mean_without_worst_over_mean": 0.7248002969795604
+            },
+            "scale": {
+              "errors_mhz": [
+                0.010399034223876894,
+                0.02547913041744381,
+                0.036015851464524865,
+                0.03785993993644416
+              ],
+              "mean_mhz": 0.027438,
+              "worst_fold": 3,
+              "worst_line_mhz": 48.99370725034199,
+              "worst_mhz": 0.03785993993644416,
+              "worst_over_mean": 1.37981140003213,
+              "worst_share_of_total": 0.3449528500080325,
+              "even_share": 0.25,
+              "mean_without_worst_over_mean": 0.87339619998929
+            }
+          },
+          "same_worst_line": true,
+          "diagnostic_only": true,
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+        }
       },
       "additive": {
         "label": "1 + comb step / f_low",
@@ -761,7 +801,14 @@
           "scale": null
         },
         "gaussian_mae": 0.7978845608028654,
-        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines",
+        "folds": {
+          "n_folds": 0,
+          "models": {},
+          "same_worst_line": null,
+          "diagnostic_only": true,
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+        }
       },
       "additive": {
         "label": "1 + comb step / f_low",
@@ -1095,7 +1142,67 @@
           "scale": 1.1163914762712048
         },
         "gaussian_mae": 0.7978845608028654,
-        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines",
+        "folds": {
+          "n_folds": 14,
+          "models": {
+            "comb": {
+              "errors_mhz": [
+                1.1607596958100945,
+                0.14375683508084713,
+                0.3178259332303703,
+                0.6572668355903476,
+                0.30238697583349794,
+                0.5545649267141745,
+                0.5016352455335558,
+                0.4045191833901107,
+                0.7848711550204158,
+                0.7562480447550267,
+                0.0924274592089951,
+                0.0011438210785090924,
+                0.029501964079156517,
+                0.6765976800227315
+              ],
+              "mean_mhz": 0.455965,
+              "worst_fold": 0,
+              "worst_line_mhz": 54.566757793416144,
+              "worst_mhz": 1.1607596958100945,
+              "worst_over_mean": 2.5457227367152013,
+              "worst_share_of_total": 0.18183733833680008,
+              "even_share": 0.07142857142857142,
+              "mean_without_worst_over_mean": 0.8810982510219076
+            },
+            "scale": {
+              "errors_mhz": [
+                0.3481224690738469,
+                0.5431594837457314,
+                0.4409356393914744,
+                0.7455496902358457,
+                0.06396378552530706,
+                0.21645756349672376,
+                0.10917139699460567,
+                0.003935825310148299,
+                0.42163548355047403,
+                1.021732582374394,
+                0.21551252239497007,
+                0.0946704647628069,
+                0.3767152156457156,
+                0.15101024110536276
+              ],
+              "mean_mhz": 0.339469,
+              "worst_fold": 9,
+              "worst_line_mhz": 69.95352792764726,
+              "worst_mhz": 1.021732582374394,
+              "worst_over_mean": 3.0097923942780263,
+              "worst_share_of_total": 0.21498517101985903,
+              "even_share": 0.07142857142857142,
+              "mean_without_worst_over_mean": 0.8454005850555365
+            }
+          },
+          "same_worst_line": false,
+          "diagnostic_only": true,
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+        }
       },
       "additive": {
         "label": "1 + comb step / f_low",
@@ -2109,7 +2216,47 @@
           "scale": 2.2699822729047816
         },
         "gaussian_mae": 0.7978845608028654,
-        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines"
+        "note": "each fit's mean error on the held-out line, read as printed and divided by the same group's in-sample rms; diagnostic only, and never recomputed from the lines",
+        "folds": {
+          "n_folds": 4,
+          "models": {
+            "comb": {
+              "errors_mhz": [
+                0.642768386194557,
+                0.4474194347328544,
+                0.06842237292979658,
+                0.24155809134589135
+              ],
+              "mean_mhz": 0.350042,
+              "worst_fold": 0,
+              "worst_line_mhz": 82.11892724377722,
+              "worst_mhz": 0.642768386194557,
+              "worst_over_mean": 1.8362603780911126,
+              "worst_share_of_total": 0.45906509452277816,
+              "even_share": 0.25,
+              "mean_without_worst_over_mean": 0.7212465406362958
+            },
+            "scale": {
+              "errors_mhz": [
+                0.5962889274298251,
+                0.4335976055354774,
+                0.08183053625029325,
+                0.20602793216356635
+              ],
+              "mean_mhz": 0.329436,
+              "worst_fold": 0,
+              "worst_line_mhz": 82.11892724377722,
+              "worst_mhz": 0.5962889274298251,
+              "worst_over_mean": 1.8100282734694328,
+              "worst_share_of_total": 0.4525070683673582,
+              "even_share": 0.25,
+              "mean_without_worst_over_mean": 0.729990575510189
+            }
+          },
+          "same_worst_line": true,
+          "diagnostic_only": true,
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+        }
       },
       "additive": {
         "label": "1 + comb step / f_low",
@@ -2853,6 +3000,180 @@
               "20240920 n=3 (undefined)",
               "20240326 n=14 (tie)"
             ]
+          },
+          "fold_spread": {
+            "groups": [
+              {
+                "date": "20240325",
+                "n_lines": 4,
+                "n_folds": 4,
+                "same_worst_line": true,
+                "comb": {
+                  "errors_mhz": [
+                    0.0237509616798684,
+                    0.010367830378733576,
+                    0.05127261148876697,
+                    0.07169352757681906
+                  ],
+                  "mean_mhz": 0.039271,
+                  "worst_fold": 3,
+                  "worst_line_mhz": 48.99370725034199,
+                  "worst_mhz": 0.07169352757681906,
+                  "worst_over_mean": 1.8255991090613188,
+                  "worst_share_of_total": 0.4563997772653297,
+                  "even_share": 0.25,
+                  "mean_without_worst_over_mean": 0.7248002969795604
+                },
+                "scale": {
+                  "errors_mhz": [
+                    0.010399034223876894,
+                    0.02547913041744381,
+                    0.036015851464524865,
+                    0.03785993993644416
+                  ],
+                  "mean_mhz": 0.027438,
+                  "worst_fold": 3,
+                  "worst_line_mhz": 48.99370725034199,
+                  "worst_mhz": 0.03785993993644416,
+                  "worst_over_mean": 1.37981140003213,
+                  "worst_share_of_total": 0.3449528500080325,
+                  "even_share": 0.25,
+                  "mean_without_worst_over_mean": 0.87339619998929
+                }
+              },
+              {
+                "date": "20240920",
+                "n_lines": 3,
+                "n_folds": 0,
+                "same_worst_line": null,
+                "comb": null,
+                "scale": null
+              },
+              {
+                "date": "20240326",
+                "n_lines": 14,
+                "n_folds": 14,
+                "same_worst_line": false,
+                "comb": {
+                  "errors_mhz": [
+                    1.1607596958100945,
+                    0.14375683508084713,
+                    0.3178259332303703,
+                    0.6572668355903476,
+                    0.30238697583349794,
+                    0.5545649267141745,
+                    0.5016352455335558,
+                    0.4045191833901107,
+                    0.7848711550204158,
+                    0.7562480447550267,
+                    0.0924274592089951,
+                    0.0011438210785090924,
+                    0.029501964079156517,
+                    0.6765976800227315
+                  ],
+                  "mean_mhz": 0.455965,
+                  "worst_fold": 0,
+                  "worst_line_mhz": 54.566757793416144,
+                  "worst_mhz": 1.1607596958100945,
+                  "worst_over_mean": 2.5457227367152013,
+                  "worst_share_of_total": 0.18183733833680008,
+                  "even_share": 0.07142857142857142,
+                  "mean_without_worst_over_mean": 0.8810982510219076
+                },
+                "scale": {
+                  "errors_mhz": [
+                    0.3481224690738469,
+                    0.5431594837457314,
+                    0.4409356393914744,
+                    0.7455496902358457,
+                    0.06396378552530706,
+                    0.21645756349672376,
+                    0.10917139699460567,
+                    0.003935825310148299,
+                    0.42163548355047403,
+                    1.021732582374394,
+                    0.21551252239497007,
+                    0.0946704647628069,
+                    0.3767152156457156,
+                    0.15101024110536276
+                  ],
+                  "mean_mhz": 0.339469,
+                  "worst_fold": 9,
+                  "worst_line_mhz": 69.95352792764726,
+                  "worst_mhz": 1.021732582374394,
+                  "worst_over_mean": 3.0097923942780263,
+                  "worst_share_of_total": 0.21498517101985903,
+                  "even_share": 0.07142857142857142,
+                  "mean_without_worst_over_mean": 0.8454005850555365
+                }
+              },
+              {
+                "date": "20240326",
+                "n_lines": 4,
+                "n_folds": 4,
+                "same_worst_line": true,
+                "comb": {
+                  "errors_mhz": [
+                    0.642768386194557,
+                    0.4474194347328544,
+                    0.06842237292979658,
+                    0.24155809134589135
+                  ],
+                  "mean_mhz": 0.350042,
+                  "worst_fold": 0,
+                  "worst_line_mhz": 82.11892724377722,
+                  "worst_mhz": 0.642768386194557,
+                  "worst_over_mean": 1.8362603780911126,
+                  "worst_share_of_total": 0.45906509452277816,
+                  "even_share": 0.25,
+                  "mean_without_worst_over_mean": 0.7212465406362958
+                },
+                "scale": {
+                  "errors_mhz": [
+                    0.5962889274298251,
+                    0.4335976055354774,
+                    0.08183053625029325,
+                    0.20602793216356635
+                  ],
+                  "mean_mhz": 0.329436,
+                  "worst_fold": 0,
+                  "worst_line_mhz": 82.11892724377722,
+                  "worst_mhz": 0.5962889274298251,
+                  "worst_over_mean": 1.8100282734694328,
+                  "worst_share_of_total": 0.4525070683673582,
+                  "even_share": 0.25,
+                  "mean_without_worst_over_mean": 0.729990575510189
+                }
+              }
+            ],
+            "groups_with_folds": 3,
+            "largest_worst_over_mean": {
+              "comb": {
+                "date": "20240326",
+                "n_lines": 14,
+                "value": 2.5457227367152013,
+                "worst_line_mhz": 54.566757793416144
+              },
+              "scale": {
+                "date": "20240326",
+                "n_lines": 14,
+                "value": 3.0097923942780263,
+                "worst_line_mhz": 69.95352792764726
+              }
+            },
+            "max_worst_share_of_total": {
+              "comb": 0.45906509452277816,
+              "scale": 0.4525070683673582
+            },
+            "same_worst_line_groups": [
+              "20240325 n=4",
+              "20240326 n=4"
+            ],
+            "different_worst_line_groups": [
+              "20240326 n=14"
+            ],
+            "diagnostic_only": true,
+            "note": "each fold's error read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv, which is only checked against it and never replaced; the worst fold is quoted as its multiple of an even split, and nothing here enters the AIC, BIC, null or verdict counts"
           },
           "gaussian_mae": 0.7978845608028654,
           "diagnostic_only": true,

@@ -650,6 +650,135 @@ class CampaignRatioTests(unittest.TestCase):
         self.assertNotIn("excess", span_header[0])
         self.assertIn("measured", span_header[0])
 
+    def test_the_docstring_ties_the_factor_two_to_the_folded_groups(self):
+        # the three-line group has no held-out fold, so no widening can be
+        # claimed for it; the optimism belongs to the groups that do have one
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "scripts", "phi_plus_one.py"),
+                  encoding="utf-8") as fh:
+            doc = fh.read().split('"""')[1]
+        self.assertNotIn("three or four", doc)
+        self.assertIn("no held-out fold", doc)
+        self.assertIn("not applicable", doc)
+        self.assertIn("optimistic by roughly a factor two on the groups of "
+                      "four", doc)
+
+    def test_the_group_sizes_in_the_prose_come_from_the_data(self):
+        # every group size named in 3c is written from the fixture, not by
+        # hand, so a fifth group cannot inherit a stale "four-line"
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"),
+                  encoding="utf-8") as fh:
+            text = fh.read()
+        start = text.index("### 3c.")
+        section = text[start:text.index("\n## 4", start)]
+        for n in sorted({e["n_lines"] for e in self.payload["campaign"]}):
+            self.assertIn(f"{n}-line", section)
+        self.assertNotIn("four-line", section)
+        self.assertNotIn("fourteen-line", section)
+        self.assertNotIn("three or four", section)
+
+    def test_the_fold_errors_are_read_from_the_expanded_groups_file(self):
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "results", "expanded_phi_groups.json"),
+                  encoding="utf-8") as fh:
+            groups = json.load(fh)["groups"]
+        index = {(g["source"], g["date"], int(g["n_lines"])): g
+                 for g in groups}
+        for row, entry in zip(self.rows, self.payload["campaign"]):
+            key = (row["source"], row["date"], int(row["n_lines"]))
+            recorded = index[key]["comparison"]["loo"]
+            spread = entry["held_out"]["folds"]
+            if not entry["held_out"]["applicable"]:
+                # three lines leave two, which fit either model exactly
+                self.assertFalse(recorded["applicable"])
+                self.assertEqual(spread["n_folds"], 0)
+                self.assertEqual(spread["models"], {})
+                self.assertIsNone(spread["same_worst_line"])
+                continue
+            self.assertEqual(spread["n_folds"], len(recorded["folds"]))
+            for model in ("comb", "scale"):
+                self.assertEqual(
+                    spread["models"][model]["errors_mhz"],
+                    [f["error_hz"][model] / 1e6
+                     for f in recorded["folds"]])
+                # the file's own mean is the mean the table prints
+                self.assertAlmostEqual(
+                    spread["models"][model]["mean_mhz"],
+                    float(Fraction(row[f"loo_{model}_mhz"])), places=6)
+
+    def test_the_worst_fold_is_read_against_its_even_share(self):
+        held = self.payload["campaign_summary"]["line_fit"]["noise_scale"][
+            "held_out"]
+        spread = held["fold_spread"]
+        self.assertEqual(len(spread["groups"]), len(self.rows))
+        for row, group in zip(self.rows, spread["groups"]):
+            if not group["n_folds"]:
+                self.assertIsNone(group["comb"])
+                self.assertIsNone(group["scale"])
+                continue
+            self.assertEqual(group["n_folds"], int(row["n_lines"]))
+            for model in ("comb", "scale"):
+                m = group[model]
+                n = group["n_folds"]
+                self.assertAlmostEqual(m["even_share"], 1.0 / n,
+                                       places=12)
+                self.assertAlmostEqual(
+                    m["worst_over_mean"],
+                    n * m["worst_share_of_total"], places=12)
+                # the denominator is the mean read as printed, which agrees
+                # with the fold mean to the last decimal the table prints
+                fold_mean = sum(m["errors_mhz"]) / n
+                self.assertLessEqual(abs(m["mean_mhz"] - fold_mean), 5e-7)
+                self.assertAlmostEqual(
+                    m["worst_over_mean"], m["worst_mhz"] / fold_mean,
+                    places=9)
+                self.assertAlmostEqual(
+                    m["worst_share_of_total"],
+                    m["worst_mhz"] / sum(m["errors_mhz"]), places=12)
+                self.assertAlmostEqual(
+                    m["mean_without_worst_over_mean"],
+                    (sum(m["errors_mhz"]) - m["worst_mhz"])
+                    / ((n - 1) * fold_mean), places=12)
+                self.assertEqual(m["worst_mhz"], max(m["errors_mhz"]))
+                self.assertGreaterEqual(m["worst_over_mean"], 1.0)
+                # no group's mean is one line's error in disguise
+                self.assertLess(m["worst_share_of_total"], 0.5)
+
+    def test_the_fold_spread_stays_out_of_the_selection_counts(self):
+        summary = self.payload["campaign_summary"]
+        spread = summary["line_fit"]["noise_scale"]["held_out"][
+            "fold_spread"]
+        self.assertTrue(spread["diagnostic_only"])
+        self.assertEqual(summary["ratios"],
+                         sum(len(e["ratios"])
+                             for e in self.payload["campaign"]))
+        self.assertEqual(summary["additive"]["pairs"],
+                         sum(len(e["additive_pairs"])
+                             for e in self.payload["campaign"]))
+        for key in ("aic", "bic", "delta_aic", "null_p", "p_value",
+                    "verdict"):
+            self.assertNotIn(key, spread)
+        # the group with no fold is shown with zero folds, not dropped
+        self.assertEqual(len(spread["groups"]), len(self.rows))
+        self.assertEqual(spread["groups_with_folds"],
+                         sum(1 for r in self.rows
+                             if r["loo_comb_mhz"].strip()))
+
+    def test_the_table_reports_the_worst_fold_of_every_group(self):
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"),
+                  encoding="utf-8") as fh:
+            text = fh.read()
+        headers = [line for line in text.splitlines()
+                   if line.startswith("| group |")
+                   and "share of total comb" in line]
+        self.assertEqual(len(headers), 1)
+        self.assertIn("worst / mean comb", headers[0])
+        self.assertIn("same line worst", headers[0])
+        for entry in self.payload["campaign"]:
+            self.assertIn(f"{entry['date']} n={entry['n_lines']}", text)
+
 
 if __name__ == "__main__":
     unittest.main()

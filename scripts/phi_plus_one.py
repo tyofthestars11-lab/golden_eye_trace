@@ -52,12 +52,21 @@ counts.
 That divisor is still one in-sample number, so the campaign's own leave-one-out
 columns are read beside it: ``loo_comb_mhz`` and ``loo_scale_mhz`` are each
 fit's mean error on the line it never saw, and dividing that by the same
-group's rms says whether one rms was a fair summary of the scatter. It is,
-where the lines outnumber the two fitted parameters; on the groups of three or
-four it is optimistic by roughly a factor two. The nearer-fit split is checked
-against the fold majority the same way. Both the held-out error and the rms
-stay diagnostic: the columns are read as printed, never recomputed, and the
-AIC and leave-one-out decisions are untouched.
+group's rms says whether one rms was a fair summary of the scatter. It is on
+the group where the lines far outnumber the two fitted parameters, and it is
+optimistic by roughly a factor two on the groups of four. The group of three
+has no held-out fold - three lines leave two, and two points fit either model
+exactly - so it is reported as not applicable and no claim is made about it.
+The nearer-fit split is checked against the fold majority the same way.
+
+A mean over folds can still hide a single line, so each fold's error already
+recorded in ``results/expanded_phi_groups.json`` is read and set beside the
+mean the campaign table prints. The worst fold is quoted as its multiple of
+that mean, which is also its multiple of an even split of the same total, so
+1.0 is an even spread and a value near the fold count is one line carrying
+everything. Both the held-out error, its per-fold spread and the rms stay
+diagnostic: the columns are read as printed, never recomputed, the fold file
+is only read, and the AIC and leave-one-out decisions are untouched.
 """
 
 from __future__ import annotations
@@ -292,6 +301,103 @@ def group_lines() -> dict:
     return out
 
 
+def group_folds() -> dict:
+    """Each leave-one-out fold's own error, keyed like the campaign table.
+
+    ``results/expanded_phi_groups.json`` already records the runs that made
+    the ``loo_*_mhz`` columns: every fold's held-out line and the error both
+    fits made on it. Those per-fold numbers are read here and never
+    recomputed; ``fold_spread`` only checks that their mean is the mean the
+    campaign table prints, so the two files are one measurement seen twice.
+    A group with no recorded leave-one-out block is returned as ``None`` and
+    reported as not applicable rather than as a zero.
+    """
+    if not os.path.exists(GROUPS_JSON):
+        raise FileNotFoundError(
+            "results/expanded_phi_groups.json is missing; run "
+            "scripts/phi_model_discrimination.py first")
+    with open(GROUPS_JSON, encoding="utf-8") as fh:
+        payload = json.load(fh)
+    out = {}
+    for g in payload["groups"]:
+        key = (g["source"], g["date"], int(g["n_lines"]))
+        out[key] = (g.get("comparison") or {}).get("loo")
+    return out
+
+
+def fold_spread(held, loo, n_lines) -> dict:
+    """Whether one held-out line carries a group's mean error.
+
+    ``held`` is the group's block from ``held_out_noise``, whose mean error
+    was read as printed from the campaign table. ``loo`` is the same group's
+    ``comparison.loo`` block from ``results/expanded_phi_groups.json``, which
+    holds one error per fold. The two describe the same runs, so the mean of
+    the folds must agree with the printed mean to the last printed decimal;
+    that is checked rather than assumed, and a disagreement raises instead of
+    being averaged away.
+
+    The worst fold is reported as a multiple of that mean. A mean of n folds
+    gives each line 1/n of the total, so the same number is also the multiple
+    of its even share that the fold carries: 1.0 is an even spread and a
+    value approaching n is one line accounting for the whole mean. The share
+    of the total travels beside it because it is the proportion the prose can
+    quote; no threshold, no outlier test and no verdict is attached to
+    either, and no fold is removed from anything.
+    """
+    out = {"n_folds": 0, "models": {}, "same_worst_line": None,
+           "diagnostic_only": True,
+           "note": "per-fold errors read from "
+                   "results/expanded_phi_groups.json and set beside the mean "
+                   "printed in results/comb_vs_scale.csv; the worst fold is "
+                   "shown as its multiple of an even split, so no outlier "
+                   "test and no null is formed and nothing enters the "
+                   "model-selection counts"}
+    if not held["applicable"]:
+        return out
+    folds = (loo or {}).get("folds") or []
+    out["n_folds"] = len(folds)
+    if len(folds) != int(n_lines):
+        raise ValueError(
+            f"{held.get('date')}: {len(folds)} folds recorded for "
+            f"{n_lines} lines; leave-one-out has one fold per line")
+    worst_index = {}
+    for model in ("comb", "scale"):
+        errors = [float(f["error_hz"][model]) for f in folds]
+        if any(not math.isfinite(e) or e < 0 for e in errors):
+            raise ValueError(f"{held.get('date')}: a {model} fold error is "
+                             "negative or not finite")
+        mean_hz = float((loo.get(model) or {})["mean_error_hz"])
+        if mean_hz <= 0:
+            raise ValueError(f"{held.get('date')}: the {model} fold mean "
+                             "must be positive")
+        printed = held[f"loo_{model}_mhz"]
+        if abs(mean_hz / 1e6 - printed) > 1e-6:
+            raise ValueError(
+                f"{held.get('date')}: the {model} fold mean "
+                f"{mean_hz / 1e6} MHz disagrees with the printed "
+                f"loo_{model}_mhz {printed}; the two files must describe "
+                "the same folds")
+        n = len(errors)
+        worst = max(range(n), key=lambda i: errors[i])
+        total = sum(errors)
+        worst_index[model] = folds[worst]["index"]
+        out["models"][model] = {
+            "errors_mhz": [e / 1e6 for e in errors],
+            "mean_mhz": printed,
+            "worst_fold": int(folds[worst]["index"]),
+            "worst_line_mhz": float(folds[worst]["actual_hz"]) / 1e6,
+            "worst_mhz": errors[worst] / 1e6,
+            "worst_over_mean": errors[worst] / mean_hz,
+            "worst_share_of_total": errors[worst] / total,
+            "even_share": 1.0 / n,
+            "mean_without_worst_over_mean":
+                (total - errors[worst]) / ((n - 1) * mean_hz),
+        }
+    out["same_worst_line"] = (worst_index["comb"]
+                              == worst_index["scale"])
+    return out
+
+
 def additive_pairs(freqs, step, q) -> list:
     """``1 + comb_df / f_i`` at every adjacent pair, i = 1 .. n-1.
 
@@ -489,6 +595,7 @@ def campaign_rows() -> list:
     with open(CAMPAIGN_CSV, newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
     lines = group_lines()
+    fold_runs = group_folds()
     out = []
     for row in rows:
         q = _exact(row["scale_q"])
@@ -507,6 +614,7 @@ def campaign_rows() -> list:
         f_low = freqs[0]
         rms = fit_noise(row)
         held = held_out_noise(row, rms)
+        held["folds"] = fold_spread(held, fold_runs.get(key), key[2])
         pairs = additive_pairs(freqs, step, q)
         # the first-line entry is the first pair, not a second computation, so
         # the lowest line cannot drift between the two places it is reported
@@ -778,6 +886,12 @@ def build() -> dict:
                         "pair": item.get("pair"), "value": value}
         return best
 
+    def _largest_fold(rows, model):
+        best = max(rows, key=lambda r: r[model]["worst_over_mean"])
+        return {"date": best["date"], "n_lines": best["n_lines"],
+                "value": best[model]["worst_over_mean"],
+                "worst_line_mhz": best[model]["worst_line_mhz"]}
+
     held_groups = []
     for row in campaign:
         held = row["held_out"]
@@ -802,6 +916,18 @@ def build() -> dict:
             "loo_majority": held["loo_majority"],
             "agrees": (nearer == vote) if comparable else None,
         })
+    fold_rows = []
+    for row in campaign:
+        spread = row["held_out"]["folds"]
+        fold_rows.append({
+            "date": row["date"],
+            "n_lines": row["n_lines"],
+            "n_folds": spread["n_folds"],
+            "same_worst_line": spread["same_worst_line"],
+            "comb": spread["models"].get("comb"),
+            "scale": spread["models"].get("scale"),
+        })
+    with_folds = [f for f in fold_rows if f["comb"] is not None]
     defined_groups = [g for g in held_groups
                       if g["sigma_over_rms"]["comb"] is not None]
     scored_groups = [g for g in held_groups if g["agrees"] is not None]
@@ -859,6 +985,31 @@ def build() -> dict:
                 "not_scored": [
                     f"{g['date']} n={g['n_lines']} ({g['loo_majority']})"
                     for g in held_groups if g["agrees"] is None],
+            },
+            "fold_spread": {
+                "groups": fold_rows,
+                "groups_with_folds": len(with_folds),
+                "largest_worst_over_mean": {
+                    model: _largest_fold(with_folds, model)
+                    for model in ("comb", "scale")},
+                "max_worst_share_of_total": {
+                    model: max(f[model]["worst_share_of_total"]
+                               for f in with_folds)
+                    for model in ("comb", "scale")},
+                "same_worst_line_groups": [
+                    f"{f['date']} n={f['n_lines']}" for f in with_folds
+                    if f["same_worst_line"]],
+                "different_worst_line_groups": [
+                    f"{f['date']} n={f['n_lines']}" for f in with_folds
+                    if not f["same_worst_line"]],
+                "diagnostic_only": True,
+                "note": "each fold's error read from "
+                        "results/expanded_phi_groups.json and set beside "
+                        "the mean printed in results/comb_vs_scale.csv, "
+                        "which is only checked against it and never "
+                        "replaced; the worst fold is quoted as its multiple "
+                        "of an even split, and nothing here enters the AIC, "
+                        "BIC, null or verdict counts",
             },
             "gaussian_mae": GAUSSIAN_MAE,
             "diagnostic_only": True,
@@ -1265,6 +1416,10 @@ def render(s: dict) -> str:
     small = [g for g in defined if g["n_lines"] < big["n_lines"]]
     small_sigma = [g["sigma_over_rms"][m] for g in small
                    for m in ("comb", "scale")]
+    small_text = " and ".join(sorted({str(g["n_lines"]) for g in small}))
+    no_fold = [g for g in ho["groups"]
+               if g["sigma_over_rms"]["comb"] is None]
+    no_fold_text = " and ".join(sorted({str(g["n_lines"]) for g in no_fold}))
     L.append("The columns are not the same kind of average, so the sigma "
              "columns carry the comparison. The held-out number is a mean "
              "absolute error and the rms a root mean square; for Gaussian "
@@ -1281,16 +1436,116 @@ def render(s: dict) -> str:
              f"{big['sigma_over_rms']['comb'] - 1:.0%} and "
              f"{big['sigma_over_rms']['scale'] - 1:.0%} above the in-sample "
              "reading, so one rms is within a quarter of the held-out scatter "
-             f"there. On the "
-             f"{min(g['n_lines'] for g in small)}-line groups it sits "
+             f"there. On the {small_text}-line groups it sits "
              f"{min(small_sigma):.2f}-{max(small_sigma):.2f} rms out, close to "
-             "double: three or four lines supporting two fitted parameters "
+             f"double: {small_text} lines supporting two fitted parameters "
              "leave a residual that is small partly because the fit was bent "
-             "to them, and the held-out error is what that bending costs. A "
-             "single rms is therefore a fair summary only where the lines "
-             "outnumber the parameters; where they do not, it is a lower "
-             "bound on the scatter, and the 3a and 3b multiples are "
-             "understatements by about that factor.\n")
+             "to them, and the held-out error is what that bending costs. "
+             f"The {no_fold_text}-line group has no fold to read - "
+             f"{no_fold_text} lines leave two, and two points fit either "
+             "model exactly - so nothing is claimed about it. A single rms is "
+             "therefore a fair summary only where the lines outnumber the "
+             "parameters; where they do not, it is a lower bound on the "
+             "scatter, and the 3a and 3b multiples are understatements by "
+             "about that factor.\n")
+    fs = ho["fold_spread"]
+    folded = [f for f in fs["groups"] if f["comb"] is not None]
+    small_f = [f for f in folded if f["n_lines"] < big["n_lines"]]
+
+    def _fold_range(rows, model, key):
+        values = [r[model][key] for r in rows]
+        return min(values), max(values)
+
+    c_share = _fold_range(folded, "comb", "worst_share_of_total")
+    s_share = _fold_range(folded, "scale", "worst_share_of_total")
+    c_drop = _fold_range(folded, "comb", "mean_without_worst_over_mean")
+    s_drop = _fold_range(folded, "scale", "mean_without_worst_over_mean")
+    L.append("The mean over folds can still hide a single line, and "
+             "`results/expanded_phi_groups.json` already carries each fold's "
+             "own error, so the question is put to that file rather than to a "
+             "new fit. Every fold's error is read as recorded, and the mean of "
+             "the folds is checked against the mean printed in "
+             "`results/comb_vs_scale.csv` to the last printed decimal; a "
+             "disagreement raises rather than being averaged away. The worst "
+             "fold is then quoted as its multiple of that mean, which is the "
+             "same number as its multiple of an even split - a mean of n folds "
+             "gives each line 1/n of the total - so 1.0 is an even spread and "
+             "a value approaching the fold count is one line carrying the "
+             "whole mean:\n")
+    L.append("| group | folds | worst fold comb | worst fold scale | "
+             "worst line comb (MHz) | worst line scale (MHz) | "
+             "worst / mean comb | worst / mean scale | "
+             "share of total comb | share of total scale | "
+             "mean without worst / mean comb | "
+             "mean without worst / mean scale | same line worst |")
+    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
+             "---: | ---: | ---: | ---: | --- |")
+    for f in fs["groups"]:
+        c, sc = f["comb"], f["scale"]
+        head = f"| {f['date']} n={f['n_lines']} | {f['n_folds']} |"
+        if c is None or sc is None:
+            L.append(head + " - | - | - | - | - | - | - | - | - | - | - |")
+            continue
+        same = "yes" if f["same_worst_line"] else "no"
+        L.append(head
+                 + f" {c['worst_fold']} | {sc['worst_fold']} |"
+                 + f" {c['worst_line_mhz']:.4f} | {sc['worst_line_mhz']:.4f} |"
+                 + f" {c['worst_over_mean']:.2f} | {sc['worst_over_mean']:.2f} |"
+                 + f" {c['worst_share_of_total']:.2f} | "
+                 + f"{sc['worst_share_of_total']:.2f} |"
+                 + f" {c['mean_without_worst_over_mean']:.2f} | "
+                 + f"{sc['mean_without_worst_over_mean']:.2f} | {same} |")
+    L.append("")
+    L.append(f"Across the {len(folded)} groups with folds the worst line "
+             f"carries {c_share[0]:.0%}-{c_share[1]:.0%} of the comb fit's "
+             f"total held-out error and {s_share[0]:.0%}-{s_share[1]:.0%} of "
+             "the scale fit's, against the even share at each group's own "
+             "fold count - "
+             + ", ".join(f"{n} folds {1 / n:.0%}" for n in
+                         sorted({f["n_folds"] for f in folded}))
+             + ". No share reaches half, so no group's mean is one line's "
+             "error in disguise; dropping that worst line still moves the "
+             f"mean by {1 - c_drop[1]:.0%}-{1 - c_drop[0]:.0%} for the comb "
+             f"fit and {1 - s_drop[1]:.0%}-{1 - s_drop[0]:.0%} for the scale "
+             "fit, and the largest single fold is "
+             f"{fs['largest_worst_over_mean']['comb']['value']:.2f} comb "
+             f"means ({fs['largest_worst_over_mean']['comb']['date']} "
+             f"n={fs['largest_worst_over_mean']['comb']['n_lines']}) and "
+             f"{fs['largest_worst_over_mean']['scale']['value']:.2f} scale "
+             f"means ({fs['largest_worst_over_mean']['scale']['date']} "
+             f"n={fs['largest_worst_over_mean']['scale']['n_lines']}).\n")
+    small_fold_mult = _fold_range(small_f, "comb", "worst_over_mean")
+    small_fold_mult_hi = max(small_fold_mult[1],
+                             _fold_range(small_f, "scale",
+                                         "worst_over_mean")[1])
+    small_fold_mult_lo = min(small_fold_mult[0],
+                             _fold_range(small_f, "scale",
+                                         "worst_over_mean")[0])
+    big_f = [f for f in folded if f["n_lines"] == big["n_lines"]]
+    big_fold_mult = [_fold_range(big_f, m, "worst_over_mean")[1]
+                     for m in ("comb", "scale")]
+    same_text = ", ".join(f"{f['date']} n={f['n_lines']}"
+                          for f in folded if f["same_worst_line"]) or "none"
+    other_text = ", ".join(f"{f['date']} n={f['n_lines']}"
+                           for f in folded
+                           if not f["same_worst_line"]) or "none"
+    L.append("What survives is a reading about fold count, not outliers: the "
+             "largest of n folds takes a growing multiple of an even share as "
+             "n rises even when every fold comes from the same scatter, which "
+             f"is why the {big['n_lines']}-line group shows "
+             f"{min(big_fold_mult):.1f}-{max(big_fold_mult):.1f} times an even "
+             f"share against {small_fold_mult_lo:.1f}-{small_fold_mult_hi:.1f} "
+             f"on the {small_text}-line groups without its folds being any "
+             "less even. Read as a proportion, what 3c reports on the "
+             f"{small_text}-line groups is the fold count and the two fitted "
+             "parameters, not one droppable line. The two fits are worst at "
+             f"the same line on {same_text} and at different lines on "
+             f"{other_text}: where they agree the bad fold belongs to that "
+             "line, and where they part it belongs to that fit's "
+             "extrapolation. Fold indices in the table are the ones recorded "
+             "in the file, counted from zero. No fold is removed from "
+             "anything - the fold file supplies the errors and the printed "
+             "means stay the campaign's own.\n")
     wpair = ho["max_abs_pair_over_comb_loo"]
     L.append("Carried through, the largest pair miss is "
              f"{wpair['value']:.2f} held-out comb widths "
@@ -1332,24 +1587,26 @@ def render(s: dict) -> str:
              "scale readings; the fold vote names a model in "
              f"{ag['comparable']} of {len(ho['groups'])} groups, and "
              f"{compare}. The {big['n_lines']}-line group votes "
-             "a tie and the "
-             f"{min(g['n_lines'] for g in ho['groups'])}-line group cannot be "
-             "held out, so neither is scored either way and both are shown "
+             f"{big['loo_majority']} and the {no_fold_text}-line group cannot "
+             "be held out, so neither is scored either way and both are shown "
              "above. Where the two disagree, the pair split is still a set of "
              "correlated in-sample nearnesses and the fold vote is an "
              "out-of-sample count on the same lines; reporting both is the "
              "check, and neither can be used to shore up the other.\n")
     L.append("Nothing here is a selection statistic, and nothing here makes "
              "the rms wrong - it dates it. The held-out columns are read from "
-             "`results/comb_vs_scale.csv` as printed and never recomputed; the "
+             "`results/comb_vs_scale.csv` as printed and never recomputed, and "
+             "the per-fold errors that sit beside them are read from "
+             "`results/expanded_phi_groups.json`; the "
              "rms on the other side is the same in-sample number 3a and 3b "
              "used; no AIC, BIC, null or verdict is touched, and the campaign's "
              "counts are unchanged. What the comparison adds is the size of "
              "the correction: a miss quoted as three rms is about "
              f"{3.0 / max(small_sigma):.1f}-{3.0 / min(small_sigma):.1f} "
-             "held-out widths on the four-line "
+             f"held-out widths on the {small_text}-line "
              f"groups and about {3.0 / big['sigma_over_rms']['comb']:.1f} on "
-             "the fourteen-line one, so the multiple should be quoted with "
+             f"the {big['n_lines']}-line one, so the multiple should be quoted "
+             "with "
              "the group size beside it. The held-out error is "
              "itself a mean over n folds of the same small group, with the "
              "pairs correlated and no null attached, so neither denominator "
@@ -1497,6 +1754,14 @@ def main() -> int:
               f"{ho['max_sigma_over_rms_scale']:.2f} scale; pair split vs "
               f"fold vote {ho['agreement']['agree']}/"
               f"{ho['agreement']['comparable']}")
+    if ho["fold_spread"]["groups_with_folds"]:
+        fs = ho["fold_spread"]
+        print(f"worst held-out fold      comb "
+              f"{fs['largest_worst_over_mean']['comb']['value']:.2f}x mean, "
+              f"scale {fs['largest_worst_over_mean']['scale']['value']:.2f}x; "
+              f"max share of a group's total "
+              f"{fs['max_worst_share_of_total']['comb']:.2f} comb / "
+              f"{fs['max_worst_share_of_total']['scale']:.2f} scale")
     print(f"model crossings (MHz)    "
           f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")
