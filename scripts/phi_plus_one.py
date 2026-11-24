@@ -61,12 +61,15 @@ The nearer-fit split is checked against the fold majority the same way.
 
 A mean over folds can still hide a single line, so each fold's error already
 recorded in ``results/expanded_phi_groups.json`` is read and set beside the
-mean the campaign table prints. The worst fold is quoted as its multiple of
-that mean, which is also its multiple of an even split of the same total, so
-1.0 is an even spread and a value near the fold count is one line carrying
-everything. Both the held-out error, its per-fold spread and the rms stay
-diagnostic: the columns are read as printed, never recomputed, the fold file
-is only read, and the AIC and leave-one-out decisions are untouched.
+mean the campaign table prints. The worst fold is reported as its share of the
+group's total, and the multiple of an even split and the mean-without-worst
+ratio are left as arithmetic on that share and the fold count rather than run
+as further columns. The share carries a null of its own - the largest of n
+exchangeable shares, uniform on the simplex with the total fixed - so a share
+can be read as unusual or not, instead of only as large. Both the held-out
+error, its per-fold spread, the share's null and the rms stay diagnostic: the
+columns are read as printed, never recomputed, the fold file is only read, and
+the AIC and leave-one-out decisions are untouched.
 """
 
 from __future__ import annotations
@@ -325,6 +328,37 @@ def group_folds() -> dict:
     return out
 
 
+def share_max_tail(share, n) -> float:
+    """Probability the largest of ``n`` exchangeable shares reaches ``share``.
+
+    The null assumes exchangeability and nothing else: the group's held-out
+    error could have fallen on any of its folds with no fold favoured, and the
+    total is fixed, so the share vector is uniform on the simplex,
+    Dirichlet(1, ..., 1). The largest of those shares is not pinned at 1/n -
+    even an even scatter of n numbers has a largest member - so the question
+    the share cannot answer alone is how large the largest gets by chance.
+
+    Its upper tail follows by inclusion-exclusion over the shares that exceed
+    x, ``P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^
+    (n-1)``, which returns exactly 1 at x = 1/n because the maximum cannot fall
+    below an even split. Evaluated in Fractions at the share as the table
+    prints it, so the two columns reproduce by hand: at n = 14 the alternating
+    terms nearly cancel, and a float round-off there could decide the answer.
+    """
+    if n < 2:
+        raise ValueError("a share null needs at least two folds")
+    x = Fraction(float(share)).limit_denominator(10 ** 9)
+    if not 0.0 < x <= 1.0:
+        raise ValueError(f"a share must lie in (0, 1], got {share}")
+    tail = Fraction(0)
+    k = 1
+    while k * x <= 1:
+        term = Fraction(math.comb(n, k)) * (1 - k * x) ** (n - 1)
+        tail += term if k % 2 else -term
+        k += 1
+    return min(1.0, max(0.0, float(tail)))
+
+
 def fold_spread(held, loo, n_lines) -> dict:
     """Whether one held-out line carries a group's mean error.
 
@@ -336,22 +370,36 @@ def fold_spread(held, loo, n_lines) -> dict:
     that is checked rather than assumed, and a disagreement raises instead of
     being averaged away.
 
-    The worst fold is reported as a multiple of that mean. A mean of n folds
-    gives each line 1/n of the total, so the same number is also the multiple
-    of its even share that the fold carries: 1.0 is an even spread and a
-    value approaching n is one line accounting for the whole mean. The share
-    of the total travels beside it because it is the proportion the prose can
-    quote; no threshold, no outlier test and no verdict is attached to
-    either, and no fold is removed from anything.
+    The worst fold is reported as its share of the group's total error. A mean
+    of n folds gives each line 1/n of the total, so the share is also the
+    multiple of an even split divided by n: a share of 1/n is an even spread
+    and a share approaching 1 is one line accounting for the whole mean. The
+    share is what travels, because the multiple and the mean-without-worst
+    ratio are arithmetic on it and on n - ``n share`` and
+    ``n (1 - share) / (n - 1)`` - and tabulating three forms of one number
+    invites reading them as three findings. Each share carries a null, the
+    largest of n exchangeable shares, so a value can be read as unusual or
+    not; no threshold, no outlier test and no verdict is attached, and no fold
+    is removed from anything.
     """
     out = {"n_folds": 0, "models": {}, "same_worst_line": None,
+           "share_null": {
+               "name": "largest of n exchangeable shares",
+               "distribution": "Dirichlet(1, ..., 1)",
+               "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) "
+                       "C(n, k) (1 - k x)^(n-1)",
+               "diagnostic_only": True,
+               "note": "the fold shares are uniform on the simplex, so the "
+                       "total is held fixed and no fold is favoured; the "
+                       "null is on the share alone, says nothing about "
+                       "which fit is right, and enters no selection count"},
            "diagnostic_only": True,
            "note": "per-fold errors read from "
                    "results/expanded_phi_groups.json and set beside the mean "
                    "printed in results/comb_vs_scale.csv; the worst fold is "
-                   "shown as its multiple of an even split, so no outlier "
-                   "test and no null is formed and nothing enters the "
-                   "model-selection counts"}
+                   "reported as its share of the group total, with that "
+                   "share's own null, and nothing enters the model-selection "
+                   "counts"}
     if not held["applicable"]:
         return out
     folds = (loo or {}).get("folds") or []
@@ -389,6 +437,9 @@ def fold_spread(held, loo, n_lines) -> dict:
             "worst_mhz": errors[worst] / 1e6,
             "worst_over_mean": errors[worst] / mean_hz,
             "worst_share_of_total": errors[worst] / total,
+            "worst_share_printed": float(f"{errors[worst] / total:.2f}"),
+            "share_max_p": share_max_tail(
+                float(f"{errors[worst] / total:.2f}"), n),
             "even_share": 1.0 / n,
             "mean_without_worst_over_mean":
                 (total - errors[worst]) / ((n - 1) * mean_hz),
@@ -892,6 +943,13 @@ def build() -> dict:
                 "value": best[model]["worst_over_mean"],
                 "worst_line_mhz": best[model]["worst_line_mhz"]}
 
+    def _smallest_share_p(rows, model):
+        """The least likely worst-fold share under the exchangeable null."""
+        best = min(rows, key=lambda r: r[model]["share_max_p"])
+        return {"date": best["date"], "n_lines": best["n_lines"],
+                "value": best[model]["share_max_p"],
+                "share": best[model]["worst_share_of_total"]}
+
     held_groups = []
     for row in campaign:
         held = row["held_out"]
@@ -928,6 +986,7 @@ def build() -> dict:
             "scale": spread["models"].get("scale"),
         })
     with_folds = [f for f in fold_rows if f["comb"] is not None]
+    fold_null = campaign[0]["held_out"]["folds"]["share_null"]
     defined_groups = [g for g in held_groups
                       if g["sigma_over_rms"]["comb"] is not None]
     scored_groups = [g for g in held_groups if g["agrees"] is not None]
@@ -996,6 +1055,10 @@ def build() -> dict:
                     model: max(f[model]["worst_share_of_total"]
                                for f in with_folds)
                     for model in ("comb", "scale")},
+                "share_null": dict(fold_null),
+                "smallest_share_p": {
+                    model: _smallest_share_p(with_folds, model)
+                    for model in ("comb", "scale")},
                 "same_worst_line_groups": [
                     f"{f['date']} n={f['n_lines']}" for f in with_folds
                     if f["same_worst_line"]],
@@ -1007,17 +1070,18 @@ def build() -> dict:
                         "results/expanded_phi_groups.json and set beside "
                         "the mean printed in results/comb_vs_scale.csv, "
                         "which is only checked against it and never "
-                        "replaced; the worst fold is quoted as its multiple "
-                        "of an even split, and nothing here enters the AIC, "
-                        "BIC, null or verdict counts",
+                        "replaced; the worst fold is quoted as its share of "
+                        "the group total and carries the exchangeable-share "
+                        "null, and nothing here enters the AIC, BIC or "
+                        "verdict counts or the campaign's own nulls",
             },
             "gaussian_mae": GAUSSIAN_MAE,
             "diagnostic_only": True,
             "note": "each group's held-out mean error set beside the rms "
                     "that group was judged by; the held-out columns are read "
                     "as printed and never recomputed, and nothing here "
-                    "replaces them or enters the AIC, BIC, null or verdict "
-                    "counts",
+                    "replaces them or enters the AIC, BIC or verdict counts "
+                    "or the campaign's own nulls",
         },
         "diagnostic_only": True,
         "note": "the pair and span misses divided by each fit's own rms "
@@ -1459,6 +1523,8 @@ def render(s: dict) -> str:
     s_share = _fold_range(folded, "scale", "worst_share_of_total")
     c_drop = _fold_range(folded, "comb", "mean_without_worst_over_mean")
     s_drop = _fold_range(folded, "scale", "mean_without_worst_over_mean")
+    c_p = _fold_range(folded, "comb", "share_max_p")
+    s_p = _fold_range(folded, "scale", "share_max_p")
     L.append("The mean over folds can still hide a single line, and "
              "`results/expanded_phi_groups.json` already carries each fold's "
              "own error, so the question is put to that file rather than to a "
@@ -1467,15 +1533,16 @@ def render(s: dict) -> str:
              "`results/comb_vs_scale.csv` to the last printed decimal; a "
              "disagreement raises rather than being averaged away. The table "
              "gives the fold count and the share of the total held-out error "
-             "that the worst fold carries, because the product of the two is "
-             "the worst fold's multiple of the mean: a mean of n folds gives "
-             "each line 1/n of the total, so a share of 1/n is an even spread "
-             "and a share approaching 1 is one line carrying the whole mean:\n")
+             "that the worst fold carries; the multiple of the mean and the "
+             "mean without it are arithmetic on those two - n share and "
+             "n (1 - share) / (n - 1) - so neither is tabulated. A share of "
+             "1/n is an even spread, a share approaching 1 is one line "
+             "carrying the whole mean, and the last two share columns give "
+             "what such a share is worth under the null below:\n")
     L.append("| group | folds | worst fold comb | worst fold scale | "
              "worst line comb (MHz) | worst line scale (MHz) | "
              "share of total comb | share of total scale | "
-             "mean without worst / mean comb | "
-             "mean without worst / mean scale | same line worst |")
+             "share null p comb | share null p scale | same line worst |")
     L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | "
              "---: | ---: | --- |")
     for f in fs["groups"]:
@@ -1488,10 +1555,9 @@ def render(s: dict) -> str:
         L.append(head
                  + f" {c['worst_fold']} | {sc['worst_fold']} |"
                  + f" {c['worst_line_mhz']:.4f} | {sc['worst_line_mhz']:.4f} |"
-                 + f" {c['worst_share_of_total']:.2f} | "
-                 + f"{sc['worst_share_of_total']:.2f} |"
-                 + f" {c['mean_without_worst_over_mean']:.2f} | "
-                 + f"{sc['mean_without_worst_over_mean']:.2f} | {same} |")
+                 + f" {c['worst_share_printed']:.2f} | "
+                 + f"{sc['worst_share_printed']:.2f} |"
+                 + f" {c['share_max_p']:.2f} | {sc['share_max_p']:.2f} | {same} |")
     L.append("")
     L.append(f"Across the {len(folded)} groups with folds the worst line "
              f"carries {c_share[0]:.0%}-{c_share[1]:.0%} of the comb fit's "
@@ -1501,16 +1567,38 @@ def render(s: dict) -> str:
              + ", ".join(f"{n} folds {1 / n:.0%}" for n in
                          sorted({f["n_folds"] for f in folded}))
              + ". No share reaches half, so no group's mean is one line's "
-             "error in disguise; dropping that worst line still moves the "
-             f"mean by {1 - c_drop[1]:.0%}-{1 - c_drop[0]:.0%} for the comb "
-             f"fit and {1 - s_drop[1]:.0%}-{1 - s_drop[0]:.0%} for the scale "
-             "fit, and the largest single fold is "
-             f"{fs['largest_worst_over_mean']['comb']['value']:.2f} comb "
-             f"means ({fs['largest_worst_over_mean']['comb']['date']} "
-             f"n={fs['largest_worst_over_mean']['comb']['n_lines']}) and "
-             f"{fs['largest_worst_over_mean']['scale']['value']:.2f} scale "
-             f"means ({fs['largest_worst_over_mean']['scale']['date']} "
-             f"n={fs['largest_worst_over_mean']['scale']['n_lines']}).\n")
+             "error in disguise; dropping that worst line lowers the mean by "
+             f"{1 - c_drop[1]:.0%}-{1 - c_drop[0]:.0%} for the comb fit and "
+             f"{1 - s_drop[1]:.0%}-{1 - s_drop[0]:.0%} for the scale fit, "
+             "which is n share - 1 over n - 1, the same two columns again. "
+             "Size alone does not say whether a share is large, so it gets a "
+             "null.\n")
+    null = fs["share_null"]
+    L.append("If a group's total held-out error could have fallen on any of "
+             "its folds with no fold favoured, the total being fixed, the "
+             "share vector is "
+             f"{null['distribution']}, uniform on the simplex, and the "
+             "largest of n such shares is not pinned at 1/n: even an even "
+             "scatter of n numbers has a largest member, and the question is "
+             "how large the largest gets by chance. Its upper tail is "
+             f"{null['tail']}, evaluated in exact fractions for the printed "
+             "shares. The tail probabilities run "
+             f"{min(c_p[0], s_p[0]):.2f}-{max(c_p[1], s_p[1]):.2f} over the "
+             f"{len(folded)} groups and both fits, and the smallest tail in "
+             "each fit is "
+             f"p = {fs['smallest_share_p']['comb']['value']:.2f} on "
+             f"{fs['smallest_share_p']['comb']['date']} "
+             f"n={fs['smallest_share_p']['comb']['n_lines']} for the comb "
+             f"fit and p = {fs['smallest_share_p']['scale']['value']:.2f} "
+             f"on {fs['smallest_share_p']['scale']['date']} "
+             f"n={fs['smallest_share_p']['scale']['n_lines']} for the scale "
+             "fit: the largest of n exchangeable folds reaches the observed "
+             "share in most null draws, so no group's worst fold is unusual "
+             "under this reading. The null assumes nothing about either fit, "
+             "knows only that the error could have fallen on any fold, and "
+             "says nothing about which model is right; it is attached to the "
+             "share alone, no threshold is drawn from it, and it stays out "
+             "of the model-selection counts.\n")
     small_fold_mult = _fold_range(small_f, "comb", "worst_over_mean")
     small_fold_mult_hi = max(small_fold_mult[1],
                              _fold_range(small_f, "scale",
@@ -1758,7 +1846,9 @@ def main() -> int:
               f"scale {fs['largest_worst_over_mean']['scale']['value']:.2f}x; "
               f"max share of a group's total "
               f"{fs['max_worst_share_of_total']['comb']:.2f} comb / "
-              f"{fs['max_worst_share_of_total']['scale']:.2f} scale")
+              f"{fs['max_worst_share_of_total']['scale']:.2f} scale, "
+              "smallest share tail p "
+              f"{min(fs['smallest_share_p']['comb']['value'], fs['smallest_share_p']['scale']['value']):.2f}")
     print(f"model crossings (MHz)    "
           f"{[round(c['crossing_mhz'], 3) for c in cs['additive']['crossings']]}")
     print(f"vacuous recursion        {cs['vacuous']}")

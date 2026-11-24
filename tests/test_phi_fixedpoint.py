@@ -784,6 +784,9 @@ class CampaignRatioTests(unittest.TestCase):
         # tabulated twice; the arithmetic that replaces it is checked here
         self.assertNotIn("| worst / mean comb |", headers[0])
         self.assertNotIn("| worst / mean scale |", headers[0])
+        # the mean without the worst fold is n(1 - share)/(n - 1), so it is
+        # arithmetic on the same two columns and is not tabulated either
+        self.assertNotIn("mean without worst", headers[0])
         spread = self.payload["campaign_summary"]["line_fit"][
             "noise_scale"]["held_out"]["fold_spread"]
         for group in spread["groups"]:
@@ -791,11 +794,71 @@ class CampaignRatioTests(unittest.TestCase):
                 m = group[model]
                 if m is None:
                     continue
+                n = group["n_folds"]
+                share = m["worst_share_of_total"]
                 self.assertAlmostEqual(
-                    group["n_folds"] * m["worst_share_of_total"],
-                    m["worst_over_mean"], places=12)
+                    n * share, m["worst_over_mean"], places=12)
+                self.assertAlmostEqual(
+                    m["mean_without_worst_over_mean"],
+                    n * (1.0 - share) / (n - 1), places=12)
         for entry in self.payload["campaign"]:
             self.assertIn(f"{entry['date']} n={entry['n_lines']}", text)
+
+    def test_the_worst_share_carries_an_exchangeable_null(self):
+        # a share is only large if the largest of n exchangeable shares
+        # rarely gets there, which is the question the table's p columns ask
+        spread = self.payload["campaign_summary"]["line_fit"]["noise_scale"][
+            "held_out"]["fold_spread"]
+        null = spread["share_null"]
+        self.assertTrue(null["diagnostic_only"])
+        self.assertEqual(null["distribution"], "Dirichlet(1, ..., 1)")
+        self.assertIn("(-1)^(k+1)", null["tail"])
+        # the maximum cannot fall below an even split, so its tail is certain
+        self.assertAlmostEqual(self.script.share_max_tail(0.25, 4), 1.0,
+                               places=12)
+        # 4 * 0.54^3 - 6 * 0.08^3, the inclusion-exclusion at n = 4, x = 0.46
+        self.assertAlmostEqual(self.script.share_max_tail(0.46, 4),
+                               0.626784, places=6)
+        # a larger observed share is the rarer event
+        self.assertGreater(self.script.share_max_tail(0.40, 6),
+                           self.script.share_max_tail(0.50, 6))
+        for group in spread["groups"]:
+            for model in ("comb", "scale"):
+                m = group[model]
+                if m is None:
+                    continue
+                # the null is evaluated at the share as the table prints it,
+                # so the two columns can be checked by hand
+                self.assertEqual(m["worst_share_printed"],
+                                 float(f"{m['worst_share_of_total']:.2f}"))
+                self.assertAlmostEqual(
+                    m["share_max_p"],
+                    self.script.share_max_tail(
+                        m["worst_share_printed"], group["n_folds"]),
+                    places=12)
+                # the null reaches every observed share most of the time, so
+                # no worst fold is unusual and no threshold is drawn
+                self.assertGreater(m["share_max_p"], 0.25)
+        root = os.path.dirname(os.path.dirname(self.table))
+        with open(os.path.join(root, "PHI_PLUS_ONE.md"), encoding="utf-8") as fh:
+            text = fh.read()
+        headers = [line for line in text.splitlines()
+                   if line.startswith("| group |")
+                   and "share null p comb" in line]
+        self.assertEqual(len(headers), 1)
+        for group in spread["groups"]:
+            for model in ("comb", "scale"):
+                m = group[model]
+                if m is None:
+                    continue
+                self.assertIn(f" {m['share_max_p']:.2f} |", text)
+        summary = self.payload["campaign_summary"]
+        self.assertEqual(summary["ratios"],
+                         sum(len(e["ratios"])
+                             for e in self.payload["campaign"]))
+        self.assertEqual(summary["additive"]["pairs"],
+                         sum(len(e["additive_pairs"])
+                             for e in self.payload["campaign"]))
 
 
 if __name__ == "__main__":

@@ -375,6 +375,8 @@
               "worst_mhz": 0.07169352757681906,
               "worst_over_mean": 1.8255991090613188,
               "worst_share_of_total": 0.4563997772653297,
+              "worst_share_printed": 0.46,
+              "share_max_p": 0.626784,
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.7248002969795604
             },
@@ -391,13 +393,22 @@
               "worst_mhz": 0.03785993993644416,
               "worst_over_mean": 1.37981140003213,
               "worst_share_of_total": 0.3449528500080325,
+              "worst_share_printed": 0.34,
+              "share_max_p": 0.953376,
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.87339619998929
             }
           },
           "same_worst_line": true,
+          "share_null": {
+            "name": "largest of n exchangeable shares",
+            "distribution": "Dirichlet(1, ..., 1)",
+            "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
+            "diagnostic_only": true,
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+          },
           "diagnostic_only": true,
-          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
         }
       },
       "additive": {
@@ -806,8 +817,15 @@
           "n_folds": 0,
           "models": {},
           "same_worst_line": null,
+          "share_null": {
+            "name": "largest of n exchangeable shares",
+            "distribution": "Dirichlet(1, ..., 1)",
+            "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
+            "diagnostic_only": true,
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+          },
           "diagnostic_only": true,
-          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
         }
       },
       "additive": {
@@ -1169,6 +1187,8 @@
               "worst_mhz": 1.1607596958100945,
               "worst_over_mean": 2.5457227367152013,
               "worst_share_of_total": 0.18183733833680008,
+              "worst_share_printed": 0.18,
+              "share_max_p": 0.8009163358777955,
               "even_share": 0.07142857142857142,
               "mean_without_worst_over_mean": 0.8810982510219076
             },
@@ -1195,13 +1215,22 @@
               "worst_mhz": 1.021732582374394,
               "worst_over_mean": 3.0097923942780263,
               "worst_share_of_total": 0.21498517101985903,
+              "worst_share_printed": 0.21,
+              "share_max_p": 0.5779485448263636,
               "even_share": 0.07142857142857142,
               "mean_without_worst_over_mean": 0.8454005850555365
             }
           },
           "same_worst_line": false,
+          "share_null": {
+            "name": "largest of n exchangeable shares",
+            "distribution": "Dirichlet(1, ..., 1)",
+            "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
+            "diagnostic_only": true,
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+          },
           "diagnostic_only": true,
-          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
         }
       },
       "additive": {
@@ -2233,6 +2262,8 @@
               "worst_mhz": 0.642768386194557,
               "worst_over_mean": 1.8362603780911126,
               "worst_share_of_total": 0.45906509452277816,
+              "worst_share_printed": 0.46,
+              "share_max_p": 0.626784,
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.7212465406362958
             },
@@ -2249,13 +2280,22 @@
               "worst_mhz": 0.5962889274298251,
               "worst_over_mean": 1.8100282734694328,
               "worst_share_of_total": 0.4525070683673582,
+              "worst_share_printed": 0.45,
+              "share_max_p": 0.6595,
               "even_share": 0.25,
               "mean_without_worst_over_mean": 0.729990575510189
             }
           },
           "same_worst_line": true,
+          "share_null": {
+            "name": "largest of n exchangeable shares",
+            "distribution": "Dirichlet(1, ..., 1)",
+            "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
+            "diagnostic_only": true,
+            "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+          },
           "diagnostic_only": true,
-          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is shown as its multiple of an even split, so no outlier test and no null is formed and nothing enters the model-selection counts"
+          "note": "per-fold errors read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv; the worst fold is reported as its share of the group total, with that share's own null, and nothing enters the model-selection counts"
         }
       },
       "additive": {
@@ -3021,6 +3061,8 @@
                   "worst_mhz": 0.07169352757681906,
                   "worst_over_mean": 1.8255991090613188,
                   "worst_share_of_total": 0.4563997772653297,
+                  "worst_share_printed": 0.46,
+                  "share_max_p": 0.626784,
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.7248002969795604
                 },
@@ -3037,6 +3079,8 @@
                   "worst_mhz": 0.03785993993644416,
                   "worst_over_mean": 1.37981140003213,
                   "worst_share_of_total": 0.3449528500080325,
+                  "worst_share_printed": 0.34,
+                  "share_max_p": 0.953376,
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.87339619998929
                 }
@@ -3077,6 +3121,8 @@
                   "worst_mhz": 1.1607596958100945,
                   "worst_over_mean": 2.5457227367152013,
                   "worst_share_of_total": 0.18183733833680008,
+                  "worst_share_printed": 0.18,
+                  "share_max_p": 0.8009163358777955,
                   "even_share": 0.07142857142857142,
                   "mean_without_worst_over_mean": 0.8810982510219076
                 },
@@ -3103,6 +3149,8 @@
                   "worst_mhz": 1.021732582374394,
                   "worst_over_mean": 3.0097923942780263,
                   "worst_share_of_total": 0.21498517101985903,
+                  "worst_share_printed": 0.21,
+                  "share_max_p": 0.5779485448263636,
                   "even_share": 0.07142857142857142,
                   "mean_without_worst_over_mean": 0.8454005850555365
                 }
@@ -3125,6 +3173,8 @@
                   "worst_mhz": 0.642768386194557,
                   "worst_over_mean": 1.8362603780911126,
                   "worst_share_of_total": 0.45906509452277816,
+                  "worst_share_printed": 0.46,
+                  "share_max_p": 0.626784,
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.7212465406362958
                 },
@@ -3141,6 +3191,8 @@
                   "worst_mhz": 0.5962889274298251,
                   "worst_over_mean": 1.8100282734694328,
                   "worst_share_of_total": 0.4525070683673582,
+                  "worst_share_printed": 0.45,
+                  "share_max_p": 0.6595,
                   "even_share": 0.25,
                   "mean_without_worst_over_mean": 0.729990575510189
                 }
@@ -3165,6 +3217,27 @@
               "comb": 0.45906509452277816,
               "scale": 0.4525070683673582
             },
+            "share_null": {
+              "name": "largest of n exchangeable shares",
+              "distribution": "Dirichlet(1, ..., 1)",
+              "tail": "P(max >= x) = sum_{k=1}^{floor(1/x)} (-1)^(k+1) C(n, k) (1 - k x)^(n-1)",
+              "diagnostic_only": true,
+              "note": "the fold shares are uniform on the simplex, so the total is held fixed and no fold is favoured; the null is on the share alone, says nothing about which fit is right, and enters no selection count"
+            },
+            "smallest_share_p": {
+              "comb": {
+                "date": "20240325",
+                "n_lines": 4,
+                "value": 0.626784,
+                "share": 0.4563997772653297
+              },
+              "scale": {
+                "date": "20240326",
+                "n_lines": 14,
+                "value": 0.5779485448263636,
+                "share": 0.21498517101985903
+              }
+            },
             "same_worst_line_groups": [
               "20240325 n=4",
               "20240326 n=4"
@@ -3173,11 +3246,11 @@
               "20240326 n=14"
             ],
             "diagnostic_only": true,
-            "note": "each fold's error read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv, which is only checked against it and never replaced; the worst fold is quoted as its multiple of an even split, and nothing here enters the AIC, BIC, null or verdict counts"
+            "note": "each fold's error read from results/expanded_phi_groups.json and set beside the mean printed in results/comb_vs_scale.csv, which is only checked against it and never replaced; the worst fold is quoted as its share of the group total and carries the exchangeable-share null, and nothing here enters the AIC, BIC or verdict counts or the campaign's own nulls"
           },
           "gaussian_mae": 0.7978845608028654,
           "diagnostic_only": true,
-          "note": "each group's held-out mean error set beside the rms that group was judged by; the held-out columns are read as printed and never recomputed, and nothing here replaces them or enters the AIC, BIC, null or verdict counts"
+          "note": "each group's held-out mean error set beside the rms that group was judged by; the held-out columns are read as printed and never recomputed, and nothing here replaces them or enters the AIC, BIC or verdict counts or the campaign's own nulls"
         },
         "diagnostic_only": true,
         "note": "the pair and span misses divided by each fit's own rms residual in channels, one rms per group estimated from the same lines, so no chi-square or null is formed and none of it enters the model-selection counts"
