@@ -73,6 +73,19 @@
     "reported": "hit or miss in each window, the observed number of events, and the proportion of hits in each window, with the 1.58% prior beside it. No verdict is attached to a single event.",
     "resolves_as": "supported if the predicted window accumulates hits at a rate materially above 1.58% over a pre-stated number of events while the control window stays near 1.58%. Refuted if the predicted rate tracks the control rate."
   },
+  "reporting_addendum": {
+    "date": "2026-11-25",
+    "rule": "When a burst lands in either window, report the address first: name, z, DM, A, z*DM, and the offset from the registered target, in that order. The null, the permutation p-value and the 1.58% prior stay in the fixture and in this record; they are not part of the address report.",
+    "unchanged": "This does not alter the registered scoring. It fixes what gets said first.",
+    "worked_example": {
+      "pair": "20190711A -> 20190523A",
+      "z_times_dm": [309.15942, 502.128],
+      "ratio": 1.624171762,
+      "ratio_over_phi": 1.003793353,
+      "predicted_center_z_times_dm": 812.460171,
+      "predicted_center_note": "phi * 502.128 = 812.460171 = phi^13.923321380"
+    }
+  },
   "limitations": [
     "The 0.0079 tolerance is measured from the discovery pair, not predicted independently; this document fixes the value and the window, it cannot restore an independent prior.",
     "z and DM are both host and sightline dependent, so A conflates cosmology with intervening plasma. A hit is a statement about numbers on the lattice, not about a mechanism.",
