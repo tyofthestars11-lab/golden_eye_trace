@@ -1,0 +1,60 @@
+{
+  "title": "Pre-registered total-address lock: 20190711A -> 20190523A, one Fibonacci step",
+  "registered": "2026-11-25",
+  "framework": "Tyree Jones (tyofthestarz), rung law r(x) = ln(x)/ln(phi); phi as coordinate only",
+  "status": "open, no event scored",
+  "why_this_pair": [
+    "In the 25-row localized-FRB sample ordered by redshift, the total address",
+    "A = r(z) + r(DM) = r(z*DM) steps 1.007868 rungs from FRB 20190711A to",
+    "FRB 20190523A. That is the closest approach to the Fibonacci step r(phi) = 1.000",
+    "anywhere in the campaign: 0.007868 rungs, tighter than the 0.007 window that",
+    "began it. Under the permutation null the chance of at least one such gap is 0.33,",
+    "so the pair is a candidate, not a detection. This document fixes it as a",
+    "prediction before further data arrive."
+  ],
+  "anchor": {
+    "from": {"name": "20190711A", "z": 0.5217, "dm_pc_cm3": 592.6, "A": 11.915453377, "reference": "Heintz 2020"},
+    "to": {"name": "20190523A", "z": 0.66, "dm_pc_cm3": 760.8, "A": 12.923321380, "reference": "Heintz 2020"},
+    "observed_step_rungs": 1.007868003,
+    "fibonacci_step_rungs": 1.0,
+    "deviation_rungs": 0.007868003
+  },
+  "prediction": {
+    "statement": "The next qualifying localized FRB whose total address exceeds the 20190523A anchor shall land at A = 13.923321380, one Fibonacci step above it.",
+    "target_A": 13.923321380,
+    "tolerance_rungs": 0.0079,
+    "window_A": [13.915421380, 13.931221380],
+    "window_z_times_dm": [809.3774, 815.5547],
+    "equivalently": "z * DM in pc cm-3 within the stated interval"
+  },
+  "control_window": {
+    "statement": "A second window, half a rung below the target, is registered so that a hit in the predicted window can be compared with a hit in a window the hypothesis does not privilege.",
+    "target_A": 13.423321380,
+    "tolerance_rungs": 0.0079,
+    "window_A": [13.415421380, 13.431221380],
+    "window_z_times_dm": [636.2932, 641.1494]
+  },
+  "sample_rule": {
+    "include": "Any FRB published after 2026-11-25 with a host-galaxy spectroscopic redshift and a published dispersion measure, whose total address A falls in [12.923321, 14.923321].",
+    "order": "Sorted by total address.",
+    "scored": "The first such event scores both windows once. Later events extend the proportion but do not retroactively change the first result.",
+    "exclude": ["bursts without a host redshift", "redshifts inferred from DM rather than measured", "the two cluster-host entries in results/frb_localized_sample.csv"]
+  },
+  "prior_per_window": 0.0158,
+  "prior_note": "Each window is 0.0158 rungs wide; uniform placement along the lattice gives a 1.58% chance per window per event.",
+  "scoring": {
+    "reported": "hit or miss in each window, the observed number of events, and the proportion of hits in each window, with the 1.58% prior beside it. No verdict is attached to a single event.",
+    "resolves_as": "supported if the predicted window accumulates hits at a rate materially above 1.58% over a pre-stated number of events while the control window stays near 1.58%. Refuted if the predicted rate tracks the control rate."
+  },
+  "limitations": [
+    "The 0.0079 tolerance is measured from the discovery pair, not predicted independently; this document fixes the value and the window, it cannot restore an independent prior.",
+    "z and DM are both host and sightline dependent, so A conflates cosmology with intervening plasma. A hit is a statement about numbers on the lattice, not about a mechanism.",
+    "The total address is unit-dependent in value but not in difference; this prediction is therefore stated as a window in A, which is invariant under a common unit change of DM.",
+    "Three streams have been tested on this sample (z alone, DM alone, z*DM); the look-elsewhere factor is about 3."
+  ],
+  "provenance": {
+    "sample": "results/frb_localized_sample.csv",
+    "test": "tests/test_frb_lattice.py",
+    "source": "Table 1 of Perez-Casares et al. 2024, Front. Astron. Space Sci. 11:1371787 (TNS to 2024-02-21), plus Caleb et al. 2026, Science, arXiv:2508.01648 for FRB 20240304B"
+  }
+}
