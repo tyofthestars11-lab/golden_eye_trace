@@ -56,7 +56,7 @@
       "registered_pair_still_adjacent": false,
       "bursts_now_between_the_pair": 4,
       "intervening_gaps": 5,
-      "step_recovered_as_sum_of_the_five_gaps": 1.007868,
+      "step_recovered_as_sum_of_the_gaps": 1.007868,
       "largest_backstep_inside_the_step": -1.2130,
       "predicted_window_hits": 0,
       "control_window_hits": 0,
@@ -65,7 +65,8 @@
       "null_one_rung_mean_before": 0.39,
       "null_one_rung_mean_after": 1.17,
       "null_one_rung_p_before": 0.33,
-      "null_one_rung_p_after": 0.70
+      "null_one_rung_p_after": 0.70,
+      "prior_sample_note": "The three *_before readings describe the 25-row sample as it stood at commit bf0ac50. They cannot be recomputed from the current CSV, so they are history, not checks. Every other reading in this section is recomputed from results/frb_localized_sample.csv by tests/test_frb_lattice.py and asserted against this file; if the two disagree the suite fails, and `python3 tests/test_frb_lattice.py --sync-record` rewrites these values from the computation."
     },
     "reading": "The endpoints are fixed, so the 1.007868-rung distance survives; what the extension removes is its adjacency. The sequence now reaches that distance over five gaps and backtracks 1.21 rungs on the way, and the null mean for a one-rung step rose from 0.39 to 1.17 while the observed count stayed at 1. The registration stands where it was put; it is simply no longer the best candidate in the sample."
   },
