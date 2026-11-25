@@ -42,6 +42,33 @@
   },
   "prior_per_window": 0.0158,
   "prior_note": "Each window is 0.0158 rungs wide; uniform placement along the lattice gives a 1.58% chance per window per event.",
+  "sample_extension": {
+    "date": "2026-11-25, before any event was scored",
+    "windows_unchanged": true,
+    "rows_added": 37,
+    "sample_size": 62,
+    "sources": [
+      "DSA-110 host-environment sample, arXiv:2609.30616: 37 rows, 35 new, with 20220509G and 20220914A replacing their Connor 2023 entries",
+      "CHIME/FRB and KKO Outrigger catalog, ApJS 280, 6 (2025), arXiv:2502.11217: 2 rows where Table 1 and Table 2 both give DM and a spectroscopic redshift"
+    ],
+    "retrospective_only": "These bursts were published before this registration, so they cannot score it. They sharpen the null and test whether the registered pair is still adjacent.",
+    "findings": {
+      "registered_pair_still_adjacent": false,
+      "bursts_now_between_the_pair": 4,
+      "intervening_gaps": 5,
+      "step_recovered_as_sum_of_the_five_gaps": 1.007868,
+      "largest_backstep_inside_the_step": -1.2130,
+      "predicted_window_hits": 0,
+      "control_window_hits": 0,
+      "mean_consecutive_step_before": 1.1231,
+      "mean_consecutive_step_after": 0.4419,
+      "null_one_rung_mean_before": 0.39,
+      "null_one_rung_mean_after": 1.17,
+      "null_one_rung_p_before": 0.33,
+      "null_one_rung_p_after": 0.70
+    },
+    "reading": "The endpoints are fixed, so the 1.007868-rung distance survives; what the extension removes is its adjacency. The sequence now reaches that distance over five gaps and backtracks 1.21 rungs on the way, and the null mean for a one-rung step rose from 0.39 to 1.17 while the observed count stayed at 1. The registration stands where it was put; it is simply no longer the best candidate in the sample."
+  },
   "scoring": {
     "reported": "hit or miss in each window, the observed number of events, and the proportion of hits in each window, with the 1.58% prior beside it. No verdict is attached to a single event.",
     "resolves_as": "supported if the predicted window accumulates hits at a rate materially above 1.58% over a pre-stated number of events while the control window stays near 1.58%. Refuted if the predicted rate tracks the control rate."
