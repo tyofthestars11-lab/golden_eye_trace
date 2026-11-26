@@ -22,6 +22,12 @@ cannot drift from the sample: if the two disagree the suite fails, and
 computation rather than by hand. The three readings that describe the 25-row
 sample at registration are historical, cannot be recomputed from the current
 CSV, and are marked as such in the record instead of being tied.
+
+The record's sentences are written the same way: prereg_prose() fills
+'why_this_pair', 'reading' and 'prior_note' from the same readings, so a quoted
+number cannot outlive the sample that produced it. A burst that was checked and
+did not score is logged under 'external_checks' with its address recomputed
+from the published redshift and DM, and its status stays open.
 """
 
 from __future__ import annotations
@@ -46,7 +52,18 @@ PREREG = os.path.join("prereg", "frb_total_address_lock.json")
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ROWS = 62
-BASE_ROWS = 25  # the sample at registration, before the extension
+
+# The sample as it stood at registration. These three numbers cannot be
+# recomputed from the current CSV, so they live here once, the record's *_before
+# fields are checked against them, and the prose quotes them from here.
+HISTORY = {
+    "rows": 25,
+    "mean_step": 1.1231,
+    "null_mean": 0.39,
+    "null_p": 0.33,
+    "first_window": 0.007,
+}
+BASE_ROWS = HISTORY["rows"]
 CLUSTERS = 2
 REGISTERED_FROM = "20190711A"
 REGISTERED_TO = "20190523A"
@@ -178,6 +195,9 @@ def build_summary(rows: list[dict], record: dict | None = None) -> dict:
         if abs(a_gaps[i] - 1.0) <= TOLERANCES[1]
     ]
     summary["null"] = permutation_null(rows, TOLERANCES[1])
+    tolerance = float(record["prediction"]["tolerance_rungs"])
+    summary["window_width_rungs"] = 2 * tolerance
+    summary["prior_percent"] = round(100 * 2 * tolerance, 2)
     return summary
 
 
@@ -206,6 +226,7 @@ def recorded_readings(summary: dict) -> dict:
             round(summary["null"]["mean"], 2),
         "sample_extension.findings.null_one_rung_p_after":
             round(summary["null"]["p"], 2),
+        "prior_per_window": round(summary["window_width_rungs"], 4),
     }
 
 
@@ -217,6 +238,85 @@ def read_path(record: dict, path: str):
     return node
 
 
+def address(z, dm) -> dict:
+    """One burst's address, from its redshift and dispersion measure."""
+    redshift, dispersion = Decimal(str(z)), Decimal(str(dm))
+    return {
+        "A": rung(redshift) + rung(dispersion),
+        "z_times_dm": redshift * dispersion,
+    }
+
+
+WORDS = {
+    1: "one", 2: "two", 3: "three", 4: "four", 5: "five",
+    6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten",
+}
+
+
+def words(number: int) -> str:
+    """five, not 5, where a sentence needs it."""
+    return WORDS.get(number, str(number))
+
+
+def prereg_prose(summary: dict, record: dict) -> dict:
+    """The record's sentences, written from the checked readings.
+
+    Every number in them is formatted from build_summary() or from HISTORY, so
+    a sentence cannot quote a reading the sample no longer supports.
+    """
+    step = summary["registered_span_sum"]
+    deviation = abs(step - 1.0)
+    gaps = summary["registered_index_gap"]
+    backstep = abs(summary["registered_min_gap"])
+    observed = summary["hits"][TOLERANCES[1]]["exactly_one"]
+    width = summary["window_width_rungs"]
+    percent = summary["prior_percent"]
+    anchor = record["anchor"]
+    return {
+        "prior_note": (
+            f"Each window is {width:.4f} rungs wide; uniform placement along "
+            f"the lattice gives a {percent:.2f}% chance per window per event."
+        ),
+        "why_this_pair": [
+            f"In the {HISTORY['rows']}-row localized-FRB sample ordered by redshift, the total address",
+            f"A = r(z) + r(DM) = r(z*DM) steps {step:.6f} rungs from FRB {anchor['from']['name']} to",
+            f"FRB {anchor['to']['name']}. That is the closest approach to the Fibonacci step r(phi) = 1.000",
+            f"anywhere in the campaign: {deviation:.6f} rungs, tighter than the {HISTORY['first_window']:.3f} window that",
+            f"began it. Under the permutation null for that sample, the chance of at least one such gap was {HISTORY['null_p']:.2f},",
+            "so the pair is a candidate, not a detection. This document fixes it as a",
+            "prediction before further data arrive.",
+        ],
+        "reading": (
+            f"The endpoints are fixed, so the {step:.6f}-rung distance survives; what the "
+            f"extension removes is its adjacency. The sequence now reaches that "
+            f"distance over {words(gaps)} gaps and backtracks {backstep:.2f} rungs on the way, "
+            f"and the null mean for a one-rung step rose from {HISTORY['null_mean']:.2f} to "
+            f"{summary['null']['mean']:.2f} while the observed count stayed at {observed}. "
+            f"The registration stands where it was put; it is simply no longer the "
+            f"best candidate in the sample."
+        ),
+    }
+
+
+def external_check_readings(entry: dict, record: dict) -> dict:
+    """The computed readings of a logged burst, keyed by their field names."""
+    base = address(entry["z"], entry["dm_pc_cm3"])
+    top = address(
+        Decimal(str(entry["z"])) + Decimal(str(entry["z_uncertainty"])),
+        entry["dm_pc_cm3"],
+    )  # the far edge of the quoted redshift range, same DM
+    target = Decimal(str(record["prediction"]["target_A"]))
+    floor = Decimal(str(record["anchor"]["to"]["A"]))
+    return {
+        "total_address": round(float(base["A"]), 6),
+        "redshift_times_dm": round(float(base["z_times_dm"]), 3),
+        "total_address_at_top_of_redshift": round(float(top["A"]), 6),
+        "offset_from_target_rungs": round(float(base["A"] - target), 6),
+        "offset_at_top_of_range_rungs": round(float(top["A"] - target), 6),
+        "below_sample_floor_rungs": round(float(floor - base["A"]), 6),
+    }
+
+
 def _same(text: str, value) -> bool:
     """Does this literal already say the computed value?"""
     try:
@@ -226,27 +326,75 @@ def _same(text: str, value) -> bool:
     return type(parsed) is type(value) and parsed == value
 
 
-def sync_record(path: str, summary: dict) -> list[tuple[str, object, object]]:
-    """Rewrite the recorded readings in place, leaving the rest of the file alone."""
+PROSE_PATHS = {
+    "prior_note": "prior_note",
+    "why_this_pair": "why_this_pair",
+    "reading": "sample_extension.reading",
+}
+
+
+def _replace_scalar(text: str, key: str, value, where: str):
+    """Swap one number or boolean on its own line."""
+    pattern = re.compile(
+        r'(^\s*"%s":\s*)([^,\n]+?)(,?)$' % re.escape(key), re.MULTILINE
+    )
+    found = list(pattern.finditer(text))
+    if len(found) != 1:
+        raise SystemExit(f"{key}: expected one line in {where}, found {len(found)}")
+    match = found[0]
+    if _same(match.group(2), value):
+        return text, None
+    was = json.loads(match.group(2))
+    return text[:match.start(2)] + json.dumps(value) + text[match.end(2):], was
+
+
+def _render_strings(items: list[str], indent: int) -> str:
+    """A list of strings in the record's own hand-set layout."""
+    pad = " " * indent
+    body = ",\n".join(f"{pad}  {json.dumps(item, ensure_ascii=False)}" for item in items)
+    return "[\n" + body + "\n" + pad + "]"
+
+
+def _replace_block(text: str, key: str, value, where: str):
+    """Swap a string or a list of strings, whatever it spans."""
+    head = re.search(
+        r'^(?P<indent>[ \t]*)"%s":' % re.escape(key), text, re.MULTILINE
+    )
+    if head is None:
+        raise SystemExit(f"{key}: no line in {where}")
+    start = head.end()
+    while start < len(text) and text[start] in " \t\r\n":
+        start += 1
+    current, end = json.JSONDecoder().raw_decode(text, start)
+    if current == value:
+        return text, None
+    rendered = (
+        json.dumps(value, ensure_ascii=False) if isinstance(value, str)
+        else _render_strings(value, len(head.group("indent")))
+    )
+    return text[:start] + rendered + text[end:], current
+
+
+def sync_record(path: str, summary: dict, record: dict) -> list[tuple[str, object, object]]:
+    """Rewrite the readings and the sentences that quote them, nothing else."""
     with open(path, encoding="utf-8") as handle:
         text = handle.read()
     changes = []
-    for dotted, value in recorded_readings(summary).items():
-        key = dotted.rsplit(".", 1)[1]
-        pattern = re.compile(
-            r'(^\s*"%s":\s*)([^,\n]+?)(,?)$' % re.escape(key), re.MULTILINE
-        )
-        found = list(pattern.finditer(text))
-        if len(found) != 1:
-            raise SystemExit(
-                f"{dotted}: expected one line in {path}, found {len(found)}"
-            )
-        match = found[0]
-        if _same(match.group(2), value):
-            continue
-        changes.append((dotted, json.loads(match.group(2)), value))
-        rendered = json.dumps(value)
-        text = text[:match.start(2)] + rendered + text[match.end(2):]
+
+    scalars = [(dotted, value) for dotted, value in recorded_readings(summary).items()]
+    for entry in record.get("external_checks", []):
+        for key, value in external_check_readings(entry, record).items():
+            scalars.append((f"external_checks[{entry['name']}].{key}", value))
+    for dotted, value in scalars:
+        text, was = _replace_scalar(text, dotted.rsplit(".", 1)[-1], value, path)
+        if was is not None:
+            changes.append((dotted, was, value))
+
+    for key, value in prereg_prose(summary, record).items():
+        text, was = _replace_block(text, key, value, path)
+        if was is not None:
+            changes.append((PROSE_PATHS[key], was, value))
+
     if changes:
         with open(path, "w", encoding="utf-8") as handle:
             handle.write(text)
@@ -378,6 +526,47 @@ class FrbInvariantTests(unittest.TestCase):
                     f"python3 tests/test_frb_lattice.py --sync-record",
             )
 
+    def test_the_prose_quotes_the_computed_readings(self):
+        prose = prereg_prose(self.summary, self.record)
+        self.assertEqual(self.record["prior_note"], prose["prior_note"])
+        self.assertEqual(self.record["why_this_pair"], prose["why_this_pair"])
+        self.assertEqual(
+            self.record["sample_extension"]["reading"], prose["reading"]
+        )
+
+    def test_the_prior_follows_the_registered_window(self):
+        width = 2 * float(self.record["prediction"]["tolerance_rungs"])
+        self.assertAlmostEqual(self.summary["window_width_rungs"], width, places=12)
+        self.assertAlmostEqual(self.record["prior_per_window"], width, places=12)
+        self.assertIn(f"{width:.4f} rungs wide", self.record["prior_note"])
+
+    def test_history_is_recorded_once(self):
+        findings = self.record["sample_extension"]["findings"]
+        self.assertEqual(findings["mean_consecutive_step_before"], HISTORY["mean_step"])
+        self.assertEqual(findings["null_one_rung_mean_before"], HISTORY["null_mean"])
+        self.assertEqual(findings["null_one_rung_p_before"], HISTORY["null_p"])
+        self.assertEqual(
+            self.record["sample_extension"]["sample_size"], ROWS
+        )
+        self.assertEqual(self.record["sample_extension"]["rows_added"], ROWS - BASE_ROWS)
+
+    def test_the_logged_burst_is_checked_and_unscored(self):
+        entries = self.record["external_checks"]
+        self.assertEqual(len(entries), 1)
+        entry = entries[0]
+        names = {row["name"] for row in self.rows}
+        self.assertNotIn(entry["name"], names)  # checked, not admitted to the sample
+        self.assertFalse(entry["scores"])
+        self.assertEqual(self.record["status"], "open, no event scored")
+        for key, computed in external_check_readings(entry, self.record).items():
+            self.assertEqual(
+                entry[key], computed,
+                msg=f"external_checks[0].{key} has drifted from the computation",
+            )
+        window = self.record["prediction"]["window_A"]
+        self.assertLess(entry["total_address_at_top_of_redshift"], window[0])
+        self.assertEqual(entry["z_kind"], "photometric")
+
     def test_the_record_marks_what_it_does_not_check(self):
         findings = self.record["sample_extension"]["findings"]
         self.assertIn("prior_sample_note", findings)
@@ -408,7 +597,9 @@ class FrbInvariantTests(unittest.TestCase):
 if __name__ == "__main__":
     if "--sync-record" in sys.argv:
         readings = build_summary(load_sample(REPO_ROOT))
-        changed = sync_record(os.path.join(REPO_ROOT, PREREG), readings)
+        changed = sync_record(
+            os.path.join(REPO_ROOT, PREREG), readings, load_record(REPO_ROOT)
+        )
         for dotted, was, now in changed:
             print(f"{dotted}: {was} -> {now}")
         print(

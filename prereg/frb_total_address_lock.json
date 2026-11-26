@@ -8,7 +8,7 @@
     "A = r(z) + r(DM) = r(z*DM) steps 1.007868 rungs from FRB 20190711A to",
     "FRB 20190523A. That is the closest approach to the Fibonacci step r(phi) = 1.000",
     "anywhere in the campaign: 0.007868 rungs, tighter than the 0.007 window that",
-    "began it. Under the permutation null the chance of at least one such gap is 0.33,",
+    "began it. Under the permutation null for that sample, the chance of at least one such gap was 0.33,",
     "so the pair is a candidate, not a detection. This document fixes it as a",
     "prediction before further data arrive."
   ],
@@ -87,6 +87,27 @@
       "predicted_center_note": "phi * 502.128 = 812.460171 = phi^13.923321380"
     }
   },
+  "external_checks": [
+    {
+      "logged": "2026-11-25",
+      "name": "FRB 20261031B",
+      "published": "ATel, 2026-11-25 11:34 UT (04:34 MST), after the registration",
+      "dm_pc_cm3": 581.4,
+      "z": 0.6,
+      "z_uncertainty": 0.1,
+      "z_kind": "photometric",
+      "repeater": true,
+      "total_address": 12.166395,
+      "redshift_times_dm": 348.840,
+      "total_address_at_top_of_redshift": 12.486734,
+      "offset_from_target_rungs": -1.756926,
+      "offset_at_top_of_range_rungs": -1.436587,
+      "below_sample_floor_rungs": 0.756926,
+      "scores": false,
+      "verdict": "Checked against both registered windows and the sample rule, and logged so the check is on the record. It does not score: it lies outside the sample window at both ends of the quoted redshift range, and its redshift is photometric rather than measured. Nothing in the registration moves.",
+      "note": "The six readings above are recomputed from z, its uncertainty and the DM by tests/test_frb_lattice.py; they are not copied into this file by hand."
+    }
+  ],
   "limitations": [
     "The 0.0079 tolerance is measured from the discovery pair, not predicted independently; this document fixes the value and the window, it cannot restore an independent prior.",
     "z and DM are both host and sightline dependent, so A conflates cosmology with intervening plasma. A hit is a statement about numbers on the lattice, not about a mechanism.",
