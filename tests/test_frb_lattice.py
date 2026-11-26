@@ -27,7 +27,9 @@ The record's sentences are written the same way: prereg_prose() fills
 'why_this_pair', 'reading' and 'prior_note' from the same readings, so a quoted
 number cannot outlive the sample that produced it. A burst that was checked and
 did not score is logged under 'external_checks' with its address recomputed
-from the published redshift and DM, and its status stays open.
+from the published redshift and DM, and its status stays open. The writer is
+exercised on a copy of the record holding a second logged burst, so logging
+another check is known to leave the first one alone.
 """
 
 from __future__ import annotations
@@ -40,6 +42,7 @@ import random
 import re
 import statistics
 import sys
+import tempfile
 import unittest
 from decimal import Decimal, getcontext
 
@@ -583,6 +586,116 @@ class FrbInvariantTests(unittest.TestCase):
                     entry[key], computed,
                     msg=f"external_checks[{entry['name']}].{key} has drifted from the computation",
                 )
+
+    # ---- the writer, on a record with more than one logged burst ----------
+
+    PROBE = "FRB 20990101A"
+
+    PROBE_ENTRY = (
+        '    {\n'
+        '      "logged": "2026-11-26",\n'
+        f'      "name": "{PROBE}",\n'
+        '      "dm_pc_cm3": 400.0,\n'
+        '      "z": 0.2,\n'
+        '      "z_uncertainty": 0.05,\n'
+        '      "z_kind": "photometric",\n'
+        '      "repeater": false,\n'
+        '      "total_address": 99.0,\n'
+        '      "redshift_times_dm": 0.0,\n'
+        '      "total_address_at_top_of_redshift": 99.0,\n'
+        '      "offset_from_target_rungs": 0.0,\n'
+        '      "offset_at_top_of_range_rungs": 0.0,\n'
+        '      "below_sample_floor_rungs": 0.0,\n'
+        '      "scores": false,\n'
+        '      "verdict": "written by the sync test, not a real burst",\n'
+        '      "note": "a record for the writer, not a second check"\n'
+        "    }"
+    )
+
+    def _record_with_a_second_burst(self, directory: str) -> tuple[str, str]:
+        """A copy of the record carrying one deliberately unsynced entry."""
+        with open(os.path.join(self.root, PREREG), encoding="utf-8") as handle:
+            text = handle.read()
+        marker = '    }\n  ],\n  "limitations"'
+        self.assertEqual(text.count(marker), 1, msg="the record's layout moved")
+        head, tail = text.split(marker, 1)
+        path = os.path.join(directory, "record.json")
+        with open(path, "w", encoding="utf-8") as handle:
+            handle.write(
+                head + "    },\n" + self.PROBE_ENTRY + '\n  ],\n  "limitations"' + tail
+            )
+        return path, head
+
+    def test_the_sync_leaves_the_other_bursts_alone(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path, head = self._record_with_a_second_burst(tmp)
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            self.assertEqual(len(record["external_checks"]), 2)
+            first = json.loads(json.dumps(record["external_checks"][0]))
+            changes = sync_record(path, self.summary, record)
+            self.assertEqual(
+                {dotted.split(".")[0] for dotted, _, _ in changes},
+                {f"external_checks[{self.PROBE}]"},
+                msg="the writer touched the burst that was already in sync",
+            )
+            self.assertEqual(
+                len(changes),
+                len(external_check_readings(record["external_checks"][1], record)),
+            )
+            with open(path, encoding="utf-8") as handle:
+                repaired = handle.read()
+            self.assertTrue(
+                repaired.startswith(head + "    },\n"),
+                msg="the first logged burst was rewritten",
+            )
+            with open(path, encoding="utf-8") as handle:
+                after = json.load(handle)
+            self.assertEqual(after["external_checks"][0], first)
+            self.assertEqual(
+                after["external_checks"][1]["total_address"],
+                external_check_readings(
+                    after["external_checks"][1], after
+                )["total_address"],
+            )
+            again = sync_record(path, self.summary, after)
+            self.assertEqual(again, [], msg="a rerun rewrote a record that matched")
+
+    def test_the_sync_catches_a_tampered_reading_on_the_second_burst(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path, _ = self._record_with_a_second_burst(tmp)
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            sync_record(path, self.summary, record)
+            with open(path, encoding="utf-8") as handle:
+                synced = json.load(handle)
+            key = f'      "name": "{self.PROBE}"'
+            with open(path, encoding="utf-8") as handle:
+                head, tail = handle.read().split(key, 1)
+            good = synced["external_checks"][1]["total_address"]
+            old = f'"total_address": {good}'
+            self.assertEqual(tail.count(old), 1)
+            with open(path, "w", encoding="utf-8") as handle:
+                handle.write(
+                    head + key + tail.replace(old, f'"total_address": {round(good + 0.1, 6)}', 1)
+                )
+            with open(path, encoding="utf-8") as handle:
+                tampered = json.load(handle)
+            entry = tampered["external_checks"][1]
+            self.assertNotEqual(
+                entry["total_address"],
+                external_check_readings(entry, tampered)["total_address"],
+                msg="the tampered reading was not caught",
+            )
+            repaired = sync_record(path, self.summary, tampered)
+            self.assertEqual(
+                [dotted for dotted, _, _ in repaired],
+                [f"external_checks[{self.PROBE}].total_address"],
+            )
+            with open(path, encoding="utf-8") as handle:
+                fixed = json.load(handle)
+            self.assertEqual(fixed["external_checks"][1]["total_address"], good)
+            self.assertEqual(fixed["external_checks"][0], synced["external_checks"][0])
 
     def test_the_record_marks_what_it_does_not_check(self):
         findings = self.record["sample_extension"]["findings"]
