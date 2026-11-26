@@ -333,15 +333,23 @@ PROSE_PATHS = {
 }
 
 
-def _replace_scalar(text: str, key: str, value, where: str):
-    """Swap one number or boolean on its own line."""
+def _replace_scalar(
+    text: str, key: str, value, where: str, occurrence: int = 0, expected: int = 1
+):
+    """Swap one number or boolean on its own line.
+
+    Keys inside `external_checks` repeat once per logged burst, so the caller
+    says how many lines it expects and which one it means.
+    """
     pattern = re.compile(
         r'(^\s*"%s":\s*)([^,\n]+?)(,?)$' % re.escape(key), re.MULTILINE
     )
     found = list(pattern.finditer(text))
-    if len(found) != 1:
-        raise SystemExit(f"{key}: expected one line in {where}, found {len(found)}")
-    match = found[0]
+    if len(found) != expected:
+        raise SystemExit(
+            f"{key}: expected {expected} line(s) in {where}, found {len(found)}"
+        )
+    match = found[occurrence]
     if _same(match.group(2), value):
         return text, None
     was = json.loads(match.group(2))
@@ -381,12 +389,17 @@ def sync_record(path: str, summary: dict, record: dict) -> list[tuple[str, objec
         text = handle.read()
     changes = []
 
-    scalars = [(dotted, value) for dotted, value in recorded_readings(summary).items()]
-    for entry in record.get("external_checks", []):
+    scalars = [(dotted, value, 0, 1) for dotted, value in recorded_readings(summary).items()]
+    logged = record.get("external_checks", [])
+    for position, entry in enumerate(logged):
         for key, value in external_check_readings(entry, record).items():
-            scalars.append((f"external_checks[{entry['name']}].{key}", value))
-    for dotted, value in scalars:
-        text, was = _replace_scalar(text, dotted.rsplit(".", 1)[-1], value, path)
+            scalars.append(
+                (f"external_checks[{entry['name']}].{key}", value, position, len(logged))
+            )
+    for dotted, value, occurrence, expected in scalars:
+        text, was = _replace_scalar(
+            text, dotted.rsplit(".", 1)[-1], value, path, occurrence, expected
+        )
         if was is not None:
             changes.append((dotted, was, value))
 
@@ -550,22 +563,26 @@ class FrbInvariantTests(unittest.TestCase):
         )
         self.assertEqual(self.record["sample_extension"]["rows_added"], ROWS - BASE_ROWS)
 
-    def test_the_logged_burst_is_checked_and_unscored(self):
+    def test_every_logged_burst_is_checked_and_unscored(self):
+        # The count is not pinned: logging another checked burst is allowed, so
+        # long as it too is recomputed, unscored and outside the sample.
         entries = self.record["external_checks"]
-        self.assertEqual(len(entries), 1)
-        entry = entries[0]
-        names = {row["name"] for row in self.rows}
-        self.assertNotIn(entry["name"], names)  # checked, not admitted to the sample
-        self.assertFalse(entry["scores"])
-        self.assertEqual(self.record["status"], "open, no event scored")
-        for key, computed in external_check_readings(entry, self.record).items():
-            self.assertEqual(
-                entry[key], computed,
-                msg=f"external_checks[0].{key} has drifted from the computation",
-            )
+        self.assertGreaterEqual(len(entries), 1)
+        logged = [entry["name"] for entry in entries]
+        self.assertEqual(len(logged), len(set(logged)), msg="two bursts logged as one")
+        sample = {row["name"] for row in self.rows}
         window = self.record["prediction"]["window_A"]
-        self.assertLess(entry["total_address_at_top_of_redshift"], window[0])
-        self.assertEqual(entry["z_kind"], "photometric")
+        self.assertEqual(self.record["status"], "open, no event scored")
+        for entry in entries:
+            self.assertNotIn(entry["name"], sample)  # checked, not admitted
+            self.assertIs(entry["scores"], False)
+            self.assertEqual(entry["z_kind"], "photometric")
+            self.assertLess(entry["total_address_at_top_of_redshift"], window[0])
+            for key, computed in external_check_readings(entry, self.record).items():
+                self.assertEqual(
+                    entry[key], computed,
+                    msg=f"external_checks[{entry['name']}].{key} has drifted from the computation",
+                )
 
     def test_the_record_marks_what_it_does_not_check(self):
         findings = self.record["sample_extension"]["findings"]
